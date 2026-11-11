@@ -1,0 +1,92 @@
+# Child-Safe EdTech Standard (CSES)
+
+An open standard and toolkit for building software that children use for learning safely, and showing it.
+It turns EU law, pending EU proposals (EU KIDS Act, Digital Fairness Act) and expert recommendations into
+rules a team can check in code, in CI and in review.
+
+> **Status:** v0.1.0, draft for public comment (November 2026).
+> **Not legal advice and not a certification.** CSES produces *pre-compliance* reports. Legal compliance
+> depends on facts code cannot show; involve your DPO and legal counsel.
+
+## What you get
+
+| | |
+|---|---|
+| **The standard** | 75 rules in a core set plus three profiles: **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. |
+| **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). Each team chooses. |
+| **Sources on every rule** | A source registry with type, status and verification date. Reports list the sources they rely on. |
+| **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included. |
+| **Scanner** | `tooling/scan.py` writes a pre-compliance report, a prioritised improvement plan, JSON and SARIF. |
+| **AI review skill** | `skill/cses-review/` lets Claude run the scanner, verify findings, review what patterns cannot see, and finalise both documents. |
+| **CI** | A GitHub Action, generated Semgrep rules, a PR template. |
+| **Templates** | Manifest, DPIA starter, AI risk file, waiver record, instructions for AI coding agents. |
+
+## Quick start
+
+```bash
+# 1. Describe your product
+cp templates/cses.yaml /path/to/your-product/cses.yaml   # then edit it
+
+# 2. Scan
+pip install pyyaml
+python3 tooling/scan.py --repo /path/to/your-product --out-dir cses-report
+
+# 3. Read the two outputs
+#    cses-report/report.md         pre-compliance report with sources
+#    cses-report/improvements.md   prioritised improvement plan
+```
+
+Try it on the examples:
+
+```bash
+python3 tooling/scan.py --repo examples/noncompliant-game --out-dir cses-report
+python3 tooling/scan.py --repo examples/compliant-game --out-dir cses-report --level 3
+```
+
+### In GitHub Actions
+
+Copy `templates/github/cses-check.yml` into `.github/workflows/` of your product repository. It runs the
+scan on each pull request, fails on blocking findings, uploads SARIF to code scanning and attaches the
+report.
+
+### With Claude
+
+- **Claude Code:** copy `skill/cses-review/` into your project's `.claude/skills/` (or your user skills folder)
+  and ask: *"Run a CSES review of this repository at level 2."*
+- **Claude apps:** run `python3 tooling/build.py --zip dist` and upload `dist/cses-review.zip` as a skill.
+
+## Read the standard
+
+1. [Introduction](standard/00-introduction.md): profiles, age bands, levels, severities, how to claim conformance
+2. [Regulatory map](standard/01-regulatory-map.md): which instrument says what, and the EU KIDS Act education exemption
+3. [Packs](standard/02-packs.md): extending with national rules and literature
+4. [Rule catalogue](standard/catalogue/index.md): every rule with requirement, rationale, improvement and sources
+5. [Self-assessment checklists](self-assessment/)
+
+## Repository layout
+
+```
+standard/        rules.yaml + sources.yaml (single source of truth), docs, generated catalogue
+packs/           country and extra packs (pt.yaml, _template.yaml)
+tooling/         scan.py, build.py, generated Semgrep rules
+skill/           cses-review skill for Claude (generated copies + SKILL.md)
+templates/       manifest, DPIA starter, AI risk file, waiver, agent instructions, GitHub files
+self-assessment/ generated checklists per profile and level
+examples/        a non-compliant and a compliant sample product
+tests/           test-suite for the scanner and the catalogue
+```
+
+Edit `standard/rules.yaml`, `standard/sources.yaml` or `packs/*.yaml`, then run `python3 tooling/build.py`.
+Never edit generated files by hand; CI checks they are up to date.
+
+## Licence
+
+- Standard text, rules, sources, packs, checklists and templates: [CC BY 4.0](LICENSE-CC-BY-4.0.txt)
+- Code (scanner, build, action, skill scripts): [Apache 2.0](LICENSE-APACHE-2.0.txt)
+
+See [LICENSE](LICENSE) for which applies where.
+
+## Maintainers and governance
+
+Maintained by Kendir Studios (Worlds4Education, Lda., Portugal) with contributions from the EdTech
+community. See [GOVERNANCE.md](GOVERNANCE.md) and [CONTRIBUTING.md](CONTRIBUTING.md).

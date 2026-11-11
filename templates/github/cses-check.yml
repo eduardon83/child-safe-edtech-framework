@@ -1,0 +1,31 @@
+# Copy to .github/workflows/cses-check.yml in your product repository.
+# Replace OWNER/child-safe-edtech-standard@v0.1.0 with the repository and tag you follow.
+name: CSES child-safety check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write   # for SARIF upload to code scanning
+
+jobs:
+  cses:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: OWNER/child-safe-edtech-standard@v0.1.0
+        with:
+          fail-on: block        # block | review | warn | never
+          # level: 2            # override compliance_level from cses.yaml
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: cses-report/findings.sarif
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cses-report
+          path: cses-report/

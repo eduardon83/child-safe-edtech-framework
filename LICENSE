@@ -1,0 +1,19 @@
+Child-Safe EdTech Standard (CSES)
+Copyright 2026 Worlds4Education - Jogos e Ambientes Educativos, Lda. (Kendir Studios) and CSES contributors
+
+This repository is dual-licensed by content type:
+
+1. Standard content: Creative Commons Attribution 4.0 International (CC BY 4.0)
+   Applies to: standard/ (including rules.yaml, sources.yaml and the catalogue), packs/,
+   self-assessment/, templates/ (except templates/github/*.yml), skill/cses-review/SKILL.md,
+   skill/cses-review/references/, and all other documentation (*.md).
+   Full text: LICENSE-CC-BY-4.0.txt
+   Attribution: "Child-Safe EdTech Standard (CSES), CSES contributors, CC BY 4.0", with a link to this repository.
+
+2. Software: Apache License, Version 2.0
+   Applies to: tooling/, tests/, action.yml, .github/, templates/github/*.yml,
+   skill/cses-review/scripts/.
+   Full text: LICENSE-APACHE-2.0.txt
+
+Sources cited by the standard (laws, guidance, research) belong to their respective owners and are
+referenced, not reproduced.

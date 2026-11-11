@@ -1,0 +1,18 @@
+# Changelog
+
+## v0.1.0 (2026-11-11), draft for public comment
+
+- First public draft: 75 rules (core, profiles A, B, C, age-band modifiers), 22 sources.
+- Three compliance levels: Legal baseline, Forward-compliant, Best practice.
+- Built on the EU KIDS Act proposal COM(2026) 681 (17 Sep 2026), the DSA Art. 28 guidelines, the AI Act as
+  amended by the Digital Omnibus on AI, and the leaked draft of the Digital Fairness Act.
+- Packs mechanism with a Portugal pack.
+- Scanner producing pre-compliance report, improvement plan, JSON and SARIF.
+- `cses-review` skill for Claude, GitHub Action, generated Semgrep rules, templates.
+
+### To revisit
+
+- Replace DFA source with the official proposal text once published; confirm rules A-ECO-01, A-ECO-02,
+  A-ECO-03, C-ENG-01, CORE-AI-06, CORE-SAF-03.
+- Track EU KIDS Act negotiations; feedback period closes 3 Dec 2026.
+- Replace the Digital Omnibus secondary source with the Official Journal reference.

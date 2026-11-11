@@ -1,0 +1,29 @@
+cses_version: "0.1"
+product: Garden of Numbers (good example)
+description: Maths puzzle game played in class, teacher-managed.
+profiles: [A]
+age_bands: [B2]
+compliance_level: 2
+jurisdictions: [EU, PT]
+context: school
+distribution:
+  - channel: school
+    operated_by: school
+legal_scope:
+  kids_act: exempt_educational
+  dsa_online_platform: false
+gdpr_role: processor
+features: [accounts]
+monetisation: adult_licence
+third_parties:
+  - name: Hosting provider
+    purpose: hosting and database
+    region: eu-central-1
+    dpa_signed: true
+retention:
+  - category: gameplay events
+    period: end of school year + 30 days
+    enforced_by: jobs/purge-gameplay.ts
+dpia: docs/dpia.md
+security_policy: SECURITY.md
+last_review: 2026-11-11

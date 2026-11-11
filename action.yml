@@ -1,0 +1,42 @@
+name: "CSES child-safety check"
+description: "Pre-compliance scan against the Child-Safe EdTech Standard: report, improvement plan and SARIF."
+branding:
+  icon: shield
+  color: green
+inputs:
+  repo:
+    description: "Path of the repository to scan"
+    default: "."
+  level:
+    description: "Compliance level 1, 2 or 3 (default: from cses.yaml)"
+    default: ""
+  fail-on:
+    description: "block | review | warn | never"
+    default: "block"
+  out-dir:
+    description: "Where to write report.md, improvements.md, findings.json and findings.sarif"
+    default: "cses-report"
+  packs:
+    description: "Space-separated extra pack files"
+    default: ""
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - shell: bash
+      run: pip install --quiet pyyaml
+    - shell: bash
+      env:
+        CSES_LEVEL: ${{ inputs.level }}
+        CSES_PACKS: ${{ inputs.packs }}
+      run: |
+        args=(--repo "${{ inputs.repo }}" --out-dir "${{ inputs.out-dir }}" --fail-on "${{ inputs.fail-on }}")
+        if [ -n "$CSES_LEVEL" ]; then args+=(--level "$CSES_LEVEL"); fi
+        for p in $CSES_PACKS; do args+=(--pack "$p"); done
+        set +e
+        python3 "${{ github.action_path }}/tooling/scan.py" "${args[@]}"
+        code=$?
+        if [ -f "${{ inputs.out-dir }}/report.md" ]; then cat "${{ inputs.out-dir }}/report.md" >> "$GITHUB_STEP_SUMMARY"; fi
+        exit $code

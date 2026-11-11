@@ -1,0 +1,124 @@
+# CSES source pack: Portugal
+# Loaded automatically when a product manifest lists `jurisdictions: [PT]`.
+# Maintainer note: every entry has a `verified` date. Re-check before relying on it.
+
+pack:
+  id: pt
+  title: Portugal national pack
+  jurisdiction: PT
+  version: "0.1.0"
+  maintainer: "CSES maintainers"
+  status: "Draft. Entries marked 'verify' need confirmation by a Portuguese legal reviewer."
+
+parameters:
+  digital_consent_age: 13
+  supervisory_authority: "CNPD, Comissão Nacional de Proteção de Dados"
+  digital_services_coordinator: "ANACOM"
+  child_helpline: "Linha Internet Segura 800 21 90 90"
+
+sources:
+  - id: PT-LEI58
+    title: "Lei n.º 58/2019, execução do RGPD na ordem jurídica nacional"
+    type: law
+    jurisdiction: PT
+    status: "In force since 9 Aug 2019. Art. 16: age of digital consent is 13"
+    url: "https://diariodarepublica.pt/dr/detalhe/lei/58-2019-123815982"
+    verified: 2026-11-11
+
+  - id: PT-DL83
+    title: "Decreto-Lei n.º 83/2018, acessibilidade dos sítios web e aplicações móveis de organismos públicos"
+    type: law
+    jurisdiction: PT
+    status: "In force. Applies to public bodies, including public schools, and their apps"
+    url: "https://diariodarepublica.pt/dr/detalhe/decreto-lei/83-2018-116734769"
+    verified: 2026-11-11
+
+  - id: PT-CNPD
+    title: "CNPD, guidance and list of processing operations requiring a DPIA"
+    type: guidance
+    jurisdiction: PT
+    status: "Check the current list on the CNPD website (verify)"
+    url: "https://www.cnpd.pt"
+    verified: 2026-11-11
+
+  - id: PT-ANACOM
+    title: "ANACOM, Portuguese Digital Services Coordinator under the DSA"
+    type: guidance
+    jurisdiction: PT
+    status: "Designated Digital Services Coordinator"
+    url: "https://www.anacom.pt"
+    verified: 2026-11-11
+
+  - id: PT-ISEGURA
+    title: "Internet Segura (Portuguese Safer Internet Centre) and Linha Internet Segura"
+    type: guidance
+    jurisdiction: PT
+    status: "Operating. Helpline for children, guardians and educators"
+    url: "https://www.internetsegura.pt"
+    verified: 2026-11-11
+
+amend:
+  - rule: AGE-B4-01
+    add_sources: [PT-LEI58]
+    note: "Portugal: age of digital consent is 13 (Lei 58/2019, art. 16). Below 13, consent-based processing needs guardian authorisation."
+
+  - rule: CORE-DAT-11
+    add_sources: [PT-LEI58]
+    note: "Portugal: guardian consent is needed below 13 where consent is the legal basis."
+
+  - rule: CORE-DAT-01
+    add_sources: [PT-CNPD]
+    note: "Portugal: check the CNPD list of operations that always require a DPIA. In public school deployments the school or Ministry is usually the controller."
+
+  - rule: CORE-ACC-01
+    add_sources: [PT-DL83]
+    tier: 1
+    note: "Portugal: products delivered to public schools or other public bodies must meet DL 83/2018, including an accessibility statement."
+
+  - rule: CORE-SAF-06
+    add_sources: [PT-ISEGURA]
+    note: "Portugal: show Linha Internet Segura (800 21 90 90) in help and support screens."
+
+  - rule: CORE-SEC-05
+    add_sources: [PT-CNPD]
+    note: "Portugal: personal data breaches are notified to the CNPD by the controller within 72 hours."
+
+  - rule: CORE-COM-03
+    add_patterns:
+      - {type: regex, confidence: medium, flags: i, pattern: '(apenas hoje|só hoje|tempo limitado|esgota já|não fiques de fora)'}
+
+rules:
+  - id: PT-LNG-01
+    title: Child-facing information in European Portuguese
+    level: MUST
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Everything a child in Portugal reads or hears (instructions, settings, warnings, privacy
+      notice, reporting tools) is available in European Portuguese, written for the target age.
+    rationale: >
+      KIDS Act Art. 18 and 19 require information minors can understand. For VLOPs it requires
+      the official language of the Member State; for everyone else it is best practice.
+    improvement: Add PT-PT copy for all child-facing text and have it reviewed by an instructional designer.
+    effort: medium
+    sources: [KIDS]
+    detection:
+      method: manual
+
+  - id: PT-SUP-01
+    title: Help screens point to Portuguese support services
+    level: SHOULD
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [multiplayer, chat, ugc, social, ai_generative]
+    requirement: >
+      Support information after a report includes Portuguese resources (Linha Internet Segura)
+      and explains in simple words how to get help from a trusted adult.
+    rationale: KIDS Act Art. 19(4) requires informing minors of national support organisations.
+    improvement: Add the Linha Internet Segura number and link to the help screen.
+    effort: low
+    sources: [KIDS, PT-ISEGURA]
+    detection:
+      method: manual

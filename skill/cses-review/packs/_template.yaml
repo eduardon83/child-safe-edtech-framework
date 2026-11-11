@@ -1,0 +1,65 @@
+# CSES source pack template.
+#
+# A pack extends the standard without forking it. Use it for:
+#   - national laws and guidance (a country pack, e.g. packs/es.yaml)
+#   - sector or procurement requirements (e.g. a Ministry's rules for digital resources)
+#   - research and literature you want cited in reports
+#   - your own company red lines (keep company packs in your product repo, e.g. .cses/packs/acme.yaml)
+#
+# How it is loaded:
+#   - packs/<code>.yaml is loaded automatically when the manifest lists `jurisdictions: [<CODE>]`
+#   - any other pack is loaded through `packs: [path/to/pack.yaml]` in the manifest,
+#     or with `--pack path` on the command line
+#
+# Merge rules (enforced by the scanner):
+#   - sources: added to the registry. An id may not clash with an existing one.
+#   - rules: new rules. Use your pack id as prefix (e.g. ES-DAT-01). Same fields as standard/rules.yaml.
+#   - amend: change an existing rule, only in the stricter direction:
+#       add_sources   cite more sources on the rule
+#       note          shown under the rule in reports (national nuance)
+#       level         only SHOULD -> MUST
+#       tier          only to a lower number (e.g. 2 -> 1 when your country already made it law)
+#       add_patterns  extra detection patterns (e.g. local-language UI strings)
+#   - parameters: free key/values shown in the report (e.g. digital consent age)
+# A pack can never weaken or remove a rule. Waivers are the only way to accept a gap,
+# and they need a named approver in the product manifest.
+
+pack:
+  id: xx                      # lowercase; also the prefix for new rule ids (XX-...)
+  title: "Country or organisation pack"
+  jurisdiction: XX            # ISO country code, or 'ORG' for an organisation pack
+  version: "0.1.0"
+  maintainer: "name or team"
+  status: "Draft"
+
+parameters:
+  digital_consent_age: 16     # GDPR Art. 8 national choice (13 to 16)
+
+sources:
+  - id: XX-LAW-1
+    title: "National law title"
+    type: law                 # law | law-pending | proposal | guidance | standard | literature | news
+    jurisdiction: XX
+    status: "In force since ..."
+    url: "https://..."
+    verified: 2026-01-01
+
+amend:
+  - rule: AGE-B4-01
+    add_sources: [XX-LAW-1]
+    note: "Age of digital consent here is 16."
+
+rules:
+  - id: XX-EDU-01
+    title: "Short title"
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: "What the product must do."
+    rationale: "Why, in one or two sentences."
+    improvement: "What a team should change to meet it."
+    effort: low
+    sources: [XX-LAW-1]
+    detection:
+      method: manual

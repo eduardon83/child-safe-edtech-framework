@@ -1,0 +1,187 @@
+# Source registry for the Child-Safe EdTech Standard (CSES).
+# Every rule cites sources by id. Source packs (packs/*.yaml) can add more.
+#
+# type:   law | law-pending | proposal | guidance | standard | literature | news
+# status: free text, always with a date, so readers know how current it is.
+# verified: date the entry (status + url) was last checked by a maintainer.
+
+sources:
+  - id: GDPR
+    title: "Regulation (EU) 2016/679, General Data Protection Regulation"
+    type: law
+    jurisdiction: EU
+    status: "In force since 25 May 2018"
+    url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+    verified: 2026-11-11
+
+  - id: EPRIV
+    title: "Directive 2002/58/EC, ePrivacy Directive (cookies and terminal equipment)"
+    type: law
+    jurisdiction: EU
+    status: "In force (transposed nationally)"
+    url: "https://eur-lex.europa.eu/eli/dir/2002/58/oj"
+    verified: 2026-11-11
+
+  - id: DSA
+    title: "Regulation (EU) 2022/2065, Digital Services Act"
+    type: law
+    jurisdiction: EU
+    status: "Fully applicable since 17 Feb 2024"
+    url: "https://eur-lex.europa.eu/eli/reg/2022/2065/oj"
+    verified: 2026-11-11
+
+  - id: DSA-G28
+    title: "Commission Guidelines on the protection of minors under Article 28 DSA"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 14 Jul 2025. Not binding, used by the Commission as a compliance benchmark"
+    url: "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors"
+    verified: 2026-11-11
+
+  - id: AIA
+    title: "Regulation (EU) 2024/1689, Artificial Intelligence Act"
+    type: law
+    jurisdiction: EU
+    status: "Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025. GPAI rules since 2 Aug 2025. Transparency (Art. 50) from 2 Aug 2026"
+    url: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+    verified: 2026-11-11
+
+  - id: AIA-OMNIBUS
+    title: "Digital Omnibus on AI: amendments to the AI Act deferring high-risk obligations"
+    type: law-pending
+    jurisdiction: EU
+    status: "Adopted June 2026. Annex III high-risk obligations (incl. education) apply from 2 Dec 2027"
+    url: "https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/"
+    notes: "Secondary source (law firm analysis). Replace with Official Journal reference when cited."
+    verified: 2026-11-11
+
+  - id: KIDS
+    title: "Proposal for a Regulation: EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681"
+    type: proposal
+    jurisdiction: EU
+    status: "Commission proposal of 17 Sep 2026 (2026/0286 COD). In legislative procedure. Would apply 6 months after entry into force"
+    url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681"
+    notes: "Art. 2(4)(c) exempts services designed primarily for education and operated by or on behalf of educational establishments. Art. 3(5)(d) excludes educational AI from 'general conversational chatbot'."
+    verified: 2026-11-11
+
+  - id: KIDS-FAQ
+    title: "The KIDS Act explained (Commission Q&A)"
+    type: guidance
+    jurisdiction: EU
+    status: "Published Sep 2026. Feedback open until 3 Dec 2026"
+    url: "https://digital-strategy.ec.europa.eu/en/policies/kids-act"
+    verified: 2026-11-11
+
+  - id: KIDS-COM
+    title: "Communication: An EU approach to online child safety, COM(2026) 680"
+    type: guidance
+    jurisdiction: EU
+    status: "Published 17 Sep 2026"
+    url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680"
+    verified: 2026-11-11
+
+  - id: DFA
+    title: "Digital Fairness Act (proposal replacing the Unfair Commercial Practices Directive)"
+    type: proposal
+    jurisdiction: EU
+    status: "Proposal due 11 Nov 2026. Content known from a leaked draft only. Re-verify against the official text"
+    url: "https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows"
+    notes: "Leaked draft: ban on paid loot boxes and pay-to-win for minors, virtual currency value shown and off by default for children, right to switch off streaks, autoplay and relationship-simulating chatbots, blacklist of 10 dark patterns."
+    verified: 2026-11-11
+
+  - id: UCPD
+    title: "Directive 2005/29/EC, Unfair Commercial Practices Directive"
+    type: law
+    jurisdiction: EU
+    status: "In force (transposed nationally). Annex I point 28 bans direct exhortations to children to buy"
+    url: "https://eur-lex.europa.eu/eli/dir/2005/29/oj"
+    verified: 2026-11-11
+
+  - id: AVREC
+    title: "Commission Recommendation on an EU-wide framework for age verification (EU age verification app)"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 29 Apr 2026. Member States to offer a solution by 31 Dec 2026"
+    url: "https://digital-strategy.ec.europa.eu/en/news/commission-urges-member-states-rollout-eu-age-verification-app"
+    verified: 2026-11-11
+
+  - id: EAA
+    title: "Directive (EU) 2019/882, European Accessibility Act"
+    type: law
+    jurisdiction: EU
+    status: "Applies since 28 Jun 2025"
+    url: "https://eur-lex.europa.eu/eli/dir/2019/882/oj"
+    verified: 2026-11-11
+
+  - id: WCAG22
+    title: "W3C Web Content Accessibility Guidelines (WCAG) 2.2"
+    type: standard
+    jurisdiction: international
+    status: "W3C Recommendation"
+    url: "https://www.w3.org/TR/WCAG22/"
+    verified: 2026-11-11
+
+  - id: EN301549
+    title: "EN 301 549, Accessibility requirements for ICT products and services"
+    type: standard
+    jurisdiction: EU
+    status: "Harmonised European standard"
+    url: "https://www.etsi.org/standards"
+    notes: "Use the current version referenced in the Official Journal."
+    verified: 2026-11-11
+
+  - id: CRA
+    title: "Regulation (EU) 2024/2847, Cyber Resilience Act"
+    type: law
+    jurisdiction: EU
+    status: "Reporting obligations from 11 Sep 2026. Main obligations from 11 Dec 2027"
+    url: "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
+    verified: 2026-11-11
+
+  - id: UNCRC-GC25
+    title: "UN Committee on the Rights of the Child, General Comment No. 25 (2021) on children's rights in relation to the digital environment"
+    type: guidance
+    jurisdiction: international
+    status: "Adopted 2021"
+    url: "https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation"
+    verified: 2026-11-11
+
+  - id: BIK
+    title: "European strategy for a better internet for kids (BIK+)"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted May 2022"
+    url: "https://digital-strategy.ec.europa.eu/en/policies/strategy-better-internet-kids"
+    verified: 2026-11-11
+
+  - id: EUKO
+    title: "EU Kids Online research network (LSE)"
+    type: literature
+    jurisdiction: EU
+    status: "Ongoing research network"
+    url: "https://www.lse.ac.uk/media-and-communications/research/research-projects/eu-kids-online"
+    verified: 2026-11-11
+
+  - id: ARNAB2014
+    title: "Arnab, S. et al. (2015). Mapping learning and game mechanics for serious games analysis. British Journal of Educational Technology 46(2)"
+    type: literature
+    jurisdiction: international
+    status: "Peer-reviewed"
+    url: "https://doi.org/10.1111/bjet.12113"
+    verified: 2026-11-11
+
+  - id: EDPB-CONSENT
+    title: "EDPB Guidelines 05/2020 on consent under Regulation 2016/679 (section on children)"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 4 May 2020"
+    url: "https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-052020-consent-under-regulation-2016679_en"
+    verified: 2026-11-11
+
+  - id: PEGI
+    title: "PEGI, Pan European Game Information age rating system"
+    type: standard
+    jurisdiction: EU
+    status: "Industry self-regulation"
+    url: "https://pegi.info"
+    verified: 2026-11-11

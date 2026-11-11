@@ -1,0 +1,18 @@
+# Deliberately non-compliant example used by the test-suite.
+cses_version: "0.1"
+product: Word Quest (bad example)
+profiles: [A, C]
+age_bands: [B2, B3]
+compliance_level: 2
+jurisdictions: [EU, PT]
+context: home
+gdpr_role: controller
+legal_scope:
+  kids_act: unknown
+features: [multiplayer, chat, notifications, streaks, leaderboards, purchases, ai_generative]
+monetisation: in_app_purchases
+third_parties:
+  - name: Example Analytics Inc.
+    purpose: product analytics
+    region: us-east-1
+    dpa_signed: false

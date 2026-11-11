@@ -1,0 +1,1 @@
+# Security policy (example placeholder)

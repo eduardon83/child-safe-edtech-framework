@@ -1,0 +1,4 @@
+cses-report/
+dist/
+__pycache__/
+.pytest_cache/
