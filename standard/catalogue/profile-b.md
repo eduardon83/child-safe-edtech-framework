@@ -8,6 +8,10 @@ Profile B: game-based applications and software. Read together with the core rul
 |---|---|---|---|---|
 | [A-ECO-01](#a-eco-01-no-paid-randomised-rewards-loot-boxes) | No paid randomised rewards (loot boxes) | MUST | 2 | static |
 | [A-ECO-02](#a-eco-02-no-pay-to-win) | No pay-to-win | MUST | 2 | mixed |
+| [A-MOT-01](#a-mot-01-no-reward-pile-up) | No reward pile-up | SHOULD | 3 | mixed |
+| [A-MOT-02](#a-mot-02-feedback-informs-it-does-not-control) | Feedback informs, it does not control | SHOULD | 3 | mixed |
+| [A-MOT-04](#a-mot-04-room-for-curiosity) | Room for curiosity | SHOULD | 3 | manual |
+| [A-MOT-05](#a-mot-05-helping-and-creativity-are-recognised-not-paid) | Helping and creativity are recognised, not paid | SHOULD | 3 | manual |
 | [A-PLY-02](#a-ply-02-non-shaming-failure-and-feedback) | Non-shaming failure and feedback | SHOULD | 3 | manual |
 | [B-DAT-01](#b-dat-01-research-use-of-learning-data-is-separated) | Research use of learning data is separated | MUST | 1 | manual |
 | [B-EVL-01](#b-evl-01-high-risk-path-for-systems-that-evaluate-or-place-learners) | High-risk path for systems that evaluate or place learners | MUST | 1 | manifest |
@@ -42,6 +46,54 @@ Profile B: game-based applications and software. Read together with the core rul
 **How to improve.** Make all progression earnable through play; keep any paid items cosmetic and adult-purchased.
 
 **Sources.** [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
+
+### A-MOT-01: No reward pile-up
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: mixed · Effort: low
+
+**Requirement.** The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards, unlockables, celebrations) and records for each one whether it is given for learning or for showing up. No more than two layers are given for playing time, logging in or simply finishing.
+
+**Why.** Expected rewards for doing a task lower later intrinsic motivation (d = -0.36), more in children. Badges plus leaderboards lowered motivation and exam scores over a semester. Each extra layer makes rewards more expected and more controlling. Stacking is an inference from single-element studies.
+
+**How to improve.** Write the reward inventory (one line per layer, 'for learning' or 'for showing up'); remove or convert layers given for showing up.
+
+**Sources.** [R-DECI1999](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf), [R-HANUS2015](https://www.smhp.psych.ucla.edu/pdfdocs/gamil.pdf), [R-MEKLER2017](https://glassmanlab.seas.harvard.edu/annotated_works/mekler17.pdf), [R-SAILER2020](https://link.springer.com/article/10.1007/s10648-019-09498-w), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
+
+### A-MOT-02: Feedback informs, it does not control
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: mixed · Effort: low
+
+**Requirement.** Feedback says what the learner did well and why, and what to try next. Copy avoids controlling language ("you must", "you have to") and external goal framing ("do this to win coins").
+
+**Why.** Informational verbal feedback raised intrinsic motivation (+0.33). Controlling language and external goal framing undermined conceptual learning in 11 to 12-year-olds, while drill scores looked fine, so the loss is easy to miss.
+
+**How to improve.** Rewrite feedback strings as specific, informational messages; review copy for 'must' and reward-centred goals.
+
+**Sources.** [R-DECI1999](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf), [R-VANSTEENKISTE2005](https://investigacion.pucp.edu.pe/grupos/motem/publicacion/examining-the-motivational-impact-of-intrinsic-vs-extrinsic-goal-framing-and-internally-controlling-vs-autonomy-supportive-communication-style-on-childrens-achievement/)
+
+### A-MOT-04: Room for curiosity
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: medium
+
+**Requirement.** The design includes open questions, things to explore, choices with consequences, and moments where learners explain their reasoning to each other. Success is not only a count of completed items.
+
+**Why.** Curiosity improves memory through the same reward circuit that responds to coins, and predicts achievement, more strongly for children in poverty. Intrinsic motivation predicts quality of work and well-being; incentives predict quantity. Intrinsic motivation already declines through school.
+
+**How to improve.** Add at least one exploratory or explain-your-reasoning moment per unit; track learning quality, not only items completed.
+
+**Sources.** [R-GRUBER2014](https://www.sciencedaily.com/releases/2014/10/141002123631.htm), [R-SHAH2018](https://www.nature.com/articles/s41390-018-0099-4), [R-CERASOLI2014](https://hillkm.com/EDUC_712/Cerasoli_Nicklin_Ford_2014.pdf), [R-HOWARD2021](https://acuresearchbank.acu.edu.au/item/8w8z7/student-motivation-and-associated-outcomes-a-meta-analysis-from-self-determination-theory), [R-LEPPER2005](https://www.reed.edu/psychology/motivation/assets/downloads/Lepper_Corpus_Iyengar_2005.pdf)
+
+### A-MOT-05: Helping and creativity are recognised, not paid
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: low
+
+**Requirement.** Helping others and cooperating are not paid with points or items. Creative tasks reward creative quality with informative feedback, not mere completion.
+
+**Why.** Toddlers rewarded with a toy for helping later helped less. Rewards for completing creative tasks lower creativity; recognising creative quality with fair feedback can help.
+
+**How to improve.** Replace point payouts for helping with acknowledgement; give creative tasks qualitative feedback instead of completion rewards.
+
+**Sources.** [R-WARNEKEN2008](https://scholars.duke.edu/publication/1458228), [R-BYRON2012](https://www.frontiersin.org/article/10.3389/fpsyg.2020.00974)
 
 ### A-PLY-02: Non-shaming failure and feedback
 

@@ -2,13 +2,13 @@
 
 # Rule catalogue
 
-CSES v0.1.0: 75 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
+CSES v0.1.0: 89 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
 
 | Level | MUST | SHOULD |
 |---|---|---|
-| 1 Legal baseline | 30 | 1 |
-| 2 Forward-compliant | 26 | 3 |
-| 3 Best practice | 0 | 15 |
+| 1 Legal baseline | 32 | 1 |
+| 2 Forward-compliant | 26 | 4 |
+| 3 Best practice | 0 | 26 |
 
 | ID | Title | Profiles | Strength | Level | Age bands |
 |---|---|---|---|---|---|
@@ -17,6 +17,11 @@ CSES v0.1.0: 75 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best
 | A-ECO-02 | No pay-to-win | A, B, C | MUST | 2 | all |
 | A-ECO-03 | Virtual currency is not sold to children and shows its real value | A, C | MUST | 2 | all |
 | A-ECO-04 | Rewards follow learning, not time or return visits | A, C | SHOULD | 3 | all |
+| A-MOT-01 | No reward pile-up | A, B, C | SHOULD | 3 | all |
+| A-MOT-02 | Feedback informs, it does not control | A, B, C | SHOULD | 3 | all |
+| A-MOT-03 | The product works with rewards switched off | A, C | SHOULD | 3 | all |
+| A-MOT-04 | Room for curiosity | A, B, C | SHOULD | 3 | all |
+| A-MOT-05 | Helping and creativity are recognised, not paid | A, B, C | SHOULD | 3 | all |
 | A-PLY-01 | No penalties for not playing | A, C | MUST | 2 | all |
 | A-PLY-02 | Non-shaming failure and feedback | A, B | SHOULD | 3 | all |
 | A-SOC-01 | Multiplayer limited to closed groups | A | MUST | 2 | all |
@@ -43,6 +48,8 @@ CSES v0.1.0: 75 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best
 | CORE-ACC-01 | WCAG 2.2 AA | core | MUST | 1 | all |
 | CORE-ACC-02 | No flashing content | core | MUST | 1 | all |
 | CORE-ACC-03 | Inclusive design for children with special educational needs | core | SHOULD | 3 | all |
+| CORE-ACC-04 | Moving content and sound can be paused | core | MUST | 1 | all |
+| CORE-ACC-05 | Colour is never the only cue | core | MUST | 1 | all |
 | CORE-AI-01 | No emotion recognition on learners | core | MUST | 1 | all |
 | CORE-AI-02 | No manipulative AI exploiting age | core | MUST | 1 | all |
 | CORE-AI-03 | AI interaction and AI-generated content are disclosed | core | MUST | 1 | all |
@@ -68,6 +75,13 @@ CSES v0.1.0: 75 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best
 | CORE-DAT-10 | Microphone and camera off by default | core | MUST | 2 | all |
 | CORE-DAT-11 | Consent for non-essential storage and cookies | core | MUST | 1 | all |
 | CORE-DAT-12 | Child-friendly privacy information | core | MUST | 1 | all |
+| CORE-DES-01 | Motion and sound can be turned down or off | core | SHOULD | 2 | all |
+| CORE-DES-02 | Motion shows the content, not decoration | core | SHOULD | 3 | all |
+| CORE-DES-03 | Calm screens, especially under 8 | core | SHOULD | 3 | B1 (3-5), B2 (6-9) |
+| CORE-DES-04 | Fantasy does not blur facts for young children | core | SHOULD | 3 | B1 (3-5), B2 (6-9) |
+| CORE-DES-05 | Visual style matches the concept, especially in maths | core | SHOULD | 3 | all |
+| CORE-DES-06 | Celebrations are short and proportional | core | SHOULD | 3 | all |
+| CORE-DES-07 | No colour-psychology claims | core | SHOULD | 3 | all |
 | CORE-GOV-01 | Product declares its CSES manifest | core | MUST | 1 | all |
 | CORE-GOV-02 | Legal scope of the EU KIDS Act is assessed and recorded | core | SHOULD | 2 | all |
 | CORE-GOV-03 | Child rights impact assessment | core | SHOULD | 3 | all |

@@ -13,6 +13,10 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **CORE-ACC-02** (MUST) No flashing content. Nothing flashes more than three times per second.  
       Evidence: 
+- [ ] **CORE-ACC-04** (MUST) Moving content and sound can be paused. Content that moves, scrolls or animates automatically for more than 5 seconds can be paused, stopped or hidden, and audio that plays automatically for more than 3 seconds can be paused or muted.  
+      Evidence: 
+- [ ] **CORE-ACC-05** (MUST) Colour is never the only cue. Right and wrong answers, states and instructions are signalled by shape, text, icon or sound as well as colour.  
+      Evidence: 
 - [ ] **CORE-AI-01** (MUST) No emotion recognition on learners. The product does not infer emotions of learners from face, voice, posture, typing or other biometric signals.  
       Evidence: 
 - [ ] **CORE-AI-02** (MUST) No manipulative AI exploiting age. AI features do not use subliminal, manipulative or deceptive techniques, or exploit age-related vulnerability, to change a child's behaviour in a harmful way.  
@@ -76,6 +80,8 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **CORE-DAT-10** (MUST) Microphone and camera off by default. Access to microphone and camera is off by default, requested only at the moment of use for a clear learning purpose, and the recording is not kept longer than needed.  
       Evidence: 
+- [ ] **CORE-DES-01** (SHOULD) Motion and sound can be turned down or off. The product honours the device's reduced-motion setting and offers in-app controls to reduce animation and sound, including motion triggered by the learner's own actions.  
+      Evidence: 
 - [ ] **CORE-GOV-02** (SHOULD) Legal scope of the EU KIDS Act is assessed and recorded. The manifest records whether the product is in scope of the EU KIDS Act (online game, AI companion, general conversational chatbot, social or video-sharing service) or exempt as a service designed primarily for education and operated by or on behalf of an educational establishment (Art. 2(4)(c)).  
       Evidence: 
 - [ ] **CORE-SAF-01** (MUST) Most protective settings by default. Profiles private, sharing off, contact off, notifications off, recommendations of other users off by default. Defaults are only relaxed after age assurance shows the user is an adult.  
@@ -102,6 +108,18 @@ Product: ____________________  Date: __________  Assessor: ____________________
 - [ ] **CORE-CNT-01** (SHOULD) Asset provenance and licences recorded. Every image, sound, font and AI-generated asset has a recorded source, licence, author and, for AI assets, the model used.  
       Evidence: 
 - [ ] **CORE-CNT-02** (SHOULD) Age rating self-assessment. The product has a documented age-appropriateness assessment covering violence, fear, language, in-app purchases, contact risks and addictive features (PEGI-style descriptors).  
+      Evidence: 
+- [ ] **CORE-DES-02** (SHOULD) Motion shows the content, not decoration. Animation is used to show what is learned (a process, a change over time, a procedure). Decorative, celebratory or purely entertaining motion and interesting-but-irrelevant extras ("seductive details") are kept to a minimum.  
+      Evidence: 
+- [ ] **CORE-DES-03** (SHOULD) Calm screens, especially under 8. Few elements compete on screen at once (as a guide, no more than four interactive or animated elements on the main screen for under-8s), and help is available as audio or pictures, not text only.  
+      Evidence: 
+- [ ] **CORE-DES-04** (SHOULD) Fantasy does not blur facts for young children. When teaching facts about the real world to young children, use realistic images and plain language. Talking animals, impossible events and fantasy framing are kept for stories and play, not for factual content.  
+      Evidence: 
+- [ ] **CORE-DES-05** (SHOULD) Visual style matches the concept, especially in maths. Abstract concepts use simple, schematic visuals. Graphs and diagrams carry no decorative pictures. Concrete images are used to start, then faded towards abstract representations. Pleasant colours and friendly faces are welcome where they do not compete with the content.  
+      Evidence: 
+- [ ] **CORE-DES-06** (SHOULD) Celebrations are short and proportional. Reward animations and sounds are brief, proportional to the achievement and skippable. Win sounds are not used to make small or no progress feel like a big win.  
+      Evidence: 
+- [ ] **CORE-DES-07** (SHOULD) No colour-psychology claims. Design decisions and product claims do not rely on popular colour-psychology effects (e.g. "red lowers performance") that are not supported by robust evidence.  
       Evidence: 
 - [ ] **CORE-GOV-03** (SHOULD) Child rights impact assessment. A child rights impact assessment (or a risk review in the sense of the DSA Art. 28 guidelines) is documented, considers the best interests of the child, and involves children, guardians and educators in testing.  
       Evidence: 

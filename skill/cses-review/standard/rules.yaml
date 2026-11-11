@@ -356,7 +356,7 @@ rules:
     rationale: DSA Art. 25, UCPD. The DFA proposal blacklists these in all circumstances.
     improvement: Rewrite the copy neutrally, remove timers and pre-selected options, make 'no' as easy as 'yes'.
     effort: low
-    sources: [DSA, UCPD, DFA]
+    sources: [DSA, UCPD, DFA, R-RADESKY2022]
     detection:
       method: mixed
       patterns:
@@ -435,7 +435,7 @@ rules:
     rationale: KIDS Act Art. 9(2)(a). DFA proposal gives users the right to switch off autoplay.
     improvement: Remove autoplay; end each activity with a clear 'done' screen and an explicit choice to continue.
     effort: low
-    sources: [KIDS, DFA, DSA-G28]
+    sources: [KIDS, DFA, DSA-G28, R-RADESKY2022]
     detection:
       method: static
       patterns:
@@ -722,7 +722,7 @@ rules:
     rationale: WCAG 2.3.1. Photosensitive seizure risk.
     improvement: Slow or remove flashing effects; offer a 'reduce motion' setting that respects prefers-reduced-motion.
     effort: low
-    sources: [WCAG22, EAA, EN301549]
+    sources: [WCAG22, EAA, EN301549, W3C-233]
     detection:
       method: manual
 
@@ -941,7 +941,7 @@ rules:
     rationale: Aligning game mechanics with learning mechanics (LM-GM model) improves learning and avoids engagement-for-its-own-sake.
     improvement: Map each reward to a learning mechanic (Arnab et al. LM-GM) and remove rewards that only count time or logins.
     effort: medium
-    sources: [ARNAB2014, KIDS-COM]
+    sources: [ARNAB2014, KIDS-COM, R-DECI1999, R-SAILER2020, R-HIRSHPASEK2015]
     detection:
       method: manual
 
@@ -957,7 +957,7 @@ rules:
     rationale: KIDS Act Art. 9(2)(d) applied to online games by Art. 15(1)(a).
     improvement: Remove decay and energy timers; let the world wait for the child unchanged.
     effort: medium
-    sources: [KIDS, DFA]
+    sources: [KIDS, DFA, R-RADESKY2022]
     detection:
       method: static
       patterns:
@@ -1195,7 +1195,7 @@ rules:
     rationale: KIDS Act Art. 11(3) (social comparison). GDPR minimisation.
     improvement: Scope leaderboards to class, use nicknames, add a teacher toggle, and consider showing personal bests only.
     effort: medium
-    sources: [KIDS, GDPR, DSA-G28]
+    sources: [KIDS, GDPR, DSA-G28, R-HANUS2015, R-SAILER2020]
     detection:
       method: static
       patterns:
@@ -1227,7 +1227,7 @@ rules:
     rationale: Variable ratio rewards drive compulsive use. KIDS Act Art. 13(2) bans them in spending contexts on social and video services.
     improvement: Replace random bonuses with predictable milestones the child can see in advance.
     effort: low
-    sources: [KIDS, KIDS-COM]
+    sources: [KIDS, KIDS-COM, R-DECI1999, R-DIXON2013]
     detection:
       method: static
       patterns:
@@ -1243,7 +1243,7 @@ rules:
     rationale: KIDS Act Art. 10(2) asks recommender optimisation to include quality and mental health metrics; good practice for every product.
     improvement: Add learning-gain and healthy-session-length metrics to the product dashboard and goals.
     effort: low
-    sources: [KIDS, KIDS-COM, EUKO]
+    sources: [KIDS, KIDS-COM, EUKO, R-CERASOLI2014]
     detection:
       method: manual
 
@@ -1346,5 +1346,275 @@ rules:
     improvement: Allow opt-in changes with a plain explanation; keep defaults protective.
     effort: low
     sources: [KIDS, DSA-G28]
+    detection:
+      method: manual
+
+  # ================================================================ CORE: design for learning (look, sound, motion)
+  # From research gathered for the EDEH Quality Compass (Nov 2026). See standard/03-design-and-motivation.md.
+  - id: CORE-ACC-04
+    title: Moving content and sound can be paused
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Content that moves, scrolls or animates automatically for more than 5 seconds can be paused,
+      stopped or hidden, and audio that plays automatically for more than 3 seconds can be paused
+      or muted.
+    rationale: WCAG 2.2.2 and 1.4.2 (Level A), within the AA target of the European Accessibility Act. Uncontrolled motion distracts all learners and harms some.
+    improvement: Add pause and mute controls to every auto-playing animation, video and background audio.
+    effort: low
+    sources: [WCAG22, EAA, EN301549]
+    detection:
+      method: manual
+
+  - id: CORE-ACC-05
+    title: Colour is never the only cue
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Right and wrong answers, states and instructions are signalled by shape, text, icon or sound as
+      well as colour.
+    rationale: WCAG 1.4.1 (Level A). About 1 in 12 boys has a colour vision deficiency, so colour-only feedback fails several children in every class.
+    improvement: Add icons or text (tick, cross, label) next to colour feedback; test screens in greyscale.
+    effort: low
+    sources: [WCAG22, EAA]
+    detection:
+      method: manual
+
+  - id: CORE-DES-01
+    title: Motion and sound can be turned down or off
+    level: SHOULD
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      The product honours the device's reduced-motion setting and offers in-app controls to reduce
+      animation and sound, including motion triggered by the learner's own actions.
+    rationale: >
+      WCAG 2.3.3 (Level AAA) protects learners with vestibular disorders. Distracting motion and sound
+      compete with the learning content for attention.
+    improvement: Wrap animations in a reduced-motion check (CSS prefers-reduced-motion, useReducedMotion, platform accessibility APIs) and add 'calm mode' and sound sliders.
+    effort: low
+    sources: [W3C-233, WCAG22, R-SUNDARARAJAN2020]
+    detection:
+      method: static
+      patterns:
+        - {type: repo, check: reduced_motion_missing, confidence: medium}
+
+  - id: CORE-DES-02
+    title: Motion shows the content, not decoration
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Animation is used to show what is learned (a process, a change over time, a procedure).
+      Decorative, celebratory or purely entertaining motion and interesting-but-irrelevant extras
+      ("seductive details") are kept to a minimum.
+    rationale: >
+      Seductive details lower learning (g = -0.33, 58 studies). Animation that depicts the content
+      improves it (g = 0.23, 140 comparisons). In e-books, story-carrying animation helps young
+      children while hotspots and side games distract.
+    improvement: For each animation, write down what it teaches. Remove or shorten the ones that teach nothing; move side games out of the learning path.
+    effort: medium
+    sources: [R-SUNDARARAJAN2020, R-BERNEY2016, R-TAKACS2015]
+    detection:
+      method: manual
+
+  - id: CORE-DES-03
+    title: Calm screens, especially under 8
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [B1, B2]
+    requirement: >
+      Few elements compete on screen at once (as a guide, no more than four interactive or animated
+      elements on the main screen for under-8s), and help is available as audio or pictures, not text only.
+    rationale: >
+      Busy visual environments increase off-task time in young children and affect autistic children
+      most. A content analysis of 200 apps for under-8s found 95% showed more than four elements on
+      the opening screen.
+    improvement: Audit each screen's element count; move secondary elements into menus; add spoken help.
+    effort: medium
+    sources: [R-FISHER2014, R-HANLEY2017, R-CAC2018, R-HIRSHPASEK2015]
+    detection:
+      method: manual
+
+  - id: CORE-DES-04
+    title: Fantasy does not blur facts for young children
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [B1, B2]
+    requirement: >
+      When teaching facts about the real world to young children, use realistic images and plain
+      language. Talking animals, impossible events and fantasy framing are kept for stories and play,
+      not for factual content.
+    rationale: >
+      Human-like animals with human-like language reduced fact learning in 3 to 5-year-olds.
+      Fantastical events, more than pace, reduced executive function in 4-year-olds.
+    improvement: Review factual units for young children; replace anthropomorphic narration with realistic visuals or clearly separate story from fact.
+    effort: medium
+    sources: [R-GANEA2014, R-LILLARD2011]
+    detection:
+      method: manual
+
+  - id: CORE-DES-05
+    title: Visual style matches the concept, especially in maths
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Abstract concepts use simple, schematic visuals. Graphs and diagrams carry no decorative
+      pictures. Concrete images are used to start, then faded towards abstract representations.
+      Pleasant colours and friendly faces are welcome where they do not compete with the content.
+    rationale: >
+      Pictures inside graphs led 6 to 8-year-olds to count the pictures; generic symbols transfer
+      better than concrete ones. Schematic visuals outperform cartoon and realistic ones in learning
+      games. Emotional design (pleasant colours, faces) improves retention (d = 0.39).
+    improvement: Remove decoration from graphs and diagrams; plan concrete-to-abstract fading in maths sequences; keep warm, pleasant colour palettes.
+    effort: medium
+    sources: [R-KAMINSKI2013, R-WOUTERS2013, R-BROM2018]
+    detection:
+      method: manual
+
+  - id: CORE-DES-06
+    title: Celebrations are short and proportional
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Reward animations and sounds are brief, proportional to the achievement and skippable. Win
+      sounds are not used to make small or no progress feel like a big win.
+    rationale: >
+      Each celebration is itself a seductive detail competing for attention. In slot machines, win
+      sounds made players overestimate how often they won.
+    improvement: Cap celebration length (e.g. under 2 seconds), scale them to the achievement, and allow skipping.
+    effort: low
+    sources: [R-SUNDARARAJAN2020, R-DIXON2013]
+    detection:
+      method: static
+      patterns:
+        - {type: dependency, confidence: medium, names: [canvas-confetti, react-confetti, react-canvas-confetti, js-confetti, party-js, confetti-js]}
+
+  - id: CORE-DES-07
+    title: No colour-psychology claims
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Design decisions and product claims do not rely on popular colour-psychology effects
+      (e.g. "red lowers performance") that are not supported by robust evidence.
+    rationale: The red-colour effect on cognitive performance does not survive correction for publication bias.
+    improvement: Justify colour choices by function (contrast, coding, highlighting) and accessibility, not by colour-psychology claims.
+    effort: low
+    sources: [R-GNAMBS2020]
+    detection:
+      method: manual
+
+  # ================================================================ MOTIVATION (profiles A, B, C)
+  - id: A-MOT-01
+    title: No reward pile-up
+    level: SHOULD
+    tier: 3
+    profiles: [A, B, C]
+    age_bands: [all]
+    requirement: >
+      The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards,
+      unlockables, celebrations) and records for each one whether it is given for learning or for
+      showing up. No more than two layers are given for playing time, logging in or simply finishing.
+    rationale: >
+      Expected rewards for doing a task lower later intrinsic motivation (d = -0.36), more in children.
+      Badges plus leaderboards lowered motivation and exam scores over a semester. Each extra layer makes
+      rewards more expected and more controlling. Stacking is an inference from single-element studies.
+    improvement: Write the reward inventory (one line per layer, 'for learning' or 'for showing up'); remove or convert layers given for showing up.
+    effort: low
+    sources: [R-DECI1999, R-HANUS2015, R-MEKLER2017, R-SAILER2020, R-RADESKY2022]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: reward_layers, confidence: medium}
+
+  - id: A-MOT-02
+    title: Feedback informs, it does not control
+    level: SHOULD
+    tier: 3
+    profiles: [A, B, C]
+    age_bands: [all]
+    requirement: >
+      Feedback says what the learner did well and why, and what to try next. Copy avoids controlling
+      language ("you must", "you have to") and external goal framing ("do this to win coins").
+    rationale: >
+      Informational verbal feedback raised intrinsic motivation (+0.33). Controlling language and
+      external goal framing undermined conceptual learning in 11 to 12-year-olds, while drill scores
+      looked fine, so the loss is easy to miss.
+    improvement: Rewrite feedback strings as specific, informational messages; review copy for 'must' and reward-centred goals.
+    effort: low
+    sources: [R-DECI1999, R-VANSTEENKISTE2005]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(you must (finish|complete|play|keep)|you have to (finish|play|keep)|play to earn|win (more )?coins|tens de (acabar|jogar|continuar)|joga para ganhar)'}
+
+  - id: A-MOT-03
+    title: The product works with rewards switched off
+    level: SHOULD
+    tier: 3
+    profiles: [A, C]
+    age_bands: [all]
+    requirement: >
+      The teacher can switch off points, leaderboards and celebrations, or turn competition into a
+      shared class or team goal, and the activity still makes sense. Teacher materials include debrief
+      prompts that turn rewards into information ("What did you do to earn that?").
+    rationale: >
+      Gamification's cognitive gains are robust, but motivational gains vanish in rigorous studies;
+      competition combined with collaboration beats competition alone. Leaderboards reward those
+      already ahead and hurt the weakest.
+    improvement: Add teacher toggles for each reward layer and a 'team goal' mode; add debrief questions to the teacher guide.
+    effort: medium
+    sources: [R-SAILER2020, R-HANUS2015, R-HIRSHPASEK2015]
+    detection:
+      method: manual
+
+  - id: A-MOT-04
+    title: Room for curiosity
+    level: SHOULD
+    tier: 3
+    profiles: [A, B, C]
+    age_bands: [all]
+    requirement: >
+      The design includes open questions, things to explore, choices with consequences, and moments
+      where learners explain their reasoning to each other. Success is not only a count of completed items.
+    rationale: >
+      Curiosity improves memory through the same reward circuit that responds to coins, and predicts
+      achievement, more strongly for children in poverty. Intrinsic motivation predicts quality of work
+      and well-being; incentives predict quantity. Intrinsic motivation already declines through school.
+    improvement: Add at least one exploratory or explain-your-reasoning moment per unit; track learning quality, not only items completed.
+    effort: medium
+    sources: [R-GRUBER2014, R-SHAH2018, R-CERASOLI2014, R-HOWARD2021, R-LEPPER2005]
+    detection:
+      method: manual
+
+  - id: A-MOT-05
+    title: Helping and creativity are recognised, not paid
+    level: SHOULD
+    tier: 3
+    profiles: [A, B, C]
+    age_bands: [all]
+    requirement: >
+      Helping others and cooperating are not paid with points or items. Creative tasks reward creative
+      quality with informative feedback, not mere completion.
+    rationale: >
+      Toddlers rewarded with a toy for helping later helped less. Rewards for completing creative tasks
+      lower creativity; recognising creative quality with fair feedback can help.
+    improvement: Replace point payouts for helping with acknowledgement; give creative tasks qualitative feedback instead of completion rewards.
+    effort: low
+    sources: [R-WARNEKEN2008, R-BYRON2012]
     detection:
       method: manual

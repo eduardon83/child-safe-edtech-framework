@@ -137,3 +137,18 @@ def test_missing_manifest_is_reported(tmp_path):
     (tmp_path / "x.js").write_text("console.log('hi')\n", encoding="utf-8")
     _, _, res = run(tmp_path)
     assert "CORE-GOV-01" in rules_with(res, "BLOCK")
+
+
+def test_design_and_motivation_checks():
+    _, _, res = run(BAD, level=3)
+    warn = rules_with(res, "WARN")
+    assert "A-MOT-01" in warn          # reward pile-up signal
+    assert "CORE-DES-01" in warn       # animations without reduced-motion handling
+    _, _, res2 = run(BAD, level=2)
+    assert "A-MOT-01" in rules_with(res2, "NEXT")   # tier 3 shows as next level at level 2
+
+
+def test_research_sources_are_literature():
+    std = scan.load_standard(ROOT)
+    assert std.sources["R-DECI1999"]["type"] == "literature"
+    assert "R-RADESKY2022" in std.rules["CORE-COM-03"]["sources"]

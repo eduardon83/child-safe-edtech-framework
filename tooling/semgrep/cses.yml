@@ -37,6 +37,18 @@ rules:
     - KIDS
     - DFA
     - UCPD
+- id: a-mot-02-1
+  message: 'A-MOT-02 (SHOULD, level 3): Feedback informs, it does not control. Rewrite feedback strings as specific, informational messages; review copy for ''must'' and reward-centred goals.'
+  severity: INFO
+  languages:
+  - generic
+  pattern-regex: (?i)(you must (finish|complete|play|keep)|you have to (finish|play|keep)|play to earn|win (more )?coins|tens de (acabar|jogar|continuar)|joga para ganhar)
+  metadata:
+    cses_rule: A-MOT-02
+    tier: 3
+    sources:
+    - R-DECI1999
+    - R-VANSTEENKISTE2005
 - id: a-ply-01-1
   message: 'A-PLY-01 (MUST, level 2): No penalties for not playing. Remove decay and energy timers; let the world wait for the child unchanged.'
   severity: WARNING
@@ -49,6 +61,7 @@ rules:
     sources:
     - KIDS
     - DFA
+    - R-RADESKY2022
 - id: age-b1-01-1
   message: 'AGE-B1-01 (MUST, level 2): Ages 3 to 5 use the product only with an adult in control. Route access through the guardian or teacher device; remove text inputs and outbound links.'
   severity: WARNING
@@ -140,6 +153,8 @@ rules:
     - KIDS
     - GDPR
     - DSA-G28
+    - R-HANUS2015
+    - R-SAILER2020
 - id: c-eng-03-1
   message: 'C-ENG-03 (MUST, level 2): Points and badges have no money value. Remove any purchase or exchange path for points.'
   severity: WARNING
@@ -164,6 +179,8 @@ rules:
     sources:
     - KIDS
     - KIDS-COM
+    - R-DECI1999
+    - R-DIXON2013
 - id: c-eng-06-1
   message: 'C-ENG-06 (SHOULD, level 3): Challenges without anxiety timers for younger children. Remove expiry from quests or extend them to the whole school term.'
   severity: INFO
@@ -260,6 +277,7 @@ rules:
     - DSA
     - UCPD
     - DFA
+    - R-RADESKY2022
 - id: core-com-03-2
   message: 'CORE-COM-03 (MUST, level 1): No dark patterns. Rewrite the copy neutrally, remove timers and pre-selected options, make ''no'' as easy as ''yes''.'
   severity: WARNING
@@ -395,6 +413,7 @@ rules:
     - KIDS
     - DFA
     - DSA-G28
+    - R-RADESKY2022
 - id: core-saf-05-1
   message: 'CORE-SAF-05 (MUST, level 1): No contact from strangers. Scope all interaction to closed groups managed by a teacher or guardian; remove user search and contact suggestions.'
   severity: WARNING

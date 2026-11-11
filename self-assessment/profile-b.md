@@ -31,6 +31,14 @@ Product: ____________________  Date: __________  Assessor: ____________________
 
 ## Level 3: Best practice
 
+- [ ] **A-MOT-01** (SHOULD) No reward pile-up. The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards, unlockables, celebrations) and records for each one whether it is given for learning or for showing up. No more than two layers are given for playing time, logging in or simply finishing.  
+      Evidence: 
+- [ ] **A-MOT-02** (SHOULD) Feedback informs, it does not control. Feedback says what the learner did well and why, and what to try next. Copy avoids controlling language ("you must", "you have to") and external goal framing ("do this to win coins").  
+      Evidence: 
+- [ ] **A-MOT-04** (SHOULD) Room for curiosity. The design includes open questions, things to explore, choices with consequences, and moments where learners explain their reasoning to each other. Success is not only a count of completed items.  
+      Evidence: 
+- [ ] **A-MOT-05** (SHOULD) Helping and creativity are recognised, not paid. Helping others and cooperating are not paid with points or items. Creative tasks reward creative quality with informative feedback, not mere completion.  
+      Evidence: 
 - [ ] **A-PLY-02** (SHOULD) Non-shaming failure and feedback. Errors and failures are presented as part of learning, without ridicule, sad animations directed at the child, or public exposure.  
       Evidence: 
 - [ ] **B-EVL-04** (SHOULD) Validity, fairness and accessibility of assessment. Assessment validity is documented, results are checked for bias across groups (gender, language background, SEN), and accommodations (extra time, audio) do not disadvantage learners.  

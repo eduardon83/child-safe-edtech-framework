@@ -62,7 +62,7 @@ The team chooses how far to go. Each rule belongs to one level.
 |---|---|---|---|
 | **1** | Legal baseline | Rules backed by binding law in force, or by law with a fixed application date (e.g. AI Act high-risk on 2 Dec 2027) | Minimum to sell legally today |
 | **2** | Forward-compliant | Level 1 plus adopted Commission proposals and official benchmarks: EU KIDS Act proposal, Digital Fairness Act proposal, DSA Art. 28 guidelines, age verification Recommendation | Products for children; avoids rebuilding when proposals become law |
-| **3** | Best practice | Level 2 plus research and expert recommendations (UN General Comment 25, EU Kids Online, learning-design literature) | Products that want to lead, or tenders that score child-rights design |
+| **3** | Best practice | Level 2 plus research and expert recommendations (UN General Comment 25, EU Kids Online, learning-design and motivation research, see 03-design-and-motivation.md) | Products that want to lead, or tenders that score child-rights design |
 
 Choosing a level does not hide the others. Rules above the chosen level appear in the improvement plan
 under *To reach the next level*, so teams can plan ahead.

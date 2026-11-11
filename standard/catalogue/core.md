@@ -9,6 +9,8 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-ACC-01](#core-acc-01-wcag-22-aa) | WCAG 2.2 AA | MUST | 1 | mixed |
 | [CORE-ACC-02](#core-acc-02-no-flashing-content) | No flashing content | MUST | 1 | manual |
 | [CORE-ACC-03](#core-acc-03-inclusive-design-for-children-with-special-educational-needs) | Inclusive design for children with special educational needs | SHOULD | 3 | manual |
+| [CORE-ACC-04](#core-acc-04-moving-content-and-sound-can-be-paused) | Moving content and sound can be paused | MUST | 1 | manual |
+| [CORE-ACC-05](#core-acc-05-colour-is-never-the-only-cue) | Colour is never the only cue | MUST | 1 | manual |
 | [CORE-AI-01](#core-ai-01-no-emotion-recognition-on-learners) | No emotion recognition on learners | MUST | 1 | static |
 | [CORE-AI-02](#core-ai-02-no-manipulative-ai-exploiting-age) | No manipulative AI exploiting age | MUST | 1 | manual |
 | [CORE-AI-03](#core-ai-03-ai-interaction-and-ai-generated-content-are-disclosed) | AI interaction and AI-generated content are disclosed | MUST | 1 | mixed |
@@ -34,6 +36,13 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-DAT-10](#core-dat-10-microphone-and-camera-off-by-default) | Microphone and camera off by default | MUST | 2 | static |
 | [CORE-DAT-11](#core-dat-11-consent-for-non-essential-storage-and-cookies) | Consent for non-essential storage and cookies | MUST | 1 | manual |
 | [CORE-DAT-12](#core-dat-12-child-friendly-privacy-information) | Child-friendly privacy information | MUST | 1 | manual |
+| [CORE-DES-01](#core-des-01-motion-and-sound-can-be-turned-down-or-off) | Motion and sound can be turned down or off | SHOULD | 2 | static |
+| [CORE-DES-02](#core-des-02-motion-shows-the-content-not-decoration) | Motion shows the content, not decoration | SHOULD | 3 | manual |
+| [CORE-DES-03](#core-des-03-calm-screens-especially-under-8) | Calm screens, especially under 8 | SHOULD | 3 | manual |
+| [CORE-DES-04](#core-des-04-fantasy-does-not-blur-facts-for-young-children) | Fantasy does not blur facts for young children | SHOULD | 3 | manual |
+| [CORE-DES-05](#core-des-05-visual-style-matches-the-concept-especially-in-maths) | Visual style matches the concept, especially in maths | SHOULD | 3 | manual |
+| [CORE-DES-06](#core-des-06-celebrations-are-short-and-proportional) | Celebrations are short and proportional | SHOULD | 3 | static |
+| [CORE-DES-07](#core-des-07-no-colour-psychology-claims) | No colour-psychology claims | SHOULD | 3 | manual |
 | [CORE-GOV-01](#core-gov-01-product-declares-its-cses-manifest) | Product declares its CSES manifest | MUST | 1 | manifest |
 | [CORE-GOV-02](#core-gov-02-legal-scope-of-the-eu-kids-act-is-assessed-and-recorded) | Legal scope of the EU KIDS Act is assessed and recorded | SHOULD | 2 | manifest |
 | [CORE-GOV-03](#core-gov-03-child-rights-impact-assessment) | Child rights impact assessment | SHOULD | 3 | manual |
@@ -76,7 +85,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Slow or remove flashing effects; offer a 'reduce motion' setting that respects prefers-reduced-motion.
 
-**Sources.** [WCAG22](https://www.w3.org/TR/WCAG22/), [EAA](https://eur-lex.europa.eu/eli/dir/2019/882/oj), [EN301549](https://www.etsi.org/standards)
+**Sources.** [WCAG22](https://www.w3.org/TR/WCAG22/), [EAA](https://eur-lex.europa.eu/eli/dir/2019/882/oj), [EN301549](https://www.etsi.org/standards), [W3C-233](https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html)
 
 ### CORE-ACC-03: Inclusive design for children with special educational needs
 
@@ -89,6 +98,30 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Add a settings panel for speed, audio, captions and font; test with SEN teachers.
 
 **Sources.** [WCAG22](https://www.w3.org/TR/WCAG22/), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
+
+### CORE-ACC-04: Moving content and sound can be paused
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: manual · Effort: low
+
+**Requirement.** Content that moves, scrolls or animates automatically for more than 5 seconds can be paused, stopped or hidden, and audio that plays automatically for more than 3 seconds can be paused or muted.
+
+**Why.** WCAG 2.2.2 and 1.4.2 (Level A), within the AA target of the European Accessibility Act. Uncontrolled motion distracts all learners and harms some.
+
+**How to improve.** Add pause and mute controls to every auto-playing animation, video and background audio.
+
+**Sources.** [WCAG22](https://www.w3.org/TR/WCAG22/), [EAA](https://eur-lex.europa.eu/eli/dir/2019/882/oj), [EN301549](https://www.etsi.org/standards)
+
+### CORE-ACC-05: Colour is never the only cue
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: manual · Effort: low
+
+**Requirement.** Right and wrong answers, states and instructions are signalled by shape, text, icon or sound as well as colour.
+
+**Why.** WCAG 1.4.1 (Level A). About 1 in 12 boys has a colour vision deficiency, so colour-only feedback fails several children in every class.
+
+**How to improve.** Add icons or text (tick, cross, label) next to colour feedback; test screens in greyscale.
+
+**Sources.** [WCAG22](https://www.w3.org/TR/WCAG22/), [EAA](https://eur-lex.europa.eu/eli/dir/2019/882/oj)
 
 ### CORE-AI-01: No emotion recognition on learners
 
@@ -232,7 +265,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Rewrite the copy neutrally, remove timers and pre-selected options, make 'no' as easy as 'yes'.
 
-**Sources.** [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+**Sources.** [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
 
 ### CORE-COM-04: Purchases are adult-facing only
 
@@ -390,6 +423,90 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
 
+### CORE-DES-01: Motion and sound can be turned down or off
+
+**SHOULD** · Level 2 (Forward-compliant) · Age bands: all · Detection: static · Effort: low
+
+**Requirement.** The product honours the device's reduced-motion setting and offers in-app controls to reduce animation and sound, including motion triggered by the learner's own actions.
+
+**Why.** WCAG 2.3.3 (Level AAA) protects learners with vestibular disorders. Distracting motion and sound compete with the learning content for attention.
+
+**How to improve.** Wrap animations in a reduced-motion check (CSS prefers-reduced-motion, useReducedMotion, platform accessibility APIs) and add 'calm mode' and sound sliders.
+
+**Sources.** [W3C-233](https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html), [WCAG22](https://www.w3.org/TR/WCAG22/), [R-SUNDARARAJAN2020](https://inspire.acu.edu.au/articles/seductive-details)
+
+### CORE-DES-02: Motion shows the content, not decoration
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: medium
+
+**Requirement.** Animation is used to show what is learned (a process, a change over time, a procedure). Decorative, celebratory or purely entertaining motion and interesting-but-irrelevant extras ("seductive details") are kept to a minimum.
+
+**Why.** Seductive details lower learning (g = -0.33, 58 studies). Animation that depicts the content improves it (g = 0.23, 140 comparisons). In e-books, story-carrying animation helps young children while hotspots and side games distract.
+
+**How to improve.** For each animation, write down what it teaches. Remove or shorten the ones that teach nothing; move side games out of the learning path.
+
+**Sources.** [R-SUNDARARAJAN2020](https://inspire.acu.edu.au/articles/seductive-details), [R-BERNEY2016](https://tecfa.unige.ch/perso/sandra/pdf/Earli2016_berney_betrancourt_FINAL.pdf), [R-TAKACS2015](https://pmc.ncbi.nlm.nih.gov/articles/PMC4647204)
+
+### CORE-DES-03: Calm screens, especially under 8
+
+**SHOULD** · Level 3 (Best practice) · Age bands: B1 (3-5), B2 (6-9) · Detection: manual · Effort: medium
+
+**Requirement.** Few elements compete on screen at once (as a guide, no more than four interactive or animated elements on the main screen for under-8s), and help is available as audio or pictures, not text only.
+
+**Why.** Busy visual environments increase off-task time in young children and affect autistic children most. A content analysis of 200 apps for under-8s found 95% showed more than four elements on the opening screen.
+
+**How to improve.** Audit each screen's element count; move secondary elements into menus; add spoken help.
+
+**Sources.** [R-FISHER2014](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2014.01444/pdf), [R-HANLEY2017](https://durham-repository.worktribe.com/output/1370163/classroom-displays-attraction-or-distraction-evidence-of-impact-on-attention-and-learning-from-children-with-and-without-autism), R-CAC2018, [R-HIRSHPASEK2015](https://www.psychologicalscience.org/publications/educational-apps.html)
+
+### CORE-DES-04: Fantasy does not blur facts for young children
+
+**SHOULD** · Level 3 (Best practice) · Age bands: B1 (3-5), B2 (6-9) · Detection: manual · Effort: medium
+
+**Requirement.** When teaching facts about the real world to young children, use realistic images and plain language. Talking animals, impossible events and fantasy framing are kept for stories and play, not for factual content.
+
+**Why.** Human-like animals with human-like language reduced fact learning in 3 to 5-year-olds. Fantastical events, more than pace, reduced executive function in 4-year-olds.
+
+**How to improve.** Review factual units for young children; replace anthropomorphic narration with realistic visuals or clearly separate story from fact.
+
+**Sources.** [R-GANEA2014](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2014.00283/full), [R-LILLARD2011](https://www.frontiersin.org/article/10.3389/fpsyg.2020.583174)
+
+### CORE-DES-05: Visual style matches the concept, especially in maths
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: medium
+
+**Requirement.** Abstract concepts use simple, schematic visuals. Graphs and diagrams carry no decorative pictures. Concrete images are used to start, then faded towards abstract representations. Pleasant colours and friendly faces are welcome where they do not compete with the content.
+
+**Why.** Pictures inside graphs led 6 to 8-year-olds to count the pictures; generic symbols transfer better than concrete ones. Schematic visuals outperform cartoon and realistic ones in learning games. Emotional design (pleasant colours, faces) improves retention (d = 0.39).
+
+**How to improve.** Remove decoration from graphs and diagrams; plan concrete-to-abstract fading in maths sequences; keep warm, pleasant colour palettes.
+
+**Sources.** [R-KAMINSKI2013](https://www.sciencedaily.com/releases/2013/05/130508092412.htm), R-WOUTERS2013, [R-BROM2018](https://artemis.ms.mff.cuni.cz/main/papers/emodesign_manuscript_1rev_180928_FINAL_norev.pdf)
+
+### CORE-DES-06: Celebrations are short and proportional
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: static · Effort: low
+
+**Requirement.** Reward animations and sounds are brief, proportional to the achievement and skippable. Win sounds are not used to make small or no progress feel like a big win.
+
+**Why.** Each celebration is itself a seductive detail competing for attention. In slot machines, win sounds made players overestimate how often they won.
+
+**How to improve.** Cap celebration length (e.g. under 2 seconds), scale them to the achievement, and allow skipping.
+
+**Sources.** [R-SUNDARARAJAN2020](https://inspire.acu.edu.au/articles/seductive-details), [R-DIXON2013](https://www.sciencedaily.com/releases/2013/07/130702100348.htm)
+
+### CORE-DES-07: No colour-psychology claims
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: low
+
+**Requirement.** Design decisions and product claims do not rely on popular colour-psychology effects (e.g. "red lowers performance") that are not supported by robust evidence.
+
+**Why.** The red-colour effect on cognitive performance does not survive correction for publication bias.
+
+**How to improve.** Justify colour choices by function (contrast, coding, highlighting) and accessibility, not by colour-psychology claims.
+
+**Sources.** [R-GNAMBS2020](https://link.springer.com/article/10.3758/s13423-020-01772-1)
+
 ### CORE-GOV-01: Product declares its CSES manifest
 
 **MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: manifest · Effort: low
@@ -460,7 +577,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Remove autoplay; end each activity with a clear 'done' screen and an explicit choice to continue.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
 
 ### CORE-SAF-04: Time-awareness tools
 

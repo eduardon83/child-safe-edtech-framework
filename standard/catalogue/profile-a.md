@@ -11,6 +11,11 @@ Profile A: educational games. Read together with the core rules.
 | [A-ECO-02](#a-eco-02-no-pay-to-win) | No pay-to-win | MUST | 2 | mixed |
 | [A-ECO-03](#a-eco-03-virtual-currency-is-not-sold-to-children-and-shows-its-real-value) | Virtual currency is not sold to children and shows its real value | MUST | 2 | static |
 | [A-ECO-04](#a-eco-04-rewards-follow-learning-not-time-or-return-visits) | Rewards follow learning, not time or return visits | SHOULD | 3 | manual |
+| [A-MOT-01](#a-mot-01-no-reward-pile-up) | No reward pile-up | SHOULD | 3 | mixed |
+| [A-MOT-02](#a-mot-02-feedback-informs-it-does-not-control) | Feedback informs, it does not control | SHOULD | 3 | mixed |
+| [A-MOT-03](#a-mot-03-the-product-works-with-rewards-switched-off) | The product works with rewards switched off | SHOULD | 3 | manual |
+| [A-MOT-04](#a-mot-04-room-for-curiosity) | Room for curiosity | SHOULD | 3 | manual |
+| [A-MOT-05](#a-mot-05-helping-and-creativity-are-recognised-not-paid) | Helping and creativity are recognised, not paid | SHOULD | 3 | manual |
 | [A-PLY-01](#a-ply-01-no-penalties-for-not-playing) | No penalties for not playing | MUST | 2 | static |
 | [A-PLY-02](#a-ply-02-non-shaming-failure-and-feedback) | Non-shaming failure and feedback | SHOULD | 3 | manual |
 | [A-SOC-01](#a-soc-01-multiplayer-limited-to-closed-groups) | Multiplayer limited to closed groups | MUST | 2 | manual |
@@ -81,7 +86,67 @@ Profile A: educational games. Read together with the core rules.
 
 **How to improve.** Map each reward to a learning mechanic (Arnab et al. LM-GM) and remove rewards that only count time or logins.
 
-**Sources.** [ARNAB2014](https://doi.org/10.1111/bjet.12113), [KIDS-COM](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680)
+**Sources.** [ARNAB2014](https://doi.org/10.1111/bjet.12113), [KIDS-COM](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680), [R-DECI1999](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf), [R-SAILER2020](https://link.springer.com/article/10.1007/s10648-019-09498-w), [R-HIRSHPASEK2015](https://www.psychologicalscience.org/publications/educational-apps.html)
+
+### A-MOT-01: No reward pile-up
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: mixed · Effort: low
+
+**Requirement.** The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards, unlockables, celebrations) and records for each one whether it is given for learning or for showing up. No more than two layers are given for playing time, logging in or simply finishing.
+
+**Why.** Expected rewards for doing a task lower later intrinsic motivation (d = -0.36), more in children. Badges plus leaderboards lowered motivation and exam scores over a semester. Each extra layer makes rewards more expected and more controlling. Stacking is an inference from single-element studies.
+
+**How to improve.** Write the reward inventory (one line per layer, 'for learning' or 'for showing up'); remove or convert layers given for showing up.
+
+**Sources.** [R-DECI1999](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf), [R-HANUS2015](https://www.smhp.psych.ucla.edu/pdfdocs/gamil.pdf), [R-MEKLER2017](https://glassmanlab.seas.harvard.edu/annotated_works/mekler17.pdf), [R-SAILER2020](https://link.springer.com/article/10.1007/s10648-019-09498-w), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
+
+### A-MOT-02: Feedback informs, it does not control
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: mixed · Effort: low
+
+**Requirement.** Feedback says what the learner did well and why, and what to try next. Copy avoids controlling language ("you must", "you have to") and external goal framing ("do this to win coins").
+
+**Why.** Informational verbal feedback raised intrinsic motivation (+0.33). Controlling language and external goal framing undermined conceptual learning in 11 to 12-year-olds, while drill scores looked fine, so the loss is easy to miss.
+
+**How to improve.** Rewrite feedback strings as specific, informational messages; review copy for 'must' and reward-centred goals.
+
+**Sources.** [R-DECI1999](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf), [R-VANSTEENKISTE2005](https://investigacion.pucp.edu.pe/grupos/motem/publicacion/examining-the-motivational-impact-of-intrinsic-vs-extrinsic-goal-framing-and-internally-controlling-vs-autonomy-supportive-communication-style-on-childrens-achievement/)
+
+### A-MOT-03: The product works with rewards switched off
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: medium
+
+**Requirement.** The teacher can switch off points, leaderboards and celebrations, or turn competition into a shared class or team goal, and the activity still makes sense. Teacher materials include debrief prompts that turn rewards into information ("What did you do to earn that?").
+
+**Why.** Gamification's cognitive gains are robust, but motivational gains vanish in rigorous studies; competition combined with collaboration beats competition alone. Leaderboards reward those already ahead and hurt the weakest.
+
+**How to improve.** Add teacher toggles for each reward layer and a 'team goal' mode; add debrief questions to the teacher guide.
+
+**Sources.** [R-SAILER2020](https://link.springer.com/article/10.1007/s10648-019-09498-w), [R-HANUS2015](https://www.smhp.psych.ucla.edu/pdfdocs/gamil.pdf), [R-HIRSHPASEK2015](https://www.psychologicalscience.org/publications/educational-apps.html)
+
+### A-MOT-04: Room for curiosity
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: medium
+
+**Requirement.** The design includes open questions, things to explore, choices with consequences, and moments where learners explain their reasoning to each other. Success is not only a count of completed items.
+
+**Why.** Curiosity improves memory through the same reward circuit that responds to coins, and predicts achievement, more strongly for children in poverty. Intrinsic motivation predicts quality of work and well-being; incentives predict quantity. Intrinsic motivation already declines through school.
+
+**How to improve.** Add at least one exploratory or explain-your-reasoning moment per unit; track learning quality, not only items completed.
+
+**Sources.** [R-GRUBER2014](https://www.sciencedaily.com/releases/2014/10/141002123631.htm), [R-SHAH2018](https://www.nature.com/articles/s41390-018-0099-4), [R-CERASOLI2014](https://hillkm.com/EDUC_712/Cerasoli_Nicklin_Ford_2014.pdf), [R-HOWARD2021](https://acuresearchbank.acu.edu.au/item/8w8z7/student-motivation-and-associated-outcomes-a-meta-analysis-from-self-determination-theory), [R-LEPPER2005](https://www.reed.edu/psychology/motivation/assets/downloads/Lepper_Corpus_Iyengar_2005.pdf)
+
+### A-MOT-05: Helping and creativity are recognised, not paid
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: low
+
+**Requirement.** Helping others and cooperating are not paid with points or items. Creative tasks reward creative quality with informative feedback, not mere completion.
+
+**Why.** Toddlers rewarded with a toy for helping later helped less. Rewards for completing creative tasks lower creativity; recognising creative quality with fair feedback can help.
+
+**How to improve.** Replace point payouts for helping with acknowledgement; give creative tasks qualitative feedback instead of completion rewards.
+
+**Sources.** [R-WARNEKEN2008](https://scholars.duke.edu/publication/1458228), [R-BYRON2012](https://www.frontiersin.org/article/10.3389/fpsyg.2020.00974)
 
 ### A-PLY-01: No penalties for not playing
 
@@ -93,7 +158,7 @@ Profile A: educational games. Read together with the core rules.
 
 **How to improve.** Remove decay and energy timers; let the world wait for the child unchanged.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
 
 ### A-PLY-02: Non-shaming failure and feedback
 
@@ -177,7 +242,7 @@ Profile A: educational games. Read together with the core rules.
 
 **How to improve.** Scope leaderboards to class, use nicknames, add a teacher toggle, and consider showing personal bests only.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [R-HANUS2015](https://www.smhp.psych.ucla.edu/pdfdocs/gamil.pdf), [R-SAILER2020](https://link.springer.com/article/10.1007/s10648-019-09498-w)
 
 ### C-ENG-04: No variable reward schedules designed for engagement
 
@@ -189,7 +254,7 @@ Profile A: educational games. Read together with the core rules.
 
 **How to improve.** Replace random bonuses with predictable milestones the child can see in advance.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [KIDS-COM](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [KIDS-COM](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680), [R-DECI1999](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf), [R-DIXON2013](https://www.sciencedaily.com/releases/2013/07/130702100348.htm)
 
 ### C-ENG-05: Engagement metrics balanced by wellbeing metrics
 
@@ -201,7 +266,7 @@ Profile A: educational games. Read together with the core rules.
 
 **How to improve.** Add learning-gain and healthy-session-length metrics to the product dashboard and goals.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [KIDS-COM](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680), [EUKO](https://www.lse.ac.uk/media-and-communications/research/research-projects/eu-kids-online)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [KIDS-COM](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680), [EUKO](https://www.lse.ac.uk/media-and-communications/research/research-projects/eu-kids-online), [R-CERASOLI2014](https://hillkm.com/EDUC_712/Cerasoli_Nicklin_Ford_2014.pdf)
 
 ### C-ENG-06: Challenges without anxiety timers for younger children
 

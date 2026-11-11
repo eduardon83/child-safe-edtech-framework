@@ -2,7 +2,10 @@
 
 ## v0.1.0 (2026-11-11), draft for public comment
 
-- First public draft: 75 rules (core, profiles A, B, C, age-band modifiers), 22 sources.
+- First public draft: 89 rules (core, profiles A, B, C, age-band modifiers), 50 sources.
+- Design-for-learning rules (CORE-DES-*, CORE-ACC-04/05, A-MOT-*) and 28 research sources on visuals,
+  motion, rewards and intrinsic motivation, gathered for the EDEH game-based learning squad (Quality Compass).
+  Scanner checks for missing reduced-motion handling and reward pile-up.
 - Three compliance levels: Legal baseline, Forward-compliant, Best practice.
 - Built on the EU KIDS Act proposal COM(2026) 681 (17 Sep 2026), the DSA Art. 28 guidelines, the AI Act as
   amended by the Digital Omnibus on AI, and the leaked draft of the Digital Fairness Act.

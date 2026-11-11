@@ -98,6 +98,9 @@ def validate_pattern(p, where):
     elif t == "dependency":
         if not p.get("names"):
             err(f"{where}: dependency pattern without names")
+    elif t == "repo":
+        if p.get("check") not in scan.REPO_CHECKS:
+            err(f"{where}: unknown repo check {p.get('check')}")
     elif t == "manifest":
         if p.get("check") not in scan.MANIFEST_CHECKS:
             err(f"{where}: unknown manifest check {p.get('check')}")

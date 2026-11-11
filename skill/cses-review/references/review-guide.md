@@ -29,6 +29,17 @@ The scanner finds patterns. These are the places to read by hand. For each, the 
 | UI around AI output | Visible AI label; generated media marked | CORE-AI-03 |
 | Any use of camera, microphone or typing dynamics | No emotion inference, no proctoring | CORE-AI-01, B-EVL-02 |
 
+## Look, sound, motion and rewards (all profiles)
+
+| Look at | What to check | Rules |
+|---|---|---|
+| Animations, transitions, celebration effects | Pause controls; reduced-motion respected; motion teaches something; celebrations short | CORE-ACC-04, CORE-DES-01, CORE-DES-02, CORE-DES-06 |
+| Screens for under-8s | Element count, spoken help, fantasy vs facts | CORE-DES-03, CORE-DES-04 |
+| Feedback states (right/wrong) | Not colour-only; informational wording | CORE-ACC-05, A-MOT-02 |
+| Maths graphics and diagrams | No decorative pictures inside graphs; concrete-to-abstract fading | CORE-DES-05 |
+| Every reward layer | Build the reward inventory: for learning or for showing up? Teacher can switch off? | A-MOT-01, A-MOT-03 |
+| Helping, collaboration, creative tasks | Not paid with points; creative quality gets qualitative feedback | A-MOT-05 |
+
 ## Profile A, educational games
 
 | Look at | What to check | Rules |

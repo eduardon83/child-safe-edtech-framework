@@ -38,4 +38,4 @@ Level 1 in a major release, with the application date.
 
 ## Releases
 
-Tagged `vX.Y.Z`. Each release publishes the catalogue, checklists and the packaged skill.
+Tagged `vX.Y.Z`. Each release publishes the catalogue, checklists and the packaged skill. Release notes live in `docs/releases/`.

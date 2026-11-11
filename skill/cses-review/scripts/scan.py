@@ -47,7 +47,7 @@ EFFORT_ORDER = {"low": 0, "medium": 1, "high": 2}
 MANIFEST_NAMES = ["cses.yaml", "cses.yml", ".cses/manifest.yaml", ".cses/cses.yaml"]
 
 SOURCE_EXT = {
-    ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".vue", ".svelte", ".html", ".htm",
+    ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".vue", ".svelte", ".html", ".htm", ".css", ".scss", ".less",
     ".py", ".java", ".kt", ".kts", ".swift", ".m", ".dart", ".cs", ".go", ".rb", ".php",
     ".sql", ".json", ".yaml", ".yml", ".xml", ".plist", ".gd", ".lua", ".gradle", ".strings",
     ".po", ".arb", ".properties", ".toml", ".env",
@@ -368,6 +368,54 @@ def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set):
     raise ValueError(f"Unknown manifest check: {name}")
 
 
+# --------------------------------------------------------------------------- repository checks
+REPO_CHECKS = ["reduced_motion_missing", "reward_layers"]
+ANIMATION_RX = re.compile(r"(@keyframes|framer-motion|from ['\"]motion/react|gsap|lottie|Animated\.(timing|spring|loop)|anime\.js|animation\s*:\s*[a-z])", re.I)
+REDUCED_RX = re.compile(r"(prefers-reduced-motion|useReducedMotion|isReduceMotionEnabled|reduceMotion|reducedMotion|AccessibilityInfo)", re.I)
+REWARD_LAYERS = {
+    "points / XP / score": r"\b(xp|exp_?points|experience_?points|addPoints|awardPoints|score\s*\+=|pointsEarned)\b",
+    "coins / gems / currency": r"\b(coins?|gems?|diamonds?|moedas|currency)\b",
+    "badges / achievements / trophies": r"\b(badges?|achievements?|trophies|trophy|medals?|conquistas)\b",
+    "streaks": r"\b(streaks?|sequ[eê]ncia)\b",
+    "levels / level-up": r"\b(levelUp|level_up|onLevelUp|nextLevel|subirN[ií]vel)\b",
+    "leaderboards / rankings": r"\b(leaderboards?|rankings?|classifica[cç][aã]o)\b",
+    "unlockables": r"\b(unlock(ed|ables?)?|desbloque\w*)\b",
+    "celebrations": r"\b(confetti|fireworks|celebrat\w*|celebra[cç][aã]o)\b",
+}
+
+
+def repo_check(name, files_cache):
+    """Return list of (path, line, message) for repository-wide checks."""
+    if name == "reduced_motion_missing":
+        first = None
+        for rel, lines, text in files_cache:
+            if REDUCED_RX.search(text):
+                return []
+            if first is None and ANIMATION_RX.search(text):
+                for i, ln in enumerate(lines):
+                    if ANIMATION_RX.search(ln):
+                        first = (rel, i + 1)
+                        break
+        if first:
+            return [(first[0], first[1], "Animations found but no reduced-motion handling anywhere in the codebase.")]
+        return []
+    if name == "reward_layers":
+        found = {}
+        for label, rx in REWARD_LAYERS.items():
+            c = re.compile(rx, re.I)
+            for rel, lines, text in files_cache:
+                if not rel.endswith((".js", ".jsx", ".ts", ".tsx", ".vue", ".svelte", ".dart", ".cs", ".gd", ".lua", ".py", ".swift", ".kt", ".json")):
+                    continue
+                if c.search(text):
+                    found[label] = rel
+                    break
+        if len(found) >= 4:
+            return [(None, None, f"Reward pile-up signal: {len(found)} reward layers found in code ({', '.join(found)}). "
+                                 "Check which are given for learning and which for showing up.")]
+        return []
+    raise ValueError(f"Unknown repository check: {name}")
+
+
 # --------------------------------------------------------------------------- severity
 def severity_for(rule, confidence: str, level: int) -> str:
     if int(rule["tier"]) > level:
@@ -436,6 +484,15 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
                                                 note=f"Waived: {w.get('reason', '')} (approved by {w['approved_by']})"))
                         continue
                     findings.append(Finding(rid, sev, rule["title"], f, None, f"dependency: {name}", note=undeclared))
+            elif pat["type"] == "repo":
+                checked_static.add(rid)
+                for rel, ln, msg in repo_check(pat["check"], files_cache):
+                    w = active_waiver(waivers, rid, rel, today)
+                    if w:
+                        findings.append(Finding(rid, "WAIVED", rule["title"], rel, ln, msg,
+                                                note=f"Waived: {w.get('reason', '')} (approved by {w['approved_by']})"))
+                        continue
+                    findings.append(Finding(rid, sev, rule["title"], rel, ln, msg))
             elif pat["type"] == "manifest":
                 if not declared and rule.get("features"):
                     continue

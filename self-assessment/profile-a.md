@@ -39,6 +39,16 @@ Product: ____________________  Date: __________  Assessor: ____________________
 
 - [ ] **A-ECO-04** (SHOULD) Rewards follow learning, not time or return visits. Points, stars and unlocks are tied to learning progress or effort, not to time spent, number of sessions or returning at specific times.  
       Evidence: 
+- [ ] **A-MOT-01** (SHOULD) No reward pile-up. The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards, unlockables, celebrations) and records for each one whether it is given for learning or for showing up. No more than two layers are given for playing time, logging in or simply finishing.  
+      Evidence: 
+- [ ] **A-MOT-02** (SHOULD) Feedback informs, it does not control. Feedback says what the learner did well and why, and what to try next. Copy avoids controlling language ("you must", "you have to") and external goal framing ("do this to win coins").  
+      Evidence: 
+- [ ] **A-MOT-03** (SHOULD) The product works with rewards switched off. The teacher can switch off points, leaderboards and celebrations, or turn competition into a shared class or team goal, and the activity still makes sense. Teacher materials include debrief prompts that turn rewards into information ("What did you do to earn that?").  
+      Evidence: 
+- [ ] **A-MOT-04** (SHOULD) Room for curiosity. The design includes open questions, things to explore, choices with consequences, and moments where learners explain their reasoning to each other. Success is not only a count of completed items.  
+      Evidence: 
+- [ ] **A-MOT-05** (SHOULD) Helping and creativity are recognised, not paid. Helping others and cooperating are not paid with points or items. Creative tasks reward creative quality with informative feedback, not mere completion.  
+      Evidence: 
 - [ ] **A-PLY-02** (SHOULD) Non-shaming failure and feedback. Errors and failures are presented as part of learning, without ridicule, sad animations directed at the child, or public exposure.  
       Evidence: 
 - [ ] **C-ENG-04** (SHOULD) No variable reward schedules designed for engagement. Rewards are predictable and earned. Random bonus drops and slot-machine style surprises are avoided.  

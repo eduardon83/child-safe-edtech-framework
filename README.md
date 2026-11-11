@@ -12,7 +12,7 @@ rules a team can check in code, in CI and in review.
 
 | | |
 |---|---|
-| **The standard** | 75 rules in a core set plus three profiles: **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. |
+| **The standard** | 89 rules in a core set plus three profiles: **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Design-for-learning rules on look, sound, motion and motivation, from current research. |
 | **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). Each team chooses. |
 | **Sources on every rule** | A source registry with type, status and verification date. Reports list the sources they rely on. |
 | **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included. |
@@ -62,8 +62,9 @@ report.
 1. [Introduction](standard/00-introduction.md): profiles, age bands, levels, severities, how to claim conformance
 2. [Regulatory map](standard/01-regulatory-map.md): which instrument says what, and the EU KIDS Act education exemption
 3. [Packs](standard/02-packs.md): extending with national rules and literature
-4. [Rule catalogue](standard/catalogue/index.md): every rule with requirement, rationale, improvement and sources
-5. [Self-assessment checklists](self-assessment/)
+4. [Design for learning](standard/03-design-and-motivation.md): what research says about visuals, motion and rewards
+5. [Rule catalogue](standard/catalogue/index.md): every rule with requirement, rationale, improvement and sources
+6. [Self-assessment checklists](self-assessment/)
 
 ## Repository layout
 
