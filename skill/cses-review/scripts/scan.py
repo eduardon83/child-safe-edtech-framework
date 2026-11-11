@@ -15,6 +15,7 @@ This is a pre-compliance aid. It cannot establish legal compliance.
 Usage:
   python3 scan.py --repo PATH [--manifest FILE] [--level 1|2|3] [--pack FILE ...]
                   [--out-dir DIR] [--format text|json|none] [--fail-on block|review|warn|never]
+                  [--export html,pdf,docx]   (dashboard.html, report.pdf, report.docx via tooling/export.py)
 
 Licence: Apache-2.0
 """
@@ -36,7 +37,7 @@ except ImportError:  # pragma: no cover
     sys.exit("CSES scanner needs PyYAML: pip install pyyaml")
 
 TOOL_NAME = "cses-scan"
-TOOL_VERSION = "0.2.0"
+TOOL_VERSION = "0.3.0"
 
 PROFILES = {"core", "A", "B", "C"}
 BANDS = ["B1", "B2", "B3", "B4", "B5"]
@@ -87,6 +88,8 @@ class Finding:
     line: int | None = None
     evidence: str | None = None
     note: str | None = None
+    confidence: str | None = None
+    raw: str | None = None          # severity the finding would have at Level 3 (for per-level views)
 
 
 @dataclass
@@ -565,6 +568,12 @@ def active_waiver(waivers, rule_id, path, today):
 
 
 # --------------------------------------------------------------------------- scan
+def _with_raw(findings, std):
+    for f in findings:
+        f.raw = "WAIVED" if f.severity == "WAIVED" else severity_for(std.rules[f.rule_id], f.confidence or "medium", 3)
+    return findings
+
+
 def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
     profiles = set(manifest.get("profiles") or []) if manifest else {"A", "B", "C"}
     bands = set(manifest.get("age_bands") or []) if manifest else set(BANDS)
@@ -600,7 +609,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
                                                 note=f"Waived: {ignored if ignored is not None else w.get('reason', '')}"
                                                      + (f" (approved by {w['approved_by']})" if w else " (inline)")))
                         continue
-                    findings.append(Finding(rid, sev, rule["title"], rel, ln, snippet, note=undeclared))
+                    findings.append(Finding(rid, sev, rule["title"], rel, ln, snippet, note=undeclared, confidence=conf))
             elif pat["type"] == "dependency":
                 checked_static.add(rid)
                 for f, name in dependency_findings(pat, deps):
@@ -609,7 +618,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
                         findings.append(Finding(rid, "WAIVED", rule["title"], f, None, f"dependency: {name}",
                                                 note=f"Waived: {w.get('reason', '')} (approved by {w['approved_by']})"))
                         continue
-                    findings.append(Finding(rid, sev, rule["title"], f, None, f"dependency: {name}", note=undeclared))
+                    findings.append(Finding(rid, sev, rule["title"], f, None, f"dependency: {name}", note=undeclared, confidence=conf))
             elif pat["type"] == "repo":
                 checked_static.add(rid)
                 for rel, ln, msg in repo_check(pat["check"], files_cache, repo):
@@ -618,7 +627,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
                         findings.append(Finding(rid, "WAIVED", rule["title"], rel, ln, msg,
                                                 note=f"Waived: {w.get('reason', '')} (approved by {w['approved_by']})"))
                         continue
-                    findings.append(Finding(rid, sev, rule["title"], rel, ln, msg))
+                    findings.append(Finding(rid, sev, rule["title"], rel, ln, msg, confidence=conf))
             elif pat["type"] == "manifest":
                 if not declared and rule.get("features"):
                     continue
@@ -629,7 +638,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
                         findings.append(Finding(rid, "WAIVED", rule["title"], "cses.yaml", None, msg,
                                                 note=f"Waived: {w.get('reason', '')} (approved by {w['approved_by']})"))
                         continue
-                    findings.append(Finding(rid, sev, rule["title"], "cses.yaml", None, msg))
+                    findings.append(Finding(rid, sev, rule["title"], "cses.yaml", None, msg, confidence=conf))
 
     # human checks: manual or mixed rules in scope whose feature applies
     human = []
@@ -641,7 +650,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
 
     return {
         "profiles": sorted(profiles), "bands": sorted(bands), "level": level,
-        "rules_in_scope": sorted(in_scope), "findings": findings, "human_checks": human,
+        "rules_in_scope": sorted(in_scope), "findings": _with_raw(findings, std), "human_checks": human,
     }
 
 
@@ -907,9 +916,21 @@ def render_item(std, n, i, verify):
     return out
 
 
+RULE_EXPORT_FIELDS = ["id", "title", "level", "tier", "profiles", "age_bands", "features", "requirement",
+                      "rationale", "improvement", "effort", "sources", "notes", "origin", "no_go"]
+MANIFEST_EXPORT_FIELDS = ["product", "description", "context", "gdpr_role", "legal_scope", "features", "jurisdictions",
+                          "monetisation", "distribution", "compliance_level", "last_review"]
+
+
 def to_json(std, manifest, result, improvements):
+    m = manifest or {}
     return {
+        "format": 2,
         "tool": {"name": TOOL_NAME, "version": TOOL_VERSION, "standard_version": std.version},
+        "minimum_level": std.minimum_level, "minimum_level_by": std.minimum_level_by,
+        "manifest": {k: m.get(k) for k in MANIFEST_EXPORT_FIELDS if k in m} if manifest else None,
+        "rules": {rid: {k: std.rules[rid].get(k) for k in RULE_EXPORT_FIELDS if k in std.rules[rid]}
+                  for rid in result["rules_in_scope"]},
         "generated": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "product": (manifest or {}).get("product"),
         "level": result["level"], "profiles": result["profiles"], "age_bands": result["bands"],
@@ -989,6 +1010,7 @@ def main(argv=None) -> int:
     ap.add_argument("--out-dir", default=None, help="write report.md, improvements.md, findings.json, findings.sarif here")
     ap.add_argument("--format", choices=["text", "json", "none"], default="text", help="stdout format")
     ap.add_argument("--fail-on", choices=["block", "review", "warn", "never"], default="block")
+    ap.add_argument("--export", default="", help="also export: comma-separated html,pdf,docx (needs --out-dir)")
     args = ap.parse_args(argv)
 
     repo = Path(args.repo).resolve()
@@ -1020,6 +1042,15 @@ def main(argv=None) -> int:
         (out / "improvements.md").write_text(render_improvements(std, manifest, result, improvements), encoding="utf-8")
         (out / "findings.json").write_text(json.dumps(to_json(std, manifest, result, improvements), indent=2, default=str), encoding="utf-8")
         (out / "findings.sarif").write_text(json.dumps(to_sarif(std, result), indent=2), encoding="utf-8")
+        if args.export:
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            import export as cses_export
+            try:
+                written = cses_export.export(out / "findings.json", [f.strip() for f in args.export.split(",") if f.strip()], out)
+                if args.format == "text":
+                    print("exported: " + ", ".join(str(Path(v).name) for k, v in written.items() if k != "pdf_engine"))
+            except RuntimeError as ex:
+                print(f"cses export: {ex}", file=sys.stderr)
 
     counts = {s: len({f.rule_id for f in result["findings"] if f.severity == s}) for s in SEVERITY_ORDER}
     if args.format == "json":

@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pyyaml pytest
+      - run: pip install pyyaml pytest python-docx
       - name: Validate catalogue and check generated files
         run: python3 tooling/build.py --check
       - name: Validate example company pack
@@ -25,9 +25,15 @@ jobs:
         run: python3 -m pytest -q
       - name: Scan the compliant example (must pass at level 3)
         run: python3 tooling/scan.py --repo examples/compliant-game --level 3 --fail-on review
+      - name: Export example dashboard, PDF and Word
+        run: |
+          python3 tooling/scan.py --repo examples/noncompliant-game --out-dir dist/example --format none --export html,pdf,docx || true
+          ls dist/example
       - name: Package skill
         run: python3 tooling/build.py --zip dist
       - uses: actions/upload-artifact@v4
         with:
           name: cses-review-skill
-          path: dist/cses-review.zip
+          path: |
+            dist/cses-review.zip
+            dist/example/

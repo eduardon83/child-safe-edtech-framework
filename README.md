@@ -18,6 +18,7 @@ rules a team can check in code, in CI and in review.
 | **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included (not legally binding). |
 | **Company packs and Pack Builder** | Each organisation sets its minimum level, no-gos, forbidden SDKs and phrases and its own rules, in a web form, then publishes the pack to GitHub. |
 | **Scanner** | `tooling/scan.py` writes a pre-compliance report, a prioritised improvement plan, JSON and SARIF. |
+| **Dashboard and exports** | `tooling/export.py` turns a scan into an interactive HTML dashboard (levels, age bands, colour-coded findings, checklists, legal counsel section), a PDF and a Word document. |
 | **AI review skill** | `skill/cses-review/` lets Claude run the scanner, verify findings, review what patterns cannot see, and finalise both documents. |
 | **CI** | A GitHub Action, generated Semgrep rules, a PR template. |
 | **Templates** | Manifest, DPIA starter, AI risk file, waiver record, instructions for AI coding agents. |
@@ -45,6 +46,22 @@ Try it on the examples:
 python3 tooling/scan.py --repo examples/noncompliant-game --out-dir cses-report
 python3 tooling/scan.py --repo examples/compliant-game --out-dir cses-report --level 3
 ```
+
+### Dashboard, PDF and Word
+
+For a friendlier review with product owners, clients or legal counsel, export the scan:
+
+```bash
+python3 tooling/scan.py --repo /path/to/your-product --out-dir cses-report --export html,pdf,docx
+# or, from an existing scan:
+python3 tooling/export.py --input cses-report/findings.json --formats html,pdf,docx
+```
+
+- `dashboard.html`: interactive, self-contained dashboard. Status at each of the three levels, age bands,
+  filters by severity and level, a human-check list you can tick and export, the improvement plan, a
+  "for legal counsel" section and all sources. Works offline; open it in any browser.
+- `report.pdf`: print version (uses Chrome or Chromium; falls back to WeasyPrint).
+- `report.docx`: Word version for comments and sign-off (needs `pip install python-docx`).
 
 ### Your organisation's pack
 

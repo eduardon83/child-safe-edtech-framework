@@ -372,6 +372,7 @@ def generate(std, packs) -> dict[Path, str]:
     for pf in sorted((ROOT / "packs").glob("*.yaml")):
         files[sk / "packs" / pf.name] = pf.read_text(encoding="utf-8")
     files[sk / "scripts" / "scan.py"] = (ROOT / "tooling" / "scan.py").read_text(encoding="utf-8")
+    files[sk / "scripts" / "export.py"] = (ROOT / "tooling" / "export.py").read_text(encoding="utf-8")
     for t in ("cses.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md"):
         files[sk / "templates" / t] = (ROOT / "templates" / t).read_text(encoding="utf-8")
     return files

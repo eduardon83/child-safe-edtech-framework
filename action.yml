@@ -19,6 +19,9 @@ inputs:
   packs:
     description: "Space-separated extra pack files"
     default: ""
+  export:
+    description: "Extra outputs: comma-separated html,pdf,docx (dashboard.html, report.pdf, report.docx)"
+    default: "html"
 runs:
   using: composite
   steps:
@@ -26,15 +29,21 @@ runs:
       with:
         python-version: "3.12"
     - shell: bash
-      run: pip install --quiet pyyaml
+      env:
+        CSES_EXPORT: ${{ inputs.export }}
+      run: |
+        pip install --quiet pyyaml
+        case "$CSES_EXPORT" in *docx*) pip install --quiet python-docx ;; esac
     - shell: bash
       env:
         CSES_LEVEL: ${{ inputs.level }}
         CSES_PACKS: ${{ inputs.packs }}
+        CSES_EXPORT: ${{ inputs.export }}
       run: |
         args=(--repo "${{ inputs.repo }}" --out-dir "${{ inputs.out-dir }}" --fail-on "${{ inputs.fail-on }}")
         if [ -n "$CSES_LEVEL" ]; then args+=(--level "$CSES_LEVEL"); fi
         for p in $CSES_PACKS; do args+=(--pack "$p"); done
+        if [ -n "$CSES_EXPORT" ]; then args+=(--export "$CSES_EXPORT"); fi
         set +e
         python3 "${{ github.action_path }}/tooling/scan.py" "${args[@]}"
         code=$?

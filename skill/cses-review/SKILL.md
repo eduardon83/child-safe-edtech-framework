@@ -56,6 +56,12 @@ python3 <skill-folder>/scripts/scan.py --repo <repo> --out-dir cses-report
 
 It writes `report.md`, `improvements.md`, `findings.json`, `findings.sarif` into `<repo>/cses-report/`.
 
+When the user wants something to share with non-developers (product owners, clients, legal counsel), add
+`--export html,pdf,docx` (or run `scripts/export.py --input cses-report/findings.json --formats ...`). It writes
+`dashboard.html` (interactive), `report.pdf` (needs Chrome/Chromium) and `report.docx` (needs python-docx).
+Re-export after you finalise the Markdown files, and say that the dashboard reflects the automated scan,
+while your reviewer assessment is in `report.md`.
+
 ### 3. Verify every automated finding
 
 Open each location in `findings.json` with severity BLOCK, REVIEW or WARN.

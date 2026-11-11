@@ -16,9 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: eduardon83/child-safe-edtech-standards@v0.2.0
+      - uses: eduardon83/child-safe-edtech-standards@v0.3.0
         with:
           fail-on: block        # block | review | warn | never
+          export: html,pdf,docx # dashboard.html, report.pdf, report.docx in the cses-report artifact
           # level: 2            # override compliance_level from cses.yaml
       - uses: github/codeql-action/upload-sarif@v3
         if: always()

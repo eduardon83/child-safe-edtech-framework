@@ -191,3 +191,18 @@ def test_pack_cannot_weaken_via_policy(tmp_path):
 def test_pack_builder_embeds_catalogue():
     html = (ROOT / "docs" / "pack-builder" / "index.html").read_text(encoding="utf-8")
     assert "/*CATALOGUE*/null" not in html and '"A-MOT-01"' in html
+
+
+def test_export_html_and_docx(tmp_path):
+    out = tmp_path / "out"
+    scan.main(["--repo", str(BAD), "--out-dir", str(out), "--format", "none"])
+    sys.path.insert(0, str(ROOT / "tooling"))
+    import export
+    written = export.export(out / "findings.json", ["html", "docx"], out)
+    html_text = (out / "dashboard.html").read_text(encoding="utf-8")
+    assert "Where you stand at each level" in html_text and "For legal counsel" in html_text
+    assert "A-ECO-01" in html_text and "B3 · ages 10-12" in html_text
+    assert (out / "report.docx").stat().st_size > 10000
+    model = export.build_model(json.loads((out / "findings.json").read_text(encoding="utf-8")))
+    assert [lv["status"] for lv in model["levels"]][0] == "blocked"
+    assert any(b["declared"] for b in model["bands"])

@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3.0 (2026-11-11)
+
+- New `tooling/export.py` and `scan.py --export html,pdf,docx`: interactive HTML dashboard (status at
+  each level, age bands, colour-coded findings with filters, human-check list with CSV export, improvement
+  plan, "for legal counsel" section, sources), PDF and Word exports.
+- `findings.json` format 2: includes rule metadata, manifest summary, minimum level and each finding's
+  severity at Level 3 (used for per-level views).
+- GitHub Action input `export` (default `html`).
+
 ## v0.2.0 (2026-11-11)
 
 - Company packs: `policy` section (minimum level, no-gos, forbidden packages and phrases, decision
