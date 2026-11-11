@@ -1,6 +1,6 @@
 # Child-Safe EdTech Standard (CSES)
 
-An open standard and toolkit for building software that children use for learning safely, and showing it.
+An open standard and toolkit for building safe educational software for under-18 students.
 It turns EU law, pending EU proposals (EU KIDS Act, Digital Fairness Act) and expert recommendations into
 rules a team can check in code, in CI and in review.
 
@@ -12,10 +12,10 @@ rules a team can check in code, in CI and in review.
 
 | | |
 |---|---|
-| **The standard** | 89 rules in a core set plus three profiles: **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Design-for-learning rules on look, sound, motion and motivation, from current research. |
-| **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). Each team chooses. |
+| **The standard** | 89 rules in a core set plus three profiles: **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Design-for-learning rules on visuals, audio/sound, motion and motivation, from current research. |
+| **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). You decide which level of compliance you want in your software. |
 | **Sources on every rule** | A source registry with type, status and verification date. Reports list the sources they rely on. |
-| **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included. |
+| **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included (not legally binding). |
 | **Company packs and Pack Builder** | Each organisation sets its minimum level, no-gos, forbidden SDKs and phrases and its own rules, in a web form, then publishes the pack to GitHub. |
 | **Scanner** | `tooling/scan.py` writes a pre-compliance report, a prioritised improvement plan, JSON and SARIF. |
 | **AI review skill** | `skill/cses-review/` lets Claude run the scanner, verify findings, review what patterns cannot see, and finalise both documents. |
@@ -99,5 +99,5 @@ See [LICENSE](LICENSE) for which applies where.
 
 ## Maintainers and governance
 
-Maintained by Kendir Studios (Worlds4Education, Lda., Portugal) with contributions from the EdTech
+Maintained by Kendir Studios (Worlds4Education, Lda., Portugal), Eduardo Nunes and contributions from the EdTech
 community. See [GOVERNANCE.md](GOVERNANCE.md) and [CONTRIBUTING.md](CONTRIBUTING.md).
