@@ -73,6 +73,7 @@ MANIFEST_CHECKS = [
     "manifest_missing", "kids_act_scope_missing", "dpia_missing", "third_party_without_dpa",
     "gdpr_role_missing", "transfer_outside_eea", "retention_missing", "monetisation_for_minors",
     "ai_without_inventory", "high_risk_without_risk_file", "security_policy_missing",
+    "decision_records", "review_stale",
 ]
 
 
@@ -95,6 +96,8 @@ class Standard:
     sources: dict
     packs: list = field(default_factory=list)
     parameters: dict = field(default_factory=dict)
+    minimum_level: int = 1
+    minimum_level_by: str = ""
 
 
 # --------------------------------------------------------------------------- loading
@@ -161,9 +164,111 @@ def apply_pack(std: Standard, pack_path: Path) -> None:
             if det.get("method") == "manual":
                 det["method"] = "mixed"
             rule["detection"] = det
+    apply_policy(std, doc, pid, meta)
     std.parameters.update({f"{pid}.{k}": v for k, v in (doc.get("parameters") or {}).items()})
     std.packs.append({"id": pid, "title": meta.get("title", pid), "path": str(pack_path),
                       "version": meta.get("version", "?"), "status": meta.get("status", "")})
+
+
+def _policy_rule(rid, title, requirement, rationale, improvement, sources, patterns, method="static", effort="low"):
+    return {
+        "id": rid, "title": title, "level": "MUST", "tier": 1, "profiles": ["core"], "age_bands": ["all"],
+        "requirement": requirement, "rationale": rationale, "improvement": improvement, "effort": effort,
+        "sources": sources, "detection": {"method": method, "patterns": patterns},
+        "notes": [], "no_go": True,
+    }
+
+
+def apply_policy(std: Standard, doc: dict, pid: str, meta: dict) -> None:
+    """Organisation policy: minimum level, no-gos, forbidden dependencies and phrases, required records.
+
+    Policy rules are 'always on' (tier 1) and 'no-go' (MUST findings block at any confidence).
+    They cite an auto-created source of type 'policy' so reports show they are the organisation's choice, not law.
+    """
+    if "policy" not in doc:
+        return
+    policy = doc.get("policy") or {}
+    pfx = pid.upper()
+    title = meta.get("title", pid)
+    src_id = f"{pfx}-POLICY"
+    if src_id not in std.sources:
+        std.sources[src_id] = {
+            "id": src_id, "title": f"{title} (organisation policy)", "type": "policy",
+            "jurisdiction": meta.get("jurisdiction", "ORG"),
+            "status": f"Organisation policy v{meta.get('version', '?')}. Binding for this organisation's products, not law",
+            "url": meta.get("url"), "verified": str(meta.get("date", dt.date.today().isoformat())), "origin": f"pack:{pid}",
+        }
+    ml = policy.get("minimum_level")
+    if ml:
+        ml = int(ml)
+        if ml not in (1, 2, 3):
+            raise ValueError(f"Pack {pid}: minimum_level must be 1, 2 or 3")
+        if ml > std.minimum_level:
+            std.minimum_level, std.minimum_level_by = ml, title
+    for rid in policy.get("no_go", []) or []:
+        if rid not in std.rules:
+            raise ValueError(f"Pack {pid}: no_go targets unknown rule {rid}")
+        r = std.rules[rid]
+        r["level"], r["tier"], r["no_go"] = "MUST", 1, True
+        if src_id not in r["sources"]:
+            r["sources"] = list(r["sources"]) + [src_id]
+        r["notes"] = list(r["notes"]) + [f"[{pfx}] No-go for {title}: blocks at every compliance level."]
+    n = 0
+    def nid():
+        nonlocal n
+        n += 1
+        rid = f"{pfx}-POL-{n:02d}"
+        if rid in std.rules:
+            raise ValueError(f"Pack {pid}: {rid} already exists; do not use the POL area for hand-written rules")
+        return rid
+    deps = policy.get("forbid_dependencies") or []
+    if deps:
+        rid = nid()
+        std.rules[rid] = _policy_rule(rid, f"Dependencies forbidden by {title}",
+            f"These packages are not used in {title} products: {', '.join(deps)}.",
+            f"Organisation decision recorded in the {title} policy.",
+            "Remove the dependency or obtain a waiver from the policy owner.", [src_id],
+            [{"type": "dependency", "confidence": "high", "names": list(deps)}])
+    phrases = policy.get("forbid_phrases") or []
+    if phrases:
+        rid = nid()
+        rx = "(" + "|".join(re.escape(str(x)) for x in phrases) + ")"
+        std.rules[rid] = _policy_rule(rid, f"Copy forbidden by {title}",
+            f"Child-facing copy does not contain: {'; '.join(phrases)}.",
+            f"Organisation decision recorded in the {title} policy (pressure, guilt or scarcity language).",
+            "Rewrite the copy in neutral, informational terms.", [src_id],
+            [{"type": "regex", "confidence": "high", "flags": "i", "pattern": rx}])
+    for item in policy.get("forbid_patterns") or []:
+        rid = nid()
+        std.rules[rid] = _policy_rule(rid, item.get("title", f"Pattern forbidden by {title}"),
+            item.get("requirement", f"Code does not match: {item['pattern']}"),
+            item.get("rationale", f"Organisation decision recorded in the {title} policy."),
+            item.get("improvement", "Remove the construct or obtain a waiver."), [src_id],
+            [{"type": "regex", "confidence": "high", "flags": item.get("flags", ""), "pattern": item["pattern"],
+              **({"globs": item["globs"]} if item.get("globs") else {})}])
+    feats = policy.get("require_decision_for_features") or []
+    if feats:
+        rid = nid()
+        std.rules[rid] = _policy_rule(rid, f"Decision record for sensitive features ({title})",
+            f"Each of these features, when declared, has a decision record linked under `decisions:` in cses.yaml: {', '.join(feats)}.",
+            "Sensitive features need a documented decision with a named approver before release.",
+            "Write a decision record (templates/waiver.md format) and link it in cses.yaml `decisions: {feature: path}`.", [src_id],
+            [{"type": "manifest", "check": "decision_records", "confidence": "high", "features": list(feats)}], method="manifest")
+    days = policy.get("review_every_days")
+    if days:
+        rid = nid()
+        std.rules[rid] = _policy_rule(rid, f"Manifest reviewed every {days} days ({title})",
+            f"`last_review` in cses.yaml is no older than {days} days.",
+            "Keeps the declared features, third parties and level in line with the product.",
+            "Review cses.yaml with the product owner and update `last_review`.", [src_id],
+            [{"type": "manifest", "check": "review_stale", "confidence": "high", "days": int(days)}], method="manifest")
+    if policy.get("require_agent_instructions"):
+        rid = nid()
+        std.rules[rid] = _policy_rule(rid, f"AI coding agents receive the child-safety rules ({title})",
+            "The repository gives AI coding agents the CSES rules (CLAUDE.md, AGENTS.md, .cursorrules or similar mentioning CSES).",
+            "Agents write much of the code; they must know the red lines too.",
+            "Copy templates/agent-instructions.md into CLAUDE.md or AGENTS.md.", [src_id],
+            [{"type": "repo", "check": "agent_instructions_missing", "confidence": "high"}])
 
 
 def find_manifest(repo: Path, explicit: str | None) -> Path | None:
@@ -314,7 +419,7 @@ def path_exists(repo: Path, value) -> bool:
     return (repo / v).exists()
 
 
-def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set):
+def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set, pat: dict | None = None):
     """Return a list of messages (empty list = check passes)."""
     if name == "manifest_missing":
         return ["No CSES manifest (cses.yaml) found. All profiles and age bands were assumed."] if manifest is None else []
@@ -362,6 +467,20 @@ def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set):
         if risky and not path_exists(repo, ai.get("risk_file")):
             return ["AI that evaluates, adapts or places learners, but no AI risk file found (`ai.risk_file`)."]
         return []
+    if name == "decision_records":
+        decisions = m.get("decisions") or {}
+        return [f"Feature '{f}' is declared but has no decision record linked under `decisions:`."
+                for f in (pat or {}).get("features", []) if f in features and not path_exists(repo, decisions.get(f))]
+    if name == "review_stale":
+        days = int((pat or {}).get("days", 180))
+        lr = m.get("last_review")
+        if not lr:
+            return ["`last_review` is missing."]
+        try:
+            age = (dt.date.today() - dt.date.fromisoformat(str(lr))).days
+        except ValueError:
+            return [f"`last_review` is not a date: {lr}"]
+        return [f"`last_review` is {age} days old (limit {days})."] if age > days else []
     if name == "security_policy_missing":
         candidates = [m.get("security_policy"), "SECURITY.md", ".github/SECURITY.md", ".well-known/security.txt", "public/.well-known/security.txt"]
         return [] if any(path_exists(repo, c) for c in candidates) else ["No SECURITY.md or security.txt found."]
@@ -369,7 +488,8 @@ def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set):
 
 
 # --------------------------------------------------------------------------- repository checks
-REPO_CHECKS = ["reduced_motion_missing", "reward_layers"]
+REPO_CHECKS = ["reduced_motion_missing", "reward_layers", "agent_instructions_missing"]
+AGENT_FILES = ["CLAUDE.md", "AGENTS.md", ".cursorrules", ".github/copilot-instructions.md", ".windsurfrules", ".lovable/knowledge.md"]
 ANIMATION_RX = re.compile(r"(@keyframes|framer-motion|from ['\"]motion/react|gsap|lottie|Animated\.(timing|spring|loop)|anime\.js|animation\s*:\s*[a-z])", re.I)
 REDUCED_RX = re.compile(r"(prefers-reduced-motion|useReducedMotion|isReduceMotionEnabled|reduceMotion|reducedMotion|AccessibilityInfo)", re.I)
 REWARD_LAYERS = {
@@ -384,8 +504,14 @@ REWARD_LAYERS = {
 }
 
 
-def repo_check(name, files_cache):
+def repo_check(name, files_cache, repo=None):
     """Return list of (path, line, message) for repository-wide checks."""
+    if name == "agent_instructions_missing":
+        for f in AGENT_FILES:
+            p = repo / f if repo else None
+            if p and p.exists() and re.search(r"CSES|child-safety rules", p.read_text(encoding="utf-8", errors="ignore"), re.I):
+                return []
+        return [(None, None, "No AI agent instructions mentioning CSES found (CLAUDE.md, AGENTS.md, .cursorrules, ...).")]
     if name == "reduced_motion_missing":
         first = None
         for rel, lines, text in files_cache:
@@ -421,7 +547,7 @@ def severity_for(rule, confidence: str, level: int) -> str:
     if int(rule["tier"]) > level:
         return "NEXT"
     if rule["level"] == "MUST":
-        return "BLOCK" if confidence == "high" else "REVIEW"
+        return "BLOCK" if (confidence == "high" or rule.get("no_go")) else "REVIEW"
     return "WARN"
 
 
@@ -486,7 +612,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
                     findings.append(Finding(rid, sev, rule["title"], f, None, f"dependency: {name}", note=undeclared))
             elif pat["type"] == "repo":
                 checked_static.add(rid)
-                for rel, ln, msg in repo_check(pat["check"], files_cache):
+                for rel, ln, msg in repo_check(pat["check"], files_cache, repo):
                     w = active_waiver(waivers, rid, rel, today)
                     if w:
                         findings.append(Finding(rid, "WAIVED", rule["title"], rel, ln, msg,
@@ -497,7 +623,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
                 if not declared and rule.get("features"):
                     continue
                 checked_static.add(rid)
-                for msg in manifest_check(pat["check"], manifest, repo, bands):
+                for msg in manifest_check(pat["check"], manifest, repo, bands, pat):
                     w = active_waiver(waivers, rid, None, today)
                     if w:
                         findings.append(Finding(rid, "WAIVED", rule["title"], "cses.yaml", None, msg,
@@ -578,6 +704,11 @@ def render_report(repo, std, manifest, result, manifest_path) -> str:
     a(f"| Age bands | {', '.join(f'{b} ({BAND_AGES[b]})' for b in result['bands'])} |")
     a(f"| Manifest | {manifest_path if manifest_path else 'not found (all profiles and bands assumed)'} |")
     a(f"| EU KIDS Act scope (declared) | {kids_act_line(manifest)} |")
+    if std.minimum_level > 1:
+        a(f"| Minimum level | Level {std.minimum_level}, set by {std.minimum_level_by} |")
+    nogos = sorted(rid for rid in result["rules_in_scope"] if std.rules[rid].get("no_go"))
+    if nogos:
+        a(f"| No-go rules | {len(nogos)} (block at any confidence) |")
     a(f"| Packs loaded | {', '.join(p['title'] + ' v' + p['version'] for p in std.packs) or 'none'} |")
     a(f"| Rules in scope | {len(result['rules_in_scope'])} |")
     a("")
@@ -873,6 +1004,9 @@ def main(argv=None) -> int:
         apply_pack(std, p)
 
     level = args.level or int((manifest or {}).get("compliance_level", 1))
+    if level < std.minimum_level:
+        print(f"cses: level raised from {level} to {std.minimum_level}, the minimum set by {std.minimum_level_by}", file=sys.stderr)
+        level = std.minimum_level
     result = scan(repo, std, manifest, level)
     improvements = build_improvements(std, result)
 

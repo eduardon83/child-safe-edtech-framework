@@ -9,6 +9,7 @@ Generated (never edit by hand):
   standard/catalogue/*.md      rule catalogue per profile, age bands and packs
   self-assessment/*.md         checklists per profile, grouped by compliance level
   tooling/semgrep/cses.yml     Semgrep rules from the regex patterns
+  docs/index.html, docs/pack-builder/index.html   GitHub Pages site and Pack Builder
   skill/cses-review/standard/  copies of rules.yaml and sources.yaml
   skill/cses-review/packs/     copies of the packs
   skill/cses-review/scripts/scan.py
@@ -19,6 +20,7 @@ Licence: Apache-2.0
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 import zipfile
@@ -31,10 +33,10 @@ sys.path.insert(0, str(ROOT / "tooling"))
 import scan  # noqa: E402
 
 LEVEL_NAMES = scan.LEVEL_NAMES
-SOURCE_TYPES = {"law", "law-pending", "proposal", "guidance", "standard", "literature", "news"}
+SOURCE_TYPES = {"law", "law-pending", "proposal", "guidance", "standard", "literature", "news", "policy"}
 TIER_MIN_TYPES = {
-    1: {"law", "law-pending"},
-    2: {"law", "law-pending", "proposal", "guidance", "standard"},
+    1: {"law", "law-pending", "policy"},
+    2: {"law", "law-pending", "proposal", "guidance", "standard", "policy"},
     3: SOURCE_TYPES,
 }
 REQUIRED = ["id", "title", "level", "tier", "profiles", "age_bands", "requirement", "rationale",
@@ -42,7 +44,7 @@ REQUIRED = ["id", "title", "level", "tier", "profiles", "age_bands", "requiremen
 FEATURES = {"accounts", "multiplayer", "chat", "ugc", "social", "notifications", "streaks",
             "leaderboards", "purchases", "assessment", "ai_generative", "ai_assessment",
             "ai_adaptive", "recommender"}
-ID_RE = re.compile(r"^(CORE|A|B|C|AGE|[A-Z]{2,5})-[A-Z0-9]{2,4}-\d{2}$")
+ID_RE = re.compile(r"^(CORE|A|B|C|AGE|[A-Z]{2,8})-[A-Z0-9]{2,4}-\d{2}$")
 
 errors: list[str] = []
 
@@ -119,6 +121,44 @@ def validate_sources(sources, origin):
             err(f"{origin} source {sid}: unknown type {s.get('type')}")
 
 
+def validate_pack_file(pf: Path):
+    """Validate one pack (country, sector or company). Returns (doc, merged standard) or None."""
+    s2 = scan.load_standard(ROOT)
+    doc = scan.load_yaml(pf)
+    if "pack" not in doc or "id" not in doc["pack"]:
+        err(f"pack {pf.name}: missing pack.id")
+        return None
+    pid = doc["pack"]["id"]
+    if not re.match(r"^[a-z][a-z0-9_-]{1,7}$", pid):
+        err(f"pack {pf.name}: pack.id must be 2 to 8 lowercase letters or digits")
+    try:
+        scan.apply_pack(s2, pf)
+    except (ValueError, KeyError) as e:
+        err(f"pack {pf.name}: {e}")
+        return None
+    validate_sources({s["id"]: s for s in doc.get("sources", []) or []}, f"pack {pid}")
+    touched = [r["id"] for r in doc.get("rules", []) or []]
+    for rid in touched:
+        if not rid.startswith(pid.upper() + "-"):
+            err(f"pack {pid}: rule {rid} must start with {pid.upper()}-")
+    touched += [a["rule"] for a in doc.get("amend", []) or []]
+    touched += [rid for rid in s2.rules if rid.startswith(pid.upper() + "-POL-")]
+    for rid in dict.fromkeys(touched):
+        if rid in s2.rules:
+            validate_rule(s2.rules[rid], s2.sources, f"pack {pid}")
+    for a in doc.get("amend", []) or []:
+        for p in a.get("add_patterns", []) or []:
+            validate_pattern(p, f"pack {pid} amend {a['rule']}")
+    pol = doc.get("policy") or {}
+    unknown = set(pol) - {"minimum_level", "no_go", "forbid_dependencies", "forbid_phrases", "forbid_patterns",
+                          "require_decision_for_features", "review_every_days", "require_agent_instructions"}
+    if unknown:
+        err(f"pack {pid}: unknown policy keys {sorted(unknown)}")
+    if not set(pol.get("require_decision_for_features") or []) <= FEATURES:
+        err(f"pack {pid}: unknown feature in require_decision_for_features")
+    return doc, s2
+
+
 def load_and_validate():
     std = scan.load_standard(ROOT)
     ids = [r["id"] for r in scan.load_yaml(ROOT / "standard" / "rules.yaml")["rules"]]
@@ -132,27 +172,38 @@ def load_and_validate():
     for pf in sorted((ROOT / "packs").glob("*.yaml")):
         if pf.name.startswith("_"):
             continue
-        s2 = scan.load_standard(ROOT)
-        try:
-            scan.apply_pack(s2, pf)
-        except (ValueError, KeyError) as e:
-            err(f"pack {pf.name}: {e}")
-            continue
-        doc = scan.load_yaml(pf)
-        pid = doc["pack"]["id"]
-        validate_sources({s["id"]: s for s in doc.get("sources", []) or []}, f"pack {pid}")
-        for r in doc.get("rules", []) or []:
-            if not r["id"].startswith(pid.upper() + "-"):
-                err(f"pack {pid}: rule {r['id']} must start with {pid.upper()}-")
-            validate_rule(s2.rules[r["id"]], s2.sources, f"pack {pid}")
-        for a in doc.get("amend", []) or []:
-            for p in a.get("add_patterns", []) or []:
-                validate_pattern(p, f"pack {pid} amend {a['rule']}")
-        packs[pid] = (doc, s2)
+        res = validate_pack_file(pf)
+        if res:
+            packs[res[0]["pack"]["id"]] = res
     return std, packs
 
 
 # --------------------------------------------------------------------------- generation
+LANDING = """<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Child-Safe EdTech Standard</title>
+<style>
+:root{--bg:#f7f7f4;--ink:#1d2321;--muted:#5d6763;--accent:#1f6f5c;--panel:#fff;--line:#dcdfd9}
+@media (prefers-color-scheme:dark){:root{--bg:#121514;--ink:#e8ebe9;--muted:#a2aba7;--accent:#5cc3a6;--panel:#1b1f1e;--line:#2e3432}}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:40px 16px}
+h1{font-size:1.9rem;margin:0 0 6px}p.lead{color:var(--muted);margin:0 0 28px}
+a{color:var(--accent)}.cards{display:grid;gap:12px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;text-decoration:none;color:var(--ink)}
+.card strong{color:var(--accent)}.card span{display:block;color:var(--muted);font-size:.95rem}
+</style></head><body><main>
+<h1>Child-Safe EdTech Standard</h1>
+<p class="lead">An open standard and toolkit for software children use for learning. CSES v{version}, {rules} rules, draft for public comment.</p>
+<div class="cards">
+<a class="card" href="pack-builder/"><strong>Pack Builder</strong><span>Define your organisation's minimum level, no-gos and rules, and publish your pack to GitHub.</span></a>
+<a class="card" href="https://github.com/eduardon83/child-safe-edtech-standards"><strong>Repository</strong><span>The standard, the scanner, the Claude skill and the GitHub Action.</span></a>
+<a class="card" href="https://github.com/eduardon83/child-safe-edtech-standards/blob/main/standard/catalogue/index.md"><strong>Rule catalogue</strong><span>Every rule with requirement, rationale, improvement and sources.</span></a>
+<a class="card" href="https://github.com/eduardon83/child-safe-edtech-standards/issues"><strong>Give feedback</strong><span>Open an issue: false positives, rule wording, sources, country packs.</span></a>
+</div>
+<p class="lead" style="margin-top:28px;font-size:.9rem">Not legal advice or a certification. Standard content CC BY 4.0, code Apache 2.0.</p>
+</main></body></html>
+"""
+
 HEADER = "<!-- GENERATED by tooling/build.py from standard/rules.yaml. Do not edit by hand. -->\n\n"
 
 
@@ -305,6 +356,16 @@ def generate(std, packs) -> dict[Path, str]:
 
     files[ROOT / "tooling" / "semgrep" / "cses.yml"] = semgrep_yaml(rules)
 
+    cat_json = json.dumps({
+        "version": std.version,
+        "features": sorted(FEATURES),
+        "rules": [{"id": r["id"], "title": r["title"], "level": r["level"], "tier": r["tier"],
+                   "profiles": r["profiles"], "requirement": " ".join(r["requirement"].split())} for r in rules],
+    }, ensure_ascii=False).replace("</", "<\\/")
+    tpl = (ROOT / "tooling" / "pack-builder.template.html").read_text(encoding="utf-8")
+    files[ROOT / "docs" / "pack-builder" / "index.html"] = tpl.replace("/*CATALOGUE*/null", cat_json)
+    files[ROOT / "docs" / "index.html"] = LANDING.replace("{version}", std.version).replace("{rules}", str(len(rules)))
+
     sk = ROOT / "skill" / "cses-review"
     files[sk / "standard" / "rules.yaml"] = (ROOT / "standard" / "rules.yaml").read_text(encoding="utf-8")
     files[sk / "standard" / "sources.yaml"] = (ROOT / "standard" / "sources.yaml").read_text(encoding="utf-8")
@@ -320,7 +381,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--zip", metavar="DIR")
+    ap.add_argument("--validate-pack", metavar="FILE", help="validate a single pack file (e.g. your company pack) and exit")
     args = ap.parse_args()
+
+    if args.validate_pack:
+        res = validate_pack_file(Path(args.validate_pack))
+        if errors or not res:
+            print("Pack validation failed:")
+            for e in errors:
+                print("  -", e)
+            return 1
+        doc, s2 = res
+        pol = doc.get("policy") or {}
+        print(f"OK: pack '{doc['pack']['id']}' valid. {len(doc.get('rules') or [])} rule(s), "
+              f"{len(doc.get('amend') or [])} amendment(s), {len(pol.get('no_go') or [])} no-go(s), "
+              f"minimum level {pol.get('minimum_level', 1)}.")
+        return 0
 
     std, packs = load_and_validate()
     if errors:

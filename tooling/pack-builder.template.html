@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSES Pack Builder</title>
+<meta name="description" content="Build your organisation's child-safety compliance pack for the Child-Safe EdTech Standard (CSES) and publish it to GitHub.">
+<style>
+:root {
+  --bg: #f7f7f4; --panel: #ffffff; --ink: #1d2321; --muted: #5d6763; --line: #dcdfd9;
+  --accent: #1f6f5c; --accent-ink: #ffffff; --accent-soft: #e3f1ec; --warn: #9a5b00; --warn-soft: #fff3df;
+  --nogo: #a3261c; --nogo-soft: #fbe9e7; --code: #f1f2ee;
+  --radius: 10px; --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121514; --panel: #1b1f1e; --ink: #e8ebe9; --muted: #a2aba7; --line: #2e3432;
+    --accent: #5cc3a6; --accent-ink: #0d1f1a; --accent-soft: #1d332d; --warn: #f0b45a; --warn-soft: #33281a;
+    --nogo: #ff8a80; --nogo-soft: #3a1f1d; --code: #232826;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--font); }
+a { color: var(--accent); }
+header { padding: 28px 16px 8px; max-width: 1180px; margin: 0 auto; }
+header h1 { margin: 0 0 4px; font-size: 1.6rem; }
+header p { margin: 0; color: var(--muted); max-width: 70ch; }
+main { max-width: 1180px; margin: 0 auto; padding: 16px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 20px; align-items: start; }
+@media (max-width: 960px) { main { grid-template-columns: 1fr; } }
+section.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin-bottom: 16px; }
+section.card h2 { margin: 0 0 4px; font-size: 1.1rem; }
+section.card .hint { margin: 0 0 12px; color: var(--muted); font-size: .92rem; }
+.step { display: inline-block; min-width: 1.6em; height: 1.6em; border-radius: 50%; background: var(--accent); color: var(--accent-ink); text-align: center; font-size: .85rem; line-height: 1.6em; margin-right: 6px; }
+label { display: block; font-weight: 600; font-size: .92rem; margin: 10px 0 4px; }
+input[type=text], input[type=url], input[type=number], textarea, select {
+  width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); font: inherit;
+}
+textarea { min-height: 84px; font-family: var(--mono); font-size: .88rem; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+@media (max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
+.levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (max-width: 640px) { .levels { grid-template-columns: 1fr; } }
+.level { border: 1px solid var(--line); border-radius: 8px; padding: 10px; cursor: pointer; display: block; font-weight: 400; margin: 0; }
+.level input { margin-right: 6px; }
+.level strong { display: block; }
+.level span { color: var(--muted); font-size: .88rem; }
+.level:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.toolbar input[type=text] { flex: 1 1 200px; width: auto; }
+button { font: inherit; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); padding: 7px 12px; cursor: pointer; }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: .88rem; display: inline-flex; gap: 6px; align-items: center; font-weight: 400; margin: 0; cursor: pointer; }
+.chip:has(input:checked) { background: var(--accent-soft); border-color: var(--accent); }
+.rules { max-height: 460px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; }
+.rule { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--line); align-items: start; font-weight: 400; margin: 0; cursor: pointer; }
+.rule:last-child { border-bottom: 0; }
+.rule:has(input:checked) { background: var(--nogo-soft); }
+.rule .id { font-family: var(--mono); font-size: .82rem; color: var(--muted); }
+.rule .t { font-weight: 600; }
+.rule .req { color: var(--muted); font-size: .86rem; }
+.badge { font-size: .75rem; border-radius: 6px; padding: 1px 6px; border: 1px solid var(--line); white-space: nowrap; color: var(--muted); }
+.count { color: var(--muted); font-size: .9rem; }
+.custom { border: 1px dashed var(--line); border-radius: 8px; padding: 10px 12px; margin-top: 10px; }
+.custom header { padding: 0; display: flex; justify-content: space-between; align-items: center; }
+main > * { min-width: 0; }
+aside { position: sticky; top: 12px; }
+.rule > span { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 960px) { aside { position: static; } }
+pre#yaml { background: var(--code); border-radius: 8px; padding: 12px; font: .8rem/1.45 var(--mono); max-height: 440px; overflow: auto; white-space: pre; margin: 0 0 10px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.msg { font-size: .9rem; padding: 8px 10px; border-radius: 8px; margin: 8px 0 0; }
+.msg.ok { background: var(--accent-soft); }
+.msg.warn { background: var(--warn-soft); color: var(--ink); }
+.msg.err { background: var(--nogo-soft); }
+footer { max-width: 1180px; margin: 0 auto; padding: 8px 16px 40px; color: var(--muted); font-size: .88rem; }
+.sr { position: absolute; left: -9999px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>CSES Pack Builder</h1>
+  <p>Define your organisation's own child-safety compliance pack for the
+  <a href="https://github.com/eduardon83/child-safe-edtech-standards">Child-Safe EdTech Standard</a>:
+  minimum level, no-gos, forbidden SDKs and phrases, records you require, and your own rules.
+  The pack is a YAML file the CSES scanner applies on top of the public standard. Nothing leaves your browser until you publish.</p>
+</header>
+
+<main>
+<div>
+  <section class="card" aria-labelledby="h-org">
+    <h2 id="h-org"><span class="step">1</span>Your organisation</h2>
+    <p class="hint">The pack id becomes the prefix of your rule ids (e.g. ACME-POL-01).</p>
+    <div class="grid2">
+      <div><label for="org">Organisation name</label><input id="org" type="text" placeholder="Acme Learning"></div>
+      <div><label for="pid">Pack id (2 to 8 lowercase letters or digits)</label><input id="pid" type="text" placeholder="acme" maxlength="8"></div>
+      <div><label for="maint">Maintainer / owner</label><input id="maint" type="text" placeholder="Privacy team"></div>
+      <div><label for="ver">Version</label><input id="ver" type="text" value="1.0.0"></div>
+    </div>
+    <label for="purl">Link to your internal policy (optional)</label><input id="purl" type="url" placeholder="https://...">
+  </section>
+
+  <section class="card" aria-labelledby="h-level">
+    <h2 id="h-level"><span class="step">2</span>Minimum compliance level</h2>
+    <p class="hint">Every product using this pack is assessed at least at this level, even if its manifest asks for less.</p>
+    <div class="levels" role="radiogroup" aria-labelledby="h-level">
+      <label class="level"><input type="radio" name="lvl" value="1"><strong>Level 1: Legal baseline</strong><span>Binding law in force or with a fixed date.</span></label>
+      <label class="level"><input type="radio" name="lvl" value="2" checked><strong>Level 2: Forward-compliant</strong><span>Adds the EU KIDS Act and DFA proposals and the DSA Art. 28 guidelines.</span></label>
+      <label class="level"><input type="radio" name="lvl" value="3"><strong>Level 3: Best practice</strong><span>Adds research and expert recommendations.</span></label>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-nogo">
+    <h2 id="h-nogo"><span class="step">3</span>No-gos</h2>
+    <p class="hint">Rules you never break. A no-go always applies and blocks the build at any level, even on medium-confidence signals.</p>
+    <div class="toolbar">
+      <label class="sr" for="q">Search rules</label>
+      <input id="q" type="text" placeholder="Search rules (e.g. loot, streak, AI)">
+      <select id="pf" aria-label="Filter by profile">
+        <option value="">All profiles</option><option value="core">Core</option>
+        <option value="A">A Educational games</option><option value="B">B Game-based apps</option><option value="C">C Gamified apps</option>
+      </select>
+      <button type="button" id="preset">Recommended red lines</button>
+      <button type="button" id="clear">Clear</button>
+      <span class="count" id="nogocount"></span>
+    </div>
+    <div class="rules" id="rules" role="group" aria-label="Rules"></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-forbid">
+    <h2 id="h-forbid"><span class="step">4</span>Forbidden packages and phrases</h2>
+    <p class="hint">One per line. Packages are matched in package.json, requirements, Podfile, Gradle and pubspec. Phrases are matched case-insensitively in code and copy files.</p>
+    <div class="grid2">
+      <div><label for="deps">Packages you never ship</label><textarea id="deps" placeholder="@hotjar/browser&#10;logrocket"></textarea></div>
+      <div><label for="phr">Phrases you never show children</label><textarea id="phr" placeholder="last chance&#10;we miss you"></textarea></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-rec">
+    <h2 id="h-rec"><span class="step">5</span>Records you require</h2>
+    <p class="hint">Features that need a decision record (with a named approver) before release, linked in each product's cses.yaml.</p>
+    <div class="chips" id="feats"></div>
+    <div class="grid2">
+      <div><label for="days">Review each product manifest every (days, 0 = off)</label><input id="days" type="number" min="0" value="180"></div>
+      <div><label class="chip" style="margin-top:34px"><input type="checkbox" id="agents" checked> Require AI coding agent instructions (CLAUDE.md, AGENTS.md)</label></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-custom">
+    <h2 id="h-custom"><span class="step">6</span>Your own rules</h2>
+    <p class="hint">Requirements specific to your organisation. Add a regular expression if the scanner can detect a breach in code.</p>
+    <div id="customs"></div>
+    <button type="button" id="addrule">Add a rule</button>
+  </section>
+</div>
+
+<aside>
+  <section class="card" aria-labelledby="h-out">
+    <h2 id="h-out"><span class="step">7</span>Your pack</h2>
+    <p class="hint" id="summary"></p>
+    <pre id="yaml" aria-label="Generated pack YAML" tabindex="0"></pre>
+    <div class="actions">
+      <button type="button" class="primary" id="dl">Download</button>
+      <button type="button" id="copy">Copy</button>
+    </div>
+    <div id="vmsg"></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-pub">
+    <h2 id="h-pub"><span class="step">8</span>Publish to GitHub</h2>
+    <p class="hint">Opens GitHub's "new file" page in your repository with the pack filled in. You review and commit it there.</p>
+    <div class="grid2">
+      <div><label for="gho">Owner or organisation</label><input id="gho" type="text" placeholder="my-org"></div>
+      <div><label for="ghr">Repository</label><input id="ghr" type="text" placeholder="my-product"></div>
+      <div><label for="ghb">Branch</label><input id="ghb" type="text" value="main"></div>
+      <div><label for="ghp">Path</label><input id="ghp" type="text" placeholder=".cses/packs/acme.yaml"></div>
+    </div>
+    <div class="actions" style="margin-top:10px"><button type="button" class="primary" id="pub">Publish to GitHub</button></div>
+    <div id="pmsg"></div>
+    <label for="mani">Then add to each product's cses.yaml</label>
+    <pre id="mani" style="background:var(--code);border-radius:8px;padding:10px;font:.8rem/1.45 var(--mono);margin:0;white-space:pre-wrap"></pre>
+  </section>
+</aside>
+</main>
+
+<footer>
+  CSES v<span id="stdver"></span>. Not legal advice or a certification. Validate locally with
+  <code>python3 tooling/build.py --validate-pack your-pack.yaml</code>.
+  Standard content CC BY 4.0, code Apache 2.0.
+</footer>
+
+<script>
+const CATALOGUE = /*CATALOGUE*/null;
+const PRESET = ["CORE-COM-01","A-ECO-01","A-ECO-02","A-ECO-03","CORE-COM-03","CORE-COM-04","CORE-AI-01","CORE-AI-06","CORE-DAT-07","CORE-DAT-08","C-ENG-02"];
+const LEVEL_NAME = {1: "Legal baseline", 2: "Forward-compliant", 3: "Best practice"};
+const $ = id => document.getElementById(id);
+const state = { nogo: new Set(), customs: [] };
+
+function store(k, v) { try { localStorage.setItem("cses-pb-" + k, JSON.stringify(v)); } catch (e) {} }
+function load(k, d) { try { const v = localStorage.getItem("cses-pb-" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+
+function slug(s) { return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "").slice(0, 8); }
+function q(s) { return JSON.stringify(String(s)); }
+function lines(id) { return $(id).value.split("\n").map(x => x.trim()).filter(Boolean); }
+
+function renderRules() {
+  const term = $("q").value.toLowerCase(), pf = $("pf").value;
+  const box = $("rules"); box.innerHTML = "";
+  CATALOGUE.rules.forEach(r => {
+    if (pf && !r.profiles.includes(pf)) return;
+    if (term && !(r.id + " " + r.title + " " + r.requirement).toLowerCase().includes(term)) return;
+    const el = document.createElement("label");
+    el.className = "rule";
+    el.innerHTML = `<input type="checkbox" ${state.nogo.has(r.id) ? "checked" : ""} aria-label="No-go ${r.id}">
+      <span><span class="id">${r.id}</span> <span class="t"></span><br><span class="req"></span></span>
+      <span class="badge">${r.level} · L${r.tier}</span>`;
+    el.querySelector(".t").textContent = r.title;
+    el.querySelector(".req").textContent = r.requirement;
+    el.querySelector("input").addEventListener("change", ev => {
+      ev.target.checked ? state.nogo.add(r.id) : state.nogo.delete(r.id); update();
+    });
+    box.appendChild(el);
+  });
+}
+
+function renderFeats() {
+  const box = $("feats"); box.innerHTML = "";
+  CATALOGUE.features.forEach(f => {
+    const el = document.createElement("label"); el.className = "chip";
+    el.innerHTML = `<input type="checkbox" value="${f}"> ${f.replace(/_/g, " ")}`;
+    el.querySelector("input").addEventListener("change", update);
+    box.appendChild(el);
+  });
+}
+
+function addCustom(data) {
+  const c = Object.assign({ title: "", requirement: "", level: "MUST", improvement: "", pattern: "" }, data || {});
+  state.customs.push(c);
+  renderCustoms(); update();
+}
+function renderCustoms() {
+  const box = $("customs"); box.innerHTML = "";
+  state.customs.forEach((c, i) => {
+    const d = document.createElement("div"); d.className = "custom";
+    d.innerHTML = `<header><strong>Rule ${i + 1}</strong><button type="button" aria-label="Remove rule ${i + 1}">Remove</button></header>
+      <div class="grid2">
+        <div><label>Title</label><input type="text" data-k="title"></div>
+        <div><label>Strength</label><select data-k="level"><option>MUST</option><option>SHOULD</option></select></div>
+      </div>
+      <label>Requirement</label><input type="text" data-k="requirement">
+      <label>How to improve</label><input type="text" data-k="improvement">
+      <label>Detect in code (regular expression, optional)</label><input type="text" data-k="pattern" placeholder="e.g. voice_?clon">`;
+    d.querySelectorAll("[data-k]").forEach(inp => {
+      inp.value = c[inp.dataset.k];
+      inp.addEventListener("input", () => { c[inp.dataset.k] = inp.value; update(); });
+    });
+    d.querySelector("button").addEventListener("click", () => { state.customs.splice(i, 1); renderCustoms(); update(); });
+    box.appendChild(d);
+  });
+}
+
+function buildYaml() {
+  const org = $("org").value.trim() || "My organisation";
+  const pid = slug($("pid").value) || slug(org) || "myorg";
+  const P = pid.toUpperCase();
+  const lvl = document.querySelector("input[name=lvl]:checked").value;
+  const today = new Date().toISOString().slice(0, 10);
+  const feats = [...document.querySelectorAll("#feats input:checked")].map(x => x.value);
+  const days = parseInt($("days").value || "0", 10);
+  const deps = lines("deps"), phr = lines("phr");
+  const nogo = CATALOGUE.rules.map(r => r.id).filter(id => state.nogo.has(id));
+  const out = [];
+  out.push("# CSES company pack generated with the CSES Pack Builder on " + today + ".");
+  out.push("# Validate: python3 tooling/build.py --validate-pack <this file>");
+  out.push("# Use: add `packs: [<path to this file>]` to each product's cses.yaml.", "");
+  out.push("pack:");
+  out.push("  id: " + q(pid));
+  out.push("  title: " + q(org + " child-safety policy"));
+  out.push("  jurisdiction: ORG");
+  out.push("  version: " + q($("ver").value.trim() || "1.0.0"));
+  out.push("  date: " + today);
+  out.push("  maintainer: " + q($("maint").value.trim() || org));
+  out.push("  status: " + q("In force for all " + org + " products used by minors"));
+  out.push("  url: " + ($("purl").value.trim() ? q($("purl").value.trim()) : "null"), "");
+  out.push("policy:");
+  out.push("  minimum_level: " + lvl);
+  if (nogo.length) { out.push("  no_go:"); nogo.forEach(id => out.push("    - " + id)); }
+  if (deps.length) { out.push("  forbid_dependencies:"); deps.forEach(d => out.push("    - " + q(d))); }
+  if (phr.length) { out.push("  forbid_phrases:"); phr.forEach(d => out.push("    - " + q(d))); }
+  if (feats.length) { out.push("  require_decision_for_features:"); feats.forEach(f => out.push("    - " + f)); }
+  if (days > 0) out.push("  review_every_days: " + days);
+  if ($("agents").checked) out.push("  require_agent_instructions: true");
+  const customs = state.customs.filter(c => c.title.trim() && c.requirement.trim());
+  if (customs.length) {
+    out.push("", "rules:");
+    customs.forEach((c, i) => {
+      const id = P + "-ORG-" + String(i + 1).padStart(2, "0");
+      out.push("  - id: " + id);
+      out.push("    title: " + q(c.title.trim()));
+      out.push("    level: " + c.level);
+      out.push("    tier: 1");
+      out.push("    profiles: [core]");
+      out.push("    age_bands: [all]");
+      out.push("    requirement: " + q(c.requirement.trim()));
+      out.push("    rationale: " + q("Organisation decision recorded in the " + org + " policy."));
+      out.push("    improvement: " + q(c.improvement.trim() || "Change the product to meet the requirement, or obtain a waiver."));
+      out.push("    effort: low");
+      out.push("    sources: [" + P + "-POLICY]");
+      out.push("    detection:");
+      if (c.pattern.trim()) {
+        out.push("      method: static");
+        out.push("      patterns:");
+        out.push("        - {type: regex, confidence: high, flags: i, pattern: " + q(c.pattern.trim()) + "}");
+      } else {
+        out.push("      method: manual");
+      }
+    });
+  }
+  return { yaml: out.join("\n") + "\n", pid, org, nogo, lvl, customs };
+}
+
+function validate(b) {
+  const msgs = [];
+  if (!/^[a-z][a-z0-9]{1,7}$/.test(b.pid)) msgs.push(["err", "Pack id must start with a letter and have 2 to 8 lowercase letters or digits."]);
+  b.customs.forEach((c, i) => { if (c.pattern.trim()) { try { new RegExp(c.pattern.trim()); } catch (e) { msgs.push(["err", `Rule ${i + 1}: the regular expression is not valid.`]); } } });
+  if (!b.nogo.length && !b.customs.length) msgs.push(["warn", "No no-gos and no custom rules yet. The pack will only set a minimum level."]);
+  if (!msgs.length) msgs.push(["ok", "Looks valid. Run --validate-pack after saving to double-check."]);
+  return msgs;
+}
+
+let current = null;
+function update() {
+  current = buildYaml();
+  $("yaml").textContent = current.yaml;
+  $("nogocount").textContent = state.nogo.size + " no-go(s) selected";
+  $("summary").textContent = `Minimum Level ${current.lvl} (${LEVEL_NAME[current.lvl]}), ${current.nogo.length} no-go(s), ${current.customs.length} custom rule(s).`;
+  $("vmsg").innerHTML = validate(current).map(([k, m]) => `<p class="msg ${k}">${m}</p>`).join("");
+  if (!$("ghp").dataset.touched) $("ghp").value = `.cses/packs/${current.pid}.yaml`;
+  $("mani").textContent = `packs: [${$("ghp").value || ".cses/packs/" + current.pid + ".yaml"}]`;
+  store("form", collect());
+}
+
+function collect() {
+  const f = {};
+  ["org", "pid", "maint", "ver", "purl", "deps", "phr", "days", "gho", "ghr", "ghb", "ghp"].forEach(id => f[id] = $(id).value);
+  f.agents = $("agents").checked;
+  f.lvl = document.querySelector("input[name=lvl]:checked").value;
+  f.feats = [...document.querySelectorAll("#feats input:checked")].map(x => x.value);
+  f.nogo = [...state.nogo]; f.customs = state.customs;
+  return f;
+}
+function restore(f) {
+  if (!f) return;
+  ["org", "pid", "maint", "ver", "purl", "deps", "phr", "days", "gho", "ghr", "ghb", "ghp"].forEach(id => { if (f[id] !== undefined) $(id).value = f[id]; });
+  if (f.ghp) $("ghp").dataset.touched = "1";
+  $("agents").checked = f.agents !== false;
+  const r = document.querySelector(`input[name=lvl][value="${f.lvl}"]`); if (r) r.checked = true;
+  (f.feats || []).forEach(v => { const c = document.querySelector(`#feats input[value="${v}"]`); if (c) c.checked = true; });
+  state.nogo = new Set(f.nogo || []); state.customs = f.customs || [];
+}
+
+function download() {
+  const blob = new Blob([current.yaml], { type: "text/yaml" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = current.pid + ".yaml";
+  document.body.appendChild(a); a.click(); a.remove();
+}
+async function copy(text, target) {
+  try { await navigator.clipboard.writeText(text); target.innerHTML = '<p class="msg ok">Copied to the clipboard.</p>'; return true; }
+  catch (e) { target.innerHTML = '<p class="msg warn">Copy failed. Select the text and copy it manually.</p>'; return false; }
+}
+async function publish() {
+  const o = $("gho").value.trim(), r = $("ghr").value.trim(), b = $("ghb").value.trim() || "main", p = $("ghp").value.trim();
+  if (!o || !r || !p) { $("pmsg").innerHTML = '<p class="msg err">Fill in owner, repository and path.</p>'; return; }
+  const errs = validate(current).filter(m => m[0] === "err");
+  if (errs.length) { $("pmsg").innerHTML = '<p class="msg err">Fix the errors in step 7 first.</p>'; return; }
+  const base = `https://github.com/${encodeURIComponent(o)}/${encodeURIComponent(r)}/new/${encodeURIComponent(b)}?filename=${encodeURIComponent(p)}`;
+  const full = base + "&value=" + encodeURIComponent(current.yaml);
+  if (full.length < 7500) {
+    window.open(full, "_blank", "noopener");
+    $("pmsg").innerHTML = '<p class="msg ok">GitHub opened in a new tab with your pack. Review it and click "Commit changes".</p>';
+  } else {
+    await copy(current.yaml, $("pmsg"));
+    window.open(base, "_blank", "noopener");
+    $("pmsg").innerHTML = '<p class="msg warn">The pack is too long to pass in a link. It is on your clipboard: paste it into the GitHub editor that just opened, then commit.</p>';
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  $("stdver").textContent = CATALOGUE.version;
+  renderFeats();
+  restore(load("form", null));
+  renderRules(); renderCustoms();
+  document.querySelectorAll("input, textarea, select").forEach(el => {
+    if (el.closest("#rules") || el.closest("#customs")) return;
+    el.addEventListener("input", () => { if (el.id === "ghp") el.dataset.touched = "1"; if (el.id === "q" || el.id === "pf") renderRules(); update(); });
+  });
+  $("preset").addEventListener("click", () => { PRESET.forEach(id => state.nogo.add(id)); renderRules(); update(); });
+  $("clear").addEventListener("click", () => { state.nogo.clear(); renderRules(); update(); });
+  $("addrule").addEventListener("click", () => addCustom());
+  $("dl").addEventListener("click", download);
+  $("copy").addEventListener("click", () => copy(current.yaml, $("vmsg")));
+  $("pub").addEventListener("click", publish);
+  update();
+});
+</script>
+</body>
+</html>

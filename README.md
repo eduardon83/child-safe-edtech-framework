@@ -16,6 +16,7 @@ rules a team can check in code, in CI and in review.
 | **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). Each team chooses. |
 | **Sources on every rule** | A source registry with type, status and verification date. Reports list the sources they rely on. |
 | **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included. |
+| **Company packs and Pack Builder** | Each organisation sets its minimum level, no-gos, forbidden SDKs and phrases and its own rules, in a web form, then publishes the pack to GitHub. |
 | **Scanner** | `tooling/scan.py` writes a pre-compliance report, a prioritised improvement plan, JSON and SARIF. |
 | **AI review skill** | `skill/cses-review/` lets Claude run the scanner, verify findings, review what patterns cannot see, and finalise both documents. |
 | **CI** | A GitHub Action, generated Semgrep rules, a PR template. |
@@ -44,6 +45,12 @@ Try it on the examples:
 python3 tooling/scan.py --repo examples/noncompliant-game --out-dir cses-report
 python3 tooling/scan.py --repo examples/compliant-game --out-dir cses-report --level 3
 ```
+
+### Your organisation's pack
+
+Open the [Pack Builder](https://eduardon83.github.io/child-safe-edtech-standards/pack-builder/), choose your
+minimum level and no-gos, add your rules, and publish the pack to your repository. Then list it in each
+product's `cses.yaml` under `packs:`. See `standard/02-packs.md`.
 
 ### In GitHub Actions
 
@@ -77,6 +84,7 @@ templates/       manifest, DPIA starter, AI risk file, waiver, agent instruction
 self-assessment/ generated checklists per profile and level
 examples/        a non-compliant and a compliant sample product
 tests/           test-suite for the scanner and the catalogue
+docs/            GitHub Pages site, Pack Builder (generated), release notes
 ```
 
 Edit `standard/rules.yaml`, `standard/sources.yaml` or `packs/*.yaml`, then run `python3 tooling/build.py`.

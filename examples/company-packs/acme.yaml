@@ -1,0 +1,36 @@
+# Example company pack. Fictional company; copy and adapt, or generate yours with the Pack Builder
+# (docs/pack-builder/index.html, also published on the project's GitHub Pages site).
+
+pack:
+  id: acme
+  title: Acme Learning child-safety policy
+  jurisdiction: ORG
+  version: "1.0.0"
+  date: 2026-11-11
+  maintainer: "Acme Learning, privacy team"
+  status: "In force for all Acme products"
+  url: null
+
+policy:
+  minimum_level: 2
+  no_go: [CORE-COM-01, A-ECO-01, CORE-AI-01, CORE-AI-06, CORE-DAT-07]
+  forbid_dependencies: ["@hotjar/browser", logrocket]
+  forbid_phrases: ["don't miss out", "last chance"]
+  require_decision_for_features: [ai_generative, leaderboards]
+  review_every_days: 180
+  require_agent_instructions: true
+
+rules:
+  - id: ACME-CNT-01
+    title: Mascot never asks the child for anything
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: The Acme mascot gives information and encouragement only; it never asks the child to buy, share, invite or come back.
+    rationale: Characters pressuring children are a common manipulative pattern in apps for young children.
+    improvement: Review mascot lines and remove requests.
+    effort: low
+    sources: [ACME-POLICY, R-RADESKY2022]
+    detection:
+      method: manual

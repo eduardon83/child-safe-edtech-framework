@@ -19,6 +19,8 @@ jobs:
       - run: pip install pyyaml pytest
       - name: Validate catalogue and check generated files
         run: python3 tooling/build.py --check
+      - name: Validate example company pack
+        run: python3 tooling/build.py --validate-pack examples/company-packs/acme.yaml
       - name: Tests
         run: python3 -m pytest -q
       - name: Scan the compliant example (must pass at level 3)

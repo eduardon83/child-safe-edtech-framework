@@ -9,6 +9,7 @@ add sources and rules, and tighten existing rules.
 |---|---|---|
 | `sources` | Laws, guidance, standards, research to cite | A national data protection act; a Ministry guide on digital resources; a peer-reviewed study |
 | `rules` | Requirements the base standard does not have | "Child-facing text in the national language" |
+| `policy` | Organisation-wide decisions: minimum level, no-gos, forbidden packages and phrases, required records (company packs) |
 | `amend` | Make an existing rule stricter or add national nuance | Add the national consent age; raise a Level 2 rule to Level 1 because the country already made it law; add local-language detection patterns |
 | `parameters` | Values shown in reports | Digital consent age, supervisory authority, child helpline |
 
@@ -24,6 +25,35 @@ to a higher (less binding) level.
 - **Literature packs** add research sources you want reports to cite, and Level 3 rules based on them.
 - **Company packs** encode your own red lines. Keep them in your product repository
   (e.g. `.cses/packs/acme.yaml`) and list them under `packs:` in `cses.yaml`.
+
+## Company packs: your organisation's policy
+
+A company pack can also carry a `policy` section. It turns your organisation's decisions into checks:
+
+| Key | Effect |
+|---|---|
+| `minimum_level` | Every product is assessed at least at this level, even if its manifest asks for less |
+| `no_go` | Standard rules you never break. They always apply (Level 1) and block at any confidence |
+| `forbid_dependencies` | Packages your products never ship |
+| `forbid_phrases` | Phrases never shown to children (pressure, guilt, scarcity), in any language |
+| `forbid_patterns` | Your own regular expressions, with title and improvement |
+| `require_decision_for_features` | Declared features need a decision record linked in `cses.yaml` under `decisions:` |
+| `review_every_days` | Product manifests must be reviewed within this many days |
+| `require_agent_instructions` | Repositories must give AI coding agents the CSES rules (CLAUDE.md, AGENTS.md, ...) |
+
+The scanner creates rules `<ID>-POL-01`, `-02`, ... from these keys and a source `<ID>-POLICY` of type
+`policy`, so reports show which findings come from your policy and which from law.
+
+**Pack Builder.** Make a company pack without writing YAML at
+`docs/pack-builder/index.html` (published on the project's GitHub Pages site). Choose your minimum level,
+tick your no-gos, list forbidden packages and phrases, add your own rules, then download the file or
+publish it straight to a GitHub repository. An example is in `examples/company-packs/acme.yaml`.
+
+Validate any pack with:
+
+```bash
+python3 tooling/build.py --validate-pack path/to/your-pack.yaml
+```
 
 ## Writing a pack
 

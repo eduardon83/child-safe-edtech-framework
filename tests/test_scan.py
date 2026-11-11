@@ -152,3 +152,42 @@ def test_research_sources_are_literature():
     std = scan.load_standard(ROOT)
     assert std.sources["R-DECI1999"]["type"] == "literature"
     assert "R-RADESKY2022" in std.rules["CORE-COM-03"]["sources"]
+
+
+ACME = ROOT / "examples" / "company-packs" / "acme.yaml"
+
+
+def test_company_pack_policy(tmp_path):
+    std, _, res = run(BAD, level=1, packs=[str(ACME)])
+    assert std.minimum_level == 2
+    assert std.sources["ACME-POLICY"]["type"] == "policy"
+    assert std.rules["A-ECO-01"]["tier"] == 1 and std.rules["A-ECO-01"].get("no_go")
+    block = rules_with(res, "BLOCK")
+    assert "A-ECO-01" in block                          # no-go blocks even at level 1
+    assert "ACME-POL-01" in block                       # forbidden dependency (@hotjar/browser)
+    assert "ACME-POL-03" in block                       # decision record missing for ai_generative / leaderboards
+    assert "CORE-DAT-07" in block                       # medium-confidence finding escalated by no-go
+
+
+def test_cli_minimum_level_from_pack(tmp_path):
+    out = tmp_path / "out"
+    scan.main(["--repo", str(GOOD), "--pack", str(ACME), "--level", "1", "--out-dir", str(out), "--format", "none"])
+    report = (out / "report.md").read_text(encoding="utf-8")
+    assert "Level 2: Forward-compliant" in report and "Minimum level" in report
+
+
+def test_validate_pack_cli():
+    r = subprocess.run([sys.executable, str(ROOT / "tooling" / "build.py"), "--validate-pack", str(ACME)], capture_output=True, text=True)
+    assert r.returncode == 0, r.stdout
+
+
+def test_pack_cannot_weaken_via_policy(tmp_path):
+    bad = tmp_path / "x.yaml"
+    bad.write_text("pack: {id: x}\npolicy: {no_go: [NOPE-01]}\n", encoding="utf-8")
+    with pytest.raises(ValueError):
+        scan.apply_pack(scan.load_standard(ROOT), bad)
+
+
+def test_pack_builder_embeds_catalogue():
+    html = (ROOT / "docs" / "pack-builder" / "index.html").read_text(encoding="utf-8")
+    assert "/*CATALOGUE*/null" not in html and '"A-MOT-01"' in html

@@ -10,6 +10,9 @@
 - Built on the EU KIDS Act proposal COM(2026) 681 (17 Sep 2026), the DSA Art. 28 guidelines, the AI Act as
   amended by the Digital Omnibus on AI, and the leaked draft of the Digital Fairness Act.
 - Packs mechanism with a Portugal pack.
+- Company packs: `policy` section (minimum level, no-gos, forbidden packages and phrases, decision
+  records, review cadence, AI agent instructions), `--validate-pack`, and the web Pack Builder with
+  publish-to-GitHub. Example in `examples/company-packs/acme.yaml`.
 - Scanner producing pre-compliance report, improvement plan, JSON and SARIF.
 - `cses-review` skill for Claude, GitHub Action, generated Semgrep rules, templates.
 
