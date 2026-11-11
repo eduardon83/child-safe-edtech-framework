@@ -763,7 +763,7 @@ def to_sarif(std, result):
     return {
         "$schema": "https://json.schemastore.org/sarif-2.1.0.json", "version": "2.1.0",
         "runs": [{"tool": {"driver": {"name": TOOL_NAME, "version": TOOL_VERSION,
-                                      "informationUri": "https://github.com/", "rules": rules}},
+                                      "informationUri": "https://github.com/eduardon83/child-safe-edtech-standards", "rules": rules}},
                   "results": results}],
     }
 

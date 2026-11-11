@@ -36,6 +36,8 @@ python3 tooling/scan.py --repo /path/to/your-product --out-dir cses-report
 #    cses-report/improvements.md   prioritised improvement plan
 ```
 
+Repository: <https://github.com/eduardon83/child-safe-edtech-standards>
+
 Try it on the examples:
 
 ```bash

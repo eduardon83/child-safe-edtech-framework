@@ -1,5 +1,5 @@
 # Copy to .github/workflows/cses-check.yml in your product repository.
-# Replace OWNER/child-safe-edtech-standard@v0.1.0 with the repository and tag you follow.
+# Pin the tag of the standard you follow.
 name: CSES child-safety check
 
 on:
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: OWNER/child-safe-edtech-standard@v0.1.0
+      - uses: eduardon83/child-safe-edtech-standards@v0.1.0
         with:
           fail-on: block        # block | review | warn | never
           # level: 2            # override compliance_level from cses.yaml
