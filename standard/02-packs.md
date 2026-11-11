@@ -9,7 +9,7 @@ add sources and rules, and tighten existing rules.
 |---|---|---|
 | `sources` | Laws, guidance, standards, research to cite | A national data protection act; a Ministry guide on digital resources; a peer-reviewed study |
 | `rules` | Requirements the base standard does not have | "Child-facing text in the national language" |
-| `policy` | Organisation-wide decisions: minimum level, no-gos, forbidden packages and phrases, required records (company packs) |
+| `policy` | Organisation-wide decisions (company packs) | Minimum level, no-gos, forbidden packages and phrases, required decision records |
 | `amend` | Make an existing rule stricter or add national nuance | Add the national consent age; raise a Level 2 rule to Level 1 because the country already made it law; add local-language detection patterns |
 | `parameters` | Values shown in reports | Digital consent age, supervisory authority, child helpline |
 

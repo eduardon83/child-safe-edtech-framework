@@ -36,7 +36,7 @@ except ImportError:  # pragma: no cover
     sys.exit("CSES scanner needs PyYAML: pip install pyyaml")
 
 TOOL_NAME = "cses-scan"
-TOOL_VERSION = "0.1.0"
+TOOL_VERSION = "0.2.0"
 
 PROFILES = {"core", "A", "B", "C"}
 BANDS = ["B1", "B2", "B3", "B4", "B5"]

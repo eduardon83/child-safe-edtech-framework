@@ -2,7 +2,7 @@
 
 # Rule catalogue
 
-CSES v0.1.0: 89 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
+CSES v0.2.0: 89 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
 
 | Level | MUST | SHOULD |
 |---|---|---|
