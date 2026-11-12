@@ -301,7 +301,7 @@ def render_html(model: dict, for_print: bool = False) -> str:
       'prepare a review with your DPO and legal counsel.</p>')
     if not for_print:
         a('<nav class="toc" aria-label="Sections"><a href="#levels">Levels</a><a href="#bands">Age bands</a><a href="#scope">Scope</a>'
-          '<a href="#findings">Findings</a><a href="#human">Human checks</a><a href="#plan">Improvement plan</a>'
+          '<a href="#comms">Communications</a><a href="#findings">Findings</a><a href="#human">Human checks</a><a href="#plan">Improvement plan</a>'
           '<a href="#counsel">For legal counsel</a><a href="#sources">Sources</a></nav>')
 
     # verdict
@@ -384,6 +384,36 @@ def render_html(model: dict, for_print: bool = False) -> str:
     a('</div>')
     if d.get("parameters"):
         a('<p class="small muted" style="margin-top:10px">Pack parameters: ' + e("; ".join(f"{k} = {v}" for k, v in d["parameters"].items())) + '</p>')
+    a('</section>')
+
+    # communications
+    inv = d.get("communications") or {}
+    a('<section class="panel" id="comms"><h2>Communications</h2>'
+      '<p class="muted small">Ways children can communicate, found in code, and the safeguards around them. A safeguard not found may '
+      'still be configured in a service dashboard or a backend outside the repository: confirm by hand.</p>')
+    if not inv.get("has_communication"):
+        a('<p>No communication channels found in code. If the product has chat, multiplayer or comments through a service configured '
+          'elsewhere, declare it in cses.yaml.</p>')
+    else:
+        a('<table><thead><tr><th>Channel</th><th>Kind</th><th>Evidence</th></tr></thead><tbody>')
+        for c in inv["channels"]:
+            a(f'<tr><td><strong>{e(c["name"])}</strong></td><td>{e(c["kind"])}</td><td>'
+              + " ".join(f'<span class="loc">{e(x)}</span>' for x in c["evidence"][:3]) + '</td></tr>')
+        a('</tbody></table><h3 style="margin-top:14px">Safeguards</h3><div class="tiles" style="margin-top:8px">')
+        for k, v in inv["safeguards"].items():
+            ok = bool(v["evidence"])
+            sv = "OK" if ok else "REVIEW"
+            a(f'<div class="tile" style="{sev_vars(sv)};background:var(--cb);border-color:var(--c)">'
+              f'<b style="color:var(--c);font-size:1rem">{"Found" if ok else "Not found"}</b><span><strong>{e(v["label"])}</strong>'
+              + (f'<br><span class="loc">{e(v["evidence"][0])}</span>' if ok else "") + '</span></div>')
+        a('</div>')
+        risks = [v for v in inv["risks"].values() if v["evidence"]]
+        if risks:
+            a('<h3 style="margin-top:14px">Risk signals</h3><table><tbody>')
+            for v in risks:
+                a(f'<tr><td style="color:var(--BLOCK)"><strong>{e(v["label"])}</strong></td><td>'
+                  + " ".join(f'<span class="loc">{e(x)}</span>' for x in v["evidence"][:3]) + '</td></tr>')
+            a('</tbody></table>')
     a('</section>')
 
     # findings
@@ -667,6 +697,27 @@ def render_docx(model: dict, path: Path) -> None:
                  ("Features", ", ".join(m.get("features") or []) or "not declared"),
                  ("Packs", ", ".join(f"{x['title']} v{x['version']}" for x in d.get("packs", [])) or "none")]:
         add_row(t, [k, v], [5, 11.5])
+
+    inv = d.get("communications") or {}
+    doc.add_heading("Communications", level=1)
+    if not inv.get("has_communication"):
+        doc.add_paragraph("No communication channels found in code.")
+    else:
+        t = table(["Channel", "Kind", "Evidence"], [4, 3.5, 9])
+        for c in inv["channels"]:
+            add_row(t, [c["name"], c["kind"], ", ".join(c["evidence"][:3])], [4, 3.5, 9])
+        doc.add_paragraph("")
+        t = table(["Safeguard", "Found in code", "Evidence"], [6, 3, 7.5])
+        for v in inv["safeguards"].values():
+            ok = bool(v["evidence"])
+            add_row(t, [v["label"], ("Found", "OK") if ok else ("Not found", "REVIEW"), ", ".join(v["evidence"][:2])], [6, 3, 7.5])
+        risks = [v for v in inv["risks"].values() if v["evidence"]]
+        if risks:
+            doc.add_paragraph("")
+            t = table(["Risk signal", "Evidence"], [6, 10.5])
+            for v in risks:
+                add_row(t, [(v["label"], "BLOCK"), ", ".join(v["evidence"][:3])], [6, 10.5])
+        doc.add_paragraph("A safeguard not found may still be configured in a service dashboard or a backend outside the repository. Confirm by hand.").italic = True
 
     doc.add_heading("Findings", level=1)
     if not model["fgroups"]:

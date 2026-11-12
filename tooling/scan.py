@@ -37,7 +37,7 @@ except ImportError:  # pragma: no cover
     sys.exit("CSES scanner needs PyYAML: pip install pyyaml")
 
 TOOL_NAME = "cses-scan"
-TOOL_VERSION = "0.4.0"
+TOOL_VERSION = "0.5.0"
 
 PROFILES = {"core", "A", "B", "C"}
 BANDS = ["B1", "B2", "B3", "B4", "B5"]
@@ -52,11 +52,13 @@ SOURCE_EXT = {
     ".py", ".java", ".kt", ".kts", ".swift", ".m", ".dart", ".cs", ".go", ".rb", ".php",
     ".sql", ".json", ".yaml", ".yml", ".xml", ".plist", ".gd", ".lua", ".gradle", ".strings",
     ".po", ".arb", ".properties", ".toml", ".env",
+    ".prefab", ".asset", ".unity", ".asmdef", ".tscn", ".tres", ".godot",          # Unity and Godot text assets
+    ".c", ".cc", ".cpp", ".h", ".hpp", ".rs", ".scala", ".ex", ".exs", ".m", ".mm", ".rules",
 }
 SKIP_DIRS = {
     ".git", "node_modules", "dist", "build", ".next", ".nuxt", "out", "coverage", "vendor",
     "Pods", ".gradle", ".idea", ".vscode", "__pycache__", ".venv", "venv", "env", "Library",
-    "Temp", "cses-report", ".cses",
+    "Temp", "cses-report", ".cses", "Logs", "obj", "UserSettings", "Build", "Builds", ".godot", "target",
 }
 SKIP_FILES = {
     "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "poetry.lock", "Podfile.lock",
@@ -391,6 +393,42 @@ def collect_dependencies(repo: Path):
                 elif fn.endswith((".gradle", ".gradle.kts")):
                     for m in re.finditer(r"['\"]([a-zA-Z0-9_.\-]+:[a-zA-Z0-9_.\-]+)(?::[^'\"]*)?['\"]", p.read_text(encoding="utf-8")):
                         deps.setdefault(m.group(1), rel)
+                elif fn == "manifest.json" and p.parent.name == "Packages":  # Unity Package Manager
+                    data = json.loads(p.read_text(encoding="utf-8"))
+                    for name in (data.get("dependencies") or {}):
+                        deps.setdefault(name, rel)
+                elif fn.endswith("Dependencies.xml"):  # Unity External Dependency Manager (Android and iOS SDKs)
+                    t = p.read_text(encoding="utf-8")
+                    for m in re.finditer(r'androidPackage\s+spec="([^":]+:[^":]+)', t):
+                        deps.setdefault(m.group(1), rel)
+                    for m in re.finditer(r'iosPod\s+name="([^"]+)"', t):
+                        deps.setdefault(m.group(1), rel)
+                elif fn == "pom.xml":
+                    t = p.read_text(encoding="utf-8")
+                    for m in re.finditer(r"<groupId>([^<]+)</groupId>\s*<artifactId>([^<]+)</artifactId>", t):
+                        deps.setdefault(f"{m.group(1).strip()}:{m.group(2).strip()}", rel)
+                elif fn.endswith((".csproj", ".fsproj")) or fn in ("packages.config", "Directory.Packages.props"):
+                    for m in re.finditer(r'(?:PackageReference|PackageVersion|package)\s+(?:Include|id)="([^"]+)"', p.read_text(encoding="utf-8"), re.I):
+                        deps.setdefault(m.group(1), rel)
+                elif fn == "go.mod":
+                    for m in re.finditer(r"^\s*(?:require\s+)?([\w.\-]+\.[\w.\-/]+)\s+v[\d.]+", p.read_text(encoding="utf-8"), re.M):
+                        deps.setdefault(m.group(1), rel)
+                elif fn == "Cargo.toml":
+                    t = p.read_text(encoding="utf-8")
+                    sec = re.search(r"^\[dependencies\]([\s\S]*?)(^\[|\Z)", t, re.M)
+                    for m in re.finditer(r"^\s*([A-Za-z0-9_\-]+)\s*=", sec.group(1) if sec else "", re.M):
+                        deps.setdefault(m.group(1), rel)
+                elif fn == "composer.json":
+                    data = json.loads(p.read_text(encoding="utf-8"))
+                    for k in ("require", "require-dev"):
+                        for name in (data.get(k) or {}):
+                            deps.setdefault(name, rel)
+                elif fn == "Gemfile":
+                    for m in re.finditer(r"^\s*gem\s+['\"]([^'\"]+)", p.read_text(encoding="utf-8"), re.M):
+                        deps.setdefault(m.group(1), rel)
+                elif fn == "Package.swift":
+                    for m in re.finditer(r'\.package\s*\(\s*(?:name:\s*"[^"]*",\s*)?url:\s*"[^"]*/([^/"]+?)(?:\.git)?"', p.read_text(encoding="utf-8")):
+                        deps.setdefault(m.group(1), rel)
                 elif fn == "pubspec.yaml":
                     data = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
                     for k in ("dependencies", "dev_dependencies"):
@@ -491,7 +529,10 @@ def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set, pat
 
 
 # --------------------------------------------------------------------------- repository checks
-REPO_CHECKS = ["reduced_motion_missing", "reward_layers", "agent_instructions_missing"]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import comms  # noqa: E402
+
+REPO_CHECKS = ["reduced_motion_missing", "reward_layers", "agent_instructions_missing"] + comms.CHECKS
 AGENT_FILES = ["CLAUDE.md", "AGENTS.md", ".cursorrules", ".github/copilot-instructions.md", ".windsurfrules", ".lovable/knowledge.md"]
 ANIMATION_RX = re.compile(r"(@keyframes|framer-motion|from ['\"]motion/react|gsap|lottie|Animated\.(timing|spring|loop)|anime\.js|animation\s*:\s*[a-z])", re.I)
 REDUCED_RX = re.compile(r"(prefers-reduced-motion|useReducedMotion|isReduceMotionEnabled|reduceMotion|reducedMotion|AccessibilityInfo)", re.I)
@@ -507,8 +548,10 @@ REWARD_LAYERS = {
 }
 
 
-def repo_check(name, files_cache, repo=None):
+def repo_check(name, files_cache, repo=None, inv=None, manifest=None):
     """Return list of (path, line, message) for repository-wide checks."""
+    if name in comms.CHECKS:
+        return comms.check(name, inv, manifest) if inv else []
     if name == "agent_instructions_missing":
         for f in AGENT_FILES:
             p = repo / f if repo else None
@@ -589,6 +632,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
             continue
         files_cache.append((str(p.relative_to(repo)), text.splitlines(), text))
     deps = collect_dependencies(repo)
+    inv = comms.inventory(files_cache, deps)
 
     findings: list[Finding] = []
     checked_static = set()
@@ -621,7 +665,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
                     findings.append(Finding(rid, sev, rule["title"], f, None, f"dependency: {name}", note=undeclared, confidence=conf))
             elif pat["type"] == "repo":
                 checked_static.add(rid)
-                for rel, ln, msg in repo_check(pat["check"], files_cache, repo):
+                for rel, ln, msg in repo_check(pat["check"], files_cache, repo, inv, manifest):
                     w = active_waiver(waivers, rid, rel, today)
                     if w:
                         findings.append(Finding(rid, "WAIVED", rule["title"], rel, ln, msg,
@@ -651,6 +695,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
     return {
         "profiles": sorted(profiles), "bands": sorted(bands), "level": level,
         "rules_in_scope": sorted(in_scope), "findings": _with_raw(findings, std), "human_checks": human,
+        "communications": inv,
     }
 
 
@@ -774,6 +819,11 @@ def render_report(repo, std, manifest, result, manifest_path) -> str:
         a("No automated findings at this level.")
         a("")
 
+    a("## Communications inventory")
+    a("")
+    a("Channels found in code and the safeguards around them (rules CORE-CHT-*, CORE-SAF-05, AGE-B2-01).")
+    a("")
+    lines.extend(comms.markdown(result["communications"]))
     a("## Human checks")
     a("")
     a("These rules apply to the product but need a person to verify. Tick them in the self-assessment checklist.")
@@ -938,6 +988,7 @@ def to_json(std, manifest, result, improvements):
         "findings": [f.__dict__ for f in result["findings"]],
         "human_checks": result["human_checks"],
         "improvements": improvements,
+        "communications": result.get("communications"),
         "sources": {sid: std.sources[sid] for sid in cited_sources(std, result["rules_in_scope"]) if sid in std.sources},
     }
 
@@ -1033,9 +1084,7 @@ def main(argv=None) -> int:
     improvements = build_improvements(std, result)
 
     if args.out_dir:
-        out = Path(args.out_dir)
-        if not out.is_absolute():
-            out = repo / out
+        out = Path(args.out_dir).resolve()  # relative to the current directory, like any CLI
         out.mkdir(parents=True, exist_ok=True)
         rel_manifest = str(mpath.relative_to(repo)) if mpath and manifest is not None and mpath.is_relative_to(repo) else (str(mpath) if manifest else None)
         (out / "report.md").write_text(render_report(repo, std, manifest, result, rel_manifest), encoding="utf-8")

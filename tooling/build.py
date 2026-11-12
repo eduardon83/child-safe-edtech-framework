@@ -168,6 +168,23 @@ def load_and_validate():
     validate_sources(std.sources, "standard")
     for r in std.rules.values():
         validate_rule(r, std.sources, "standard")
+    topics = scan.load_yaml(ROOT / "standard" / "coc-topics.yaml")
+    for rid in std.rules:
+        if rid not in topics.get("rules", {}):
+            err(f"coc-topics.yaml: rule {rid} has no entry (add terms, or skip: true)")
+    for rid, t in topics.get("rules", {}).items():
+        if rid not in std.rules:
+            err(f"coc-topics.yaml: unknown rule {rid}")
+        for g in (t or {}).get("terms", []) + [[x] for x in (t or {}).get("conflict", []) or []]:
+            for term in g:
+                if isinstance(term, bool):
+                    err(f"coc-topics.yaml: {rid} has a YAML boolean (quote words like \"no\", \"yes\", \"on\", \"off\")")
+        for rx in (t or {}).get("conflict_regex", []) or []:
+            try:
+                re.compile(rx)
+            except re.error as ex:
+                err(f"coc-topics.yaml: {rid} bad conflict_regex: {ex}")
+
     packs = {}
     for pf in sorted((ROOT / "packs").glob("*.yaml")):
         if pf.name.startswith("_"):
@@ -372,7 +389,9 @@ def generate(std, packs) -> dict[Path, str]:
     for pf in sorted((ROOT / "packs").glob("*.yaml")):
         files[sk / "packs" / pf.name] = pf.read_text(encoding="utf-8")
     files[sk / "scripts" / "scan.py"] = (ROOT / "tooling" / "scan.py").read_text(encoding="utf-8")
-    files[sk / "scripts" / "export.py"] = (ROOT / "tooling" / "export.py").read_text(encoding="utf-8")
+    for t in ("export.py", "comms.py", "coc.py"):
+        files[sk / "scripts" / t] = (ROOT / "tooling" / t).read_text(encoding="utf-8")
+    files[sk / "standard" / "coc-topics.yaml"] = (ROOT / "standard" / "coc-topics.yaml").read_text(encoding="utf-8")
     for t in ("cses.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md"):
         files[sk / "templates" / t] = (ROOT / "templates" / t).read_text(encoding="utf-8")
     return files

@@ -2,12 +2,12 @@
 
 # Rule catalogue
 
-CSES v0.4.0: 97 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
+CSES v0.5.0: 106 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
 
 | Level | MUST | SHOULD |
 |---|---|---|
-| 1 Legal baseline | 33 | 1 |
-| 2 Forward-compliant | 32 | 4 |
+| 1 Legal baseline | 35 | 2 |
+| 2 Forward-compliant | 38 | 4 |
 | 3 Best practice | 0 | 27 |
 
 | ID | Title | Profiles | Strength | Level | Age bands |
@@ -61,6 +61,15 @@ CSES v0.4.0: 97 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best
 | CORE-AI-09 | AI is re-tested regularly and monitored after release | core | MUST | 2 | all |
 | CORE-AI-10 | An AI assistant inside a game or app is opt-in and easy to leave | core | MUST | 2 | all |
 | CORE-AI-11 | AI never nudges children to spend or towards ads | core | MUST | 2 | all |
+| CORE-CHT-01 | Every communication channel is declared | core | MUST | 1 | all |
+| CORE-CHT-02 | Report and block in every channel | core | MUST | 1 | all |
+| CORE-CHT-03 | Moderation by people and by tools | core | MUST | 2 | all |
+| CORE-CHT-04 | Direct messages only with approved contacts; groups only with agreement | core | MUST | 2 | all |
+| CORE-CHT-05 | No links, handles or contact details in children's messages | core | MUST | 2 | all |
+| CORE-CHT-06 | Voice, video and live streaming off by default | core | MUST | 2 | all |
+| CORE-CHT-07 | Children's shared media is protected | core | MUST | 2 | all |
+| CORE-CHT-08 | Safeguarding procedure for communication risks | core | MUST | 2 | all |
+| CORE-CHT-09 | Messages are kept only as long as needed | core | SHOULD | 1 | all |
 | CORE-CNT-01 | Asset provenance and licences recorded | core | SHOULD | 3 | all |
 | CORE-CNT-02 | Age rating self-assessment | core | SHOULD | 3 | all |
 | CORE-COM-01 | No advertising or ad tracking SDKs | core | MUST | 1 | all |

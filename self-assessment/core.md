@@ -27,6 +27,12 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **CORE-AI-07** (MUST) Human review of decisions about learners. No grade, level placement, certification or access decision about a learner is taken solely by automated processing. A teacher can see, explain and override it.  
       Evidence: 
+- [ ] **CORE-CHT-01** (MUST) Every communication channel is declared. Every way children can communicate (text chat, direct messages, comments, voice, video, live streaming, multiplayer messaging) is declared in cses.yaml features and listed in the DPIA, with the service used and where data is processed.  
+      Evidence: 
+- [ ] **CORE-CHT-02** (MUST) Report and block in every channel. In every channel, a child can report a message or user in one step and block any user without the blocked user being told who blocked them. Reports reach a person quickly, with the message kept as evidence.  
+      Evidence: 
+- [ ] **CORE-CHT-09** (SHOULD) Messages are kept only as long as needed. Messages have a defined retention period enforced by code, children and teachers can delete them, and reported messages are preserved only for the investigation.  
+      Evidence: 
 - [ ] **CORE-COM-01** (MUST) No advertising or ad tracking SDKs. No advertising based on profiling of minors and no ad, attribution or fingerprinting SDKs in products used by minors.  
       Evidence: 
 - [ ] **CORE-COM-03** (MUST) No dark patterns. No fake urgency or scarcity, confirmshaming, pre-ticked options, nagging after a choice, obstruction to leave or cancel, fake notifications, or confusing double negatives.  
@@ -83,6 +89,18 @@ Product: ____________________  Date: __________  Assessor: ____________________
 - [ ] **CORE-AI-10** (MUST) An AI assistant inside a game or app is opt-in and easy to leave. When an AI chatbot or companion is a feature of a game, app or platform, it is not switched on automatically, not displayed prominently (e.g. not pinned at the top of contacts or the home screen), children are not encouraged to use it, and they can turn it off easily at any time.  
       Evidence: 
 - [ ] **CORE-AI-11** (MUST) AI never nudges children to spend or towards ads. AI tutors, characters and assistants never suggest purchases, upgrades, premium content or advertised products, and are not optimised for spending or engagement time.  
+      Evidence: 
+- [ ] **CORE-CHT-03** (MUST) Moderation by people and by tools. Communication is moderated by named people (a teacher in school use, trained moderators otherwise) who can hide, remove, mute and suspend, supported by automated filters for text and images in the product's languages, with rate limits against spam. The level of moderation matches the age band.  
+      Evidence: 
+- [ ] **CORE-CHT-04** (MUST) Direct messages only with approved contacts; groups only with agreement. Nobody can start a private conversation with a child unless the child (or, under 13, the guardian or teacher) has approved that contact. Children are added to groups only with their agreement. Nobody can pressure a child into approving contact.  
+      Evidence: 
+- [ ] **CORE-CHT-05** (MUST) No links, handles or contact details in children's messages. Messages to and from children block or warn on external links, social media handles, phone numbers, emails and addresses, so the product cannot be used to move children to other services.  
+      Evidence: 
+- [ ] **CORE-CHT-06** (MUST) Voice, video and live streaming off by default. Voice chat, video chat and live streaming are off by default, enabled only by a guardian or teacher for under-13s, limited to approved contacts, and children cannot host live streams by default.  
+      Evidence: 
+- [ ] **CORE-CHT-07** (MUST) Children's shared media is protected. Images and files sent in messages are checked automatically, visible to the responsible teacher or moderator, and cannot be downloaded or forwarded by other users. Contact and account information of children is never visible to people they have not accepted.  
+      Evidence: 
+- [ ] **CORE-CHT-08** (MUST) Safeguarding procedure for communication risks. There is a written safeguarding procedure with a named lead: how moderators recognise and escalate grooming, sexual exploitation, extortion, threats, self-harm signals and radicalisation; how evidence is preserved; when guardians, schools, hotlines and authorities are contacted; and how moderators are trained and supported.  
       Evidence: 
 - [ ] **CORE-COM-02** (SHOULD) Third-party analytics and session recording reviewed. Product analytics and session-replay tools are either self-hosted in the EEA or bound by a processor agreement that forbids reuse of data. Session recording is not used on child-facing screens.  
       Evidence: 

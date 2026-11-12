@@ -1,6 +1,6 @@
 ---
 name: cses-review
-description: Pre-compliance review of a codebase used by children (educational games, game-based applications, gamified apps) against the Child-Safe EdTech Standard (CSES), covering GDPR, DSA, AI Act, EU KIDS Act and DFA proposals, accessibility and national packs. Produces a pre-compliance report and a prioritised improvement plan, both with sources. Use when asked to check, audit or review child safety, children's privacy or EU compliance of an app, game or repository.
+description: Pre-compliance review of a codebase used by children (educational games, game-based applications, gamified apps) against the Child-Safe EdTech Standard (CSES), covering GDPR, DSA, AI Act, EU KIDS Act and DFA proposals, accessibility and national packs. Produces a pre-compliance report and a prioritised improvement plan with sources, an interactive dashboard, PDF and Word exports, a communications audit, and code-of-conduct gap analysis. Use when asked to check, audit or review child safety, children's privacy or EU compliance of an app, game, repository or code of conduct.
 ---
 
 # CSES review
@@ -50,11 +50,12 @@ is not in the registry, offer to write a pack for it (see `packs/_template.yaml`
 
 ```bash
 pip install pyyaml  # if missing
-python3 <skill-folder>/scripts/scan.py --repo <repo> --out-dir cses-report
+python3 <skill-folder>/scripts/scan.py --repo <repo> --out-dir <repo>/cses-report
 # options: --level 1|2|3   --pack path/to/extra-pack.yaml   --format json
 ```
 
-It writes `report.md`, `improvements.md`, `findings.json`, `findings.sarif` into `<repo>/cses-report/`.
+It writes `report.md`, `improvements.md`, `findings.json`, `findings.sarif` into the output folder
+(relative paths are relative to the current directory).
 
 When the user wants something to share with non-developers (product owners, clients, legal counsel), add
 `--export html,pdf,docx` (or run `scripts/export.py --input cses-report/findings.json --formats ...`). It writes
@@ -107,3 +108,34 @@ human (DPO, legal, product owner). Link both files.
   official source before answering; the registry has a `verified` date.
 - **Roles.** In school deployments the provider is usually a processor. Many obligations (DPIA, legal
   basis) sit with the school; the report should say what the provider must supply.
+
+## Communications audit
+
+The scan includes a communications inventory (`findings.json` > `communications`, and a section in
+`report.md` and the dashboard): channels found (chat SDKs, message tables, voice and video, comments,
+live streaming) and safeguards found (report, block, moderation roles, filters, link filtering, rate
+limits, preset messages, retention, teacher visibility). A safeguard "not found" may live in a service
+dashboard (for example the chat provider's moderation settings) or a backend outside the repository.
+Look for it, ask the user if needed, and say which you confirmed. CORE-CHT-08 (safeguarding procedure)
+is always a human check.
+
+## Code of conduct comparison
+
+When the user wants to check a code of conduct (an industry code, their own code, a draft code under the
+EU KIDS Act), follow `references/coc-review.md`. In short:
+
+```bash
+python3 <skill-folder>/scripts/coc.py --input code.pdf --name "Code name" --level 2 --profiles A,C --bands B2,B3 --out-dir coc-report
+```
+
+It writes `coc-comparison.md`, `.html` and `.json`: structural criteria from the KIDS Act (Art. 17, 23,
+Recital 39) and, per rule, covered, partial, missing or possible conflict. The tool matches wording;
+you then read the code and confirm or correct every result by meaning, in any language.
+
+## Limits to state in every report
+
+- Static analysis reads files; it does not run the product, inspect live databases, cloud consoles or
+  third-party dashboards.
+- Contracts, legal bases, DPIAs, moderation practice and safeguarding procedures are human checks.
+- Binary engine assets (Unreal Blueprints, GameMaker, Construct) and no-code tools without a repository
+  cannot be scanned; review them by hand or from exported configuration.

@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.5.0 (2026-11-12)
+
+- Communications audit (`tooling/comms.py`): inventory of chat SDKs, message tables, direct messages,
+  voice, video, comments and live streaming, and of safeguards (report, block, moderation roles, automated
+  filters, link and contact-detail filtering, rate limits, preset messages, retention, teacher visibility).
+  Shown in `report.md`, the dashboard, PDF and Word.
+- Nine communications rules CORE-CHT-01 to 09 (KIDS Act Art. 12, 15(2), Recital 36; DSA Art. 16).
+  CORE-SAF-05 also detects random matching, public rooms and global chat.
+- Code-of-conduct comparison (`tooling/coc.py`, `standard/coc-topics.yaml`): structure checks from KIDS
+  Act Art. 17, 23 and Recital 39, and covered / partial / missing / possible conflict per rule. Markdown,
+  HTML and JSON. Fictional example in `examples/codes-of-conduct/`.
+- Unity support: Unity Package Manager and External Dependency Manager, Unity text assets (`.prefab`,
+  `.asset`, `.unity`), Unity Ads, LevelPlay, IAP, Analytics, Vivox and Photon detection; `examples/unity-sample`.
+- More ecosystems: Maven, NuGet, Go modules, Cargo, Composer, Bundler, Swift Package Manager; Rust, C and
+  C++, Scala, Elixir and Godot files.
+- `standard/legislation.md` and `standard/research.md`.
+- Fix: `--out-dir` is now relative to the current directory (it was relative to the scanned repository,
+  which broke CI example exports in v0.3 and v0.4).
+- CI and templates use `actions/checkout@v5` and `actions/setup-python@v6`.
+
 ## v0.4.0 (2026-11-12)
 
 - EU KIDS Act commercial practices (Recital 31, Art. 13): new rules CORE-COM-05 purchases labelled in

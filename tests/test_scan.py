@@ -215,3 +215,67 @@ def test_kids_act_commercial_and_ai_rules():
         assert rid in flagged, rid
     std = scan.load_standard(ROOT)
     assert std.rules["CORE-COM-07"]["tier"] == 1
+
+
+UNITY = ROOT / "examples" / "unity-sample"
+COC = ROOT / "examples" / "codes-of-conduct" / "example-code.md"
+
+
+def test_communications_inventory():
+    _, _, res = run(BAD, level=2)
+    inv = res["communications"]
+    assert inv["has_communication"]
+    assert {"Socket.IO", "Agora"} <= {c["name"] for c in inv["channels"]}
+    assert not inv["safeguards"]["report"]["evidence"]
+    flagged = rules_with(res, "REVIEW") | rules_with(res, "BLOCK")
+    for rid in ["CORE-CHT-02", "CORE-CHT-03", "CORE-CHT-04", "CORE-CHT-05", "CORE-CHT-06", "CORE-CHT-07"]:
+        assert rid in flagged, rid
+    assert "CORE-CHT-06" in rules_with(res, "BLOCK")          # voiceChatEnabled: true
+
+
+def test_no_comms_in_compliant_example():
+    _, _, res = run(GOOD, level=3)
+    assert not res["communications"]["has_communication"]
+    assert not any(f.rule_id.startswith("CORE-CHT") for f in res["findings"])
+
+
+def test_unity_project():
+    _, _, res = run(UNITY, level=2)
+    block = rules_with(res, "BLOCK")
+    assert "CORE-COM-01" in block                              # com.unity.ads + Advertisement.Initialize
+    assert "CORE-CHT-06" in block                              # voiceChatEnabled: 1 in a prefab
+    assert "Vivox / Photon Voice" in {c["name"] for c in res["communications"]["channels"]}
+    deps = scan.collect_dependencies(UNITY)
+    assert "com.unity.purchasing" in deps
+
+
+def test_dependency_parsers(tmp_path):
+    (tmp_path / "pom.xml").write_text("<project><dependencies><dependency><groupId>com.appsflyer</groupId><artifactId>af-android-sdk</artifactId></dependency></dependencies></project>", encoding="utf-8")
+    (tmp_path / "App.csproj").write_text('<Project><ItemGroup><PackageReference Include="GoogleMobileAds" Version="9.0.0" /></ItemGroup></Project>', encoding="utf-8")
+    (tmp_path / "go.mod").write_text("module x\n\nrequire (\n\tgithub.com/gorilla/websocket v1.5.0\n)\n", encoding="utf-8")
+    (tmp_path / "composer.json").write_text('{"require": {"pusher/pusher-php-server": "^7.0"}}', encoding="utf-8")
+    (tmp_path / "Gemfile").write_text("gem 'rails'\n", encoding="utf-8")
+    deps = scan.collect_dependencies(tmp_path)
+    for name in ["com.appsflyer:af-android-sdk", "GoogleMobileAds", "github.com/gorilla/websocket", "pusher/pusher-php-server", "rails"]:
+        assert name in deps, name
+
+
+def test_out_dir_relative_to_cwd(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    scan.main(["--repo", str(GOOD), "--out-dir", "out", "--format", "none"])
+    assert (tmp_path / "out" / "report.md").exists()
+
+
+def test_code_of_conduct_comparison(tmp_path):
+    import coc
+    code = scan.main  # noqa: F841  (scan imported above)
+    assert coc.main(["--input", str(COC), "--name", "Example", "--level", "2", "--out-dir", str(tmp_path)]) == 0
+    res = json.loads((tmp_path / "coc-comparison.json").read_text(encoding="utf-8"))
+    by = {r["rule_id"]: r["status"] for r in res["rules"]}
+    assert by["A-ECO-01"] == "conflict"                      # loot boxes allowed if odds disclosed
+    assert by["CORE-SAF-02"] == "conflict"                   # notifications enabled by default
+    assert by["CORE-CHT-02"] == "covered"                    # report and block in every chat
+    assert by["CORE-AI-01"] == "missing"
+    s = {x["id"]: x["status"] for x in res["structure"]}
+    assert s["COC-S05"] == "missing" and s["COC-S06"] == "covered"
+    assert "Possible conflicts" in (tmp_path / "coc-comparison.md").read_text(encoding="utf-8")

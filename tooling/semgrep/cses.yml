@@ -277,7 +277,23 @@ rules:
     - KIDS
     - AIA
     - UCPD
-- id: core-com-01-2
+- id: core-com-01-1
+  message: 'CORE-COM-01 (MUST, level 1): No advertising or ad tracking SDKs. Remove the SDK. If marketing attribution is needed, measure it on the adult-facing website only.'
+  severity: ERROR
+  languages:
+  - generic
+  pattern-regex: \b(Advertisement\.(Initialize|Show|Load)|MobileAds\.Initialize|FB\.Init|AppsFlyer\.initSDK|IronSource\.Agent|LevelPlay\.Init|AdjustConfig)\b
+  metadata:
+    cses_rule: CORE-COM-01
+    tier: 1
+    sources: &id002
+    - DSA
+    - DFA
+    - GDPR
+  paths:
+    include:
+    - '*.cs'
+- id: core-com-01-3
   message: 'CORE-COM-01 (MUST, level 1): No advertising or ad tracking SDKs. Remove the SDK. If marketing attribution is needed, measure it on the adult-facing website only.'
   severity: ERROR
   languages:
@@ -286,11 +302,24 @@ rules:
   metadata:
     cses_rule: CORE-COM-01
     tier: 1
-    sources:
-    - DSA
-    - DFA
+    sources: *id002
+- id: core-com-02-1
+  message: 'CORE-COM-02 (SHOULD, level 2): Third-party analytics and session recording reviewed. Prefer self-hosted analytics (e.g. EU-hosted PostHog or Matomo) with IP anonymisation; remove session replay
+    from child screens.'
+  severity: INFO
+  languages:
+  - generic
+  pattern-regex: \b(Firebase\.Analytics|GameAnalyticsSDK|AnalyticsService\.Instance)\b
+  metadata:
+    cses_rule: CORE-COM-02
+    tier: 2
+    sources: &id003
     - GDPR
-- id: core-com-02-2
+    - DSA-G28
+  paths:
+    include:
+    - '*.cs'
+- id: core-com-02-3
   message: 'CORE-COM-02 (SHOULD, level 2): Third-party analytics and session recording reviewed. Prefer self-hosted analytics (e.g. EU-hosted PostHog or Matomo) with IP anonymisation; remove session replay
     from child screens.'
   severity: INFO
@@ -300,9 +329,7 @@ rules:
   metadata:
     cses_rule: CORE-COM-02
     tier: 2
-    sources:
-    - GDPR
-    - DSA-G28
+    sources: *id003
 - id: core-com-03-1
   message: 'CORE-COM-03 (MUST, level 1): No dark patterns. Rewrite the copy neutrally, remove timers and pre-selected options, make ''no'' as easy as ''yes''.'
   severity: ERROR
@@ -312,7 +339,7 @@ rules:
   metadata:
     cses_rule: CORE-COM-03
     tier: 1
-    sources: &id002
+    sources: &id004
     - DSA
     - UCPD
     - DFA
@@ -326,7 +353,7 @@ rules:
   metadata:
     cses_rule: CORE-COM-03
     tier: 1
-    sources: *id002
+    sources: *id004
 - id: core-com-03-3
   message: 'CORE-COM-03 (MUST, level 1): No dark patterns. Rewrite the copy neutrally, remove timers and pre-selected options, make ''no'' as easy as ''yes''.'
   severity: WARNING
@@ -336,7 +363,23 @@ rules:
   metadata:
     cses_rule: CORE-COM-03
     tier: 1
-    sources: *id002
+    sources: *id004
+- id: core-com-04-1
+  message: 'CORE-COM-04 (MUST, level 1): Purchases are adult-facing only. Move purchases to a guardian or school portal; remove buy prompts from child screens.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: \b(UnityPurchasing\.Initialize|IDetailedStoreListener|IStoreListener|CodelessIAPStoreListener)\b
+  metadata:
+    cses_rule: CORE-COM-04
+    tier: 1
+    sources:
+    - UCPD
+    - KIDS
+    - DFA
+  paths:
+    include:
+    - '*.cs'
 - id: core-com-06-1
   message: 'CORE-COM-06 (MUST, level 2): No design for impulsive or unwanted spending. Move every purchase out of the child experience into a guardian or school area; remove purchase buttons from gameplay,
     results and failure screens.'
@@ -410,7 +453,7 @@ rules:
   severity: WARNING
   languages:
   - generic
-  pattern-regex: (navigator\.geolocation|getCurrentPosition|watchPosition|ACCESS_FINE_LOCATION|NSLocationAlwaysUsageDescription|CLLocationManager)
+  pattern-regex: (navigator\.geolocation|getCurrentPosition|watchPosition|ACCESS_FINE_LOCATION|NSLocationAlwaysUsageDescription|CLLocationManager|Input\.location\.Start)
   metadata:
     cses_rule: CORE-DAT-09
     tier: 2
@@ -423,7 +466,7 @@ rules:
   severity: WARNING
   languages:
   - generic
-  pattern-regex: (getUserMedia|RECORD_AUDIO|android\.permission\.CAMERA|NSMicrophoneUsageDescription|NSCameraUsageDescription)
+  pattern-regex: (getUserMedia|RECORD_AUDIO|android\.permission\.CAMERA|NSMicrophoneUsageDescription|NSCameraUsageDescription|Microphone\.Start|WebCamTexture)
   metadata:
     cses_rule: CORE-DAT-10
     tier: 2
@@ -452,7 +495,7 @@ rules:
   metadata:
     cses_rule: CORE-SAF-02
     tier: 2
-    sources: &id003
+    sources: &id005
     - KIDS
     - DSA-G28
     - DFA
@@ -466,7 +509,7 @@ rules:
   metadata:
     cses_rule: CORE-SAF-02
     tier: 2
-    sources: *id003
+    sources: *id005
 - id: core-saf-03-1
   message: 'CORE-SAF-03 (MUST, level 2): Natural stopping points, no autoplay or endless feeds. Remove autoplay; end each activity with a clear ''done'' screen and an explicit choice to continue.'
   severity: WARNING
@@ -486,7 +529,7 @@ rules:
   severity: WARNING
   languages:
   - generic
-  pattern-regex: (searchUsers|findFriends|suggestedFriends|peopleYouMayKnow|friendSuggestions|addFriendByName)
+  pattern-regex: (searchUsers|findFriends|suggestedFriends|peopleYouMayKnow|friendSuggestions|addFriendByName|randomMatch|findRandomPlayer|joinPublicRoom|publicLobby|globalChat|worldChat)
   metadata:
     cses_rule: CORE-SAF-05
     tier: 1

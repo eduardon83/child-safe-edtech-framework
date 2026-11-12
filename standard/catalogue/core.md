@@ -22,6 +22,15 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-AI-09](#core-ai-09-ai-is-re-tested-regularly-and-monitored-after-release) | AI is re-tested regularly and monitored after release | MUST | 2 | manual |
 | [CORE-AI-10](#core-ai-10-an-ai-assistant-inside-a-game-or-app-is-opt-in-and-easy-to-leave) | An AI assistant inside a game or app is opt-in and easy to leave | MUST | 2 | mixed |
 | [CORE-AI-11](#core-ai-11-ai-never-nudges-children-to-spend-or-towards-ads) | AI never nudges children to spend or towards ads | MUST | 2 | mixed |
+| [CORE-CHT-01](#core-cht-01-every-communication-channel-is-declared) | Every communication channel is declared | MUST | 1 | static |
+| [CORE-CHT-02](#core-cht-02-report-and-block-in-every-channel) | Report and block in every channel | MUST | 1 | mixed |
+| [CORE-CHT-03](#core-cht-03-moderation-by-people-and-by-tools) | Moderation by people and by tools | MUST | 2 | mixed |
+| [CORE-CHT-04](#core-cht-04-direct-messages-only-with-approved-contacts-groups-only-with-agreement) | Direct messages only with approved contacts; groups only with agreement | MUST | 2 | mixed |
+| [CORE-CHT-05](#core-cht-05-no-links-handles-or-contact-details-in-childrens-messages) | No links, handles or contact details in children's messages | MUST | 2 | mixed |
+| [CORE-CHT-06](#core-cht-06-voice-video-and-live-streaming-off-by-default) | Voice, video and live streaming off by default | MUST | 2 | mixed |
+| [CORE-CHT-07](#core-cht-07-childrens-shared-media-is-protected) | Children's shared media is protected | MUST | 2 | mixed |
+| [CORE-CHT-08](#core-cht-08-safeguarding-procedure-for-communication-risks) | Safeguarding procedure for communication risks | MUST | 2 | manual |
+| [CORE-CHT-09](#core-cht-09-messages-are-kept-only-as-long-as-needed) | Messages are kept only as long as needed | SHOULD | 1 | manual |
 | [CORE-CNT-01](#core-cnt-01-asset-provenance-and-licences-recorded) | Asset provenance and licences recorded | SHOULD | 3 | manual |
 | [CORE-CNT-02](#core-cnt-02-age-rating-self-assessment) | Age rating self-assessment | SHOULD | 3 | manual |
 | [CORE-COM-01](#core-com-01-no-advertising-or-ad-tracking-sdks) | No advertising or ad tracking SDKs | MUST | 1 | static |
@@ -262,6 +271,114 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Remove commercial goals from system prompts and fine-tuning data; add red-team prompts that try to elicit upsell and test that the AI refuses.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
+
+### CORE-CHT-01: Every communication channel is declared
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: static · Effort: low
+
+**Requirement.** Every way children can communicate (text chat, direct messages, comments, voice, video, live streaming, multiplayer messaging) is declared in cses.yaml features and listed in the DPIA, with the service used and where data is processed.
+
+**Why.** Accountability (GDPR Art. 5(2)) and the DPIA require knowing every channel. Contact risks are the main reason the KIDS Act regulates online games (Recital 36). Undeclared channels escape every other check.
+
+**How to improve.** Add the channel to `features` (chat, multiplayer, social or ugc) and to `third_parties`; update the DPIA.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
+
+### CORE-CHT-02: Report and block in every channel
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: mixed · Effort: medium
+
+**Requirement.** In every channel, a child can report a message or user in one step and block any user without the blocked user being told who blocked them. Reports reach a person quickly, with the message kept as evidence.
+
+**Why.** DSA Art. 16 (notice and action) applies to hosting services. KIDS Act Art. 12(1)(d) (block without identity disclosed) and Art. 19 (child-friendly reporting). DSA Art. 28 guidelines.
+
+**How to improve.** Add report and block actions to every message and profile; route reports to a moderation queue with priority for minors.
+
+**Sources.** [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
+
+### CORE-CHT-03: Moderation by people and by tools
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: mixed · Effort: high
+
+**Requirement.** Communication is moderated by named people (a teacher in school use, trained moderators otherwise) who can hide, remove, mute and suspend, supported by automated filters for text and images in the product's languages, with rate limits against spam. The level of moderation matches the age band.
+
+**Why.** KIDS Act Recital 36 lists cyberbullying, harassment, grooming, sexual exploitation, recruitment and radicalisation as contact risks in online games. DSA Art. 28 guidelines on moderation for minors.
+
+**How to improve.** Give teachers or moderators hide/remove/mute/suspend powers; add a text filter (word list plus a moderation API) and image checks for uploads; add rate limits.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj)
+
+### CORE-CHT-04: Direct messages only with approved contacts; groups only with agreement
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: mixed · Effort: medium
+
+**Requirement.** Nobody can start a private conversation with a child unless the child (or, under 13, the guardian or teacher) has approved that contact. Children are added to groups only with their agreement. Nobody can pressure a child into approving contact.
+
+**Why.** KIDS Act Art. 12(1)(a)(c) and 12(2), applied to online games by Art. 15(1)(c) for 12(1).
+
+**How to improve.** Restrict direct messages to approved contacts within the class or group; require acceptance for group invitations.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
+
+### CORE-CHT-05: No links, handles or contact details in children's messages
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: mixed · Effort: medium
+
+**Requirement.** Messages to and from children block or warn on external links, social media handles, phone numbers, emails and addresses, so the product cannot be used to move children to other services.
+
+**Why.** KIDS Act Art. 15(2) and Recital 36 (restrict link-outs, warning messages, prevent enticing minors to other services); Art. 12(3)(c) (contact details of minors never shared).
+
+**How to improve.** Filter URLs, handles and contact details before delivery; show a warning to the child and notify moderation.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
+
+### CORE-CHT-06: Voice, video and live streaming off by default
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Detection: mixed · Effort: medium
+
+**Requirement.** Voice chat, video chat and live streaming are off by default, enabled only by a guardian or teacher for under-13s, limited to approved contacts, and children cannot host live streams by default.
+
+**Why.** KIDS Act Art. 11(1) (camera, microphone) and Art. 12(3)(f) (no hosting of real-time transmissions by default). DSA Art. 28 guidelines.
+
+**How to improve.** Default voice and video to off; add guardian or teacher activation; restrict to class groups; remove child-hosted streaming.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
+
+### CORE-CHT-07: Children's shared media is protected
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: mixed · Effort: medium
+
+**Requirement.** Images and files sent in messages are checked automatically, visible to the responsible teacher or moderator, and cannot be downloaded or forwarded by other users. Contact and account information of children is never visible to people they have not accepted.
+
+**Why.** KIDS Act Art. 12(3)(a)(b)(e). DSA Art. 28 guidelines.
+
+**How to improve.** Add image checks on upload, disable download and forwarding of children's media, and restrict profile visibility.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+
+### CORE-CHT-08: Safeguarding procedure for communication risks
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: manual · Effort: medium
+
+**Requirement.** There is a written safeguarding procedure with a named lead: how moderators recognise and escalate grooming, sexual exploitation, extortion, threats, self-harm signals and radicalisation; how evidence is preserved; when guardians, schools, hotlines and authorities are contacted; and how moderators are trained and supported.
+
+**Why.** KIDS Act Recital 36 names these contact risks. Code cannot show this; it is the human side of every other communication rule. DSA Art. 28 guidelines expect effective moderation and support for minors.
+
+**How to improve.** Write the procedure with the DPO and a safeguarding lead; train moderators and teachers; test it with a tabletop exercise each year.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
+
+### CORE-CHT-09: Messages are kept only as long as needed
+
+**SHOULD** · Level 1 (Legal baseline) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: manual · Effort: low
+
+**Requirement.** Messages have a defined retention period enforced by code, children and teachers can delete them, and reported messages are preserved only for the investigation.
+
+**Why.** GDPR storage limitation (Art. 5(1)(e)) and erasure (Art. 17).
+
+**How to improve.** Add a retention job for messages and keep reported messages in a separate, access-controlled store.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
 
 ### CORE-CNT-01: Asset provenance and licences recorded
 

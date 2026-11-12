@@ -1,0 +1,5 @@
+%YAML 1.1
+--- !u!114 &114000011
+MonoBehaviour:
+  m_Name: VoiceSettings
+  voiceChatEnabled: 1

@@ -1,0 +1,9 @@
+cses_version: "0.1"
+product: Unity sample (bad example)
+profiles: [A]
+age_bands: [B2, B3]
+compliance_level: 2
+context: home
+gdpr_role: controller
+features: [multiplayer, chat, purchases]
+monetisation: in_app_purchases

@@ -15,7 +15,7 @@
 #   effort      low | medium | high (used to prioritise the improvement list)
 #   detection   method: static | manifest | manual | mixed, plus patterns
 
-version: "0.4.0"
+version: "0.5.0"
 
 rules:
 
@@ -249,7 +249,7 @@ rules:
     detection:
       method: static
       patterns:
-        - {type: regex, confidence: medium, pattern: '(navigator\.geolocation|getCurrentPosition|watchPosition|ACCESS_FINE_LOCATION|NSLocationAlwaysUsageDescription|CLLocationManager)'}
+        - {type: regex, confidence: medium, pattern: '(navigator\.geolocation|getCurrentPosition|watchPosition|ACCESS_FINE_LOCATION|NSLocationAlwaysUsageDescription|CLLocationManager|Input\.location\.Start)'}
 
   - id: CORE-DAT-10
     title: Microphone and camera off by default
@@ -267,7 +267,7 @@ rules:
     detection:
       method: static
       patterns:
-        - {type: regex, confidence: medium, pattern: '(getUserMedia|RECORD_AUDIO|android\.permission\.CAMERA|NSMicrophoneUsageDescription|NSCameraUsageDescription)'}
+        - {type: regex, confidence: medium, pattern: '(getUserMedia|RECORD_AUDIO|android\.permission\.CAMERA|NSMicrophoneUsageDescription|NSCameraUsageDescription|Microphone\.Start|WebCamTexture)'}
 
   - id: CORE-DAT-11
     title: Consent for non-essential storage and cookies
@@ -318,9 +318,10 @@ rules:
     detection:
       method: static
       patterns:
+        - {type: regex, confidence: high, globs: ['*.cs'], pattern: '\b(Advertisement\.(Initialize|Show|Load)|MobileAds\.Initialize|FB\.Init|AppsFlyer\.initSDK|IronSource\.Agent|LevelPlay\.Init|AdjustConfig)\b'}
         - type: dependency
           confidence: high
-          names: [react-native-google-mobile-ads, google-mobile-ads, '@capacitor-community/admob', admob-plus-cordova, react-native-fbsdk, react-native-fbsdk-next, facebook-nodejs-business-sdk, facebook_business, react-native-appsflyer, appsflyer-capacitor-plugin, react-native-adjust, '@adjustcom/adjust-web-sdk', react-native-branch, branch-sdk, '@fingerprintjs/fingerprintjs', '@fingerprintjs/fingerprintjs-pro', Google-Mobile-Ads-SDK, FBSDKCoreKit, AppsFlyerFramework, Adjust, 'com.google.android.gms:play-services-ads', 'com.facebook.android:facebook-android-sdk', 'com.appsflyer:af-android-sdk', 'com.adjust.sdk:adjust-android', google_mobile_ads, appsflyer_sdk, adjust_sdk]
+          names: [react-native-google-mobile-ads, google-mobile-ads, '@capacitor-community/admob', admob-plus-cordova, react-native-fbsdk, react-native-fbsdk-next, facebook-nodejs-business-sdk, facebook_business, react-native-appsflyer, appsflyer-capacitor-plugin, react-native-adjust, '@adjustcom/adjust-web-sdk', react-native-branch, branch-sdk, '@fingerprintjs/fingerprintjs', '@fingerprintjs/fingerprintjs-pro', Google-Mobile-Ads-SDK, FBSDKCoreKit, AppsFlyerFramework, Adjust, 'com.google.android.gms:play-services-ads', 'com.facebook.android:facebook-android-sdk', 'com.appsflyer:af-android-sdk', 'com.adjust.sdk:adjust-android', google_mobile_ads, appsflyer_sdk, adjust_sdk, com.unity.ads, com.unity.services.levelplay, com.google.ads.mobile, com.ironsource.sdk, GoogleMobileAds, Unity.Advertisements, Google.Apis.AdSense.v2]
         - {type: regex, confidence: high, pattern: '(googletagservices\.com|doubleclick\.net|connect\.facebook\.net/[^"'' ]*/fbevents\.js|adsbygoogle)'}
 
   - id: CORE-COM-02
@@ -339,9 +340,10 @@ rules:
     detection:
       method: static
       patterns:
+        - {type: regex, confidence: medium, globs: ['*.cs'], pattern: '\b(Firebase\.Analytics|GameAnalyticsSDK|AnalyticsService\.Instance)\b'}
         - type: dependency
           confidence: medium
-          names: ['@react-native-firebase/analytics', firebase-analytics, mixpanel-browser, mixpanel-react-native, '@amplitude/analytics-browser', '@segment/analytics-next', '@hotjar/browser', '@fullstory/browser', '@microsoft/clarity', logrocket, smartlook-client, posthog-js]
+          names: ['@react-native-firebase/analytics', firebase-analytics, mixpanel-browser, mixpanel-react-native, '@amplitude/analytics-browser', '@segment/analytics-next', '@hotjar/browser', '@fullstory/browser', '@microsoft/clarity', logrocket, smartlook-client, posthog-js, com.unity.services.analytics, com.unity.analytics, com.google.firebase.analytics, com.gameanalytics.sdk]
         - {type: regex, confidence: medium, pattern: '(getAnalytics\s*\(|static\.hotjar\.com|clarity\.ms/tag)'}
 
   - id: CORE-COM-03
@@ -380,7 +382,8 @@ rules:
     detection:
       method: mixed
       patterns:
-        - {type: dependency, confidence: medium, names: [react-native-iap, expo-in-app-purchases, '@revenuecat/purchases-js', react-native-purchases, cordova-plugin-purchase, in_app_purchase, purchases_flutter]}
+        - {type: regex, confidence: medium, globs: ['*.cs'], pattern: '\b(UnityPurchasing\.Initialize|IDetailedStoreListener|IStoreListener|CodelessIAPStoreListener)\b'}
+        - {type: dependency, confidence: medium, names: [react-native-iap, expo-in-app-purchases, '@revenuecat/purchases-js', react-native-purchases, cordova-plugin-purchase, in_app_purchase, purchases_flutter, com.unity.purchasing, com.unity.services.purchasing]}
         - {type: manifest, check: monetisation_for_minors, confidence: high}
 
   # ---------------------------------------------------------------- CORE: safety by design
@@ -475,7 +478,7 @@ rules:
     detection:
       method: mixed
       patterns:
-        - {type: regex, confidence: medium, pattern: '(searchUsers|findFriends|suggestedFriends|peopleYouMayKnow|friendSuggestions|addFriendByName)'}
+        - {type: regex, confidence: medium, pattern: '(searchUsers|findFriends|suggestedFriends|peopleYouMayKnow|friendSuggestions|addFriendByName|randomMatch|findRandomPlayer|joinPublicRoom|publicLobby|globalChat|worldChat)'}
 
   - id: CORE-SAF-06
     title: Child-friendly reporting and support
@@ -1803,3 +1806,188 @@ rules:
       method: mixed
       patterns:
         - {type: regex, confidence: medium, flags: i, pattern: '(upsell|encourage (the )?(user|child|student|player) to (buy|purchase|upgrade|subscribe)|promote (the )?(premium|shop|store|subscription))'}
+
+  # ================================================================ COMMUNICATIONS (KIDS Act Art. 12, 15(2), Recital 36; DSA)
+  # Detection uses the communications inventory (tooling/comms.py). Absence of a safeguard in code is a
+  # signal, not proof: many chat services configure moderation in a dashboard. Findings are REVIEW.
+  - id: CORE-CHT-01
+    title: Every communication channel is declared
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Every way children can communicate (text chat, direct messages, comments, voice, video, live streaming,
+      multiplayer messaging) is declared in cses.yaml features and listed in the DPIA, with the service used
+      and where data is processed.
+    rationale: >
+      Accountability (GDPR Art. 5(2)) and the DPIA require knowing every channel. Contact risks are the main
+      reason the KIDS Act regulates online games (Recital 36). Undeclared channels escape every other check.
+    improvement: Add the channel to `features` (chat, multiplayer, social or ugc) and to `third_parties`; update the DPIA.
+    effort: low
+    sources: [GDPR, KIDS, DSA-G28]
+    detection:
+      method: static
+      patterns:
+        - {type: repo, check: comms_undeclared, confidence: high}
+
+  - id: CORE-CHT-02
+    title: Report and block in every channel
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      In every channel, a child can report a message or user in one step and block any user without the
+      blocked user being told who blocked them. Reports reach a person quickly, with the message kept as evidence.
+    rationale: >
+      DSA Art. 16 (notice and action) applies to hosting services. KIDS Act Art. 12(1)(d) (block without
+      identity disclosed) and Art. 19 (child-friendly reporting). DSA Art. 28 guidelines.
+    improvement: Add report and block actions to every message and profile; route reports to a moderation queue with priority for minors.
+    effort: medium
+    sources: [DSA, KIDS, DSA-G28]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_report_block, confidence: medium}
+
+  - id: CORE-CHT-03
+    title: Moderation by people and by tools
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      Communication is moderated by named people (a teacher in school use, trained moderators otherwise) who can
+      hide, remove, mute and suspend, supported by automated filters for text and images in the product's
+      languages, with rate limits against spam. The level of moderation matches the age band.
+    rationale: >
+      KIDS Act Recital 36 lists cyberbullying, harassment, grooming, sexual exploitation, recruitment and
+      radicalisation as contact risks in online games. DSA Art. 28 guidelines on moderation for minors.
+    improvement: Give teachers or moderators hide/remove/mute/suspend powers; add a text filter (word list plus a moderation API) and image checks for uploads; add rate limits.
+    effort: high
+    sources: [KIDS, DSA-G28, DSA]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_moderation, confidence: medium}
+
+  - id: CORE-CHT-04
+    title: Direct messages only with approved contacts; groups only with agreement
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      Nobody can start a private conversation with a child unless the child (or, under 13, the guardian or
+      teacher) has approved that contact. Children are added to groups only with their agreement. Nobody can
+      pressure a child into approving contact.
+    rationale: KIDS Act Art. 12(1)(a)(c) and 12(2), applied to online games by Art. 15(1)(c) for 12(1).
+    improvement: Restrict direct messages to approved contacts within the class or group; require acceptance for group invitations.
+    effort: medium
+    sources: [KIDS, DSA-G28]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_direct_messages, confidence: medium}
+
+  - id: CORE-CHT-05
+    title: No links, handles or contact details in children's messages
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      Messages to and from children block or warn on external links, social media handles, phone numbers,
+      emails and addresses, so the product cannot be used to move children to other services.
+    rationale: >
+      KIDS Act Art. 15(2) and Recital 36 (restrict link-outs, warning messages, prevent enticing minors to other
+      services); Art. 12(3)(c) (contact details of minors never shared).
+    improvement: Filter URLs, handles and contact details before delivery; show a warning to the child and notify moderation.
+    effort: medium
+    sources: [KIDS]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_link_filter, confidence: medium}
+
+  - id: CORE-CHT-06
+    title: Voice, video and live streaming off by default
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Voice chat, video chat and live streaming are off by default, enabled only by a guardian or teacher for
+      under-13s, limited to approved contacts, and children cannot host live streams by default.
+    rationale: KIDS Act Art. 11(1) (camera, microphone) and Art. 12(3)(f) (no hosting of real-time transmissions by default). DSA Art. 28 guidelines.
+    improvement: Default voice and video to off; add guardian or teacher activation; restrict to class groups; remove child-hosted streaming.
+    effort: medium
+    sources: [KIDS, DSA-G28]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_voice_default_on, confidence: high}
+        - {type: repo, check: comms_voice_video, confidence: medium}
+
+  - id: CORE-CHT-07
+    title: Children's shared media is protected
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      Images and files sent in messages are checked automatically, visible to the responsible teacher or
+      moderator, and cannot be downloaded or forwarded by other users. Contact and account information of
+      children is never visible to people they have not accepted.
+    rationale: KIDS Act Art. 12(3)(a)(b)(e). DSA Art. 28 guidelines.
+    improvement: Add image checks on upload, disable download and forwarding of children's media, and restrict profile visibility.
+    effort: medium
+    sources: [KIDS, DSA-G28, GDPR]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_media, confidence: medium}
+
+  - id: CORE-CHT-08
+    title: Safeguarding procedure for communication risks
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      There is a written safeguarding procedure with a named lead: how moderators recognise and escalate
+      grooming, sexual exploitation, extortion, threats, self-harm signals and radicalisation; how evidence is
+      preserved; when guardians, schools, hotlines and authorities are contacted; and how moderators are trained
+      and supported.
+    rationale: >
+      KIDS Act Recital 36 names these contact risks. Code cannot show this; it is the human side of every
+      other communication rule. DSA Art. 28 guidelines expect effective moderation and support for minors.
+    improvement: Write the procedure with the DPO and a safeguarding lead; train moderators and teachers; test it with a tabletop exercise each year.
+    effort: medium
+    sources: [KIDS, DSA-G28, UNCRC-GC25]
+    detection:
+      method: manual
+
+  - id: CORE-CHT-09
+    title: Messages are kept only as long as needed
+    level: SHOULD
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      Messages have a defined retention period enforced by code, children and teachers can delete them, and
+      reported messages are preserved only for the investigation.
+    rationale: GDPR storage limitation (Art. 5(1)(e)) and erasure (Art. 17).
+    improvement: Add a retention job for messages and keep reported messages in a separate, access-controlled store.
+    effort: low
+    sources: [GDPR]
+    detection:
+      method: manual
