@@ -33,6 +33,8 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **CORE-COM-04** (MUST) Purchases are adult-facing only. Children are never directly exhorted to buy, and any purchase flow is behind an adult gate (guardian or school account), with the price in real currency.  
       Evidence: 
+- [ ] **CORE-COM-07** (MUST) No disguised advertising. Paid promotion is never presented as learning content, game content or a character's own opinion. Any sponsorship, product placement or brand partnership is clearly identified as such, in words a child of the target age understands.  
+      Evidence: 
 - [ ] **CORE-DAT-01** (MUST) DPIA before launch. A Data Protection Impact Assessment exists before launch when children's data is processed at scale, with new technology (including AI), or for systematic monitoring of learners.  
       Evidence: 
 - [ ] **CORE-DAT-02** (MUST) Controller and processor roles are defined, with processor agreements. The manifest states whether the provider acts as controller or processor, and every third party that touches personal data has a data processing agreement (GDPR Art. 28).  
@@ -72,9 +74,21 @@ Product: ____________________  Date: __________  Assessor: ____________________
 
 - [ ] **CORE-AI-05** (MUST) Age-appropriate AI output, tested before release. Input and output filters adapted to the target age, red-team tests in the product's languages before release, and post-release monitoring of incidents.  
       Evidence: 
-- [ ] **CORE-AI-06** (MUST) No AI persona that simulates a relationship. AI characters are friendly but never claim feelings, friendship, missing the child, or exclusivity, and do not create emotional dependency. Memory of previous chats is off by default unless needed for safety.  
+- [ ] **CORE-AI-06** (MUST) No AI persona that simulates a relationship. AI characters are friendly but never claim feelings, friendship, missing the child, or exclusivity, and do not create emotional dependency (see CORE-AI-08 for conversation memory).  
+      Evidence: 
+- [ ] **CORE-AI-08** (MUST) Conversation memory is off by default. AI systems do not keep or reuse information from a child's previous conversations by default, except where necessary to protect the child's safety. Any memory is visible to the teacher or guardian and can be deleted.  
+      Evidence: 
+- [ ] **CORE-AI-09** (MUST) AI is re-tested regularly and monitored after release. AI features are evaluated for risks to children before release and at regular intervals afterwards (and on every model or prompt change). After release, incidents involving children are detected, logged, assessed and acted on, with a named owner.  
+      Evidence: 
+- [ ] **CORE-AI-10** (MUST) An AI assistant inside a game or app is opt-in and easy to leave. When an AI chatbot or companion is a feature of a game, app or platform, it is not switched on automatically, not displayed prominently (e.g. not pinned at the top of contacts or the home screen), children are not encouraged to use it, and they can turn it off easily at any time.  
+      Evidence: 
+- [ ] **CORE-AI-11** (MUST) AI never nudges children to spend or towards ads. AI tutors, characters and assistants never suggest purchases, upgrades, premium content or advertised products, and are not optimised for spending or engagement time.  
       Evidence: 
 - [ ] **CORE-COM-02** (SHOULD) Third-party analytics and session recording reviewed. Product analytics and session-replay tools are either self-hosted in the EEA or bound by a processor agreement that forbids reuse of data. Session recording is not used on child-facing screens.  
+      Evidence: 
+- [ ] **CORE-COM-05** (MUST) Purchases are labelled as purchases, in real time. Before any purchase or spending of purchasable currency, the child is told in clear, age-appropriate words (and icons or audio for non-readers) that this is a purchase that costs real money, at the moment it happens, with the price in the national currency.  
+      Evidence: 
+- [ ] **CORE-COM-06** (MUST) No design for impulsive or unwanted spending. No one-tap or in-content purchases for children. There is a clear separation and friction between learning or play content and buying anything related to it (for example a separate adult area and a confirmation step). No spending prompts at moments of frustration, failure or excitement.  
       Evidence: 
 - [ ] **CORE-DAT-09** (MUST) Geolocation off and not collected unless essential. Precise geolocation is not collected. If a feature truly needs it, it is off by default and turned off again at the end of the session.  
       Evidence: 
@@ -108,6 +122,8 @@ Product: ____________________  Date: __________  Assessor: ____________________
 - [ ] **CORE-CNT-01** (SHOULD) Asset provenance and licences recorded. Every image, sound, font and AI-generated asset has a recorded source, licence, author and, for AI assets, the model used.  
       Evidence: 
 - [ ] **CORE-CNT-02** (SHOULD) Age rating self-assessment. The product has a documented age-appropriateness assessment covering violence, fear, language, in-app purchases, contact risks and addictive features (PEGI-style descriptors).  
+      Evidence: 
+- [ ] **CORE-COM-08** (SHOULD) No commercial content inside learning activities for children. Learning activities for children contain no product placement, branded rewards, sponsored characters or influencer endorsements, even when labelled. Funding and partner credits, if any, appear only in adult-facing areas.  
       Evidence: 
 - [ ] **CORE-DES-02** (SHOULD) Motion shows the content, not decoration. Animation is used to show what is learned (a process, a change over time, a procedure). Decorative, celebratory or purely entertaining motion and interesting-but-irrelevant extras ("seductive details") are kept to a minimum.  
       Evidence: 

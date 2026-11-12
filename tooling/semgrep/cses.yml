@@ -238,6 +238,45 @@ rules:
     - KIDS
     - DFA
     - AIA
+- id: core-ai-08-1
+  message: 'CORE-AI-08 (MUST, level 2): Conversation memory is off by default. Start each session without past context; if continuity is needed for learning progress, store structured progress data (e.g.
+    skills mastered), not chat transcripts.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (persistentMemory|longTermMemory|conversationMemory|memoryEnabled|rememberConversations|enableMemory)\s*[:=]\s*true
+  metadata:
+    cses_rule: CORE-AI-08
+    tier: 2
+    sources:
+    - KIDS
+    - GDPR
+- id: core-ai-10-1
+  message: 'CORE-AI-10 (MUST, level 2): An AI assistant inside a game or app is opt-in and easy to leave. Default the assistant to off (or teacher-enabled), place it behind a neutral help entry, and add
+    a visible "turn off assistant" setting.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (assistantEnabled|chatbotEnabled|aiChatEnabled|aiCompanionEnabled|autoOpenChat|autoStartAssistant|showAssistantOnStart)\s*[:=]\s*true
+  metadata:
+    cses_rule: CORE-AI-10
+    tier: 2
+    sources:
+    - KIDS
+- id: core-ai-11-1
+  message: 'CORE-AI-11 (MUST, level 2): AI never nudges children to spend or towards ads. Remove commercial goals from system prompts and fine-tuning data; add red-team prompts that try to elicit upsell
+    and test that the AI refuses.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)(upsell|encourage (the )?(user|child|student|player) to (buy|purchase|upgrade|subscribe)|promote (the )?(premium|shop|store|subscription))
+  metadata:
+    cses_rule: CORE-AI-11
+    tier: 2
+    sources:
+    - KIDS
+    - AIA
+    - UCPD
 - id: core-com-01-2
   message: 'CORE-COM-01 (MUST, level 1): No advertising or ad tracking SDKs. Remove the SDK. If marketing attribution is needed, measure it on the adult-facing website only.'
   severity: ERROR
@@ -298,6 +337,34 @@ rules:
     cses_rule: CORE-COM-03
     tier: 1
     sources: *id002
+- id: core-com-06-1
+  message: 'CORE-COM-06 (MUST, level 2): No design for impulsive or unwanted spending. Move every purchase out of the child experience into a guardian or school area; remove purchase buttons from gameplay,
+    results and failure screens.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (oneClick(Buy|Purchase)|oneTap(Buy|Purchase)|instantPurchase|quickBuy|skipPurchaseConfirm(ation)?|autoPurchase|purchaseWithoutConfirm)
+  metadata:
+    cses_rule: CORE-COM-06
+    tier: 2
+    sources:
+    - KIDS
+    - DFA
+    - UCPD
+    - R-RADESKY2022
+- id: core-com-07-1
+  message: 'CORE-COM-07 (MUST, level 1): No disguised advertising. Label any commercial content clearly (e.g. "Ad" or "Paid partnership" with an icon); remove promotion voiced by characters or tutors.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)(sponsoredBy|isSponsored|productPlacement|brandedContent|paidPartnership|partnerContent|conte[uú]do patrocinado|patrocinado por)
+  metadata:
+    cses_rule: CORE-COM-07
+    tier: 1
+    sources:
+    - UCPD
+    - DSA
+    - KIDS
 - id: core-dat-04-1
   message: 'CORE-DAT-04 (MUST, level 1): No personal data in analytics events. Replace identifiers with a pseudonymous learner ID and drop free-text fields from events.'
   severity: WARNING
@@ -428,7 +495,8 @@ rules:
     - DSA-G28
     - KIDS
 - id: core-saf-08-1
-  message: 'CORE-SAF-08 (MUST, level 2): Proportionate, privacy-preserving age assurance. Integrate the EU age verification solution or the EUDI wallet; store only an ''over threshold'' flag.'
+  message: 'CORE-SAF-08 (MUST, level 2): Proportionate, privacy-preserving age assurance. Integrate the EU age verification solution or the EUDI wallet, and the national guardian attestation when available
+    (KIDS Act Art. 31); store only an ''over threshold'' flag and never reuse age assurance data for any other purpose.'
   severity: WARNING
   languages:
   - generic

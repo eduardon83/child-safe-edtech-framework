@@ -15,7 +15,7 @@
 #   effort      low | medium | high (used to prioritise the improvement list)
 #   detection   method: static | manifest | manual | mixed, plus patterns
 
-version: "0.3.0"
+version: "0.4.0"
 
 rules:
 
@@ -521,8 +521,15 @@ rules:
       Where age matters, age assurance is proportionate, uses zero-knowledge solutions such as the
       EU age verification app, does not store identity documents and only keeps an age signal.
       Self-declaration alone is not relied on for high-risk features.
-    rationale: KIDS Act Art. 27 and 28. DSA Art. 28 guidelines. EU age verification Recommendation.
-    improvement: Integrate the EU age verification solution or the EUDI wallet; store only an 'over threshold' flag.
+    rationale: >
+      KIDS Act Art. 27 and 28: age assurance must be accurate and privacy-preserving, and its data may
+      never be used to identify, track, target, advertise to or profile the user (Art. 28(1)). Art. 31
+      requires Member States to provide free EU age verification and guardian attestation means.
+      DSA Art. 28 guidelines. EU age verification Recommendation.
+    improvement: >
+      Integrate the EU age verification solution or the EUDI wallet, and the national guardian
+      attestation when available (KIDS Act Art. 31); store only an 'over threshold' flag and never
+      reuse age assurance data for any other purpose.
     effort: high
     sources: [KIDS, DSA-G28, AVREC]
     detection:
@@ -663,8 +670,7 @@ rules:
     features: [ai_generative]
     requirement: >
       AI characters are friendly but never claim feelings, friendship, missing the child, or
-      exclusivity, and do not create emotional dependency. Memory of previous chats is off by
-      default unless needed for safety.
+      exclusivity, and do not create emotional dependency (see CORE-AI-08 for conversation memory).
     rationale: >
       KIDS Act Art. 3(5)(c) and 14(1)(a)(b): such a system would be an 'AI companion' in scope,
       even in an educational product. DFA proposal: right to switch off relationship-simulating chatbots.
@@ -1618,3 +1624,182 @@ rules:
     sources: [R-WARNEKEN2008, R-BYRON2012]
     detection:
       method: manual
+
+  # ================================================================ COMMERCIAL PRACTICES (KIDS Act Recital 31, Art. 13)
+  - id: CORE-COM-05
+    title: Purchases are labelled as purchases, in real time
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [purchases]
+    requirement: >
+      Before any purchase or spending of purchasable currency, the child is told in clear, age-appropriate
+      words (and icons or audio for non-readers) that this is a purchase that costs real money, at the
+      moment it happens, with the price in the national currency.
+    rationale: >
+      KIDS Act Art. 13(1) and Recital 31: minors often do not understand the consequences of online
+      transactions, so purchases must be labelled as economic transactions in real time. Binding for social
+      and video services and AI chatbots (Art. 14(1)(c)); applied to games and learning apps as good practice.
+    improvement: Add a purchase confirmation screen for child accounts that says "This costs money" with the euro price and requires an adult step.
+    effort: low
+    sources: [KIDS, UCPD, DFA]
+    detection:
+      method: manual
+
+  - id: CORE-COM-06
+    title: No design for impulsive or unwanted spending
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [purchases]
+    requirement: >
+      No one-tap or in-content purchases for children. There is a clear separation and friction between
+      learning or play content and buying anything related to it (for example a separate adult area and a
+      confirmation step). No spending prompts at moments of frustration, failure or excitement.
+    rationale: >
+      KIDS Act Art. 13(2) and Recital 31: services must not be designed in a way that leads to excessive,
+      impulsive or unwanted spending, including through separation or friction between content and
+      purchases. DFA proposal targets the same practices.
+    improvement: Move every purchase out of the child experience into a guardian or school area; remove purchase buttons from gameplay, results and failure screens.
+    effort: medium
+    sources: [KIDS, DFA, UCPD, R-RADESKY2022]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(oneClick(Buy|Purchase)|oneTap(Buy|Purchase)|instantPurchase|quickBuy|skipPurchaseConfirm(ation)?|autoPurchase|purchaseWithoutConfirm)'}
+
+  - id: CORE-COM-07
+    title: No disguised advertising
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Paid promotion is never presented as learning content, game content or a character's own opinion.
+      Any sponsorship, product placement or brand partnership is clearly identified as such, in words a
+      child of the target age understands.
+    rationale: >
+      UCPD Annex I point 11 bans editorial content paid for by a trader without making that clear, and
+      point 28 bans direct exhortations to children to buy. DSA Art. 26 requires ads on platforms to be
+      clearly identifiable. KIDS Act Recital 31 names product placement, influencer marketing and
+      sponsorship as tactics with particular persuasive effects on minors.
+    improvement: Label any commercial content clearly (e.g. "Ad" or "Paid partnership" with an icon); remove promotion voiced by characters or tutors.
+    effort: low
+    sources: [UCPD, DSA, KIDS]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(sponsoredBy|isSponsored|productPlacement|brandedContent|paidPartnership|partnerContent|conte[uú]do patrocinado|patrocinado por)'}
+
+  - id: CORE-COM-08
+    title: No commercial content inside learning activities for children
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Learning activities for children contain no product placement, branded rewards, sponsored
+      characters or influencer endorsements, even when labelled. Funding and partner credits, if any,
+      appear only in adult-facing areas.
+    rationale: >
+      Children, especially under 8, struggle to recognise persuasive intent even when content is labelled.
+      Recital 31 of the KIDS Act lists these tactics among those with particular persuasive effects on
+      minors; UN General Comment 25 asks states to protect children from commercial exploitation.
+    improvement: Remove brands and sponsored items from learning content; move partner credits to the teacher or guardian area.
+    effort: low
+    sources: [KIDS, UNCRC-GC25, R-RADESKY2022]
+    detection:
+      method: manual
+
+  # ================================================================ AI COMPANIONS AND CHATBOTS (KIDS Act Recitals 32-34, Art. 14)
+  - id: CORE-AI-08
+    title: Conversation memory is off by default
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      AI systems do not keep or reuse information from a child's previous conversations by default,
+      except where necessary to protect the child's safety. Any memory is visible to the teacher or
+      guardian and can be deleted.
+    rationale: >
+      KIDS Act Art. 14(1)(b) and Recital 32: persistent conversational memory with minors must be disabled
+      by default, to prevent accumulating sensitive data and reinforcing harmful interaction patterns.
+      GDPR data minimisation and storage limitation.
+    improvement: Start each session without past context; if continuity is needed for learning progress, store structured progress data (e.g. skills mastered), not chat transcripts.
+    effort: low
+    sources: [KIDS, GDPR]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(persistentMemory|longTermMemory|conversationMemory|memoryEnabled|rememberConversations|enableMemory)\s*[:=]\s*true'}
+
+  - id: CORE-AI-09
+    title: AI is re-tested regularly and monitored after release
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      AI features are evaluated for risks to children before release and at regular intervals afterwards
+      (and on every model or prompt change). After release, incidents involving children are detected,
+      logged, assessed and acted on, with a named owner.
+    rationale: >
+      KIDS Act Art. 14(1)(e)(f) and Recitals 32 and 33. The legal duty of post-market monitoring does not
+      apply to micro and small enterprises; CSES applies it to every provider because the risk to a child
+      does not depend on company size. Risk mitigations by the provider of the underlying general-purpose
+      model (AI Act Art. 55) can be relied on in part, but are not sufficient on their own.
+    improvement: Schedule the age-appropriate red-team set (CORE-AI-05) to run at least each term and on model or prompt changes; add an incident channel for teachers and guardians and a monthly review.
+    effort: medium
+    sources: [KIDS, AIA]
+    detection:
+      method: manual
+
+  - id: CORE-AI-10
+    title: An AI assistant inside a game or app is opt-in and easy to leave
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      When an AI chatbot or companion is a feature of a game, app or platform, it is not switched on
+      automatically, not displayed prominently (e.g. not pinned at the top of contacts or the home screen),
+      children are not encouraged to use it, and they can turn it off easily at any time.
+    rationale: >
+      KIDS Act Art. 14(2) and Recital 34, which cover AI companions and chatbots deployed as a functionality
+      of online games and platforms, including where in-game purchases can occur.
+    improvement: Default the assistant to off (or teacher-enabled), place it behind a neutral help entry, and add a visible "turn off assistant" setting.
+    effort: low
+    sources: [KIDS]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(assistantEnabled|chatbotEnabled|aiChatEnabled|aiCompanionEnabled|autoOpenChat|autoStartAssistant|showAssistantOnStart)\s*[:=]\s*true'}
+
+  - id: CORE-AI-11
+    title: AI never nudges children to spend or towards ads
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      AI tutors, characters and assistants never suggest purchases, upgrades, premium content or
+      advertised products, and are not optimised for spending or engagement time.
+    rationale: >
+      KIDS Act Recital 31 names AI-enhanced nudging as a commercial tactic with particular effects on minors;
+      Art. 14(1)(c) applies the economic transaction safeguards to AI companions and chatbots, and Recital 34
+      extends safeguards to chatbots inside games with in-game purchases. AI Act Art. 5(1)(b) bans AI that
+      exploits age-related vulnerability.
+    improvement: Remove commercial goals from system prompts and fine-tuning data; add red-team prompts that try to elicit upsell and test that the AI refuses.
+    effort: low
+    sources: [KIDS, AIA, UCPD]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(upsell|encourage (the )?(user|child|student|player) to (buy|purchase|upgrade|subscribe)|promote (the )?(premium|shop|store|subscription))'}

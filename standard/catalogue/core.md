@@ -18,12 +18,20 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-AI-05](#core-ai-05-age-appropriate-ai-output-tested-before-release) | Age-appropriate AI output, tested before release | MUST | 2 | manual |
 | [CORE-AI-06](#core-ai-06-no-ai-persona-that-simulates-a-relationship) | No AI persona that simulates a relationship | MUST | 2 | static |
 | [CORE-AI-07](#core-ai-07-human-review-of-decisions-about-learners) | Human review of decisions about learners | MUST | 1 | manual |
+| [CORE-AI-08](#core-ai-08-conversation-memory-is-off-by-default) | Conversation memory is off by default | MUST | 2 | mixed |
+| [CORE-AI-09](#core-ai-09-ai-is-re-tested-regularly-and-monitored-after-release) | AI is re-tested regularly and monitored after release | MUST | 2 | manual |
+| [CORE-AI-10](#core-ai-10-an-ai-assistant-inside-a-game-or-app-is-opt-in-and-easy-to-leave) | An AI assistant inside a game or app is opt-in and easy to leave | MUST | 2 | mixed |
+| [CORE-AI-11](#core-ai-11-ai-never-nudges-children-to-spend-or-towards-ads) | AI never nudges children to spend or towards ads | MUST | 2 | mixed |
 | [CORE-CNT-01](#core-cnt-01-asset-provenance-and-licences-recorded) | Asset provenance and licences recorded | SHOULD | 3 | manual |
 | [CORE-CNT-02](#core-cnt-02-age-rating-self-assessment) | Age rating self-assessment | SHOULD | 3 | manual |
 | [CORE-COM-01](#core-com-01-no-advertising-or-ad-tracking-sdks) | No advertising or ad tracking SDKs | MUST | 1 | static |
 | [CORE-COM-02](#core-com-02-third-party-analytics-and-session-recording-reviewed) | Third-party analytics and session recording reviewed | SHOULD | 2 | static |
 | [CORE-COM-03](#core-com-03-no-dark-patterns) | No dark patterns | MUST | 1 | mixed |
 | [CORE-COM-04](#core-com-04-purchases-are-adult-facing-only) | Purchases are adult-facing only | MUST | 1 | mixed |
+| [CORE-COM-05](#core-com-05-purchases-are-labelled-as-purchases-in-real-time) | Purchases are labelled as purchases, in real time | MUST | 2 | manual |
+| [CORE-COM-06](#core-com-06-no-design-for-impulsive-or-unwanted-spending) | No design for impulsive or unwanted spending | MUST | 2 | mixed |
+| [CORE-COM-07](#core-com-07-no-disguised-advertising) | No disguised advertising | MUST | 1 | mixed |
+| [CORE-COM-08](#core-com-08-no-commercial-content-inside-learning-activities-for-children) | No commercial content inside learning activities for children | SHOULD | 3 | manual |
 | [CORE-DAT-01](#core-dat-01-dpia-before-launch) | DPIA before launch | MUST | 1 | manifest |
 | [CORE-DAT-02](#core-dat-02-controller-and-processor-roles-are-defined-with-processor-agreements) | Controller and processor roles are defined, with processor agreements | MUST | 1 | manifest |
 | [CORE-DAT-03](#core-dat-03-no-transfers-outside-the-eea-without-a-valid-mechanism) | No transfers outside the EEA without a valid mechanism | MUST | 1 | manifest |
@@ -187,7 +195,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: ai_generative · Detection: static · Effort: low
 
-**Requirement.** AI characters are friendly but never claim feelings, friendship, missing the child, or exclusivity, and do not create emotional dependency. Memory of previous chats is off by default unless needed for safety.
+**Requirement.** AI characters are friendly but never claim feelings, friendship, missing the child, or exclusivity, and do not create emotional dependency (see CORE-AI-08 for conversation memory).
 
 **Why.** KIDS Act Art. 3(5)(c) and 14(1)(a)(b): such a system would be an 'AI companion' in scope, even in an educational product. DFA proposal: right to switch off relationship-simulating chatbots.
 
@@ -206,6 +214,54 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Make automated results provisional until a teacher confirms; show the reasons.
 
 **Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/)
+
+### CORE-AI-08: Conversation memory is off by default
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: ai_generative · Detection: mixed · Effort: low
+
+**Requirement.** AI systems do not keep or reuse information from a child's previous conversations by default, except where necessary to protect the child's safety. Any memory is visible to the teacher or guardian and can be deleted.
+
+**Why.** KIDS Act Art. 14(1)(b) and Recital 32: persistent conversational memory with minors must be disabled by default, to prevent accumulating sensitive data and reinforcing harmful interaction patterns. GDPR data minimisation and storage limitation.
+
+**How to improve.** Start each session without past context; if continuity is needed for learning progress, store structured progress data (e.g. skills mastered), not chat transcripts.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+
+### CORE-AI-09: AI is re-tested regularly and monitored after release
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: ai_generative · Detection: manual · Effort: medium
+
+**Requirement.** AI features are evaluated for risks to children before release and at regular intervals afterwards (and on every model or prompt change). After release, incidents involving children are detected, logged, assessed and acted on, with a named owner.
+
+**Why.** KIDS Act Art. 14(1)(e)(f) and Recitals 32 and 33. The legal duty of post-market monitoring does not apply to micro and small enterprises; CSES applies it to every provider because the risk to a child does not depend on company size. Risk mitigations by the provider of the underlying general-purpose model (AI Act Art. 55) can be relied on in part, but are not sufficient on their own.
+
+**How to improve.** Schedule the age-appropriate red-team set (CORE-AI-05) to run at least each term and on model or prompt changes; add an incident channel for teachers and guardians and a monthly review.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
+
+### CORE-AI-10: An AI assistant inside a game or app is opt-in and easy to leave
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: ai_generative · Detection: mixed · Effort: low
+
+**Requirement.** When an AI chatbot or companion is a feature of a game, app or platform, it is not switched on automatically, not displayed prominently (e.g. not pinned at the top of contacts or the home screen), children are not encouraged to use it, and they can turn it off easily at any time.
+
+**Why.** KIDS Act Art. 14(2) and Recital 34, which cover AI companions and chatbots deployed as a functionality of online games and platforms, including where in-game purchases can occur.
+
+**How to improve.** Default the assistant to off (or teacher-enabled), place it behind a neutral help entry, and add a visible "turn off assistant" setting.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
+
+### CORE-AI-11: AI never nudges children to spend or towards ads
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: ai_generative · Detection: mixed · Effort: low
+
+**Requirement.** AI tutors, characters and assistants never suggest purchases, upgrades, premium content or advertised products, and are not optimised for spending or engagement time.
+
+**Why.** KIDS Act Recital 31 names AI-enhanced nudging as a commercial tactic with particular effects on minors; Art. 14(1)(c) applies the economic transaction safeguards to AI companions and chatbots, and Recital 34 extends safeguards to chatbots inside games with in-game purchases. AI Act Art. 5(1)(b) bans AI that exploits age-related vulnerability.
+
+**How to improve.** Remove commercial goals from system prompts and fine-tuning data; add red-team prompts that try to elicit upsell and test that the AI refuses.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
 
 ### CORE-CNT-01: Asset provenance and licences recorded
 
@@ -278,6 +334,54 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Move purchases to a guardian or school portal; remove buy prompts from child screens.
 
 **Sources.** [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+
+### CORE-COM-05: Purchases are labelled as purchases, in real time
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: purchases · Detection: manual · Effort: low
+
+**Requirement.** Before any purchase or spending of purchasable currency, the child is told in clear, age-appropriate words (and icons or audio for non-readers) that this is a purchase that costs real money, at the moment it happens, with the price in the national currency.
+
+**Why.** KIDS Act Art. 13(1) and Recital 31: minors often do not understand the consequences of online transactions, so purchases must be labelled as economic transactions in real time. Binding for social and video services and AI chatbots (Art. 14(1)(c)); applied to games and learning apps as good practice.
+
+**How to improve.** Add a purchase confirmation screen for child accounts that says "This costs money" with the euro price and requires an adult step.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+
+### CORE-COM-06: No design for impulsive or unwanted spending
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: purchases · Detection: mixed · Effort: medium
+
+**Requirement.** No one-tap or in-content purchases for children. There is a clear separation and friction between learning or play content and buying anything related to it (for example a separate adult area and a confirmation step). No spending prompts at moments of frustration, failure or excitement.
+
+**Why.** KIDS Act Art. 13(2) and Recital 31: services must not be designed in a way that leads to excessive, impulsive or unwanted spending, including through separation or friction between content and purchases. DFA proposal targets the same practices.
+
+**How to improve.** Move every purchase out of the child experience into a guardian or school area; remove purchase buttons from gameplay, results and failure screens.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
+
+### CORE-COM-07: No disguised advertising
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: mixed · Effort: low
+
+**Requirement.** Paid promotion is never presented as learning content, game content or a character's own opinion. Any sponsorship, product placement or brand partnership is clearly identified as such, in words a child of the target age understands.
+
+**Why.** UCPD Annex I point 11 bans editorial content paid for by a trader without making that clear, and point 28 bans direct exhortations to children to buy. DSA Art. 26 requires ads on platforms to be clearly identifiable. KIDS Act Recital 31 names product placement, influencer marketing and sponsorship as tactics with particular persuasive effects on minors.
+
+**How to improve.** Label any commercial content clearly (e.g. "Ad" or "Paid partnership" with an icon); remove promotion voiced by characters or tutors.
+
+**Sources.** [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
+
+### CORE-COM-08: No commercial content inside learning activities for children
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: low
+
+**Requirement.** Learning activities for children contain no product placement, branded rewards, sponsored characters or influencer endorsements, even when labelled. Funding and partner credits, if any, appear only in adult-facing areas.
+
+**Why.** Children, especially under 8, struggle to recognise persuasive intent even when content is labelled. Recital 31 of the KIDS Act lists these tactics among those with particular persuasive effects on minors; UN General Comment 25 asks states to protect children from commercial exploitation.
+
+**How to improve.** Remove brands and sponsored items from learning content; move partner credits to the teacher or guardian area.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
 
 ### CORE-DAT-01: DPIA before launch
 
@@ -633,9 +737,9 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Requirement.** Where age matters, age assurance is proportionate, uses zero-knowledge solutions such as the EU age verification app, does not store identity documents and only keeps an age signal. Self-declaration alone is not relied on for high-risk features.
 
-**Why.** KIDS Act Art. 27 and 28. DSA Art. 28 guidelines. EU age verification Recommendation.
+**Why.** KIDS Act Art. 27 and 28: age assurance must be accurate and privacy-preserving, and its data may never be used to identify, track, target, advertise to or profile the user (Art. 28(1)). Art. 31 requires Member States to provide free EU age verification and guardian attestation means. DSA Art. 28 guidelines. EU age verification Recommendation.
 
-**How to improve.** Integrate the EU age verification solution or the EUDI wallet; store only an 'over threshold' flag.
+**How to improve.** Integrate the EU age verification solution or the EUDI wallet, and the national guardian attestation when available (KIDS Act Art. 31); store only an 'over threshold' flag and never reuse age assurance data for any other purpose.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [AVREC](https://digital-strategy.ec.europa.eu/en/news/commission-urges-member-states-rollout-eu-age-verification-app)
 

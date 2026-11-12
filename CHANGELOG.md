@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.4.0 (2026-11-12)
+
+- EU KIDS Act commercial practices (Recital 31, Art. 13): new rules CORE-COM-05 purchases labelled in
+  real time, CORE-COM-06 no design for impulsive spending, CORE-COM-07 no disguised advertising (Level 1,
+  UCPD Annex I point 11), CORE-COM-08 no commercial content inside learning activities (Level 3).
+- EU KIDS Act AI companions and chatbots (Recitals 32 to 34, Art. 14): CORE-AI-08 conversation memory off
+  by default, CORE-AI-09 regular re-testing and post-market monitoring, CORE-AI-10 AI assistant inside a
+  game or app is opt-in and easy to leave, CORE-AI-11 AI never nudges children to spend.
+- CORE-SAF-08 now cites KIDS Act Art. 28(1) and Art. 31 (national guardian attestation and age verification).
+- CORE-AI-06 no longer covers memory (moved to CORE-AI-08).
+
 ## v0.3.0 (2026-11-11)
 
 - New `tooling/export.py` and `scan.py --export html,pdf,docx`: interactive HTML dashboard (status at

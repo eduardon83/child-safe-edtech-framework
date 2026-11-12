@@ -2,13 +2,13 @@
 
 # Rule catalogue
 
-CSES v0.3.0: 89 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
+CSES v0.4.0: 97 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
 
 | Level | MUST | SHOULD |
 |---|---|---|
-| 1 Legal baseline | 32 | 1 |
-| 2 Forward-compliant | 26 | 4 |
-| 3 Best practice | 0 | 26 |
+| 1 Legal baseline | 33 | 1 |
+| 2 Forward-compliant | 32 | 4 |
+| 3 Best practice | 0 | 27 |
 
 | ID | Title | Profiles | Strength | Level | Age bands |
 |---|---|---|---|---|---|
@@ -57,12 +57,20 @@ CSES v0.3.0: 89 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best
 | CORE-AI-05 | Age-appropriate AI output, tested before release | core | MUST | 2 | all |
 | CORE-AI-06 | No AI persona that simulates a relationship | core | MUST | 2 | all |
 | CORE-AI-07 | Human review of decisions about learners | core | MUST | 1 | all |
+| CORE-AI-08 | Conversation memory is off by default | core | MUST | 2 | all |
+| CORE-AI-09 | AI is re-tested regularly and monitored after release | core | MUST | 2 | all |
+| CORE-AI-10 | An AI assistant inside a game or app is opt-in and easy to leave | core | MUST | 2 | all |
+| CORE-AI-11 | AI never nudges children to spend or towards ads | core | MUST | 2 | all |
 | CORE-CNT-01 | Asset provenance and licences recorded | core | SHOULD | 3 | all |
 | CORE-CNT-02 | Age rating self-assessment | core | SHOULD | 3 | all |
 | CORE-COM-01 | No advertising or ad tracking SDKs | core | MUST | 1 | all |
 | CORE-COM-02 | Third-party analytics and session recording reviewed | core | SHOULD | 2 | all |
 | CORE-COM-03 | No dark patterns | core | MUST | 1 | all |
 | CORE-COM-04 | Purchases are adult-facing only | core | MUST | 1 | all |
+| CORE-COM-05 | Purchases are labelled as purchases, in real time | core | MUST | 2 | all |
+| CORE-COM-06 | No design for impulsive or unwanted spending | core | MUST | 2 | all |
+| CORE-COM-07 | No disguised advertising | core | MUST | 1 | all |
+| CORE-COM-08 | No commercial content inside learning activities for children | core | SHOULD | 3 | all |
 | CORE-DAT-01 | DPIA before launch | core | MUST | 1 | all |
 | CORE-DAT-02 | Controller and processor roles are defined, with processor agreements | core | MUST | 1 | all |
 | CORE-DAT-03 | No transfers outside the EEA without a valid mechanism | core | MUST | 1 | all |

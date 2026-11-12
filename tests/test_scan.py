@@ -206,3 +206,12 @@ def test_export_html_and_docx(tmp_path):
     model = export.build_model(json.loads((out / "findings.json").read_text(encoding="utf-8")))
     assert [lv["status"] for lv in model["levels"]][0] == "blocked"
     assert any(b["declared"] for b in model["bands"])
+
+
+def test_kids_act_commercial_and_ai_rules():
+    _, _, res = run(BAD, level=2)
+    flagged = rules_with(res, "REVIEW") | rules_with(res, "BLOCK")
+    for rid in ["CORE-AI-08", "CORE-AI-10", "CORE-AI-11", "CORE-COM-06"]:
+        assert rid in flagged, rid
+    std = scan.load_standard(ROOT)
+    assert std.rules["CORE-COM-07"]["tier"] == 1

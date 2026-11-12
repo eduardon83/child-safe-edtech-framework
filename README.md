@@ -12,7 +12,7 @@ rules a team can check in code, in CI and in review.
 
 | | |
 |---|---|
-| **The standard** | 89 rules in a core set plus three profiles: **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Design-for-learning rules on visuals, audio/sound, motion and motivation, from current research. |
+| **The standard** | 97 rules in a core set plus three profiles: **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Design-for-learning rules on visuals, audio/sound, motion and motivation, from current research. |
 | **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). You decide which level of compliance you want in your software. |
 | **Sources on every rule** | A source registry with type, status and verification date. Reports list the sources they rely on. |
 | **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included (not legally binding). |
