@@ -19,14 +19,14 @@
 
 ## Independence
 
-CSES is vendor-neutral. No rule may reference a specific commercial product as the required solution.
+CSEF is vendor-neutral. No rule may reference a specific commercial product as the required solution.
 Maintainers declare conflicts of interest on rule changes that affect their own products.
 
 ## Versioning
 
-Semantic versioning on the standard:
+Semantic versioning on the framework:
 
-- **Major**: a rule becomes stricter in a way that can break existing conformance claims (new MUST, lower level number).
+- **Major**: a rule becomes stricter in a way that can change existing self-assessment results (new MUST, lower level number).
 - **Minor**: new rules at SHOULD, new packs, new sources, new detection patterns.
 - **Patch**: wording, links, false-positive fixes.
 

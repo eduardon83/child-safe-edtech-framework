@@ -1,0 +1,414 @@
+# Source registry for the Child-Safe EdTech Framework (CSEF).
+# Every rule cites sources by id. Source packs (packs/*.yaml) can add more.
+#
+# type:   law | law-pending | proposal | guidance | standard | literature | news
+# status: free text, always with a date, so readers know how current it is.
+# verified: date the entry (status + url) was last checked by a maintainer.
+
+sources:
+  - id: GDPR
+    title: "Regulation (EU) 2016/679, General Data Protection Regulation"
+    type: law
+    jurisdiction: EU
+    status: "In force since 25 May 2018"
+    url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+    verified: 2026-11-11
+
+  - id: EPRIV
+    title: "Directive 2002/58/EC, ePrivacy Directive (cookies and terminal equipment)"
+    type: law
+    jurisdiction: EU
+    status: "In force (transposed nationally)"
+    url: "https://eur-lex.europa.eu/eli/dir/2002/58/oj"
+    verified: 2026-11-11
+
+  - id: DSA
+    title: "Regulation (EU) 2022/2065, Digital Services Act"
+    type: law
+    jurisdiction: EU
+    status: "Fully applicable since 17 Feb 2024"
+    url: "https://eur-lex.europa.eu/eli/reg/2022/2065/oj"
+    verified: 2026-11-11
+
+  - id: DSA-G28
+    title: "Commission Guidelines on the protection of minors under Article 28 DSA"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 14 Jul 2025. Not binding, used by the Commission as a compliance benchmark"
+    url: "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors"
+    verified: 2026-11-11
+
+  - id: AIA
+    title: "Regulation (EU) 2024/1689, Artificial Intelligence Act"
+    type: law
+    jurisdiction: EU
+    status: "Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025. GPAI rules since 2 Aug 2025. Transparency (Art. 50) from 2 Aug 2026"
+    url: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+    verified: 2026-11-11
+
+  - id: AIA-OMNIBUS
+    title: "Digital Omnibus on AI: amendments to the AI Act deferring high-risk obligations"
+    type: law-pending
+    jurisdiction: EU
+    status: "Adopted June 2026. Annex III high-risk obligations (incl. education) apply from 2 Dec 2027"
+    url: "https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/"
+    notes: "Secondary source (law firm analysis). Replace with Official Journal reference when cited."
+    verified: 2026-11-11
+
+  - id: KIDS
+    title: "Proposal for a Regulation: EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681"
+    type: proposal
+    jurisdiction: EU
+    status: "Commission proposal of 17 Sep 2026 (2026/0286 COD). In legislative procedure. Would apply 6 months after entry into force"
+    url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681"
+    notes: "Art. 2(4)(c) exempts services designed primarily for education and operated by or on behalf of educational establishments. Art. 3(5)(d) excludes educational AI from 'general conversational chatbot'."
+    verified: 2026-11-11
+
+  - id: KIDS-FAQ
+    title: "The KIDS Act explained (Commission Q&A)"
+    type: guidance
+    jurisdiction: EU
+    status: "Published Sep 2026. Feedback open until 3 Dec 2026"
+    url: "https://digital-strategy.ec.europa.eu/en/policies/kids-act"
+    verified: 2026-11-11
+
+  - id: KIDS-COM
+    title: "Communication: An EU approach to online child safety, COM(2026) 680"
+    type: guidance
+    jurisdiction: EU
+    status: "Published 17 Sep 2026"
+    url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680"
+    verified: 2026-11-11
+
+  - id: DFA
+    title: "Digital Fairness Act (proposal replacing the Unfair Commercial Practices Directive)"
+    type: proposal
+    jurisdiction: EU
+    status: "Proposal due 11 Nov 2026. Content known from a leaked draft only. Re-verify against the official text"
+    url: "https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows"
+    notes: "Leaked draft: ban on paid loot boxes and pay-to-win for minors, virtual currency value shown and off by default for children, right to switch off streaks, autoplay and relationship-simulating chatbots, blacklist of 10 dark patterns."
+    verified: 2026-11-11
+
+  - id: UCPD
+    title: "Directive 2005/29/EC, Unfair Commercial Practices Directive"
+    type: law
+    jurisdiction: EU
+    status: "In force (transposed nationally). Annex I point 28 bans direct exhortations to children to buy"
+    url: "https://eur-lex.europa.eu/eli/dir/2005/29/oj"
+    verified: 2026-11-11
+
+  - id: AVREC
+    title: "Commission Recommendation on an EU-wide framework for age verification (EU age verification app)"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 29 Apr 2026. Member States to offer a solution by 31 Dec 2026"
+    url: "https://digital-strategy.ec.europa.eu/en/news/commission-urges-member-states-rollout-eu-age-verification-app"
+    verified: 2026-11-11
+
+  - id: EAA
+    title: "Directive (EU) 2019/882, European Accessibility Act"
+    type: law
+    jurisdiction: EU
+    status: "Applies since 28 Jun 2025"
+    url: "https://eur-lex.europa.eu/eli/dir/2019/882/oj"
+    verified: 2026-11-11
+
+  - id: WCAG22
+    title: "W3C Web Content Accessibility Guidelines (WCAG) 2.2"
+    type: standard
+    jurisdiction: international
+    status: "W3C Recommendation"
+    url: "https://www.w3.org/TR/WCAG22/"
+    verified: 2026-11-11
+
+  - id: EN301549
+    title: "EN 301 549, Accessibility requirements for ICT products and services"
+    type: standard
+    jurisdiction: EU
+    status: "Harmonised European standard"
+    url: "https://www.etsi.org/standards"
+    notes: "Use the current version referenced in the Official Journal."
+    verified: 2026-11-11
+
+  - id: CRA
+    title: "Regulation (EU) 2024/2847, Cyber Resilience Act"
+    type: law
+    jurisdiction: EU
+    status: "Reporting obligations from 11 Sep 2026. Main obligations from 11 Dec 2027"
+    url: "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
+    verified: 2026-11-11
+
+  - id: UNCRC-GC25
+    title: "UN Committee on the Rights of the Child, General Comment No. 25 (2021) on children's rights in relation to the digital environment"
+    type: guidance
+    jurisdiction: international
+    status: "Adopted 2021"
+    url: "https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation"
+    verified: 2026-11-11
+
+  - id: BIK
+    title: "European strategy for a better internet for kids (BIK+)"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted May 2022"
+    url: "https://digital-strategy.ec.europa.eu/en/policies/strategy-better-internet-kids"
+    verified: 2026-11-11
+
+  - id: EUKO
+    title: "EU Kids Online research network (LSE)"
+    type: literature
+    jurisdiction: EU
+    status: "Ongoing research network"
+    url: "https://www.lse.ac.uk/media-and-communications/research/research-projects/eu-kids-online"
+    verified: 2026-11-11
+
+  - id: ARNAB2014
+    title: "Arnab, S. et al. (2015). Mapping learning and game mechanics for serious games analysis. British Journal of Educational Technology 46(2)"
+    type: literature
+    jurisdiction: international
+    status: "Peer-reviewed"
+    url: "https://doi.org/10.1111/bjet.12113"
+    verified: 2026-11-11
+
+  - id: EDPB-CONSENT
+    title: "EDPB Guidelines 05/2020 on consent under Regulation 2016/679 (section on children)"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 4 May 2020"
+    url: "https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-052020-consent-under-regulation-2016679_en"
+    verified: 2026-11-11
+
+  - id: PEGI
+    title: "PEGI, Pan European Game Information age rating system"
+    type: standard
+    jurisdiction: EU
+    status: "Industry self-regulation"
+    url: "https://pegi.info"
+    verified: 2026-11-11
+
+  # ---------------------------------------------------------------- research: look, sound, motion
+  # Added from "Reflections and early proposals for the Quality Compass" (EDEH GBL squad, 11 Nov 2026).
+  - id: R-SUNDARARAJAN2020
+    title: "Sundararajan, N. and Adesope, O. (2020). Keep it coherent: a meta-analysis of the seductive details effect. Educational Psychology Review (with Rey, G. D., 2012)"
+    type: literature
+    jurisdiction: international
+    status: "Meta-analysis: 58 studies, over 7,500 learners. Interesting but irrelevant material lowers learning (g = -0.33)"
+    url: "https://inspire.acu.edu.au/articles/seductive-details"
+    verified: 2026-11-11
+
+  - id: R-BERNEY2016
+    title: "Berney, S. and Bétrancourt, M. (2016). Does animation enhance learning? A meta-analysis. Computers & Education"
+    type: literature
+    jurisdiction: international
+    status: "Meta-analysis: 140 comparisons, 7,036 learners. Animation that shows the content beats static pictures (g = 0.23)"
+    url: "https://tecfa.unige.ch/perso/sandra/pdf/Earli2016_berney_betrancourt_FINAL.pdf"
+    verified: 2026-11-11
+
+  - id: R-TAKACS2015
+    title: "Takacs, Z. K., Swart, E. K. and Bus, A. G. (2015). Benefits and pitfalls of multimedia and interactive features in technology-enhanced storybooks. Review of Educational Research"
+    type: literature
+    jurisdiction: international
+    status: "Meta-analysis: 43 studies, 2,147 young children. Story-carrying animation helps; hotspots, games and extras distract"
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC4647204"
+    verified: 2026-11-11
+
+  - id: R-LILLARD2011
+    title: "Lillard, A. S. and Peterson, J. (2011). The immediate impact of different types of television on young children's executive function. Pediatrics (and Lillard et al. 2015 follow-ups)"
+    type: literature
+    jurisdiction: international
+    status: "Experiments with 4-year-olds. Fantastical events, more than pace, reduced executive function"
+    url: "https://www.frontiersin.org/article/10.3389/fpsyg.2020.583174"
+    verified: 2026-11-11
+
+  - id: R-FISHER2014
+    title: "Fisher, A. V., Godwin, K. E. and Seltman, H. (2014). Visual environment, attention allocation, and learning in young children. Psychological Science"
+    type: literature
+    jurisdiction: international
+    status: "Lab study, 24 kindergarten children. Heavy decoration increased off-task time; effect shrinks with novelty (reanalysis)"
+    url: "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2014.01444/pdf"
+    verified: 2026-11-11
+
+  - id: R-HANLEY2017
+    title: "Hanley, M. et al. (2017). Classroom displays: attraction or distraction? Evidence from children with and without autism. Developmental Psychology 53(7)"
+    type: literature
+    jurisdiction: international
+    status: "Eye-tracking study. Busy displays drew attention, more in autistic children, and lowered learning"
+    url: "https://durham-repository.worktribe.com/output/1370163/classroom-displays-attraction-or-distraction-evidence-of-impact-on-attention-and-learning-from-children-with-and-without-autism"
+    verified: 2026-11-11
+
+  - id: R-BROM2018
+    title: "Brom, C., Stárková, T. and D'Mello, S. K. (2018). How effective is emotional design? A meta-analysis on facial anthropomorphisms and pleasant colors. Educational Research Review"
+    type: literature
+    jurisdiction: international
+    status: "Meta-analysis: 33 samples, 2,924 learners. Pleasant colours and faces improved retention (d = 0.39) and comprehension (0.32)"
+    url: "https://artemis.ms.mff.cuni.cz/main/papers/emodesign_manuscript_1rev_180928_FINAL_norev.pdf"
+    verified: 2026-11-11
+
+  - id: R-WOUTERS2013
+    title: "Wouters, P. and van Oostendorp, H. (2013). A meta-analytic review of the role of instructional support in game-based learning. Computers & Education"
+    type: literature
+    jurisdiction: international
+    status: "Meta-analysis, 107 comparisons. Schematic visuals (d = 0.45) beat cartoon (0.18) and realistic (0.01) in learning games"
+    url: null
+    verified: 2026-11-11
+
+  - id: R-KAMINSKI2013
+    title: "Kaminski, J. A. and Sloutsky, V. M. (2013). Extraneous perceptual information interferes with children's acquisition of mathematical knowledge. Journal of Educational Psychology 105(2); and Kaminski, Sloutsky and Heckler (2008), Science 320"
+    type: literature
+    jurisdiction: international
+    status: "122 children aged 6 to 8: pictures inside graphs led to counting pictures; generic symbols transfer better than concrete images"
+    url: "https://www.sciencedaily.com/releases/2013/05/130508092412.htm"
+    verified: 2026-11-11
+
+  - id: R-GANEA2014
+    title: "Ganea, P. A., Canfield, C. F., Simons-Ghafari, K. and Chou, T. (2014). Do cavies talk? Frontiers in Psychology 5, 283"
+    type: literature
+    jurisdiction: international
+    status: "Two studies, ages 3 to 5. Human-like animals with human-like language reduced fact learning"
+    url: "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2014.00283/full"
+    verified: 2026-11-11
+
+  - id: R-CAC2018
+    title: "Consell de l'Audiovisual de Catalunya (2018). Analysis of apps for children under 8 (Informe CAC, L. Crescenzi)"
+    type: literature
+    jurisdiction: ES
+    status: "Content analysis of 200 apps: 95% showed more than 4 elements on the opening screen; help often text-only"
+    url: null
+    verified: 2026-11-11
+
+  - id: R-GNAMBS2020
+    title: "Gnambs, T. (2020). Limited evidence for the effect of red color on cognitive performance: a meta-analysis. Psychonomic Bulletin & Review 27"
+    type: literature
+    jurisdiction: international
+    status: "Meta-analysis, 38 samples. 'Red lowers performance' does not survive publication-bias correction. Avoid colour-psychology claims"
+    url: "https://link.springer.com/article/10.3758/s13423-020-01772-1"
+    verified: 2026-11-11
+
+  - id: W3C-233
+    title: "W3C, Understanding WCAG Success Criterion 2.3.3 Animation from Interactions (Level AAA)"
+    type: standard
+    jurisdiction: international
+    status: "W3C guidance. Motion triggered by interaction can be disabled"
+    url: "https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html"
+    verified: 2026-11-11
+
+  - id: R-DIXON2013
+    title: "Dixon, M. J. et al. (2013). The impact of sound in modern multiline video slot machine play. Journal of Gambling Studies"
+    type: literature
+    jurisdiction: international
+    status: "Win sounds inflated players' estimates of how often they won, even on net losses"
+    url: "https://www.sciencedaily.com/releases/2013/07/130702100348.htm"
+    verified: 2026-11-11
+
+  # ---------------------------------------------------------------- research: rewards and motivation
+  - id: R-DECI1999
+    title: "Deci, E. L., Koestner, R. and Ryan, R. M. (1999). A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation. Psychological Bulletin 125(6)"
+    type: literature
+    jurisdiction: international
+    status: "Meta-analysis, 128 experiments. Expected tangible rewards lowered intrinsic motivation (d = -0.36), more in children; informational feedback raised it (+0.33)"
+    url: "https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf"
+    verified: 2026-11-11
+
+  - id: R-HANUS2015
+    title: "Hanus, M. D. and Fox, J. (2015). Assessing the effects of gamification in the classroom. Computers & Education 80"
+    type: literature
+    jurisdiction: international
+    status: "Semester-long study. Compulsory badges and leaderboard lowered intrinsic motivation, satisfaction and exam scores"
+    url: "https://www.smhp.psych.ucla.edu/pdfdocs/gamil.pdf"
+    verified: 2026-11-11
+
+  - id: R-MEKLER2017
+    title: "Mekler, E. D. et al. (2017). Towards understanding the effects of individual gamification elements on intrinsic motivation and performance. Computers in Human Behavior"
+    type: literature
+    jurisdiction: international
+    status: "Online experiment. Points, levels and leaderboards raised quantity of work but not intrinsic motivation"
+    url: "https://glassmanlab.seas.harvard.edu/annotated_works/mekler17.pdf"
+    verified: 2026-11-11
+
+  - id: R-SAILER2020
+    title: "Sailer, M. and Homner, L. (2020). The gamification of learning: a meta-analysis. Educational Psychology Review 32"
+    type: literature
+    jurisdiction: international
+    status: "Meta-analysis. Cognitive gains robust (g = 0.49); motivational and behavioural gains vanish in rigorous studies; competition plus collaboration beats competition alone"
+    url: "https://link.springer.com/article/10.1007/s10648-019-09498-w"
+    verified: 2026-11-11
+
+  - id: R-RADESKY2022
+    title: "Radesky, J. et al. (2022). Prevalence and characteristics of manipulative design in mobile applications used by children. JAMA Network Open"
+    type: literature
+    jurisdiction: international
+    status: "About 4 in 5 apps used by 3 to 5-year-olds had manipulative design: lures, time pressure, rewards to keep playing"
+    url: "https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use"
+    verified: 2026-11-11
+
+  - id: R-HIRSHPASEK2015
+    title: "Hirsh-Pasek, K. et al. (2015). Putting education in 'educational' apps: lessons from the science of learning. Psychological Science in the Public Interest 16(1)"
+    type: literature
+    jurisdiction: international
+    status: "Review. Learning apps should be active, engaged (on the learning goal), meaningful and socially interactive"
+    url: "https://www.psychologicalscience.org/publications/educational-apps.html"
+    verified: 2026-11-11
+
+  - id: R-LEPPER2005
+    title: "Lepper, M. R., Corpus, J. H. and Iyengar, S. S. (2005). Intrinsic and extrinsic motivational orientations in the classroom. Journal of Educational Psychology 97(2)"
+    type: literature
+    jurisdiction: international
+    status: "797 students, grades 3 to 8. Intrinsic motivation falls through school and correlates with grades; extrinsic correlates negatively"
+    url: "https://www.reed.edu/psychology/motivation/assets/downloads/Lepper_Corpus_Iyengar_2005.pdf"
+    verified: 2026-11-11
+
+  - id: R-HOWARD2021
+    title: "Howard, J. L., Bureau, J., Guay, F., Chong, J. X. Y. and Ryan, R. M. (2021). Student motivation and associated outcomes: a meta-analysis from self-determination theory. Perspectives on Psychological Science 16(6)"
+    type: literature
+    jurisdiction: international
+    status: "Meta-analysis, 344 samples, 223,209 students. Intrinsic motivation linked to success and well-being; external pressure to lower well-being"
+    url: "https://acuresearchbank.acu.edu.au/item/8w8z7/student-motivation-and-associated-outcomes-a-meta-analysis-from-self-determination-theory"
+    verified: 2026-11-11
+
+  - id: R-CERASOLI2014
+    title: "Cerasoli, C. P., Nicklin, J. M. and Ford, M. T. (2014). Intrinsic motivation and extrinsic incentives jointly predict performance: a 40-year meta-analysis. Psychological Bulletin 140(2)"
+    type: literature
+    jurisdiction: international
+    status: "Meta-analysis, 183 samples. Intrinsic motivation predicts quality of work; incentives predict quantity"
+    url: "https://hillkm.com/EDUC_712/Cerasoli_Nicklin_Ford_2014.pdf"
+    verified: 2026-11-11
+
+  - id: R-VANSTEENKISTE2005
+    title: "Vansteenkiste, M., Simons, J., Lens, W., Soenens, B. and Matos, L. (2005). Examining the motivational impact of intrinsic versus extrinsic goal framing and autonomy-supportive communication. Child Development 76(2)"
+    type: literature
+    jurisdiction: international
+    status: "3 field experiments, ages 11 to 12. External goal framing and controlling language undermined conceptual, not rote, learning"
+    url: "https://investigacion.pucp.edu.pe/grupos/motem/publicacion/examining-the-motivational-impact-of-intrinsic-vs-extrinsic-goal-framing-and-internally-controlling-vs-autonomy-supportive-communication-style-on-childrens-achievement/"
+    verified: 2026-11-11
+
+  - id: R-GRUBER2014
+    title: "Gruber, M. J., Gelman, B. D. and Ranganath, C. (2014). States of curiosity modulate hippocampus-dependent learning via the dopaminergic circuit. Neuron"
+    type: literature
+    jurisdiction: international
+    status: "Brain imaging. Curiosity improved memory through the dopamine reward circuit and hippocampus"
+    url: "https://www.sciencedaily.com/releases/2014/10/141002123631.htm"
+    verified: 2026-11-11
+
+  - id: R-SHAH2018
+    title: "Shah, P. E., Weeks, H. M., Richards, B. and Kaciroti, N. (2018). Early childhood curiosity and kindergarten reading and math academic achievement. Pediatric Research"
+    type: literature
+    jurisdiction: international
+    status: "Large US sample. Curiosity linked to achievement, more strongly for children in poverty"
+    url: "https://www.nature.com/articles/s41390-018-0099-4"
+    verified: 2026-11-11
+
+  - id: R-WARNEKEN2008
+    title: "Warneken, F. and Tomasello, M. (2008). Extrinsic rewards undermine altruistic tendencies in 20-month-olds. Developmental Psychology 44(6)"
+    type: literature
+    jurisdiction: international
+    status: "Toddlers rewarded with a toy for helping later helped less than praised or unrewarded toddlers"
+    url: "https://scholars.duke.edu/publication/1458228"
+    verified: 2026-11-11
+
+  - id: R-BYRON2012
+    title: "Byron, K. and Khazanchi, S. (2012). Rewards and creative performance: a meta-analytic test. Psychological Bulletin 138; with Amabile, Hennessey and Grossman (1986), JPSP 50(1)"
+    type: literature
+    jurisdiction: international
+    status: "Rewards for completion hurt creativity; rewards for creative quality with informative feedback can help"
+    url: "https://www.frontiersin.org/article/10.3389/fpsyg.2020.00974"
+    verified: 2026-11-11

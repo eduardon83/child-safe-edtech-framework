@@ -1,6 +1,6 @@
 # Example Learning Games Alliance: Code of Conduct (fictional sample)
 
-This is a fictional code written to test the CSES code-of-conduct comparison. It contains gaps and conflicts on purpose.
+This is a fictional code written to test the CSEF code-of-conduct comparison. It contains gaps and conflicts on purpose.
 
 ## 1. Objectives
 

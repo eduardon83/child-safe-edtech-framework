@@ -1,4 +1,4 @@
-# CSES source pack: Portugal
+# CSEF source pack: Portugal
 # Loaded automatically when a product manifest lists `jurisdictions: [PT]`.
 # Maintainer note: every entry has a `verified` date. Re-check before relying on it.
 
@@ -7,7 +7,7 @@ pack:
   title: Portugal national pack
   jurisdiction: PT
   version: "0.1.0"
-  maintainer: "CSES maintainers"
+  maintainer: "CSEF maintainers"
   status: "Draft. Entries marked 'verify' need confirmation by a Portuguese legal reviewer."
 
 parameters:

@@ -1,6 +1,6 @@
-# CSES source pack template.
+# CSEF source pack template.
 #
-# A pack extends the standard without forking it. Use it for:
+# A pack extends the framework without forking it. Use it for:
 #   - national laws and guidance (a country pack, e.g. packs/es.yaml)
 #   - sector or procurement requirements (e.g. a Ministry's rules for digital resources)
 #   - research and literature you want cited in reports
@@ -13,7 +13,7 @@
 #
 # Merge rules (enforced by the scanner):
 #   - sources: added to the registry. An id may not clash with an existing one.
-#   - rules: new rules. Use your pack id as prefix (e.g. ES-DAT-01). Same fields as standard/rules.yaml.
+#   - rules: new rules. Use your pack id as prefix (e.g. ES-DAT-01). Same fields as framework/rules.yaml.
 #   - amend: change an existing rule, only in the stricter direction:
 #       add_sources   cite more sources on the rule
 #       note          shown under the rule in reports (national nuance)

@@ -2,7 +2,7 @@
 
 Use this for any AI that evaluates learning outcomes, steers learning, assigns a level or monitors
 tests. Under the AI Act, these are Annex III high-risk uses; obligations apply from 2 Dec 2027 after the
-Digital Omnibus. Starting the file now is CSES rule B-EVL-01.
+Digital Omnibus. Starting the file now is CSEF rule B-EVL-01.
 
 ## 1. Classification
 

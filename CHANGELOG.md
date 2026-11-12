@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.6.0 (2026-11-12)
+
+- Renamed from Child-Safe EdTech Standard (CSES) to **Child-Safe EdTech Framework (CSEF)**. CSEF is a
+  framework, not a formal standard: it is not adopted by a standards body and gives no presumption of
+  conformity. Thanks to Swedish EdTech Industry for the feedback.
+- Repository renamed to `child-safe-edtech-framework` (GitHub redirects the old URL).
+- `standard/` folder is now `framework/`; skill `cses-review` is now `csef-review`; tools report as
+  `csef-scan` and `csef-coc`; manifest template `templates/csef.yaml`; workflow template `csef-check.yml`;
+  default output folder `csef-report`.
+- "Claiming conformance" replaced by "Describing your results" (self-assessment wording) and a new section
+  "A framework, not a standard" in the introduction.
+- Backward compatible: `cses.yaml` and `.cses/` manifests, `cses-ignore` comments, `--standard-root` and
+  `CSES_STANDARD_ROOT` still work. New names take precedence when both exist.
+- Rules and sources unchanged (106 rules, 50 sources).
+
 ## v0.5.0 (2026-11-12)
 
 - Communications audit (`tooling/comms.py`): inventory of chat SDKs, message tables, direct messages,

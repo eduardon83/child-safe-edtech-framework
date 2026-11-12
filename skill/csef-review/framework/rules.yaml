@@ -1,0 +1,1993 @@
+# Child-Safe EdTech Framework (CSEF): rule catalogue. Single source of truth.
+# Generated documents (catalogue, checklists, skill references, semgrep rules)
+# are built from this file by tooling/build.py. Do not edit those by hand.
+#
+# Field reference (see framework/00-introduction.md for the full explanation):
+#   id          PREFIX-AREA-NN. Prefixes: CORE, A (educational games), B (game-based
+#               applications), C (gamified applications), AGE (age-band modifiers).
+#   level       MUST | SHOULD
+#   tier        1 = legal baseline, 2 = forward-compliant, 3 = best practice
+#   profiles    [core] applies to every product; otherwise any of [A, B, C]
+#   age_bands   [all] or any of [B1, B2, B3, B4, B5]
+#   features    optional. Rule only applies if the product declares one of these
+#               features in its manifest (or if there is no manifest).
+#   sources     ids from framework/sources.yaml or a loaded pack
+#   effort      low | medium | high (used to prioritise the improvement list)
+#   detection   method: static | manifest | manual | mixed, plus patterns
+
+version: "0.6.0"
+
+rules:
+
+  # ---------------------------------------------------------------- CORE: governance
+  - id: CORE-GOV-01
+    title: Product declares its CSEF manifest
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      The repository contains a CSEF manifest (csef.yaml) declaring profiles, age bands,
+      context of use, GDPR role, features, AI use, third parties and chosen compliance level.
+    rationale: >
+      Accountability (GDPR Art. 5(2)) requires being able to show what the product does with
+      children's data. The manifest is also what lets the checks select the right rules.
+    improvement: Copy templates/csef.yaml to the repository root and fill it in with the product owner.
+    effort: low
+    sources: [GDPR]
+    detection:
+      method: manifest
+      patterns:
+        - {type: manifest, check: manifest_missing, confidence: high}
+
+  - id: CORE-GOV-02
+    title: Legal scope of the EU KIDS Act is assessed and recorded
+    level: SHOULD
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      The manifest records whether the product is in scope of the EU KIDS Act (online game,
+      AI companion, general conversational chatbot, social or video-sharing service) or exempt
+      as a service designed primarily for education and operated by or on behalf of an
+      educational establishment (Art. 2(4)(c)).
+    rationale: >
+      The same product can be exempt when deployed by a school and in scope when offered
+      directly to families. Teams must know which situation they are in for each channel.
+    improvement: Fill the `legal_scope.kids_act` field in csef.yaml for each distribution channel.
+    effort: low
+    sources: [KIDS, KIDS-FAQ]
+    detection:
+      method: manifest
+      patterns:
+        - {type: manifest, check: kids_act_scope_missing, confidence: medium}
+
+  - id: CORE-GOV-03
+    title: Child rights impact assessment
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      A child rights impact assessment (or a risk review in the sense of the DSA Art. 28
+      guidelines) is documented, considers the best interests of the child, and involves
+      children, guardians and educators in testing.
+    rationale: >
+      The DSA guidelines and UN General Comment No. 25 ask providers to weigh all children's
+      rights (protection, participation, provision), not only data protection.
+    improvement: Extend the DPIA with a child rights section (templates/dpia-starter.md, part C).
+    effort: medium
+    sources: [DSA-G28, UNCRC-GC25, EUKO]
+    detection:
+      method: manual
+
+  # ---------------------------------------------------------------- CORE: data protection
+  - id: CORE-DAT-01
+    title: DPIA before launch
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      A Data Protection Impact Assessment exists before launch when children's data is processed
+      at scale, with new technology (including AI), or for systematic monitoring of learners.
+    rationale: Processing of vulnerable data subjects with new technology is high risk under GDPR Art. 35.
+    improvement: >
+      Start a DPIA with templates/dpia-starter.md. If the school or Ministry is controller, provide
+      them the technical input; they sign it.
+    effort: medium
+    sources: [GDPR]
+    detection:
+      method: manifest
+      patterns:
+        - {type: manifest, check: dpia_missing, confidence: high}
+
+  - id: CORE-DAT-02
+    title: Controller and processor roles are defined, with processor agreements
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      The manifest states whether the provider acts as controller or processor, and every third
+      party that touches personal data has a data processing agreement (GDPR Art. 28).
+    rationale: Without defined roles nobody is accountable for legal basis, DPIA or data subject requests.
+    improvement: "Record `gdpr_role` and `dpa_signed: true` for each third party, or remove the integration."
+    effort: low
+    sources: [GDPR]
+    detection:
+      method: manifest
+      patterns:
+        - {type: manifest, check: third_party_without_dpa, confidence: high}
+        - {type: manifest, check: gdpr_role_missing, confidence: high}
+
+  - id: CORE-DAT-03
+    title: No transfers outside the EEA without a valid mechanism
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Personal data of minors is hosted in the EEA, or every transfer outside it has a documented
+      transfer mechanism (adequacy decision, SCCs plus transfer impact assessment).
+    rationale: GDPR Chapter V.
+    improvement: Move hosting to an EEA region or record `transfer_mechanism` for the third party.
+    effort: medium
+    sources: [GDPR]
+    detection:
+      method: manifest
+      patterns:
+        - {type: manifest, check: transfer_outside_eea, confidence: high}
+
+  - id: CORE-DAT-04
+    title: No personal data in analytics events
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Analytics and telemetry events carry no direct identifiers (name, email, phone, IP address,
+      precise location, free text typed by the child). Use pseudonymous IDs.
+    rationale: Data minimisation and purpose limitation (GDPR Art. 5(1)(b)(c)).
+    improvement: Replace identifiers with a pseudonymous learner ID and drop free-text fields from events.
+    effort: low
+    sources: [GDPR]
+    detection:
+      method: static
+      patterns:
+        - type: regex
+          confidence: medium
+          pattern: '(track|logEvent|capture|analytics\.\w+)\s*\([^)]*\b(email|e_mail|full_?name|first_?name|last_?name|phone|ip_?address|latitude|longitude)\b'
+          flags: i
+
+  - id: CORE-DAT-05
+    title: Retention periods enforced by code
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Each category of learner data has a retention period, enforced by an automated deletion
+      or anonymisation job, not only by policy text.
+    rationale: Storage limitation (GDPR Art. 5(1)(e)).
+    improvement: Add a scheduled deletion job per data category and list it in csef.yaml `retention`.
+    effort: medium
+    sources: [GDPR]
+    detection:
+      method: manifest
+      patterns:
+        - {type: manifest, check: retention_missing, confidence: medium}
+
+  - id: CORE-DAT-06
+    title: Data subject rights are supported by tooling
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Access, rectification, erasure and export of a learner's data can be executed by tooling
+      (admin function or script), and the process is tested.
+    rationale: GDPR Art. 15 to 20. Schools as controllers depend on the processor to execute requests.
+    improvement: Build an admin export and delete function per learner and test it each release.
+    effort: medium
+    sources: [GDPR]
+    detection:
+      method: manual
+
+  - id: CORE-DAT-07
+    title: No real learner data outside production
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Seeds, fixtures, tests, staging databases and prompts sent to development AI tools use
+      synthetic data only.
+    rationale: Purpose limitation and security (GDPR Art. 5(1)(b)(f), Art. 32).
+    improvement: Use a synthetic data generator (e.g. Faker) and block production dumps in non-production environments.
+    effort: low
+    sources: [GDPR]
+    detection:
+      method: static
+      patterns:
+        - type: regex
+          confidence: medium
+          globs: ['*seed*', '*fixture*', '*mock*', '*.sql', '*test*']
+          pattern: '[A-Za-z0-9._%+-]+@(gmail|hotmail|outlook|yahoo|sapo|live|icloud)\.(com|pt|es|fr|de)'
+          flags: i
+
+  - id: CORE-DAT-08
+    title: No biometric identification of minors
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: The product does not process face, voice or fingerprint data to identify children.
+    rationale: Biometric data for identification is special category data (GDPR Art. 9). Disproportionate in education.
+    improvement: Remove face or voice recognition. Use class codes, picture passwords or teacher-managed login.
+    effort: medium
+    sources: [GDPR]
+    detection:
+      method: static
+      patterns:
+        - {type: dependency, confidence: high, names: [face-api.js, '@vladmandic/face-api', face_recognition, deepface, '@aws-sdk/client-rekognition', amazon-rekognition, azure-cognitiveservices-face, '@azure/cognitiveservices-face']}
+        - {type: regex, confidence: medium, pattern: '(faceRecognition|recognizeFace|FaceMatcher|detectAllFaces|compareFaces|voiceprint|speakerRecognition)'}
+
+  - id: CORE-DAT-09
+    title: Geolocation off and not collected unless essential
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Precise geolocation is not collected. If a feature truly needs it, it is off by default
+      and turned off again at the end of the session.
+    rationale: KIDS Act Art. 11(1)(a) and 11(2) (applied to games via Art. 15(1)(b)). DSA Art. 28 guidelines on safe defaults.
+    improvement: Remove location permissions or gate them behind an explicit, session-limited opt-in.
+    effort: low
+    sources: [KIDS, DSA-G28, GDPR]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(navigator\.geolocation|getCurrentPosition|watchPosition|ACCESS_FINE_LOCATION|NSLocationAlwaysUsageDescription|CLLocationManager|Input\.location\.Start)'}
+
+  - id: CORE-DAT-10
+    title: Microphone and camera off by default
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Access to microphone and camera is off by default, requested only at the moment of use
+      for a clear learning purpose, and the recording is not kept longer than needed.
+    rationale: KIDS Act Art. 11(1)(b), applied to games via Art. 15(1)(b).
+    improvement: Request media permissions just-in-time with a child-friendly explanation; never at start-up.
+    effort: low
+    sources: [KIDS, GDPR]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(getUserMedia|RECORD_AUDIO|android\.permission\.CAMERA|NSMicrophoneUsageDescription|NSCameraUsageDescription|Microphone\.Start|WebCamTexture)'}
+
+  - id: CORE-DAT-11
+    title: Consent for non-essential storage and cookies
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Non-essential cookies and local storage are only set after valid consent, and where consent
+      is the legal basis for minors under the national age of digital consent (13 to 16), a guardian gives it.
+    rationale: ePrivacy Art. 5(3) and GDPR Art. 8.
+    improvement: Keep only strictly necessary storage, or add a guardian-facing consent flow.
+    effort: medium
+    sources: [EPRIV, GDPR, EDPB-CONSENT]
+    detection:
+      method: manual
+
+  - id: CORE-DAT-12
+    title: Child-friendly privacy information
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Privacy information exists in a version the target age can understand (very short sentences,
+      icons, audio for non-readers), plus a full version for adults.
+    rationale: GDPR Art. 12(1) requires clear language, in particular for information addressed to a child.
+    improvement: Write a one-screen child version of the privacy notice and test it with children of the target age.
+    effort: low
+    sources: [GDPR, KIDS]
+    detection:
+      method: manual
+
+  # ---------------------------------------------------------------- CORE: commercial
+  - id: CORE-COM-01
+    title: No advertising or ad tracking SDKs
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      No advertising based on profiling of minors and no ad, attribution or fingerprinting SDKs
+      in products used by minors.
+    rationale: DSA Art. 28(2) bans profiling-based ads to minors on online platforms. The DFA proposal extends this to all traders.
+    improvement: Remove the SDK. If marketing attribution is needed, measure it on the adult-facing website only.
+    effort: low
+    sources: [DSA, DFA, GDPR]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: high, globs: ['*.cs'], pattern: '\b(Advertisement\.(Initialize|Show|Load)|MobileAds\.Initialize|FB\.Init|AppsFlyer\.initSDK|IronSource\.Agent|LevelPlay\.Init|AdjustConfig)\b'}
+        - type: dependency
+          confidence: high
+          names: [react-native-google-mobile-ads, google-mobile-ads, '@capacitor-community/admob', admob-plus-cordova, react-native-fbsdk, react-native-fbsdk-next, facebook-nodejs-business-sdk, facebook_business, react-native-appsflyer, appsflyer-capacitor-plugin, react-native-adjust, '@adjustcom/adjust-web-sdk', react-native-branch, branch-sdk, '@fingerprintjs/fingerprintjs', '@fingerprintjs/fingerprintjs-pro', Google-Mobile-Ads-SDK, FBSDKCoreKit, AppsFlyerFramework, Adjust, 'com.google.android.gms:play-services-ads', 'com.facebook.android:facebook-android-sdk', 'com.appsflyer:af-android-sdk', 'com.adjust.sdk:adjust-android', google_mobile_ads, appsflyer_sdk, adjust_sdk, com.unity.ads, com.unity.services.levelplay, com.google.ads.mobile, com.ironsource.sdk, GoogleMobileAds, Unity.Advertisements, Google.Apis.AdSense.v2]
+        - {type: regex, confidence: high, pattern: '(googletagservices\.com|doubleclick\.net|connect\.facebook\.net/[^"'' ]*/fbevents\.js|adsbygoogle)'}
+
+  - id: CORE-COM-02
+    title: Third-party analytics and session recording reviewed
+    level: SHOULD
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Product analytics and session-replay tools are either self-hosted in the EEA or bound by a
+      processor agreement that forbids reuse of data. Session recording is not used on child-facing screens.
+    rationale: Many analytics vendors reuse data for their own purposes, which would make them controllers (GDPR Art. 28).
+    improvement: Prefer self-hosted analytics (e.g. EU-hosted PostHog or Matomo) with IP anonymisation; remove session replay from child screens.
+    effort: medium
+    sources: [GDPR, DSA-G28]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, globs: ['*.cs'], pattern: '\b(Firebase\.Analytics|GameAnalyticsSDK|AnalyticsService\.Instance)\b'}
+        - type: dependency
+          confidence: medium
+          names: ['@react-native-firebase/analytics', firebase-analytics, mixpanel-browser, mixpanel-react-native, '@amplitude/analytics-browser', '@segment/analytics-next', '@hotjar/browser', '@fullstory/browser', '@microsoft/clarity', logrocket, smartlook-client, posthog-js, com.unity.services.analytics, com.unity.analytics, com.google.firebase.analytics, com.gameanalytics.sdk]
+        - {type: regex, confidence: medium, pattern: '(getAnalytics\s*\(|static\.hotjar\.com|clarity\.ms/tag)'}
+
+  - id: CORE-COM-03
+    title: No dark patterns
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      No fake urgency or scarcity, confirmshaming, pre-ticked options, nagging after a choice,
+      obstruction to leave or cancel, fake notifications, or confusing double negatives.
+    rationale: DSA Art. 25, UCPD. The DFA proposal blacklists these in all circumstances.
+    improvement: Rewrite the copy neutrally, remove timers and pre-selected options, make 'no' as easy as 'yes'.
+    effort: low
+    sources: [DSA, UCPD, DFA, R-RADESKY2022]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: high, flags: i, pattern: '(only \d+ left|offer ends in|hurry[,!]? |last chance|don''t miss out|limited time offer|só restam \d+|última oportunidade|oferta termina|despacha-te|não percas)'}
+        - {type: regex, confidence: medium, flags: i, pattern: '(no thanks,? i (don''t|do not) want|não,? não quero aprender|i prefer to stay (bad|behind))'}
+        - {type: regex, confidence: medium, pattern: '(defaultChecked|checked)\s*=\s*\{?\s*true'}
+
+  - id: CORE-COM-04
+    title: Purchases are adult-facing only
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Children are never directly exhorted to buy, and any purchase flow is behind an adult gate
+      (guardian or school account), with the price in real currency.
+    rationale: UCPD Annex I point 28 (direct exhortation to children). KIDS Act Art. 13 and 14(1)(c).
+    improvement: Move purchases to a guardian or school portal; remove buy prompts from child screens.
+    effort: medium
+    sources: [UCPD, KIDS, DFA]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, globs: ['*.cs'], pattern: '\b(UnityPurchasing\.Initialize|IDetailedStoreListener|IStoreListener|CodelessIAPStoreListener)\b'}
+        - {type: dependency, confidence: medium, names: [react-native-iap, expo-in-app-purchases, '@revenuecat/purchases-js', react-native-purchases, cordova-plugin-purchase, in_app_purchase, purchases_flutter, com.unity.purchasing, com.unity.services.purchasing]}
+        - {type: manifest, check: monetisation_for_minors, confidence: high}
+
+  # ---------------------------------------------------------------- CORE: safety by design
+  - id: CORE-SAF-01
+    title: Most protective settings by default
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Profiles private, sharing off, contact off, notifications off, recommendations of other users
+      off by default. Defaults are only relaxed after age assurance shows the user is an adult.
+    rationale: KIDS Act Art. 8(1) and 11(1). DSA Art. 28 guidelines.
+    improvement: Flip the defaults in the settings model and add a test that asserts them.
+    effort: low
+    sources: [KIDS, DSA-G28]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(isPublic|publicProfile|profileVisibility|shareEnabled|allowMessages|discoverable)\s*[:=]\s*(true|[''"]public[''"])'}
+
+  - id: CORE-SAF-02
+    title: Notifications only about the child's own activity, off by default, quiet hours
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [notifications]
+    requirement: >
+      Push notifications are off by default, never designed to prompt the child to start or resume
+      use, only relate to the child's own activity or teacher assignments, and respect school time
+      and core sleep hours.
+    rationale: KIDS Act Art. 9(2)(b) and 11(1)(d), applied to games via Art. 15(1).
+    improvement: Default the push flag to false, remove re-engagement campaigns, add quiet hours (e.g. 21:00 to 08:00 and school hours).
+    effort: low
+    sources: [KIDS, DSA-G28, DFA]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: high, pattern: '(push(Notifications)?Enabled|notificationsEnabled|enablePush)\s*[:=]\s*true'}
+        - {type: regex, confidence: high, flags: i, pattern: '(we miss you|come back and play|your friends are waiting|it''s been a while|temos saudades|volta a jogar|os teus amigos estão à tua espera)'}
+
+  - id: CORE-SAF-03
+    title: Natural stopping points, no autoplay or endless feeds
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      No autoplay of the next content and no infinite scroll. Sessions have natural endings and
+      regular interruption moments that let the child decide whether to continue.
+    rationale: KIDS Act Art. 9(2)(a). DFA proposal gives users the right to switch off autoplay.
+    improvement: Remove autoplay; end each activity with a clear 'done' screen and an explicit choice to continue.
+    effort: low
+    sources: [KIDS, DFA, DSA-G28, R-RADESKY2022]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(autoPlayNext|autoplayNext|autoplay\s*[:=]\s*true|<video[^>]*\sautoplay)'}
+        - {type: dependency, confidence: medium, names: [react-infinite-scroll-component, react-infinite-scroller, ngx-infinite-scroll, vue-infinite-loading]}
+
+  - id: CORE-SAF-04
+    title: Time-awareness tools
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      The product offers break reminders and lets guardians or teachers set a daily time limit,
+      protecting school time (outside class use) and core sleep hours.
+    rationale: KIDS Act Art. 9(3) and 20(4)(a) require time-limited access for social and video services. Best practice for all products.
+    improvement: Add a session timer with a gentle break screen and a configurable daily limit.
+    effort: medium
+    sources: [KIDS, KIDS-COM]
+    detection:
+      method: manual
+
+  - id: CORE-SAF-05
+    title: No contact from strangers
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [multiplayer, chat, ugc, social]
+    requirement: >
+      Nobody outside the child's approved group (class, guardian-approved contacts) can initiate
+      contact, see the child's profile or content, or add the child to a group.
+    rationale: DSA Art. 28 and guidelines. KIDS Act Art. 12(1), applied to games via Art. 15(1)(c).
+    improvement: Scope all interaction to closed groups managed by a teacher or guardian; remove user search and contact suggestions.
+    effort: high
+    sources: [DSA, DSA-G28, KIDS]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(searchUsers|findFriends|suggestedFriends|peopleYouMayKnow|friendSuggestions|addFriendByName|randomMatch|findRandomPlayer|joinPublicRoom|publicLobby|globalChat|worldChat)'}
+
+  - id: CORE-SAF-06
+    title: Child-friendly reporting and support
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [multiplayer, chat, ugc, social, ai_generative]
+    requirement: >
+      Wherever children interact with others or with generated content, a report option is one
+      step away, understandable by the target age, processed with priority, and followed by
+      information on help resources.
+    rationale: KIDS Act Art. 19. DSA Art. 16 and Art. 28 guidelines.
+    improvement: Add a visible report button, a priority moderation queue and a help screen with national helplines.
+    effort: medium
+    sources: [KIDS, DSA, DSA-G28]
+    detection:
+      method: manual
+
+  - id: CORE-SAF-07
+    title: Tools for guardians and teachers that respect the child
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Guardians (or teachers in school use) can manage settings, time and contacts. The child is
+      told when such tools are active. Controls cannot be bypassed by the child.
+    rationale: KIDS Act Art. 20, applied to online games by Art. 15(1)(d).
+    improvement: Provide a guardian or teacher panel for settings, time limits and contacts, with an in-app notice to the child.
+    effort: high
+    sources: [KIDS, UNCRC-GC25]
+    detection:
+      method: manual
+
+  - id: CORE-SAF-08
+    title: Proportionate, privacy-preserving age assurance
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Where age matters, age assurance is proportionate, uses zero-knowledge solutions such as the
+      EU age verification app, does not store identity documents and only keeps an age signal.
+      Self-declaration alone is not relied on for high-risk features.
+    rationale: >
+      KIDS Act Art. 27 and 28: age assurance must be accurate and privacy-preserving, and its data may
+      never be used to identify, track, target, advertise to or profile the user (Art. 28(1)). Art. 31
+      requires Member States to provide free EU age verification and guardian attestation means.
+      DSA Art. 28 guidelines. EU age verification Recommendation.
+    improvement: >
+      Integrate the EU age verification solution or the EUDI wallet, and the national guardian
+      attestation when available (KIDS Act Art. 31); store only an 'over threshold' flag and never
+      reuse age assurance data for any other purpose.
+    effort: high
+    sources: [KIDS, DSA-G28, AVREC]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(id_?card_?(image|photo|upload)|passport_?(image|photo|upload)|upload(Id|Passport)Document)'}
+
+  - id: CORE-SAF-09
+    title: Children can control and give feedback on what they see
+    level: SHOULD
+    tier: 2
+    profiles: [core]
+    age_bands: [B3, B4, B5]
+    requirement: >
+      Children can adjust settings that affect how they interact and what they are shown, give
+      feedback with lasting effect, and easily return to default settings.
+    rationale: KIDS Act Art. 18.
+    improvement: Add a simple 'my settings' screen with a 'reset to safe settings' button.
+    effort: medium
+    sources: [KIDS, UNCRC-GC25]
+    detection:
+      method: manual
+
+  - id: CORE-SAF-10
+    title: No social comparison or image-altering features
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      No follower counts, likes on the child's appearance, beauty filters, or features that
+      embellish or idealise the child's image.
+    rationale: KIDS Act Art. 11(3).
+    improvement: Remove public counters and appearance filters; use avatars instead of photos.
+    effort: low
+    sources: [KIDS]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(followerCount|followersCount|likeCount|beautyFilter|faceFilter|skinSmooth)'}
+
+  # ---------------------------------------------------------------- CORE: AI
+  - id: CORE-AI-01
+    title: No emotion recognition on learners
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: The product does not infer emotions of learners from face, voice, posture, typing or other biometric signals.
+    rationale: AI Act Art. 5(1)(f) prohibits emotion recognition in education institutions since 2 Feb 2025.
+    improvement: Remove emotion inference. Use explicit signals (a help button, a self-report mood picker).
+    effort: medium
+    sources: [AIA]
+    detection:
+      method: static
+      patterns:
+        - {type: dependency, confidence: high, names: [fer, hume, '@humeai/voice', affdex, '@affectiva/affdex', emotion-recognition, py-feat]}
+        - {type: regex, confidence: high, pattern: '(withFaceExpressions|detectEmotion|emotionRecognition|recognizeEmotion|facialExpression|sentimentFromFace|frustrationDetect)'}
+
+  - id: CORE-AI-02
+    title: No manipulative AI exploiting age
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      AI features do not use subliminal, manipulative or deceptive techniques, or exploit age-related
+      vulnerability, to change a child's behaviour in a harmful way.
+    rationale: AI Act Art. 5(1)(a)(b).
+    improvement: Review prompts and reward logic for persuasion targets that serve engagement over learning; document the review.
+    effort: medium
+    sources: [AIA]
+    detection:
+      method: manual
+
+  - id: CORE-AI-03
+    title: AI interaction and AI-generated content are disclosed
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      Children (and teachers) are told, in age-appropriate form, when they interact with AI and
+      when content is AI-generated. Generated media is marked.
+    rationale: AI Act Art. 50, applicable from 2 Aug 2026.
+    improvement: Add a persistent 'AI' label on AI responses and metadata marking on generated images and audio.
+    effort: low
+    sources: [AIA]
+    detection:
+      method: mixed
+      patterns:
+        - {type: dependency, confidence: medium, names: [openai, '@anthropic-ai/sdk', anthropic, '@google/generative-ai', '@google/genai', google-generativeai, '@mistralai/mistralai', mistralai, groq-sdk, ai, '@ai-sdk/openai', langchain, '@langchain/core', elevenlabs, '@elevenlabs/elevenlabs-js']}
+
+  - id: CORE-AI-04
+    title: AI inventory and no training on learners' data by default
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative, ai_assessment, ai_adaptive]
+    requirement: >
+      Every AI component is listed (model, provider, purpose, inputs, outputs, oversight). Provider
+      data retention for training is disabled. Learners' data is not used to train or fine-tune
+      models without a DPIA and a lawful basis.
+    rationale: GDPR Art. 5 and 35. AI Act Art. 4 (AI literacy) and provider transparency.
+    improvement: Create docs/ai-inventory.md and switch providers to zero-retention or no-training settings.
+    effort: low
+    sources: [GDPR, AIA]
+    detection:
+      method: manifest
+      patterns:
+        - {type: manifest, check: ai_without_inventory, confidence: high}
+
+  - id: CORE-AI-05
+    title: Age-appropriate AI output, tested before release
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      Input and output filters adapted to the target age, red-team tests in the product's languages
+      before release, and post-release monitoring of incidents.
+    rationale: KIDS Act Art. 14(1)(e)(f) for chatbots and companions. Best practice for any child-facing generative AI.
+    improvement: Build a red-team prompt set per age band and language; run it in CI on prompt changes.
+    effort: medium
+    sources: [KIDS, AIA]
+    detection:
+      method: manual
+
+  - id: CORE-AI-06
+    title: No AI persona that simulates a relationship
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      AI characters are friendly but never claim feelings, friendship, missing the child, or
+      exclusivity, and do not create emotional dependency (see CORE-AI-08 for conversation memory).
+    rationale: >
+      KIDS Act Art. 3(5)(c) and 14(1)(a)(b): such a system would be an 'AI companion' in scope,
+      even in an educational product. DFA proposal: right to switch off relationship-simulating chatbots.
+    improvement: Rewrite the system prompt persona; add tests that reject outputs claiming feelings or friendship.
+    effort: low
+    sources: [KIDS, DFA, AIA]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: high, flags: i, pattern: '(i missed you|i love you|i''m your (best )?friend|you are my (best )?friend|only i understand you|don''t leave me|tive saudades tuas|sou o teu melhor amigo|és o meu melhor amigo|não me deixes)'}
+
+  - id: CORE-AI-07
+    title: Human review of decisions about learners
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_assessment, ai_adaptive]
+    requirement: >
+      No grade, level placement, certification or access decision about a learner is taken solely
+      by automated processing. A teacher can see, explain and override it.
+    rationale: GDPR Art. 22. AI Act Annex III(3) human oversight requirements from 2 Dec 2027.
+    improvement: Make automated results provisional until a teacher confirms; show the reasons.
+    effort: medium
+    sources: [GDPR, AIA, AIA-OMNIBUS]
+    detection:
+      method: manual
+
+  # ---------------------------------------------------------------- CORE: accessibility
+  - id: CORE-ACC-01
+    title: WCAG 2.2 AA
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Interfaces meet WCAG 2.2 level AA (aligned with EN 301 549), with automated checks in CI
+      and manual screen-reader testing per release.
+    rationale: European Accessibility Act for covered services; public procurement rules for schools.
+    improvement: Add axe-core or Pa11y to CI and fix contrast, labels, focus order and keyboard access.
+    effort: medium
+    sources: [EAA, WCAG22, EN301549]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, globs: ['*.html', '*.jsx', '*.tsx', '*.vue', '*.svelte'], pattern: '<img(?![^>]*\balt=)[^>]*>'}
+
+  - id: CORE-ACC-02
+    title: No flashing content
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: Nothing flashes more than three times per second.
+    rationale: WCAG 2.3.1. Photosensitive seizure risk.
+    improvement: Slow or remove flashing effects; offer a 'reduce motion' setting that respects prefers-reduced-motion.
+    effort: low
+    sources: [WCAG22, EAA, EN301549, W3C-233]
+    detection:
+      method: manual
+
+  - id: CORE-ACC-03
+    title: Inclusive design for children with special educational needs
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Adjustable speed and time limits, audio alternatives for text, captions, dyslexia-friendly
+      typography options, and support for switch or keyboard-only play.
+    rationale: Accessibility beyond the AA floor is what makes a learning product usable by every child.
+    improvement: Add a settings panel for speed, audio, captions and font; test with SEN teachers.
+    effort: medium
+    sources: [WCAG22, UNCRC-GC25]
+    detection:
+      method: manual
+
+  # ---------------------------------------------------------------- CORE: security
+  - id: CORE-SEC-01
+    title: No secrets in the repository
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: API keys, tokens and passwords are not committed.
+    rationale: GDPR Art. 32 (security of processing).
+    improvement: Rotate the exposed key, move it to a secret manager, and add gitleaks to CI.
+    effort: low
+    sources: [GDPR]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: high, pattern: '(sk-[A-Za-z0-9]{32,}|sk-ant-[A-Za-z0-9_-]{20,}|AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z_-]{35}|-----BEGIN (RSA |EC )?PRIVATE KEY-----)'}
+
+  - id: CORE-SEC-02
+    title: Access control on every store of learner data
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Every table, bucket or collection with learner data enforces access control at the data
+      layer (e.g. row-level security), not only in the client.
+    rationale: GDPR Art. 25 and 32. Client-only checks are easily bypassed.
+    improvement: Enable row-level security with policies scoped to class and role; add a test per table.
+    effort: medium
+    sources: [GDPR]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, globs: ['*.sql'], flags: i, pattern: 'disable row level security'}
+
+  - id: CORE-SEC-03
+    title: Encryption in transit
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: All network calls use TLS. No plain http endpoints for APIs or assets.
+    rationale: GDPR Art. 32.
+    improvement: Switch the URL to https and enable HSTS.
+    effort: low
+    sources: [GDPR]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, pattern: '[''"]http://(?!localhost|127\.0\.0\.1|0\.0\.0\.0|www\.w3\.org|schemas\.|xmlns)[^''"]+[''"]'}
+
+  - id: CORE-SEC-04
+    title: No personal data in logs
+    level: SHOULD
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: Application logs contain pseudonymous IDs only, with short retention.
+    rationale: GDPR Art. 5(1)(c) and 32. Logs are often copied to third-party tools.
+    improvement: Log the learner ID instead of names or emails; add a log scrubber.
+    effort: low
+    sources: [GDPR]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(console\.(log|info|warn|error)|logger\.\w+|print)\s*\([^)]*\b(email|fullName|full_name|firstName|first_name|lastName|phone|password)\b'}
+
+  - id: CORE-SEC-05
+    title: Vulnerability handling and breach response
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      A published way to report vulnerabilities (SECURITY.md or security.txt), a process to fix them,
+      and a breach procedure that lets controllers meet the 72-hour notification deadline.
+    rationale: GDPR Art. 33. Cyber Resilience Act reporting obligations for products with digital elements.
+    improvement: Add SECURITY.md and an incident runbook with contact chain and timelines.
+    effort: low
+    sources: [GDPR, CRA]
+    detection:
+      method: manifest
+      patterns:
+        - {type: manifest, check: security_policy_missing, confidence: medium}
+
+  - id: CORE-SEC-06
+    title: Strong authentication for adults, simple safe login for children
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Teacher and admin accounts use MFA. Children use age-appropriate login (class code,
+      picture password, teacher reset) without email or phone collection.
+    rationale: Adult accounts hold data on whole classes. Children should not need personal contact details to log in.
+    improvement: Enforce MFA for staff roles; replace child email login with class codes.
+    effort: medium
+    sources: [GDPR, DSA-G28]
+    detection:
+      method: manual
+
+  # ---------------------------------------------------------------- CORE: content
+  - id: CORE-CNT-01
+    title: Asset provenance and licences recorded
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Every image, sound, font and AI-generated asset has a recorded source, licence, author and,
+      for AI assets, the model used.
+    rationale: Copyright compliance and AI Act Art. 50 marking of generated content.
+    improvement: Keep an assets/PROVENANCE.csv and check it in CI.
+    effort: low
+    sources: [AIA]
+    detection:
+      method: manual
+
+  - id: CORE-CNT-02
+    title: Age rating self-assessment
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      The product has a documented age-appropriateness assessment covering violence, fear, language,
+      in-app purchases, contact risks and addictive features (PEGI-style descriptors).
+    rationale: KIDS Act Art. 16 and 17 foresee harmonised age ratings covering monetisation and contact risks.
+    improvement: Run a PEGI-style self-assessment and publish the resulting age and descriptors.
+    effort: low
+    sources: [PEGI, KIDS]
+    detection:
+      method: manual
+
+  # ================================================================ PROFILE A: educational games
+  - id: A-ECO-01
+    title: No paid randomised rewards (loot boxes)
+    level: MUST
+    tier: 2
+    profiles: [A, B, C]
+    age_bands: [all]
+    requirement: >
+      No loot boxes, gacha, mystery chests or other variable rewards that can be obtained with
+      money or with currency purchasable with money.
+    rationale: KIDS Act Art. 13(2) bans variable reward systems on social and video services. DFA proposal bans paid loot boxes for minors in games.
+    improvement: Replace with fixed, visible rewards earned through learning.
+    effort: medium
+    sources: [KIDS, DFA]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: high, flags: i, pattern: '(loot_?box|lootbox|gacha|mystery_?(box|chest)|openChest|randomReward|caixa_?mist[eé]rio|ba[uú]_?surpresa)'}
+
+  - id: A-ECO-02
+    title: No pay-to-win
+    level: MUST
+    tier: 2
+    profiles: [A, B, C]
+    age_bands: [all]
+    requirement: Nothing bought with money gives a gameplay or learning advantage.
+    rationale: DFA proposal bans pay-to-win for minors. Fairness in learning.
+    improvement: Make all progression earnable through play; keep any paid items cosmetic and adult-purchased.
+    effort: medium
+    sources: [DFA, UCPD]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(buy(Boost|PowerUp|Hint|Lives|Energy)|purchase(Boost|PowerUp|Hint|Lives|Energy)|comprar(Vidas|Energia|Dica))'}
+
+  - id: A-ECO-03
+    title: Virtual currency is not sold to children and shows its real value
+    level: MUST
+    tier: 2
+    profiles: [A, C]
+    age_bands: [all]
+    requirement: >
+      In-game currency cannot be bought by a minor. If it can be bought by an adult, its value in
+      euro is shown wherever it is spent, and it is off by default for children unless a guardian approves.
+    rationale: KIDS Act Art. 13(1) (applied to chatbots via Art. 14(1)(c)). DFA proposal.
+    improvement: Remove currency purchase from child screens; show euro equivalents; add guardian approval.
+    effort: medium
+    sources: [KIDS, DFA, UCPD]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(buy(Gems|Coins|Diamonds|Crystals)|purchase(Gems|Coins|Diamonds|Crystals)|gemPack|coinPack|comprar(Gemas|Moedas|Diamantes))'}
+
+  - id: A-ECO-04
+    title: Rewards follow learning, not time or return visits
+    level: SHOULD
+    tier: 3
+    profiles: [A, C]
+    age_bands: [all]
+    requirement: >
+      Points, stars and unlocks are tied to learning progress or effort, not to time spent,
+      number of sessions or returning at specific times.
+    rationale: Aligning game mechanics with learning mechanics (LM-GM model) improves learning and avoids engagement-for-its-own-sake.
+    improvement: Map each reward to a learning mechanic (Arnab et al. LM-GM) and remove rewards that only count time or logins.
+    effort: medium
+    sources: [ARNAB2014, KIDS-COM, R-DECI1999, R-SAILER2020, R-HIRSHPASEK2015]
+    detection:
+      method: manual
+
+  - id: A-PLY-01
+    title: No penalties for not playing
+    level: MUST
+    tier: 2
+    profiles: [A, C]
+    age_bands: [all]
+    requirement: >
+      No energy systems that only refill by waiting or paying, no pets or worlds that decay or die
+      when the child is away, no loss of benefits for missing days.
+    rationale: KIDS Act Art. 9(2)(d) applied to online games by Art. 15(1)(a).
+    improvement: Remove decay and energy timers; let the world wait for the child unchanged.
+    effort: medium
+    sources: [KIDS, DFA, R-RADESKY2022]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(energyRefill|staminaRefill|refillTimer|petHunger|decayRate|witherTime|cropsWither|energia_?recarga)'}
+
+  - id: A-PLY-02
+    title: Non-shaming failure and feedback
+    level: SHOULD
+    tier: 3
+    profiles: [A, B]
+    age_bands: [all]
+    requirement: Errors and failures are presented as part of learning, without ridicule, sad animations directed at the child, or public exposure.
+    rationale: Psychological safety supports learning, especially for younger children.
+    improvement: Review all failure states with an instructional designer; use encouraging, specific feedback.
+    effort: low
+    sources: [UNCRC-GC25, ARNAB2014]
+    detection:
+      method: manual
+
+  - id: A-ASM-01
+    title: In-game assessment is transparent and separated
+    level: MUST
+    tier: 2
+    profiles: [A]
+    age_bands: [all]
+    features: [ai_assessment, assessment]
+    requirement: >
+      When gameplay is used to assess learning (stealth assessment), learners, teachers and guardians
+      are told, assessment data is separated from general telemetry, and it is used only for the stated purpose.
+    rationale: GDPR transparency and purpose limitation. AI Act Annex III(3)(b) if AI evaluates learning outcomes.
+    improvement: Document what is assessed in the teacher guide and the child privacy notice; store assessment data separately.
+    effort: medium
+    sources: [GDPR, AIA, AIA-OMNIBUS]
+    detection:
+      method: manual
+
+  - id: A-SOC-01
+    title: Multiplayer limited to closed groups
+    level: MUST
+    tier: 2
+    profiles: [A]
+    age_bands: [all]
+    features: [multiplayer]
+    requirement: >
+      Multiplayer happens within teacher- or guardian-defined groups. Cross-group play only through
+      adult-mediated pairing. The game cannot be used to lure children to other services.
+    rationale: KIDS Act Art. 15(1)(c) and 15(2).
+    improvement: Use class rooms with join codes controlled by the teacher; block sharing of external links and handles.
+    effort: high
+    sources: [KIDS, DSA-G28]
+    detection:
+      method: manual
+
+  # ================================================================ PROFILE B: game-based applications
+  - id: B-EVL-01
+    title: High-risk path for systems that evaluate or place learners
+    level: MUST
+    tier: 1
+    profiles: [B]
+    age_bands: [all]
+    features: [ai_assessment, ai_adaptive]
+    requirement: >
+      AI that evaluates learning outcomes, steers learning, assigns levels or monitors tests is
+      treated as an Annex III high-risk candidate: risk management file, data governance, logging,
+      human oversight, accuracy and robustness testing.
+    rationale: AI Act Annex III(3). Obligations apply from 2 Dec 2027 under the Digital Omnibus.
+    improvement: Open a risk management file now (templates/ai-risk-file.md) and record the classification decision.
+    effort: high
+    sources: [AIA, AIA-OMNIBUS]
+    detection:
+      method: manifest
+      patterns:
+        - {type: manifest, check: high_risk_without_risk_file, confidence: high}
+
+  - id: B-EVL-02
+    title: No camera-based or biometric proctoring of minors
+    level: MUST
+    tier: 1
+    profiles: [B]
+    age_bands: [all]
+    features: [assessment, ai_assessment]
+    requirement: Tests are not proctored by webcam, eye tracking, keystroke biometrics or behaviour analysis of the child.
+    rationale: AI Act Art. 5(1)(f) (emotion recognition) and Annex III(3)(d) (monitoring during tests). GDPR Art. 9.
+    improvement: Use supervised test conditions in class instead of automated surveillance.
+    effort: medium
+    sources: [AIA, GDPR]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(proctor|eyeTracking|gazeTracking|tabSwitchDetect|keystrokeDynamics|webcamMonitor)'}
+
+  - id: B-EVL-03
+    title: Results are explainable and contestable
+    level: MUST
+    tier: 2
+    profiles: [B]
+    age_bands: [all]
+    features: [assessment, ai_assessment]
+    requirement: Teachers and learners can see why a result was given and can contest it with a human.
+    rationale: GDPR Art. 22(3). AI Act transparency for high-risk systems.
+    improvement: Show per-item evidence behind each score and a 'request review' action for teachers.
+    effort: medium
+    sources: [GDPR, AIA]
+    detection:
+      method: manual
+
+  - id: B-EVL-04
+    title: Validity, fairness and accessibility of assessment
+    level: SHOULD
+    tier: 3
+    profiles: [B]
+    age_bands: [all]
+    features: [assessment, ai_assessment]
+    requirement: >
+      Assessment validity is documented, results are checked for bias across groups (gender,
+      language background, SEN), and accommodations (extra time, audio) do not disadvantage learners.
+    rationale: Good assessment practice and AI Act data governance expectations.
+    improvement: Run a differential item functioning check on pilot data and document accommodations.
+    effort: high
+    sources: [AIA, UNCRC-GC25]
+    detection:
+      method: manual
+
+  - id: B-UGC-01
+    title: User-generated content is moderated and visible to the teacher
+    level: MUST
+    tier: 2
+    profiles: [B, A, C]
+    age_bands: [all]
+    features: [ugc, chat]
+    requirement: >
+      Content created or uploaded by children is moderated proportionally to age, visible to the
+      responsible teacher, reportable, and not public. Uploaded media has metadata (e.g. GPS) stripped.
+    rationale: DSA Art. 28 guidelines. KIDS Act Art. 12(3) and 19.
+    improvement: Add teacher review queues, EXIF stripping on upload, and keep galleries class-private.
+    effort: medium
+    sources: [DSA-G28, KIDS, GDPR]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(isPublic|visibility)\s*[:=]\s*[''"]?public'}
+
+  - id: B-UGC-02
+    title: No photos of children's faces kept or shared beyond need
+    level: MUST
+    tier: 2
+    profiles: [B, A, C]
+    age_bands: [all]
+    features: [ugc]
+    requirement: >
+      Photos and videos of children are only stored when necessary for the learning activity, are
+      never public, expire automatically, and others cannot download them.
+    rationale: KIDS Act Art. 12(3)(e). GDPR minimisation and storage limitation.
+    improvement: Prefer avatars; add auto-expiry and disable download of child media.
+    effort: medium
+    sources: [KIDS, GDPR]
+    detection:
+      method: manual
+
+  - id: B-DAT-01
+    title: Research use of learning data is separated
+    level: MUST
+    tier: 1
+    profiles: [B, A, C]
+    age_bands: [all]
+    requirement: >
+      Learning data is only shared for research under a data sharing agreement, with legal basis,
+      ethics approval and pseudonymisation, and never as a by-product of normal operation.
+    rationale: GDPR Art. 5(1)(b), 6 and 89.
+    improvement: Create a research export pipeline that pseudonymises and logs every extract.
+    effort: medium
+    sources: [GDPR]
+    detection:
+      method: manual
+
+  - id: B-SIM-01
+    title: Sensitive simulations include warnings and debrief
+    level: SHOULD
+    tier: 3
+    profiles: [B]
+    age_bands: [all]
+    requirement: Simulations about health, conflict, loss or other sensitive themes include a content note, an exit at any time, and a guided debrief.
+    rationale: Protects children from distressing content and supports reflection.
+    improvement: Add content notes and a debrief screen designed with the instructional team.
+    effort: low
+    sources: [UNCRC-GC25, DSA-G28]
+    detection:
+      method: manual
+
+  - id: B-OPS-01
+    title: Dashboards show learning, not surveillance
+    level: SHOULD
+    tier: 3
+    profiles: [B, C]
+    age_bands: [all]
+    requirement: Teacher and guardian dashboards show what helps learning; they avoid minute-by-minute activity logs and are explained to the child.
+    rationale: Respect for the child's privacy and agency (KIDS Act Art. 20(1)(f), UN GC 25).
+    improvement: Aggregate activity data and show learning progress instead of raw logs.
+    effort: medium
+    sources: [KIDS, UNCRC-GC25]
+    detection:
+      method: manual
+
+  # ================================================================ PROFILE C: gamified applications
+  - id: C-ENG-01
+    title: Streaks are optional and never punish
+    level: MUST
+    tier: 2
+    profiles: [C, A]
+    age_bands: [all]
+    features: [streaks]
+    requirement: >
+      Streaks can be switched off, carry no loss framing, and missing a day costs nothing (free
+      freezes or no reset).
+    rationale: "KIDS Act Art. 9(2)(d) (penalties for not engaging). DFA proposal: right to switch off streak rewards."
+    improvement: Add a 'turn off streaks' setting and replace 'you will lose your streak' with neutral progress messages.
+    effort: low
+    sources: [KIDS, DFA]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: high, flags: i, pattern: '(lose your streak|streak (will be )?lost|don''t break (your|the) (streak|chain)|perdes a tua sequ[eê]ncia|vais perder a sequ[eê]ncia|n[aã]o quebres a sequ[eê]ncia)'}
+        - {type: regex, confidence: medium, pattern: '(resetStreak|streakReset|breakStreak)'}
+
+  - id: C-ENG-02
+    title: Leaderboards are class-scoped and pseudonymous
+    level: MUST
+    tier: 2
+    profiles: [C, A]
+    age_bands: [all]
+    features: [leaderboards]
+    requirement: >
+      Leaderboards are limited to the class or group, show avatars or nicknames, can be disabled
+      by the teacher, and never publicly rank named children.
+    rationale: KIDS Act Art. 11(3) (social comparison). GDPR minimisation.
+    improvement: Scope leaderboards to class, use nicknames, add a teacher toggle, and consider showing personal bests only.
+    effort: medium
+    sources: [KIDS, GDPR, DSA-G28, R-HANUS2015, R-SAILER2020]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(globalLeaderboard|publicLeaderboard|worldRanking|leaderboard[^\n]{0,80}(fullName|full_name|realName))'}
+
+  - id: C-ENG-03
+    title: Points and badges have no money value
+    level: MUST
+    tier: 2
+    profiles: [C]
+    age_bands: [all]
+    requirement: Points, badges and levels cannot be bought, sold or exchanged for money or goods.
+    rationale: KIDS Act Art. 13. Keeps gamification about learning.
+    improvement: Remove any purchase or exchange path for points.
+    effort: low
+    sources: [KIDS, DFA]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(buyPoints|purchasePoints|buyXp|purchaseXp|redeemForCash|pointsToCredit)'}
+
+  - id: C-ENG-04
+    title: No variable reward schedules designed for engagement
+    level: SHOULD
+    tier: 3
+    profiles: [C, A]
+    age_bands: [all]
+    requirement: Rewards are predictable and earned. Random bonus drops and slot-machine style surprises are avoided.
+    rationale: Variable ratio rewards drive compulsive use. KIDS Act Art. 13(2) bans them in spending contexts on social and video services.
+    improvement: Replace random bonuses with predictable milestones the child can see in advance.
+    effort: low
+    sources: [KIDS, KIDS-COM, R-DECI1999, R-DIXON2013]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(randomBonus|surpriseReward|dailySpin|spinTheWheel|luckyDraw|roda_?da_?sorte)'}
+
+  - id: C-ENG-05
+    title: Engagement metrics balanced by wellbeing metrics
+    level: SHOULD
+    tier: 3
+    profiles: [C, A]
+    age_bands: [all]
+    requirement: Product KPIs for minors include learning and wellbeing outcomes, not only time spent, sessions or retention.
+    rationale: KIDS Act Art. 10(2) asks recommender optimisation to include quality and mental health metrics; good practice for every product.
+    improvement: Add learning-gain and healthy-session-length metrics to the product dashboard and goals.
+    effort: low
+    sources: [KIDS, KIDS-COM, EUKO, R-CERASOLI2014]
+    detection:
+      method: manual
+
+  - id: C-ENG-06
+    title: Challenges without anxiety timers for younger children
+    level: SHOULD
+    tier: 3
+    profiles: [C, A]
+    age_bands: [B1, B2, B3]
+    requirement: Quests and challenges for under-13s avoid countdown timers and expiring rewards.
+    rationale: Time pressure creates anxiety and drives compulsive return.
+    improvement: Remove expiry from quests or extend them to the whole school term.
+    effort: low
+    sources: [KIDS-COM, UNCRC-GC25]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(expiresIn|countdown|timeLeft|questExpiry|tempo_?restante)'}
+
+  # ================================================================ AGE-BAND MODIFIERS
+  - id: AGE-B1-01
+    title: Ages 3 to 5 use the product only with an adult in control
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [B1]
+    requirement: >
+      No child account with credentials, no text input, no external links, no notifications to
+      the child, audio-first instructions, and any AI conversation only with an adult present.
+    rationale: >
+      KIDS Act Art. 14(1)(d) and 15(1)(d): access below 13 only through tools for guardians.
+      Art. 7(4)(b) sets 3 years as the floor for guardian-controlled access to video services.
+    improvement: Route access through the guardian or teacher device; remove text inputs and outbound links.
+    effort: medium
+    sources: [KIDS, UNCRC-GC25]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, globs: ['*.html', '*.jsx', '*.tsx', '*.vue', '*.svelte'], pattern: '<a\s[^>]*href=[''"]https?://'}
+
+  - id: AGE-B2-01
+    title: Under 10, communication uses preset messages only
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [B1, B2]
+    features: [chat, multiplayer]
+    requirement: No free-text chat. Communication uses preset phrases or emojis. External links are behind an adult gate.
+    rationale: DSA Art. 28 guidelines on contact risks; KIDS Act Art. 12 and 15(1)(c).
+    improvement: Replace chat input with a preset phrase picker.
+    effort: medium
+    sources: [DSA-G28, KIDS]
+    detection:
+      method: static
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(sendChatMessage|chatInput|ChatInput|freeTextChat)'}
+
+  - id: AGE-B3-01
+    title: Under 13, access is enabled and controlled by a guardian or the school
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [B1, B2, B3]
+    requirement: >
+      Below 13, access to online games and AI conversational features is enabled and controlled
+      through tools for guardians (or the school in educational deployments).
+    rationale: KIDS Act Art. 14(1)(d) and 15(1)(d).
+    improvement: Require a guardian or school account to activate the child's access and settings.
+    effort: medium
+    sources: [KIDS]
+    detection:
+      method: manual
+
+  - id: AGE-B4-01
+    title: Ages 13 to 15 respect the national consent age and limited features
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [B4]
+    requirement: >
+      Where consent is the legal basis, guardian consent is obtained below the national age of
+      digital consent (13 to 16 depending on Member State). Social features follow limited-account rules.
+    rationale: GDPR Art. 8. KIDS Act Art. 6(2) for social and video features (13 to 14 only with guardian-set limited accounts).
+    improvement: Read the national pack for the consent age and add a guardian consent step below it.
+    effort: medium
+    sources: [GDPR, KIDS, EDPB-CONSENT]
+    detection:
+      method: manual
+
+  - id: AGE-B5-01
+    title: Ages 16 to 17 keep protective defaults
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [B5]
+    requirement: >
+      Older teenagers may change defaults themselves after clear information and explicit choice,
+      but defaults stay protective and profiling-based recommendations stay off by default.
+    rationale: KIDS Act Art. 11(2) (changes only above 15 with explicit consent) and 10(2)(b).
+    improvement: Allow opt-in changes with a plain explanation; keep defaults protective.
+    effort: low
+    sources: [KIDS, DSA-G28]
+    detection:
+      method: manual
+
+  # ================================================================ CORE: design for learning (look, sound, motion)
+  # From research gathered for the EDEH Quality Compass (Nov 2026). See framework/03-design-and-motivation.md.
+  - id: CORE-ACC-04
+    title: Moving content and sound can be paused
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Content that moves, scrolls or animates automatically for more than 5 seconds can be paused,
+      stopped or hidden, and audio that plays automatically for more than 3 seconds can be paused
+      or muted.
+    rationale: WCAG 2.2.2 and 1.4.2 (Level A), within the AA target of the European Accessibility Act. Uncontrolled motion distracts all learners and harms some.
+    improvement: Add pause and mute controls to every auto-playing animation, video and background audio.
+    effort: low
+    sources: [WCAG22, EAA, EN301549]
+    detection:
+      method: manual
+
+  - id: CORE-ACC-05
+    title: Colour is never the only cue
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Right and wrong answers, states and instructions are signalled by shape, text, icon or sound as
+      well as colour.
+    rationale: WCAG 1.4.1 (Level A). About 1 in 12 boys has a colour vision deficiency, so colour-only feedback fails several children in every class.
+    improvement: Add icons or text (tick, cross, label) next to colour feedback; test screens in greyscale.
+    effort: low
+    sources: [WCAG22, EAA]
+    detection:
+      method: manual
+
+  - id: CORE-DES-01
+    title: Motion and sound can be turned down or off
+    level: SHOULD
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      The product honours the device's reduced-motion setting and offers in-app controls to reduce
+      animation and sound, including motion triggered by the learner's own actions.
+    rationale: >
+      WCAG 2.3.3 (Level AAA) protects learners with vestibular disorders. Distracting motion and sound
+      compete with the learning content for attention.
+    improvement: Wrap animations in a reduced-motion check (CSS prefers-reduced-motion, useReducedMotion, platform accessibility APIs) and add 'calm mode' and sound sliders.
+    effort: low
+    sources: [W3C-233, WCAG22, R-SUNDARARAJAN2020]
+    detection:
+      method: static
+      patterns:
+        - {type: repo, check: reduced_motion_missing, confidence: medium}
+
+  - id: CORE-DES-02
+    title: Motion shows the content, not decoration
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Animation is used to show what is learned (a process, a change over time, a procedure).
+      Decorative, celebratory or purely entertaining motion and interesting-but-irrelevant extras
+      ("seductive details") are kept to a minimum.
+    rationale: >
+      Seductive details lower learning (g = -0.33, 58 studies). Animation that depicts the content
+      improves it (g = 0.23, 140 comparisons). In e-books, story-carrying animation helps young
+      children while hotspots and side games distract.
+    improvement: For each animation, write down what it teaches. Remove or shorten the ones that teach nothing; move side games out of the learning path.
+    effort: medium
+    sources: [R-SUNDARARAJAN2020, R-BERNEY2016, R-TAKACS2015]
+    detection:
+      method: manual
+
+  - id: CORE-DES-03
+    title: Calm screens, especially under 8
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [B1, B2]
+    requirement: >
+      Few elements compete on screen at once (as a guide, no more than four interactive or animated
+      elements on the main screen for under-8s), and help is available as audio or pictures, not text only.
+    rationale: >
+      Busy visual environments increase off-task time in young children and affect autistic children
+      most. A content analysis of 200 apps for under-8s found 95% showed more than four elements on
+      the opening screen.
+    improvement: Audit each screen's element count; move secondary elements into menus; add spoken help.
+    effort: medium
+    sources: [R-FISHER2014, R-HANLEY2017, R-CAC2018, R-HIRSHPASEK2015]
+    detection:
+      method: manual
+
+  - id: CORE-DES-04
+    title: Fantasy does not blur facts for young children
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [B1, B2]
+    requirement: >
+      When teaching facts about the real world to young children, use realistic images and plain
+      language. Talking animals, impossible events and fantasy framing are kept for stories and play,
+      not for factual content.
+    rationale: >
+      Human-like animals with human-like language reduced fact learning in 3 to 5-year-olds.
+      Fantastical events, more than pace, reduced executive function in 4-year-olds.
+    improvement: Review factual units for young children; replace anthropomorphic narration with realistic visuals or clearly separate story from fact.
+    effort: medium
+    sources: [R-GANEA2014, R-LILLARD2011]
+    detection:
+      method: manual
+
+  - id: CORE-DES-05
+    title: Visual style matches the concept, especially in maths
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Abstract concepts use simple, schematic visuals. Graphs and diagrams carry no decorative
+      pictures. Concrete images are used to start, then faded towards abstract representations.
+      Pleasant colours and friendly faces are welcome where they do not compete with the content.
+    rationale: >
+      Pictures inside graphs led 6 to 8-year-olds to count the pictures; generic symbols transfer
+      better than concrete ones. Schematic visuals outperform cartoon and realistic ones in learning
+      games. Emotional design (pleasant colours, faces) improves retention (d = 0.39).
+    improvement: Remove decoration from graphs and diagrams; plan concrete-to-abstract fading in maths sequences; keep warm, pleasant colour palettes.
+    effort: medium
+    sources: [R-KAMINSKI2013, R-WOUTERS2013, R-BROM2018]
+    detection:
+      method: manual
+
+  - id: CORE-DES-06
+    title: Celebrations are short and proportional
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Reward animations and sounds are brief, proportional to the achievement and skippable. Win
+      sounds are not used to make small or no progress feel like a big win.
+    rationale: >
+      Each celebration is itself a seductive detail competing for attention. In slot machines, win
+      sounds made players overestimate how often they won.
+    improvement: Cap celebration length (e.g. under 2 seconds), scale them to the achievement, and allow skipping.
+    effort: low
+    sources: [R-SUNDARARAJAN2020, R-DIXON2013]
+    detection:
+      method: static
+      patterns:
+        - {type: dependency, confidence: medium, names: [canvas-confetti, react-confetti, react-canvas-confetti, js-confetti, party-js, confetti-js]}
+
+  - id: CORE-DES-07
+    title: No colour-psychology claims
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Design decisions and product claims do not rely on popular colour-psychology effects
+      (e.g. "red lowers performance") that are not supported by robust evidence.
+    rationale: The red-colour effect on cognitive performance does not survive correction for publication bias.
+    improvement: Justify colour choices by function (contrast, coding, highlighting) and accessibility, not by colour-psychology claims.
+    effort: low
+    sources: [R-GNAMBS2020]
+    detection:
+      method: manual
+
+  # ================================================================ MOTIVATION (profiles A, B, C)
+  - id: A-MOT-01
+    title: No reward pile-up
+    level: SHOULD
+    tier: 3
+    profiles: [A, B, C]
+    age_bands: [all]
+    requirement: >
+      The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards,
+      unlockables, celebrations) and records for each one whether it is given for learning or for
+      showing up. No more than two layers are given for playing time, logging in or simply finishing.
+    rationale: >
+      Expected rewards for doing a task lower later intrinsic motivation (d = -0.36), more in children.
+      Badges plus leaderboards lowered motivation and exam scores over a semester. Each extra layer makes
+      rewards more expected and more controlling. Stacking is an inference from single-element studies.
+    improvement: Write the reward inventory (one line per layer, 'for learning' or 'for showing up'); remove or convert layers given for showing up.
+    effort: low
+    sources: [R-DECI1999, R-HANUS2015, R-MEKLER2017, R-SAILER2020, R-RADESKY2022]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: reward_layers, confidence: medium}
+
+  - id: A-MOT-02
+    title: Feedback informs, it does not control
+    level: SHOULD
+    tier: 3
+    profiles: [A, B, C]
+    age_bands: [all]
+    requirement: >
+      Feedback says what the learner did well and why, and what to try next. Copy avoids controlling
+      language ("you must", "you have to") and external goal framing ("do this to win coins").
+    rationale: >
+      Informational verbal feedback raised intrinsic motivation (+0.33). Controlling language and
+      external goal framing undermined conceptual learning in 11 to 12-year-olds, while drill scores
+      looked fine, so the loss is easy to miss.
+    improvement: Rewrite feedback strings as specific, informational messages; review copy for 'must' and reward-centred goals.
+    effort: low
+    sources: [R-DECI1999, R-VANSTEENKISTE2005]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(you must (finish|complete|play|keep)|you have to (finish|play|keep)|play to earn|win (more )?coins|tens de (acabar|jogar|continuar)|joga para ganhar)'}
+
+  - id: A-MOT-03
+    title: The product works with rewards switched off
+    level: SHOULD
+    tier: 3
+    profiles: [A, C]
+    age_bands: [all]
+    requirement: >
+      The teacher can switch off points, leaderboards and celebrations, or turn competition into a
+      shared class or team goal, and the activity still makes sense. Teacher materials include debrief
+      prompts that turn rewards into information ("What did you do to earn that?").
+    rationale: >
+      Gamification's cognitive gains are robust, but motivational gains vanish in rigorous studies;
+      competition combined with collaboration beats competition alone. Leaderboards reward those
+      already ahead and hurt the weakest.
+    improvement: Add teacher toggles for each reward layer and a 'team goal' mode; add debrief questions to the teacher guide.
+    effort: medium
+    sources: [R-SAILER2020, R-HANUS2015, R-HIRSHPASEK2015]
+    detection:
+      method: manual
+
+  - id: A-MOT-04
+    title: Room for curiosity
+    level: SHOULD
+    tier: 3
+    profiles: [A, B, C]
+    age_bands: [all]
+    requirement: >
+      The design includes open questions, things to explore, choices with consequences, and moments
+      where learners explain their reasoning to each other. Success is not only a count of completed items.
+    rationale: >
+      Curiosity improves memory through the same reward circuit that responds to coins, and predicts
+      achievement, more strongly for children in poverty. Intrinsic motivation predicts quality of work
+      and well-being; incentives predict quantity. Intrinsic motivation already declines through school.
+    improvement: Add at least one exploratory or explain-your-reasoning moment per unit; track learning quality, not only items completed.
+    effort: medium
+    sources: [R-GRUBER2014, R-SHAH2018, R-CERASOLI2014, R-HOWARD2021, R-LEPPER2005]
+    detection:
+      method: manual
+
+  - id: A-MOT-05
+    title: Helping and creativity are recognised, not paid
+    level: SHOULD
+    tier: 3
+    profiles: [A, B, C]
+    age_bands: [all]
+    requirement: >
+      Helping others and cooperating are not paid with points or items. Creative tasks reward creative
+      quality with informative feedback, not mere completion.
+    rationale: >
+      Toddlers rewarded with a toy for helping later helped less. Rewards for completing creative tasks
+      lower creativity; recognising creative quality with fair feedback can help.
+    improvement: Replace point payouts for helping with acknowledgement; give creative tasks qualitative feedback instead of completion rewards.
+    effort: low
+    sources: [R-WARNEKEN2008, R-BYRON2012]
+    detection:
+      method: manual
+
+  # ================================================================ COMMERCIAL PRACTICES (KIDS Act Recital 31, Art. 13)
+  - id: CORE-COM-05
+    title: Purchases are labelled as purchases, in real time
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [purchases]
+    requirement: >
+      Before any purchase or spending of purchasable currency, the child is told in clear, age-appropriate
+      words (and icons or audio for non-readers) that this is a purchase that costs real money, at the
+      moment it happens, with the price in the national currency.
+    rationale: >
+      KIDS Act Art. 13(1) and Recital 31: minors often do not understand the consequences of online
+      transactions, so purchases must be labelled as economic transactions in real time. Binding for social
+      and video services and AI chatbots (Art. 14(1)(c)); applied to games and learning apps as good practice.
+    improvement: Add a purchase confirmation screen for child accounts that says "This costs money" with the euro price and requires an adult step.
+    effort: low
+    sources: [KIDS, UCPD, DFA]
+    detection:
+      method: manual
+
+  - id: CORE-COM-06
+    title: No design for impulsive or unwanted spending
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [purchases]
+    requirement: >
+      No one-tap or in-content purchases for children. There is a clear separation and friction between
+      learning or play content and buying anything related to it (for example a separate adult area and a
+      confirmation step). No spending prompts at moments of frustration, failure or excitement.
+    rationale: >
+      KIDS Act Art. 13(2) and Recital 31: services must not be designed in a way that leads to excessive,
+      impulsive or unwanted spending, including through separation or friction between content and
+      purchases. DFA proposal targets the same practices.
+    improvement: Move every purchase out of the child experience into a guardian or school area; remove purchase buttons from gameplay, results and failure screens.
+    effort: medium
+    sources: [KIDS, DFA, UCPD, R-RADESKY2022]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(oneClick(Buy|Purchase)|oneTap(Buy|Purchase)|instantPurchase|quickBuy|skipPurchaseConfirm(ation)?|autoPurchase|purchaseWithoutConfirm)'}
+
+  - id: CORE-COM-07
+    title: No disguised advertising
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Paid promotion is never presented as learning content, game content or a character's own opinion.
+      Any sponsorship, product placement or brand partnership is clearly identified as such, in words a
+      child of the target age understands.
+    rationale: >
+      UCPD Annex I point 11 bans editorial content paid for by a trader without making that clear, and
+      point 28 bans direct exhortations to children to buy. DSA Art. 26 requires ads on platforms to be
+      clearly identifiable. KIDS Act Recital 31 names product placement, influencer marketing and
+      sponsorship as tactics with particular persuasive effects on minors.
+    improvement: Label any commercial content clearly (e.g. "Ad" or "Paid partnership" with an icon); remove promotion voiced by characters or tutors.
+    effort: low
+    sources: [UCPD, DSA, KIDS]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(sponsoredBy|isSponsored|productPlacement|brandedContent|paidPartnership|partnerContent|conte[uú]do patrocinado|patrocinado por)'}
+
+  - id: CORE-COM-08
+    title: No commercial content inside learning activities for children
+    level: SHOULD
+    tier: 3
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Learning activities for children contain no product placement, branded rewards, sponsored
+      characters or influencer endorsements, even when labelled. Funding and partner credits, if any,
+      appear only in adult-facing areas.
+    rationale: >
+      Children, especially under 8, struggle to recognise persuasive intent even when content is labelled.
+      Recital 31 of the KIDS Act lists these tactics among those with particular persuasive effects on
+      minors; UN General Comment 25 asks states to protect children from commercial exploitation.
+    improvement: Remove brands and sponsored items from learning content; move partner credits to the teacher or guardian area.
+    effort: low
+    sources: [KIDS, UNCRC-GC25, R-RADESKY2022]
+    detection:
+      method: manual
+
+  # ================================================================ AI COMPANIONS AND CHATBOTS (KIDS Act Recitals 32-34, Art. 14)
+  - id: CORE-AI-08
+    title: Conversation memory is off by default
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      AI systems do not keep or reuse information from a child's previous conversations by default,
+      except where necessary to protect the child's safety. Any memory is visible to the teacher or
+      guardian and can be deleted.
+    rationale: >
+      KIDS Act Art. 14(1)(b) and Recital 32: persistent conversational memory with minors must be disabled
+      by default, to prevent accumulating sensitive data and reinforcing harmful interaction patterns.
+      GDPR data minimisation and storage limitation.
+    improvement: Start each session without past context; if continuity is needed for learning progress, store structured progress data (e.g. skills mastered), not chat transcripts.
+    effort: low
+    sources: [KIDS, GDPR]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(persistentMemory|longTermMemory|conversationMemory|memoryEnabled|rememberConversations|enableMemory)\s*[:=]\s*true'}
+
+  - id: CORE-AI-09
+    title: AI is re-tested regularly and monitored after release
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      AI features are evaluated for risks to children before release and at regular intervals afterwards
+      (and on every model or prompt change). After release, incidents involving children are detected,
+      logged, assessed and acted on, with a named owner.
+    rationale: >
+      KIDS Act Art. 14(1)(e)(f) and Recitals 32 and 33. The legal duty of post-market monitoring does not
+      apply to micro and small enterprises; CSEF applies it to every provider because the risk to a child
+      does not depend on company size. Risk mitigations by the provider of the underlying general-purpose
+      model (AI Act Art. 55) can be relied on in part, but are not sufficient on their own.
+    improvement: Schedule the age-appropriate red-team set (CORE-AI-05) to run at least each term and on model or prompt changes; add an incident channel for teachers and guardians and a monthly review.
+    effort: medium
+    sources: [KIDS, AIA]
+    detection:
+      method: manual
+
+  - id: CORE-AI-10
+    title: An AI assistant inside a game or app is opt-in and easy to leave
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      When an AI chatbot or companion is a feature of a game, app or platform, it is not switched on
+      automatically, not displayed prominently (e.g. not pinned at the top of contacts or the home screen),
+      children are not encouraged to use it, and they can turn it off easily at any time.
+    rationale: >
+      KIDS Act Art. 14(2) and Recital 34, which cover AI companions and chatbots deployed as a functionality
+      of online games and platforms, including where in-game purchases can occur.
+    improvement: Default the assistant to off (or teacher-enabled), place it behind a neutral help entry, and add a visible "turn off assistant" setting.
+    effort: low
+    sources: [KIDS]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, pattern: '(assistantEnabled|chatbotEnabled|aiChatEnabled|aiCompanionEnabled|autoOpenChat|autoStartAssistant|showAssistantOnStart)\s*[:=]\s*true'}
+
+  - id: CORE-AI-11
+    title: AI never nudges children to spend or towards ads
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [ai_generative]
+    requirement: >
+      AI tutors, characters and assistants never suggest purchases, upgrades, premium content or
+      advertised products, and are not optimised for spending or engagement time.
+    rationale: >
+      KIDS Act Recital 31 names AI-enhanced nudging as a commercial tactic with particular effects on minors;
+      Art. 14(1)(c) applies the economic transaction safeguards to AI companions and chatbots, and Recital 34
+      extends safeguards to chatbots inside games with in-game purchases. AI Act Art. 5(1)(b) bans AI that
+      exploits age-related vulnerability.
+    improvement: Remove commercial goals from system prompts and fine-tuning data; add red-team prompts that try to elicit upsell and test that the AI refuses.
+    effort: low
+    sources: [KIDS, AIA, UCPD]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(upsell|encourage (the )?(user|child|student|player) to (buy|purchase|upgrade|subscribe)|promote (the )?(premium|shop|store|subscription))'}
+
+  # ================================================================ COMMUNICATIONS (KIDS Act Art. 12, 15(2), Recital 36; DSA)
+  # Detection uses the communications inventory (tooling/comms.py). Absence of a safeguard in code is a
+  # signal, not proof: many chat services configure moderation in a dashboard. Findings are REVIEW.
+  - id: CORE-CHT-01
+    title: Every communication channel is declared
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Every way children can communicate (text chat, direct messages, comments, voice, video, live streaming,
+      multiplayer messaging) is declared in csef.yaml features and listed in the DPIA, with the service used
+      and where data is processed.
+    rationale: >
+      Accountability (GDPR Art. 5(2)) and the DPIA require knowing every channel. Contact risks are the main
+      reason the KIDS Act regulates online games (Recital 36). Undeclared channels escape every other check.
+    improvement: Add the channel to `features` (chat, multiplayer, social or ugc) and to `third_parties`; update the DPIA.
+    effort: low
+    sources: [GDPR, KIDS, DSA-G28]
+    detection:
+      method: static
+      patterns:
+        - {type: repo, check: comms_undeclared, confidence: high}
+
+  - id: CORE-CHT-02
+    title: Report and block in every channel
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      In every channel, a child can report a message or user in one step and block any user without the
+      blocked user being told who blocked them. Reports reach a person quickly, with the message kept as evidence.
+    rationale: >
+      DSA Art. 16 (notice and action) applies to hosting services. KIDS Act Art. 12(1)(d) (block without
+      identity disclosed) and Art. 19 (child-friendly reporting). DSA Art. 28 guidelines.
+    improvement: Add report and block actions to every message and profile; route reports to a moderation queue with priority for minors.
+    effort: medium
+    sources: [DSA, KIDS, DSA-G28]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_report_block, confidence: medium}
+
+  - id: CORE-CHT-03
+    title: Moderation by people and by tools
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      Communication is moderated by named people (a teacher in school use, trained moderators otherwise) who can
+      hide, remove, mute and suspend, supported by automated filters for text and images in the product's
+      languages, with rate limits against spam. The level of moderation matches the age band.
+    rationale: >
+      KIDS Act Recital 36 lists cyberbullying, harassment, grooming, sexual exploitation, recruitment and
+      radicalisation as contact risks in online games. DSA Art. 28 guidelines on moderation for minors.
+    improvement: Give teachers or moderators hide/remove/mute/suspend powers; add a text filter (word list plus a moderation API) and image checks for uploads; add rate limits.
+    effort: high
+    sources: [KIDS, DSA-G28, DSA]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_moderation, confidence: medium}
+
+  - id: CORE-CHT-04
+    title: Direct messages only with approved contacts; groups only with agreement
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      Nobody can start a private conversation with a child unless the child (or, under 13, the guardian or
+      teacher) has approved that contact. Children are added to groups only with their agreement. Nobody can
+      pressure a child into approving contact.
+    rationale: KIDS Act Art. 12(1)(a)(c) and 12(2), applied to online games by Art. 15(1)(c) for 12(1).
+    improvement: Restrict direct messages to approved contacts within the class or group; require acceptance for group invitations.
+    effort: medium
+    sources: [KIDS, DSA-G28]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_direct_messages, confidence: medium}
+
+  - id: CORE-CHT-05
+    title: No links, handles or contact details in children's messages
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      Messages to and from children block or warn on external links, social media handles, phone numbers,
+      emails and addresses, so the product cannot be used to move children to other services.
+    rationale: >
+      KIDS Act Art. 15(2) and Recital 36 (restrict link-outs, warning messages, prevent enticing minors to other
+      services); Art. 12(3)(c) (contact details of minors never shared).
+    improvement: Filter URLs, handles and contact details before delivery; show a warning to the child and notify moderation.
+    effort: medium
+    sources: [KIDS]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_link_filter, confidence: medium}
+
+  - id: CORE-CHT-06
+    title: Voice, video and live streaming off by default
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Voice chat, video chat and live streaming are off by default, enabled only by a guardian or teacher for
+      under-13s, limited to approved contacts, and children cannot host live streams by default.
+    rationale: KIDS Act Art. 11(1) (camera, microphone) and Art. 12(3)(f) (no hosting of real-time transmissions by default). DSA Art. 28 guidelines.
+    improvement: Default voice and video to off; add guardian or teacher activation; restrict to class groups; remove child-hosted streaming.
+    effort: medium
+    sources: [KIDS, DSA-G28]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_voice_default_on, confidence: high}
+        - {type: repo, check: comms_voice_video, confidence: medium}
+
+  - id: CORE-CHT-07
+    title: Children's shared media is protected
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      Images and files sent in messages are checked automatically, visible to the responsible teacher or
+      moderator, and cannot be downloaded or forwarded by other users. Contact and account information of
+      children is never visible to people they have not accepted.
+    rationale: KIDS Act Art. 12(3)(a)(b)(e). DSA Art. 28 guidelines.
+    improvement: Add image checks on upload, disable download and forwarding of children's media, and restrict profile visibility.
+    effort: medium
+    sources: [KIDS, DSA-G28, GDPR]
+    detection:
+      method: mixed
+      patterns:
+        - {type: repo, check: comms_media, confidence: medium}
+
+  - id: CORE-CHT-08
+    title: Safeguarding procedure for communication risks
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      There is a written safeguarding procedure with a named lead: how moderators recognise and escalate
+      grooming, sexual exploitation, extortion, threats, self-harm signals and radicalisation; how evidence is
+      preserved; when guardians, schools, hotlines and authorities are contacted; and how moderators are trained
+      and supported.
+    rationale: >
+      KIDS Act Recital 36 names these contact risks. Code cannot show this; it is the human side of every
+      other communication rule. DSA Art. 28 guidelines expect effective moderation and support for minors.
+    improvement: Write the procedure with the DPO and a safeguarding lead; train moderators and teachers; test it with a tabletop exercise each year.
+    effort: medium
+    sources: [KIDS, DSA-G28, UNCRC-GC25]
+    detection:
+      method: manual
+
+  - id: CORE-CHT-09
+    title: Messages are kept only as long as needed
+    level: SHOULD
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [chat, multiplayer, social, ugc]
+    requirement: >
+      Messages have a defined retention period enforced by code, children and teachers can delete them, and
+      reported messages are preserved only for the investigation.
+    rationale: GDPR storage limitation (Art. 5(1)(e)) and erasure (Art. 17).
+    improvement: Add a retention job for messages and keep reported messages in a separate, access-controlled store.
+    effort: low
+    sources: [GDPR]
+    detection:
+      method: manual

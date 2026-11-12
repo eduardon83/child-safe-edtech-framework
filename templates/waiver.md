@@ -1,7 +1,7 @@
 # Waiver / decision record
 
-Use when the team decides to accept a gap against a CSES rule. Add the short form to `waivers:` in
-cses.yaml so the scanner reports it as WAIVED instead of failing.
+Use when the team decides to accept a gap against a CSEF rule. Add the short form to `waivers:` in
+csef.yaml so the scanner reports it as WAIVED instead of failing.
 
 | Field | Value |
 |---|---|

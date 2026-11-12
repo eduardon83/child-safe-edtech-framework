@@ -35,8 +35,8 @@ jobs:
         run: python3 tooling/build.py --zip dist
       - uses: actions/upload-artifact@v4
         with:
-          name: cses-review-skill
+          name: csef-review-skill
           path: |
-            dist/cses-review.zip
+            dist/csef-review.zip
             dist/example/
             dist/example-coc/

@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Validate the CSES rule catalogue and regenerate derived files.
+"""Validate the CSEF rule catalogue and regenerate derived files.
 
   python3 tooling/build.py            validate + regenerate
   python3 tooling/build.py --check    validate + fail if generated files are out of date (CI)
-  python3 tooling/build.py --zip DIR  also package the skill as DIR/cses-review.zip
+  python3 tooling/build.py --zip DIR  also package the skill as DIR/csef-review.zip
 
 Generated (never edit by hand):
-  standard/catalogue/*.md      rule catalogue per profile, age bands and packs
+  framework/catalogue/*.md      rule catalogue per profile, age bands and packs
   self-assessment/*.md         checklists per profile, grouped by compliance level
-  tooling/semgrep/cses.yml     Semgrep rules from the regex patterns
+  tooling/semgrep/csef.yml     Semgrep rules from the regex patterns
   docs/index.html, docs/pack-builder/index.html   GitHub Pages site and Pack Builder
-  skill/cses-review/standard/  copies of rules.yaml and sources.yaml
-  skill/cses-review/packs/     copies of the packs
-  skill/cses-review/scripts/scan.py
-  skill/cses-review/templates/   copies of the product templates
+  skill/csef-review/framework/  copies of rules.yaml and sources.yaml
+  skill/csef-review/packs/     copies of the packs
+  skill/csef-review/scripts/scan.py
+  skill/csef-review/templates/   copies of the product templates
 
 Licence: Apache-2.0
 """
@@ -161,14 +161,14 @@ def validate_pack_file(pf: Path):
 
 def load_and_validate():
     std = scan.load_standard(ROOT)
-    ids = [r["id"] for r in scan.load_yaml(ROOT / "standard" / "rules.yaml")["rules"]]
+    ids = [r["id"] for r in scan.load_yaml(ROOT / "framework" / "rules.yaml")["rules"]]
     dupes = {i for i in ids if ids.count(i) > 1}
     if dupes:
         err(f"duplicate rule ids: {sorted(dupes)}")
     validate_sources(std.sources, "standard")
     for r in std.rules.values():
         validate_rule(r, std.sources, "standard")
-    topics = scan.load_yaml(ROOT / "standard" / "coc-topics.yaml")
+    topics = scan.load_yaml(ROOT / "framework" / "coc-topics.yaml")
     for rid in std.rules:
         if rid not in topics.get("rules", {}):
             err(f"coc-topics.yaml: rule {rid} has no entry (add terms, or skip: true)")
@@ -198,7 +198,7 @@ def load_and_validate():
 # --------------------------------------------------------------------------- generation
 LANDING = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Child-Safe EdTech Standard</title>
+<title>Child-Safe EdTech Framework</title>
 <style>
 :root{--bg:#f7f7f4;--ink:#1d2321;--muted:#5d6763;--accent:#1f6f5c;--panel:#fff;--line:#dcdfd9}
 @media (prefers-color-scheme:dark){:root{--bg:#121514;--ink:#e8ebe9;--muted:#a2aba7;--accent:#5cc3a6;--panel:#1b1f1e;--line:#2e3432}}
@@ -209,19 +209,19 @@ a{color:var(--accent)}.cards{display:grid;gap:12px}
 .card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;text-decoration:none;color:var(--ink)}
 .card strong{color:var(--accent)}.card span{display:block;color:var(--muted);font-size:.95rem}
 </style></head><body><main>
-<h1>Child-Safe EdTech Standard</h1>
-<p class="lead">An open standard and toolkit for software children use for learning. CSES v{version}, {rules} rules, draft for public comment.</p>
+<h1>Child-Safe EdTech Framework</h1>
+<p class="lead">An open framework and toolkit for software children use for learning. CSEF v{version}, {rules} rules, draft for public comment.</p>
 <div class="cards">
 <a class="card" href="pack-builder/"><strong>Pack Builder</strong><span>Define your organisation's minimum level, no-gos and rules, and publish your pack to GitHub.</span></a>
-<a class="card" href="https://github.com/eduardon83/child-safe-edtech-standards"><strong>Repository</strong><span>The standard, the scanner, the Claude skill and the GitHub Action.</span></a>
-<a class="card" href="https://github.com/eduardon83/child-safe-edtech-standards/blob/main/standard/catalogue/index.md"><strong>Rule catalogue</strong><span>Every rule with requirement, rationale, improvement and sources.</span></a>
-<a class="card" href="https://github.com/eduardon83/child-safe-edtech-standards/issues"><strong>Give feedback</strong><span>Open an issue: false positives, rule wording, sources, country packs.</span></a>
+<a class="card" href="https://github.com/eduardon83/child-safe-edtech-framework"><strong>Repository</strong><span>The framework, the scanner, the Claude skill and the GitHub Action.</span></a>
+<a class="card" href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/catalogue/index.md"><strong>Rule catalogue</strong><span>Every rule with requirement, rationale, improvement and sources.</span></a>
+<a class="card" href="https://github.com/eduardon83/child-safe-edtech-framework/issues"><strong>Give feedback</strong><span>Open an issue: false positives, rule wording, sources, country packs.</span></a>
 </div>
-<p class="lead" style="margin-top:28px;font-size:.9rem">Not legal advice or a certification. Standard content CC BY 4.0, code Apache 2.0.</p>
+<p class="lead" style="margin-top:28px;font-size:.9rem">Not legal advice or a certification. Framework content CC BY 4.0, code Apache 2.0.</p>
 </main></body></html>
 """
 
-HEADER = "<!-- GENERATED by tooling/build.py from standard/rules.yaml. Do not edit by hand. -->\n\n"
+HEADER = "<!-- GENERATED by tooling/build.py from framework/rules.yaml. Do not edit by hand. -->\n\n"
 
 
 def bands_txt(r):
@@ -299,7 +299,7 @@ def semgrep_yaml(rules):
                 "severity": sev,
                 "languages": ["generic"],
                 "pattern-regex": rx,
-                "metadata": {"cses_rule": r["id"], "tier": r["tier"], "sources": r["sources"]},
+                "metadata": {"csef_rule": r["id"], "tier": r["tier"], "sources": r["sources"]},
             }
             if p.get("globs"):
                 entry["paths"] = {"include": p["globs"]}
@@ -313,7 +313,7 @@ def generate(std, packs) -> dict[Path, str]:
     core = [r for r in rules if r["profiles"] == ["core"] and not r["id"].startswith("AGE-")]
     by_prof = {p: [r for r in rules if p in r["profiles"]] for p in ("A", "B", "C")}
     age = [r for r in rules if r["id"].startswith("AGE-")]
-    cat = ROOT / "standard" / "catalogue"
+    cat = ROOT / "framework" / "catalogue"
     intros = {
         "core": "Rules that apply to every product used by minors, whatever its profile.",
         "A": "Profile A: educational games. Read together with the core rules.",
@@ -328,7 +328,7 @@ def generate(std, packs) -> dict[Path, str]:
     files[cat / "age-bands.md"] = catalogue_page("Age-band modifiers", intros["age"], age, std.sources)
 
     idx = [HEADER + "# Rule catalogue", "",
-           f"CSES v{std.version}: {len(rules)} rules. Level 1 = {LEVEL_NAMES[1]}, 2 = {LEVEL_NAMES[2]}, 3 = {LEVEL_NAMES[3]}.", "",
+           f"CSEF v{std.version}: {len(rules)} rules. Level 1 = {LEVEL_NAMES[1]}, 2 = {LEVEL_NAMES[2]}, 3 = {LEVEL_NAMES[3]}.", "",
            "| Level | MUST | SHOULD |", "|---|---|---|"]
     for t in (1, 2, 3):
         idx.append(f"| {t} {LEVEL_NAMES[t]} | {sum(1 for r in rules if r['tier'] == t and r['level'] == 'MUST')} | {sum(1 for r in rules if r['tier'] == t and r['level'] == 'SHOULD')} |")
@@ -347,7 +347,7 @@ def generate(std, packs) -> dict[Path, str]:
         lines += ["## Sources added", ""]
         for s in doc.get("sources", []) or []:
             lines.append(f"- **{s['id']}** {s['title']}. {s.get('status', '')}. {s.get('url', '')}")
-        lines += ["", "## Amendments to standard rules", ""]
+        lines += ["", "## Amendments to framework rules", ""]
         for a in doc.get("amend", []) or []:
             bits = []
             if a.get("add_sources"):
@@ -371,7 +371,7 @@ def generate(std, packs) -> dict[Path, str]:
     files[sa / "profile-c.md"] = checklist_page("Profile C, gamified applications (use with core.md)", [r for r in by_prof["C"] if r["profiles"] != ["core"]])
     files[sa / "age-bands.md"] = checklist_page("Age-band modifiers (use with core.md)", age)
 
-    files[ROOT / "tooling" / "semgrep" / "cses.yml"] = semgrep_yaml(rules)
+    files[ROOT / "tooling" / "semgrep" / "csef.yml"] = semgrep_yaml(rules)
 
     cat_json = json.dumps({
         "version": std.version,
@@ -383,16 +383,16 @@ def generate(std, packs) -> dict[Path, str]:
     files[ROOT / "docs" / "pack-builder" / "index.html"] = tpl.replace("/*CATALOGUE*/null", cat_json)
     files[ROOT / "docs" / "index.html"] = LANDING.replace("{version}", std.version).replace("{rules}", str(len(rules)))
 
-    sk = ROOT / "skill" / "cses-review"
-    files[sk / "standard" / "rules.yaml"] = (ROOT / "standard" / "rules.yaml").read_text(encoding="utf-8")
-    files[sk / "standard" / "sources.yaml"] = (ROOT / "standard" / "sources.yaml").read_text(encoding="utf-8")
+    sk = ROOT / "skill" / "csef-review"
+    files[sk / "framework" / "rules.yaml"] = (ROOT / "framework" / "rules.yaml").read_text(encoding="utf-8")
+    files[sk / "framework" / "sources.yaml"] = (ROOT / "framework" / "sources.yaml").read_text(encoding="utf-8")
     for pf in sorted((ROOT / "packs").glob("*.yaml")):
         files[sk / "packs" / pf.name] = pf.read_text(encoding="utf-8")
     files[sk / "scripts" / "scan.py"] = (ROOT / "tooling" / "scan.py").read_text(encoding="utf-8")
     for t in ("export.py", "comms.py", "coc.py"):
         files[sk / "scripts" / t] = (ROOT / "tooling" / t).read_text(encoding="utf-8")
-    files[sk / "standard" / "coc-topics.yaml"] = (ROOT / "standard" / "coc-topics.yaml").read_text(encoding="utf-8")
-    for t in ("cses.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md"):
+    files[sk / "framework" / "coc-topics.yaml"] = (ROOT / "framework" / "coc-topics.yaml").read_text(encoding="utf-8")
+    for t in ("csef.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md"):
         files[sk / "templates" / t] = (ROOT / "templates" / t).read_text(encoding="utf-8")
     return files
 
@@ -441,11 +441,11 @@ def main():
     if args.zip:
         out = Path(args.zip)
         out.mkdir(parents=True, exist_ok=True)
-        z = out / "cses-review.zip"
+        z = out / "csef-review.zip"
         with zipfile.ZipFile(z, "w", zipfile.ZIP_DEFLATED) as zf:
-            for f in sorted((ROOT / "skill" / "cses-review").rglob("*")):
+            for f in sorted((ROOT / "skill" / "csef-review").rglob("*")):
                 if f.is_file() and "__pycache__" not in f.parts:
-                    zf.write(f, Path("cses-review") / f.relative_to(ROOT / "skill" / "cses-review"))
+                    zf.write(f, Path("csef-review") / f.relative_to(ROOT / "skill" / "csef-review"))
         print(f"Skill packaged: {z}")
     return 0
 

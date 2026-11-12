@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""CSES export: turn a scan (findings.json) into a reviewer-friendly dashboard and documents.
+"""CSEF export: turn a scan (findings.json) into a reviewer-friendly dashboard and documents.
 
-  python3 tooling/export.py --input cses-report/findings.json --formats html,pdf,docx [--out-dir DIR]
+  python3 tooling/export.py --input csef-report/findings.json --formats html,pdf,docx [--out-dir DIR]
 
 Outputs (in --out-dir, default: the folder of the input):
   dashboard.html   interactive, self-contained dashboard (levels, age bands, filters, checklists)
@@ -212,7 +212,7 @@ details.card,.lvl,.band,.tile,tr,.imp{break-inside:avoid}.panel{border:1px solid
 
 JS = r"""
 (function(){
-  const key = 'cses-dash-' + (document.body.dataset.product || 'product');
+  const key = 'csef-dash-' + (document.body.dataset.product || 'product');
   function load(){ try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch(e){ return {}; } }
   function save(v){ try { localStorage.setItem(key, JSON.stringify(v)); } catch(e){} }
   const st = load();
@@ -249,7 +249,7 @@ JS = r"""
       rows.push([cb.dataset.check, cb.checked ? 'yes' : 'no', (n ? n.value : '').replace(/"/g,'""')]); });
     const csv = rows.map(r => r.map(v => '"' + v + '"').join(',')).join('\n');
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
-    a.download = 'cses-human-checks.csv'; document.body.appendChild(a); a.click(); a.remove();
+    a.download = 'csef-human-checks.csv'; document.body.appendChild(a); a.click(); a.remove();
   });
   window.addEventListener('beforeprint', () => document.querySelectorAll('details.card').forEach(d => d.open = true));
 })();
@@ -287,11 +287,11 @@ def render_html(model: dict, for_print: bool = False) -> str:
     a = out.append
     op = " open" if for_print else ""
     a(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
-      f'<title>CSES dashboard: {e(product)}</title><style>{CSS}</style></head>'
+      f'<title>CSEF dashboard: {e(product)}</title><style>{CSS}</style></head>'
       f'<body data-product="{e(product)}"><div class="wrap">')
     a('<div class="top"><div>')
-    a(f'<h1>CSES pre-compliance dashboard</h1><p class="sub"><strong>{e(product)}</strong> · scanned {e(gen)} · '
-      f'Child-Safe EdTech Standard v{e(d["tool"]["standard_version"])} · {e(d["tool"]["name"])} {e(d["tool"]["version"])}</p></div>')
+    a(f'<h1>CSEF pre-compliance dashboard</h1><p class="sub"><strong>{e(product)}</strong> · scanned {e(gen)} · '
+      f'Child-Safe EdTech Framework v{e(d["tool"]["standard_version"])} · {e(d["tool"]["name"])} {e(d["tool"]["version"])}</p></div>')
     if not for_print:
         a('<div class="btns"><button id="expand" type="button">Expand all</button><button id="collapse" type="button">Collapse all</button>'
           '<button id="print" type="button">Print / PDF</button></div>')
@@ -393,7 +393,7 @@ def render_html(model: dict, for_print: bool = False) -> str:
       'still be configured in a service dashboard or a backend outside the repository: confirm by hand.</p>')
     if not inv.get("has_communication"):
         a('<p>No communication channels found in code. If the product has chat, multiplayer or comments through a service configured '
-          'elsewhere, declare it in cses.yaml.</p>')
+          'elsewhere, declare it in csef.yaml.</p>')
     else:
         a('<table><thead><tr><th>Channel</th><th>Kind</th><th>Evidence</th></tr></thead><tbody>')
         for c in inv["channels"]:
@@ -524,7 +524,7 @@ def render_html(model: dict, for_print: bool = False) -> str:
           f'<td class="small">{e(s.get("status", ""))}</td><td class="small">{e(str(s.get("verified", "")))}</td></tr>')
     a('</tbody></table></section>')
     a(f'<p class="small muted" style="margin-top:18px">Generated {e(dt.date.today().isoformat())} from findings.json. '
-      'Child-Safe EdTech Standard: standard content CC BY 4.0, code Apache 2.0.</p></div>')
+      'Child-Safe EdTech Framework: standard content CC BY 4.0, code Apache 2.0.</p></div>')
     if not for_print:
         a(f'<script>{JS}</script>')
     a('</body></html>')
@@ -651,9 +651,9 @@ def render_docx(model: dict, path: Path) -> None:
         return cells
 
     product = d.get("product") or "Product"
-    doc.add_paragraph(f"CSES pre-compliance report: {product}", style="Title")
+    doc.add_paragraph(f"CSEF pre-compliance report: {product}", style="Title")
     p = doc.add_paragraph()
-    p.add_run(f"Scanned {d.get('generated', '')[:10]} · Child-Safe EdTech Standard v{d['tool']['standard_version']} · "
+    p.add_run(f"Scanned {d.get('generated', '')[:10]} · Child-Safe EdTech Framework v{d['tool']['standard_version']} · "
               f"{d['tool']['name']} {d['tool']['version']}").italic = True
     p = doc.add_paragraph()
     p.add_run("Pre-compliance report, not legal advice or certification. ").bold = True
@@ -819,8 +819,8 @@ def export(input_path: Path, formats: list[str], out_dir: Path | None = None) ->
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Export a CSES scan to an interactive HTML dashboard, PDF and Word")
-    ap.add_argument("--input", default="cses-report/findings.json", help="findings.json written by tooling/scan.py")
+    ap = argparse.ArgumentParser(description="Export a CSEF scan to an interactive HTML dashboard, PDF and Word")
+    ap.add_argument("--input", default="csef-report/findings.json", help="findings.json written by tooling/scan.py")
     ap.add_argument("--formats", default="html", help="comma-separated: html,pdf,docx")
     ap.add_argument("--out-dir", default=None)
     args = ap.parse_args(argv)
@@ -832,7 +832,7 @@ def main(argv=None) -> int:
     try:
         written = export(Path(args.input), formats, Path(args.out_dir) if args.out_dir else None)
     except (RuntimeError, FileNotFoundError) as ex:
-        print(f"cses export: {ex}", file=sys.stderr)
+        print(f"csef export: {ex}", file=sys.stderr)
         return 1
     for k, v in written.items():
         if k != "pdf_engine":

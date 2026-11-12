@@ -1,0 +1,32 @@
+# Copy to .github/workflows/csef-check.yml in your product repository.
+# Pin the framework version you follow.
+name: CSEF child-safety check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write   # for SARIF upload to code scanning
+
+jobs:
+  cses:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: eduardon83/child-safe-edtech-framework@v0.6.0
+        with:
+          fail-on: block        # block | review | warn | never
+          export: html,pdf,docx # dashboard.html, report.pdf, report.docx in the csef-report artifact
+          # level: 2            # override compliance_level from csef.yaml
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: csef-report/findings.sarif
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: csef-report
+          path: csef-report/

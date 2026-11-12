@@ -1,4 +1,4 @@
-"""Tests for the CSES scanner and catalogue. Run: python3 -m pytest -q"""
+"""Tests for the CSEF scanner and catalogue. Run: python3 -m pytest -q"""
 import json
 import subprocess
 import sys
@@ -101,10 +101,10 @@ def test_waiver_requires_approver(tmp_path):
     (repo / "src").mkdir(parents=True)
     (repo / "src" / "a.ts").write_text('const x = "http://cdn.example.org/img.png";\n', encoding="utf-8")
     base = "product: t\nprofiles: [C]\nage_bands: [B4]\ncompliance_level: 1\n"
-    (repo / "cses.yaml").write_text(base + "waivers:\n  - {rule: CORE-SEC-03, reason: legacy}\n", encoding="utf-8")
+    (repo / "csef.yaml").write_text(base + "waivers:\n  - {rule: CORE-SEC-03, reason: legacy}\n", encoding="utf-8")
     _, _, res = run(repo)
     assert "CORE-SEC-03" in rules_with(res, "REVIEW")
-    (repo / "cses.yaml").write_text(base + "waivers:\n  - {rule: CORE-SEC-03, reason: legacy, approved_by: DPO, expires: 2099-01-01}\n", encoding="utf-8")
+    (repo / "csef.yaml").write_text(base + "waivers:\n  - {rule: CORE-SEC-03, reason: legacy, approved_by: DPO, expires: 2099-01-01}\n", encoding="utf-8")
     _, _, res = run(repo)
     assert "CORE-SEC-03" in rules_with(res, "WAIVED")
 
@@ -114,7 +114,7 @@ def test_inline_ignore(tmp_path):
     (repo / "src").mkdir(parents=True)
     (repo / "src" / "a.ts").write_text(
         '// cses-ignore: CORE-SEC-03 -- public static asset host\nconst x = "http://cdn.example.org/img.png";\n', encoding="utf-8")
-    (repo / "cses.yaml").write_text("product: t\nprofiles: [C]\nage_bands: [B4]\n", encoding="utf-8")
+    (repo / "csef.yaml").write_text("product: t\nprofiles: [C]\nage_bands: [B4]\n", encoding="utf-8")
     _, _, res = run(repo)
     assert "CORE-SEC-03" in rules_with(res, "WAIVED")
 
@@ -279,3 +279,13 @@ def test_code_of_conduct_comparison(tmp_path):
     s = {x["id"]: x["status"] for x in res["structure"]}
     assert s["COC-S05"] == "missing" and s["COC-S06"] == "covered"
     assert "Possible conflicts" in (tmp_path / "coc-comparison.md").read_text(encoding="utf-8")
+
+
+def test_legacy_cses_names_still_work(tmp_path):
+    """v0.6 renamed CSES to CSEF; the old manifest name and ignore marker must keep working."""
+    (tmp_path / "cses.yaml").write_text("product: legacy\nprofiles: [A]\nage_bands: [B2]\n", encoding="utf-8")
+    assert scan.find_manifest(tmp_path, None) == tmp_path / "cses.yaml"
+    (tmp_path / "csef.yaml").write_text("product: new\nprofiles: [A]\nage_bands: [B2]\n", encoding="utf-8")
+    assert scan.find_manifest(tmp_path, None) == tmp_path / "csef.yaml"
+    assert scan.IGNORE_RE.search("// cses-ignore: CORE-DAT-01 -- reason")
+    assert scan.IGNORE_RE.search("// csef-ignore: CORE-DAT-01 -- reason")

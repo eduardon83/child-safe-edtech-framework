@@ -1,4 +1,4 @@
-"""CSES communications inventory.
+"""CSEF communications inventory.
 
 Finds communication channels in a codebase (text chat, direct messages, voice and video, comments,
 live streaming) and the safeguards around them (reporting, blocking, moderation roles, automated
@@ -133,7 +133,7 @@ def check(name: str, inv: dict, manifest: dict | None):
     if name == "comms_undeclared":
         declared = set((manifest or {}).get("features") or [])
         if manifest is not None and not (declared & COMM_FEATURES):
-            out.append((path, line, f"Communication found in code ({chans}) but no chat, multiplayer, social or ugc feature is declared in cses.yaml."))
+            out.append((path, line, f"Communication found in code ({chans}) but no chat, multiplayer, social or ugc feature is declared in csef.yaml."))
     elif name == "comms_report_block":
         if not sg["report"]["evidence"]:
             out.append((path, line, f"Communication found ({chans}) but no reporting function was found in code."))
@@ -186,7 +186,7 @@ def _split(ev: str):
 def markdown(inv: dict) -> list[str]:
     if not inv["has_communication"]:
         return ["No communication channels were found in code. If the product has chat, multiplayer or comments "
-                "through a service configured outside the repository, declare it in cses.yaml.", ""]
+                "through a service configured outside the repository, declare it in csef.yaml.", ""]
     a = []
     a.append("| Channel | Kind | Evidence |")
     a.append("|---|---|---|")

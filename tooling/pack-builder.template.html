@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CSES Pack Builder</title>
-<meta name="description" content="Build your organisation's child-safety compliance pack for the Child-Safe EdTech Standard (CSES) and publish it to GitHub.">
+<title>CSEF Pack Builder</title>
+<meta name="description" content="Build your organisation's child-safety compliance pack for the Child-Safe EdTech Framework (CSEF) and publish it to GitHub.">
 <style>
 :root {
   --bg: #f7f7f4; --panel: #ffffff; --ink: #1d2321; --muted: #5d6763; --line: #dcdfd9;
@@ -81,11 +81,11 @@ footer { max-width: 1180px; margin: 0 auto; padding: 8px 16px 40px; color: var(-
 </head>
 <body>
 <header>
-  <h1>CSES Pack Builder</h1>
+  <h1>CSEF Pack Builder</h1>
   <p>Define your organisation's own child-safety compliance pack for the
-  <a href="https://github.com/eduardon83/child-safe-edtech-standards">Child-Safe EdTech Standard</a>:
+  <a href="https://github.com/eduardon83/child-safe-edtech-framework">Child-Safe EdTech Framework</a>:
   minimum level, no-gos, forbidden SDKs and phrases, records you require, and your own rules.
-  The pack is a YAML file the CSES scanner applies on top of the public standard. Nothing leaves your browser until you publish.</p>
+  The pack is a YAML file the CSEF scanner applies on top of the public framework. Nothing leaves your browser until you publish.</p>
 </header>
 
 <main>
@@ -140,7 +140,7 @@ footer { max-width: 1180px; margin: 0 auto; padding: 8px 16px 40px; color: var(-
 
   <section class="card" aria-labelledby="h-rec">
     <h2 id="h-rec"><span class="step">5</span>Records you require</h2>
-    <p class="hint">Features that need a decision record (with a named approver) before release, linked in each product's cses.yaml.</p>
+    <p class="hint">Features that need a decision record (with a named approver) before release, linked in each product's csef.yaml.</p>
     <div class="chips" id="feats"></div>
     <div class="grid2">
       <div><label for="days">Review each product manifest every (days, 0 = off)</label><input id="days" type="number" min="0" value="180"></div>
@@ -175,20 +175,20 @@ footer { max-width: 1180px; margin: 0 auto; padding: 8px 16px 40px; color: var(-
       <div><label for="gho">Owner or organisation</label><input id="gho" type="text" placeholder="my-org"></div>
       <div><label for="ghr">Repository</label><input id="ghr" type="text" placeholder="my-product"></div>
       <div><label for="ghb">Branch</label><input id="ghb" type="text" value="main"></div>
-      <div><label for="ghp">Path</label><input id="ghp" type="text" placeholder=".cses/packs/acme.yaml"></div>
+      <div><label for="ghp">Path</label><input id="ghp" type="text" placeholder=".csef/packs/acme.yaml"></div>
     </div>
     <div class="actions" style="margin-top:10px"><button type="button" class="primary" id="pub">Publish to GitHub</button></div>
     <div id="pmsg"></div>
-    <label for="mani">Then add to each product's cses.yaml</label>
+    <label for="mani">Then add to each product's csef.yaml</label>
     <pre id="mani" style="background:var(--code);border-radius:8px;padding:10px;font:.8rem/1.45 var(--mono);margin:0;white-space:pre-wrap"></pre>
   </section>
 </aside>
 </main>
 
 <footer>
-  CSES v<span id="stdver"></span>. Not legal advice or a certification. Validate locally with
+  CSEF v<span id="stdver"></span>. Not legal advice or a certification. Validate locally with
   <code>python3 tooling/build.py --validate-pack your-pack.yaml</code>.
-  Standard content CC BY 4.0, code Apache 2.0.
+  Framework content CC BY 4.0, code Apache 2.0.
 </footer>
 
 <script>
@@ -272,9 +272,9 @@ function buildYaml() {
   const deps = lines("deps"), phr = lines("phr");
   const nogo = CATALOGUE.rules.map(r => r.id).filter(id => state.nogo.has(id));
   const out = [];
-  out.push("# CSES company pack generated with the CSES Pack Builder on " + today + ".");
+  out.push("# CSEF company pack generated with the CSEF Pack Builder on " + today + ".");
   out.push("# Validate: python3 tooling/build.py --validate-pack <this file>");
-  out.push("# Use: add `packs: [<path to this file>]` to each product's cses.yaml.", "");
+  out.push("# Use: add `packs: [<path to this file>]` to each product's csef.yaml.", "");
   out.push("pack:");
   out.push("  id: " + q(pid));
   out.push("  title: " + q(org + " child-safety policy"));
@@ -337,8 +337,8 @@ function update() {
   $("nogocount").textContent = state.nogo.size + " no-go(s) selected";
   $("summary").textContent = `Minimum Level ${current.lvl} (${LEVEL_NAME[current.lvl]}), ${current.nogo.length} no-go(s), ${current.customs.length} custom rule(s).`;
   $("vmsg").innerHTML = validate(current).map(([k, m]) => `<p class="msg ${k}">${m}</p>`).join("");
-  if (!$("ghp").dataset.touched) $("ghp").value = `.cses/packs/${current.pid}.yaml`;
-  $("mani").textContent = `packs: [${$("ghp").value || ".cses/packs/" + current.pid + ".yaml"}]`;
+  if (!$("ghp").dataset.touched) $("ghp").value = `.csef/packs/${current.pid}.yaml`;
+  $("mani").textContent = `packs: [${$("ghp").value || ".csef/packs/" + current.pid + ".yaml"}]`;
   store("form", collect());
 }
 

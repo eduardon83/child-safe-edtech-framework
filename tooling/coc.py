@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""CSES code-of-conduct comparison.
+"""CSEF code-of-conduct comparison.
 
 Compares a code of conduct (an industry code, a company code, a draft code under the EU KIDS Act) with:
   1. the structural expectations for codes of conduct in the EU KIDS Act proposal (Art. 17, Art. 23, Recital 39);
-  2. the CSES rules in scope (profiles, age bands, level, packs).
+  2. the CSEF rules in scope (profiles, age bands, level, packs).
 
 For each rule it reports: covered, partial (topic mentioned, or only weak commitment), missing, or
 possible conflict (the code permits something the rule forbids). This is a first pass based on wording;
-every result needs a person (or the cses-review skill) to confirm meaning.
+every result needs a person (or the csef-review skill) to confirm meaning.
 
   python3 tooling/coc.py --input code.pdf [--name "Example Code"] [--level 1|2|3] [--profiles A,C]
-                         [--bands B2,B3] [--pack file.yaml] [--out-dir cses-coc] [--formats md,html,json]
+                         [--bands B2,B3] [--pack file.yaml] [--out-dir csef-coc] [--formats md,html,json]
 
 Input: .txt, .md, .html, .pdf (pdftotext or pypdf) or .docx (python-docx).
 
@@ -34,7 +34,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import scan  # noqa: E402
 
-TOOL = "cses-coc"
+TOOL = "csef-coc"
 STRONG = r"\b(must|shall|will|never|do not|does not|are not|is not|may not|cannot|can not|prohibit\w*|ban(s|ned)?|required?|commit\w*|ensure\w*|undertake\w*|guarantee\w*|not permitted|not allowed)\b"
 WEAK = r"\b(should|encourag\w*|endeavou?r\w*|aim(s)? to|where possible|where appropriate|where feasible|strive\w*|consider\w*|recommend\w*|seek to|best efforts|as far as possible|voluntar\w*)\b"
 PERMISSIVE = r"\b(may|can|could|is permitted|are permitted|permitted|allowed|acceptable|optional|at (their|its) discretion|provided that|as long as|subject to|is possible)\b"
@@ -253,7 +253,7 @@ def render_md(res: dict) -> str:
     lv = res["scope"]["level"]
     a(f"# Code of conduct comparison: {res['code']['name']}")
     a("")
-    a(f"Generated {res['generated'][:10]} by {TOOL} {res['tool']['version']} against the Child-Safe EdTech Standard v{res['tool']['standard_version']}, "
+    a(f"Generated {res['generated'][:10]} by {TOOL} {res['tool']['version']} against the Child-Safe EdTech Framework v{res['tool']['standard_version']}, "
       f"Level {lv} ({scan.LEVEL_NAMES[lv]}), profiles core + {', '.join(res['scope']['profiles'])}, age bands {', '.join(res['scope']['age_bands'])}.")
     a("")
     a("> **First-pass comparison based on wording, not legal advice.** 'Covered' means the code uses the right terms with a clear "
@@ -335,7 +335,7 @@ def render_html(res: dict) -> str:
       f'<title>Code of conduct comparison: {e(res["code"]["name"])}</title><style>{export.CSS}</style></head><body><div class="wrap">')
     a(f'<h1>Code of conduct comparison</h1><p class="sub"><strong>{e(res["code"]["name"])}</strong> · {res["code"]["clauses"]} clauses · '
       f'Level {lv} ({e(scan.LEVEL_NAMES[lv])}) · core + {e(", ".join(res["scope"]["profiles"]))} · bands {e(", ".join(res["scope"]["age_bands"]))} · '
-      f'CSES v{e(res["tool"]["standard_version"])}</p>')
+      f'CSEF v{e(res["tool"]["standard_version"])}</p>')
     a('<p class="disclaimer"><strong>First-pass comparison based on wording, not legal advice.</strong> Confirm every result by reading the '
       'clauses cited. Under the EU KIDS Act proposal (Recital 39), adhering to a code does not in itself presume legal compliance.</p>')
     a('<section class="panel"><h2>Summary</h2><div class="tiles" style="grid-template-columns:repeat(4,minmax(0,1fr))">')
@@ -387,15 +387,15 @@ document.querySelectorAll('[data-sev-filter]').forEach(x=>x.addEventListener('ch
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Compare a code of conduct with the Child-Safe EdTech Standard")
+    ap = argparse.ArgumentParser(description="Compare a code of conduct with the Child-Safe EdTech Framework")
     ap.add_argument("--input", required=True, help=".txt, .md, .html, .pdf or .docx")
     ap.add_argument("--name", help="name of the code (default: file name)")
     ap.add_argument("--level", type=int, choices=[1, 2, 3], default=3, help="compare up to this level (default 3: everything)")
     ap.add_argument("--profiles", default="A,B,C", help="comma-separated profiles in scope (default A,B,C)")
     ap.add_argument("--bands", default="B1,B2,B3,B4,B5", help="comma-separated age bands in scope")
     ap.add_argument("--pack", action="append", default=[], help="extra pack (country, sector or company)")
-    ap.add_argument("--standard-root", default=None)
-    ap.add_argument("--out-dir", default="cses-coc")
+    ap.add_argument("--framework-root", "--standard-root", dest="standard_root", default=None)
+    ap.add_argument("--out-dir", default="csef-coc")
     ap.add_argument("--formats", default="md,html,json")
     args = ap.parse_args(argv)
 
@@ -403,12 +403,12 @@ def main(argv=None) -> int:
     std = scan.load_standard(root)
     for p in args.pack:
         scan.apply_pack(std, Path(p))
-    topics = yaml.safe_load((root / "standard" / "coc-topics.yaml").read_text(encoding="utf-8"))
+    topics = yaml.safe_load((root / "framework" / "coc-topics.yaml").read_text(encoding="utf-8"))
     src = Path(args.input)
     try:
         text = read_input(src)
     except RuntimeError as ex:
-        print(f"cses coc: {ex}", file=sys.stderr)
+        print(f"csef coc: {ex}", file=sys.stderr)
         return 1
     res = compare(text, std, topics, args.level, set(args.profiles.split(",")), set(args.bands.split(",")), args.name or src.stem)
     out = Path(args.out_dir)

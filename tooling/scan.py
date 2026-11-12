@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""CSES scanner: pre-compliance checks for software used by children.
+"""CSEF scanner: pre-compliance checks for software used by children.
 
-Reads a product manifest (cses.yaml), selects the rules of the Child-Safe EdTech
+Reads a product manifest (csef.yaml), selects the rules of the Child-Safe EdTech
 Standard that apply (profiles, age bands, compliance level, packs), runs static
 and manifest checks, and writes:
 
@@ -34,10 +34,10 @@ from pathlib import Path
 try:
     import yaml
 except ImportError:  # pragma: no cover
-    sys.exit("CSES scanner needs PyYAML: pip install pyyaml")
+    sys.exit("CSEF scanner needs PyYAML: pip install pyyaml")
 
-TOOL_NAME = "cses-scan"
-TOOL_VERSION = "0.5.0"
+TOOL_NAME = "csef-scan"
+TOOL_VERSION = "0.6.0"
 
 PROFILES = {"core", "A", "B", "C"}
 BANDS = ["B1", "B2", "B3", "B4", "B5"]
@@ -45,7 +45,9 @@ BAND_AGES = {"B1": "3-5", "B2": "6-9", "B3": "10-12", "B4": "13-15", "B5": "16-1
 LEVEL_NAMES = {1: "Legal baseline", 2: "Forward-compliant", 3: "Best practice"}
 SEVERITY_ORDER = ["BLOCK", "REVIEW", "WARN", "HUMAN", "NEXT", "WAIVED"]
 EFFORT_ORDER = {"low": 0, "medium": 1, "high": 2}
-MANIFEST_NAMES = ["cses.yaml", "cses.yml", ".cses/manifest.yaml", ".cses/cses.yaml"]
+# csef.* first; the cses.* names from v0.5 and earlier are still accepted.
+MANIFEST_NAMES = ["csef.yaml", "csef.yml", ".csef/manifest.yaml", ".csef/csef.yaml",
+                  "cses.yaml", "cses.yml", ".cses/manifest.yaml", ".cses/cses.yaml"]
 
 SOURCE_EXT = {
     ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".vue", ".svelte", ".html", ".htm", ".css", ".scss", ".less",
@@ -58,7 +60,7 @@ SOURCE_EXT = {
 SKIP_DIRS = {
     ".git", "node_modules", "dist", "build", ".next", ".nuxt", "out", "coverage", "vendor",
     "Pods", ".gradle", ".idea", ".vscode", "__pycache__", ".venv", "venv", "env", "Library",
-    "Temp", "cses-report", ".cses", "Logs", "obj", "UserSettings", "Build", "Builds", ".godot", "target",
+    "Temp", "csef-report", "cses-report", ".csef", ".cses", "Logs", "obj", "UserSettings", "Build", "Builds", ".godot", "target",
 }
 SKIP_FILES = {
     "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "poetry.lock", "Podfile.lock",
@@ -116,15 +118,15 @@ def load_yaml(path: Path):
 
 
 def load_standard(root: Path) -> Standard:
-    rules_doc = load_yaml(root / "standard" / "rules.yaml")
-    sources_doc = load_yaml(root / "standard" / "sources.yaml")
+    rules_doc = load_yaml(root / "framework" / "rules.yaml")
+    sources_doc = load_yaml(root / "framework" / "sources.yaml")
     rules = {}
     for r in rules_doc.get("rules", []):
         r = dict(r)
         r.setdefault("notes", [])
-        r.setdefault("origin", "CSES")
+        r.setdefault("origin", "CSEF")
         rules[r["id"]] = r
-    sources = {s["id"]: dict(s, origin="CSES") for s in sources_doc.get("sources", [])}
+    sources = {s["id"]: dict(s, origin="CSEF") for s in sources_doc.get("sources", [])}
     return Standard(version=str(rules_doc.get("version", "?")), rules=rules, sources=sources)
 
 
@@ -255,22 +257,22 @@ def apply_policy(std: Standard, doc: dict, pid: str, meta: dict) -> None:
     if feats:
         rid = nid()
         std.rules[rid] = _policy_rule(rid, f"Decision record for sensitive features ({title})",
-            f"Each of these features, when declared, has a decision record linked under `decisions:` in cses.yaml: {', '.join(feats)}.",
+            f"Each of these features, when declared, has a decision record linked under `decisions:` in csef.yaml: {', '.join(feats)}.",
             "Sensitive features need a documented decision with a named approver before release.",
-            "Write a decision record (templates/waiver.md format) and link it in cses.yaml `decisions: {feature: path}`.", [src_id],
+            "Write a decision record (templates/waiver.md format) and link it in csef.yaml `decisions: {feature: path}`.", [src_id],
             [{"type": "manifest", "check": "decision_records", "confidence": "high", "features": list(feats)}], method="manifest")
     days = policy.get("review_every_days")
     if days:
         rid = nid()
         std.rules[rid] = _policy_rule(rid, f"Manifest reviewed every {days} days ({title})",
-            f"`last_review` in cses.yaml is no older than {days} days.",
+            f"`last_review` in csef.yaml is no older than {days} days.",
             "Keeps the declared features, third parties and level in line with the product.",
-            "Review cses.yaml with the product owner and update `last_review`.", [src_id],
+            "Review csef.yaml with the product owner and update `last_review`.", [src_id],
             [{"type": "manifest", "check": "review_stale", "confidence": "high", "days": int(days)}], method="manifest")
     if policy.get("require_agent_instructions"):
         rid = nid()
         std.rules[rid] = _policy_rule(rid, f"AI coding agents receive the child-safety rules ({title})",
-            "The repository gives AI coding agents the CSES rules (CLAUDE.md, AGENTS.md, .cursorrules or similar mentioning CSES).",
+            "The repository gives AI coding agents the CSEF rules (CLAUDE.md, AGENTS.md, .cursorrules or similar mentioning CSEF).",
             "Agents write much of the code; they must know the red lines too.",
             "Copy templates/agent-instructions.md into CLAUDE.md or AGENTS.md.", [src_id],
             [{"type": "repo", "check": "agent_instructions_missing", "confidence": "high"}])
@@ -332,7 +334,7 @@ def read_text(p: Path):
         return None
 
 
-IGNORE_RE = re.compile(r"cses-ignore:\s*([A-Z0-9, -]+?)(?:\s+(?:--|because|reason:)\s*(.*))?$", re.I)
+IGNORE_RE = re.compile(r"cse[fs]-ignore:\s*([A-Z0-9, -]+?)(?:\s+(?:--|because|reason:)\s*(.*))?$", re.I)
 
 
 def inline_ignored(lines, idx, rule_id) -> str | None:
@@ -463,7 +465,7 @@ def path_exists(repo: Path, value) -> bool:
 def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set, pat: dict | None = None):
     """Return a list of messages (empty list = check passes)."""
     if name == "manifest_missing":
-        return ["No CSES manifest (cses.yaml) found. All profiles and age bands were assumed."] if manifest is None else []
+        return ["No CSEF manifest (csef.yaml) found. All profiles and age bands were assumed."] if manifest is None else []
     if manifest is None:
         return []
     m = manifest
@@ -555,9 +557,9 @@ def repo_check(name, files_cache, repo=None, inv=None, manifest=None):
     if name == "agent_instructions_missing":
         for f in AGENT_FILES:
             p = repo / f if repo else None
-            if p and p.exists() and re.search(r"CSES|child-safety rules", p.read_text(encoding="utf-8", errors="ignore"), re.I):
+            if p and p.exists() and re.search(r"CSEF|CSES|child-safety rules", p.read_text(encoding="utf-8", errors="ignore"), re.I):
                 return []
-        return [(None, None, "No AI agent instructions mentioning CSES found (CLAUDE.md, AGENTS.md, .cursorrules, ...).")]
+        return [(None, None, "No AI agent instructions mentioning CSEF found (CLAUDE.md, AGENTS.md, .cursorrules, ...).")]
     if name == "reduced_motion_missing":
         first = None
         for rel, lines, text in files_cache:
@@ -679,10 +681,10 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
                 for msg in manifest_check(pat["check"], manifest, repo, bands, pat):
                     w = active_waiver(waivers, rid, None, today)
                     if w:
-                        findings.append(Finding(rid, "WAIVED", rule["title"], "cses.yaml", None, msg,
+                        findings.append(Finding(rid, "WAIVED", rule["title"], "csef.yaml", None, msg,
                                                 note=f"Waived: {w.get('reason', '')} (approved by {w['approved_by']})"))
                         continue
-                    findings.append(Finding(rid, sev, rule["title"], "cses.yaml", None, msg, confidence=conf))
+                    findings.append(Finding(rid, sev, rule["title"], "csef.yaml", None, msg, confidence=conf))
 
     # human checks: manual or mixed rules in scope whose feature applies
     human = []
@@ -740,9 +742,9 @@ def render_report(repo, std, manifest, result, manifest_path) -> str:
     product = (manifest or {}).get("product", repo.name)
     lines = []
     a = lines.append
-    a(f"# CSES pre-compliance report: {product}")
+    a(f"# CSEF pre-compliance report: {product}")
     a("")
-    a(f"Generated {dt.date.today().isoformat()} by {TOOL_NAME} {TOOL_VERSION}, Child-Safe EdTech Standard v{std.version}.")
+    a(f"Generated {dt.date.today().isoformat()} by {TOOL_NAME} {TOOL_VERSION}, Child-Safe EdTech Framework v{std.version}.")
     a("")
     a("> **This is a pre-compliance report, not a legal opinion or certification.** Static analysis finds")
     a("> technical signals in code and configuration. It cannot see contracts, legal bases, real user")
@@ -773,7 +775,7 @@ def render_report(repo, std, manifest, result, manifest_path) -> str:
     a("")
     verdict = ("Blocking issues found. Fix or formally waive them before release."
                if counts["BLOCK"] else
-               "No blocking issues found by automated checks at this level. Complete the review items and human checks before claiming conformance.")
+               "No blocking issues found by automated checks at this level. Complete the review items and human checks before describing the results.")
     a(f"**{verdict}**")
     a("")
     a("| Severity | Rules affected | Meaning |")
@@ -803,7 +805,7 @@ def render_report(repo, std, manifest, result, manifest_path) -> str:
             a("")
             for f in fs[:10]:
                 loc = f"`{f.path}{':' + str(f.line) if f.line else ''}`" if f.path else ""
-                ev = f" `{esc(f.evidence)}`" if f.evidence and f.path != "cses.yaml" else (f" {f.evidence}" if f.evidence else "")
+                ev = f" `{esc(f.evidence)}`" if f.evidence and f.path != "csef.yaml" else (f" {f.evidence}" if f.evidence else "")
                 extra = f" *{f.note}*" if f.note else ""
                 a(f"- {loc}{ev}{extra}")
             if len(fs) > 10:
@@ -1012,7 +1014,7 @@ def to_sarif(std, result):
     for f in result["findings"]:
         if f.severity not in sev_map:
             continue
-        loc = {"physicalLocation": {"artifactLocation": {"uri": f.path or "cses.yaml"}}}
+        loc = {"physicalLocation": {"artifactLocation": {"uri": f.path or "csef.yaml"}}}
         if f.line:
             loc["physicalLocation"]["region"] = {"startLine": f.line}
         results.append({
@@ -1023,7 +1025,7 @@ def to_sarif(std, result):
     return {
         "$schema": "https://json.schemastore.org/sarif-2.1.0.json", "version": "2.1.0",
         "runs": [{"tool": {"driver": {"name": TOOL_NAME, "version": TOOL_VERSION,
-                                      "informationUri": "https://github.com/eduardon83/child-safe-edtech-standards", "rules": rules}},
+                                      "informationUri": "https://github.com/eduardon83/child-safe-edtech-framework", "rules": rules}},
                   "results": results}],
     }
 
@@ -1039,7 +1041,7 @@ def resolve_packs(repo: Path, root: Path, manifest: dict | None, extra: list[str
         if p.exists():
             paths.append(p)
         else:
-            print(f"cses: no pack for jurisdiction {j} (looked for {p}). Consider contributing one.", file=sys.stderr)
+            print(f"csef: no pack for jurisdiction {j} (looked for {p}). Consider contributing one.", file=sys.stderr)
     for rel in ((manifest or {}).get("packs") or []) + list(extra or []):
         p = Path(rel)
         if not p.is_absolute():
@@ -1052,10 +1054,10 @@ def resolve_packs(repo: Path, root: Path, manifest: dict | None, extra: list[str
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="CSES pre-compliance scanner")
+    ap = argparse.ArgumentParser(description="CSEF pre-compliance scanner")
     ap.add_argument("--repo", default=".", help="repository to scan")
-    ap.add_argument("--manifest", help="path to cses.yaml (default: auto-detect)")
-    ap.add_argument("--standard-root", default=None, help="folder containing standard/ and packs/")
+    ap.add_argument("--manifest", help="path to csef.yaml (default: auto-detect)")
+    ap.add_argument("--framework-root", "--standard-root", dest="standard_root", default=None, help="folder containing framework/ and packs/")
     ap.add_argument("--level", type=int, choices=[1, 2, 3], help="override compliance level")
     ap.add_argument("--pack", action="append", default=[], help="extra pack file (repeatable)")
     ap.add_argument("--out-dir", default=None, help="write report.md, improvements.md, findings.json, findings.sarif here")
@@ -1065,20 +1067,20 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
 
     repo = Path(args.repo).resolve()
-    root = Path(args.standard_root).resolve() if args.standard_root else Path(os.environ.get("CSES_STANDARD_ROOT", default_root()))
+    root = Path(args.standard_root).resolve() if args.standard_root else Path(os.environ.get("CSEF_FRAMEWORK_ROOT") or os.environ.get("CSES_STANDARD_ROOT") or default_root())
     std = load_standard(root)
 
     mpath = find_manifest(repo, args.manifest)
     manifest = load_yaml(mpath) if mpath and mpath.exists() else None
     if args.manifest and manifest is None:
-        print(f"cses: manifest {args.manifest} not found", file=sys.stderr)
+        print(f"csef: manifest {args.manifest} not found", file=sys.stderr)
         return 2
     for p in resolve_packs(repo, root, manifest, args.pack):
         apply_pack(std, p)
 
     level = args.level or int((manifest or {}).get("compliance_level", 1))
     if level < std.minimum_level:
-        print(f"cses: level raised from {level} to {std.minimum_level}, the minimum set by {std.minimum_level_by}", file=sys.stderr)
+        print(f"csef: level raised from {level} to {std.minimum_level}, the minimum set by {std.minimum_level_by}", file=sys.stderr)
         level = std.minimum_level
     result = scan(repo, std, manifest, level)
     improvements = build_improvements(std, result)
@@ -1093,19 +1095,19 @@ def main(argv=None) -> int:
         (out / "findings.sarif").write_text(json.dumps(to_sarif(std, result), indent=2), encoding="utf-8")
         if args.export:
             sys.path.insert(0, str(Path(__file__).resolve().parent))
-            import export as cses_export
+            import export as csef_export
             try:
-                written = cses_export.export(out / "findings.json", [f.strip() for f in args.export.split(",") if f.strip()], out)
+                written = csef_export.export(out / "findings.json", [f.strip() for f in args.export.split(",") if f.strip()], out)
                 if args.format == "text":
                     print("exported: " + ", ".join(str(Path(v).name) for k, v in written.items() if k != "pdf_engine"))
             except RuntimeError as ex:
-                print(f"cses export: {ex}", file=sys.stderr)
+                print(f"csef export: {ex}", file=sys.stderr)
 
     counts = {s: len({f.rule_id for f in result["findings"] if f.severity == s}) for s in SEVERITY_ORDER}
     if args.format == "json":
         print(json.dumps(to_json(std, manifest, result, improvements), indent=2, default=str))
     elif args.format == "text":
-        print(f"CSES {std.version} | level {level} ({LEVEL_NAMES[level]}) | profiles core+{','.join(result['profiles'])} | bands {','.join(result['bands'])}")
+        print(f"CSEF {std.version} | level {level} ({LEVEL_NAMES[level]}) | profiles core+{','.join(result['profiles'])} | bands {','.join(result['bands'])}")
         print("rules affected: " + ", ".join(f"{s} {counts[s]}" for s in SEVERITY_ORDER if s != "HUMAN")
               + f", HUMAN {len([h for h in result['human_checks'] if not h['next_level']])}")
         for f in sorted(result["findings"], key=lambda f: (SEVERITY_ORDER.index(f.severity), f.rule_id)):

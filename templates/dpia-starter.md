@@ -48,7 +48,7 @@ authority publishes a list of processing that always needs a DPIA (see the natio
 
 If a high residual risk remains, the controller must consult the supervisory authority before starting (Art. 36).
 
-## Part C. Child rights (recommended, CSES rule CORE-GOV-03)
+## Part C. Child rights (recommended, CSEF rule CORE-GOV-03)
 
 Go beyond data protection. For each right, note positive and negative impacts and how children,
 guardians and teachers were involved in testing.

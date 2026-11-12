@@ -7,7 +7,7 @@ Thank you for helping make EdTech safer for children.
 - **Report a false positive or missed pattern**: open an issue with a minimal code sample.
 - **Propose a rule**: open an issue labelled `rule-change` with requirement, rationale, level, sources.
 - **Add or update a source**: include the official URL, status with a date, and the date you verified it.
-- **Write a country pack**: start from `packs/_template.yaml`; see `standard/02-packs.md`.
+- **Write a country pack**: start from `packs/_template.yaml`; see `framework/02-packs.md`.
 - **Improve the tools**: scanner, build, action, skill.
 
 ## Rule quality bar
@@ -27,7 +27,7 @@ python3 tooling/build.py      # validate + regenerate
 python3 -m pytest -q          # tests
 ```
 
-Edit only `standard/rules.yaml`, `standard/sources.yaml`, `packs/*.yaml`, docs and tooling. Generated files
+Edit only `framework/rules.yaml`, `framework/sources.yaml`, `packs/*.yaml`, docs and tooling. Generated files
 (catalogue, checklists, Semgrep, skill copies) are rebuilt by `tooling/build.py`; CI fails if they are stale.
 
 ## Language

@@ -1,5 +1,5 @@
-name: "CSES child-safety check"
-description: "Pre-compliance scan against the Child-Safe EdTech Standard: report, improvement plan and SARIF."
+name: "CSEF child-safety check"
+description: "Pre-compliance scan against the Child-Safe EdTech Framework: report, improvement plan and SARIF."
 branding:
   icon: shield
   color: green
@@ -8,14 +8,14 @@ inputs:
     description: "Path of the repository to scan"
     default: "."
   level:
-    description: "Compliance level 1, 2 or 3 (default: from cses.yaml)"
+    description: "Compliance level 1, 2 or 3 (default: from csef.yaml)"
     default: ""
   fail-on:
     description: "block | review | warn | never"
     default: "block"
   out-dir:
     description: "Where to write report.md, improvements.md, findings.json and findings.sarif"
-    default: "cses-report"
+    default: "csef-report"
   packs:
     description: "Space-separated extra pack files"
     default: ""
@@ -30,20 +30,20 @@ runs:
         python-version: "3.12"
     - shell: bash
       env:
-        CSES_EXPORT: ${{ inputs.export }}
+        CSEF_EXPORT: ${{ inputs.export }}
       run: |
         pip install --quiet pyyaml
-        case "$CSES_EXPORT" in *docx*) pip install --quiet python-docx ;; esac
+        case "$CSEF_EXPORT" in *docx*) pip install --quiet python-docx ;; esac
     - shell: bash
       env:
-        CSES_LEVEL: ${{ inputs.level }}
-        CSES_PACKS: ${{ inputs.packs }}
-        CSES_EXPORT: ${{ inputs.export }}
+        CSEF_LEVEL: ${{ inputs.level }}
+        CSEF_PACKS: ${{ inputs.packs }}
+        CSEF_EXPORT: ${{ inputs.export }}
       run: |
         args=(--repo "${{ inputs.repo }}" --out-dir "${{ inputs.out-dir }}" --fail-on "${{ inputs.fail-on }}")
-        if [ -n "$CSES_LEVEL" ]; then args+=(--level "$CSES_LEVEL"); fi
-        for p in $CSES_PACKS; do args+=(--pack "$p"); done
-        if [ -n "$CSES_EXPORT" ]; then args+=(--export "$CSES_EXPORT"); fi
+        if [ -n "$CSEF_LEVEL" ]; then args+=(--level "$CSEF_LEVEL"); fi
+        for p in $CSEF_PACKS; do args+=(--pack "$p"); done
+        if [ -n "$CSEF_EXPORT" ]; then args+=(--export "$CSEF_EXPORT"); fi
         set +e
         python3 "${{ github.action_path }}/tooling/scan.py" "${args[@]}"
         code=$?
