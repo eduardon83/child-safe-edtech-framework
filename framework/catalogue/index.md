@@ -2,7 +2,7 @@
 
 # Rule catalogue
 
-CSEF v0.7.0: 106 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
+CSEF v0.8.0: 106 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
 
 | Level | MUST | SHOULD |
 |---|---|---|

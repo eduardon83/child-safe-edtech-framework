@@ -1,0 +1,28 @@
+{
+  "core": {
+    "paper": "#F6F3EC",
+    "ink": "#17233F",
+    "ink-secondary": "#4A5468",
+    "ink-secondary-on-dark": "#B8C0D0"
+  },
+  "roles-on-light": {
+    "developers": "#1F8A7A",
+    "designers": "#4A5FC1",
+    "educators": "#5DA9DD",
+    "companies": "#9A7AD0"
+  },
+  "roles-on-dark": {
+    "developers": "#3FBFA8",
+    "designers": "#8A9BEA",
+    "educators": "#5DA9DD",
+    "companies": "#B59BE6"
+  },
+  "child": {
+    "head": "#E2674A",
+    "body": "#F2B441"
+  },
+  "fonts": {
+    "display": "Space Grotesk 700",
+    "body": "Inter 400/500"
+  }
+}

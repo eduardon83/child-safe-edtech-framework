@@ -334,3 +334,17 @@ def test_policy_hides_questions_for_unused_features():
     items = {i["id"]: i for i in res["items"]}
     assert items["streaks"]["key"] == "na" and items["ads"]["key"] == "covered"
     assert items["commercial_learning"]["key"] == "gap"
+
+
+def test_brand_in_html_outputs(tmp_path):
+    import brand
+    import policy
+    logo = brand.logo()
+    assert "<svg" in logo and "var(--c-ink" in logo and 'width="594"' not in logo
+    html_form = policy.render_form(policy.Q(ROOT), None, False)
+    assert "csef-stripe" in html_form and "--c-paper" in html_form
+    res = subprocess.run([sys.executable, str(ROOT / "skill" / "csef-review" / "scripts" / "policy.py"), "--answers",
+                          str(ROOT / "examples" / "policy" / "answers.json"), "--batch", "--out-dir", str(tmp_path / "k"),
+                          "--formats", "html"], capture_output=True, text=True)
+    assert res.returncode == 0, res.stderr
+    assert "csef-brand" in (tmp_path / "k" / "staff-policy.html").read_text()

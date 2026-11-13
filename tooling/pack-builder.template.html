@@ -5,26 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CSEF Pack Builder</title>
 <meta name="description" content="Build your organisation's child-safety compliance pack for the Child-Safe EdTech Framework (CSEF) and publish it to GitHub.">
+<!--BRAND_HEAD-->
 <style>
+/*BRAND_CSS*/
 :root {
-  --bg: #f7f7f4; --panel: #ffffff; --ink: #1d2321; --muted: #5d6763; --line: #dcdfd9;
-  --accent: #1f6f5c; --accent-ink: #ffffff; --accent-soft: #e3f1ec; --warn: #9a5b00; --warn-soft: #fff3df;
-  --nogo: #a3261c; --nogo-soft: #fbe9e7; --code: #f1f2ee;
-  --radius: 10px; --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --bg: var(--c-paper); --panel: var(--c-panel); --ink: var(--c-ink); --muted: var(--c-ink2); --line: var(--c-line);
+  --accent: var(--c-teal-t); --accent-ink: #ffffff; --accent-soft: var(--c-teal-bg); --warn: var(--c-sun-t); --warn-soft: var(--c-sun-bg);
+  --nogo: var(--c-coral-t); --nogo-soft: var(--c-coral-bg); --code: var(--c-code);
+  --radius: 14px; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #121514; --panel: #1b1f1e; --ink: #e8ebe9; --muted: #a2aba7; --line: #2e3432;
-    --accent: #5cc3a6; --accent-ink: #0d1f1a; --accent-soft: #1d332d; --warn: #f0b45a; --warn-soft: #33281a;
-    --nogo: #ff8a80; --nogo-soft: #3a1f1d; --code: #232826;
-  }
-}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent-ink: #17233F; } }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--font); }
 a { color: var(--accent); }
 header { padding: 28px 16px 8px; max-width: 1180px; margin: 0 auto; }
-header h1 { margin: 0 0 4px; font-size: 1.6rem; }
+header h1 { margin: 0 0 6px; font-size: 2rem; }
 header p { margin: 0; color: var(--muted); max-width: 70ch; }
 main { max-width: 1180px; margin: 0 auto; padding: 16px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 20px; align-items: start; }
 @media (max-width: 960px) { main { grid-template-columns: 1fr; } }
@@ -80,7 +75,9 @@ footer { max-width: 1180px; margin: 0 auto; padding: 8px 16px 40px; color: var(-
 </style>
 </head>
 <body>
+<div class="csef-stripe"></div>
 <header>
+  <!--BRAND_LOGO-->
   <h1>CSEF Pack Builder</h1>
   <p>Define your organisation's own child-safety compliance pack for the
   <a href="https://github.com/eduardon83/child-safe-edtech-framework">Child-Safe EdTech Framework</a>:

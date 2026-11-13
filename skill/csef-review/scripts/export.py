@@ -23,6 +23,9 @@ import sys
 import tempfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import brand  # noqa: E402
+
 LEVEL_NAMES = {1: "Legal baseline", 2: "Forward-compliant", 3: "Best practice"}
 LEVEL_DESC = {
     1: "Binding law in force, or law with a fixed application date.",
@@ -126,17 +129,16 @@ def build_model(d: dict) -> dict:
 
 # --------------------------------------------------------------------------- html
 CSS = """
-:root{--bg:#f6f6f3;--panel:#fff;--ink:#1c2220;--muted:#5b6561;--line:#dde0da;--code:#f0f1ed;
---BLOCK:#b42318;--BLOCK-bg:#fdecea;--REVIEW:#b45309;--REVIEW-bg:#fff1e0;--WARN:#8a6d00;--WARN-bg:#fff8d6;
---HUMAN:#1d4ed8;--HUMAN-bg:#e8efff;--NEXT:#5f6b7a;--NEXT-bg:#eef0f3;--WAIVED:#3f7a52;--WAIVED-bg:#e6f3ea;--OK:#1f7a4d;--OK-bg:#e3f4ea;
---L1:#0f5c4d;--L1-bg:#e1f1ec;--L2:#3949ab;--L2-bg:#e8eafb;--L3:#7b3fa0;--L3-bg:#f3e8fa;
---B1:#d9480f;--B2:#c08400;--B3:#2b8a3e;--B4:#1971c2;--B5:#7048e8;
---font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#111413;--panel:#1a1e1d;--ink:#e7eae8;--muted:#a1aaa6;--line:#2c3331;--code:#222826;
---BLOCK:#ff8a7a;--BLOCK-bg:#3b1c19;--REVIEW:#ffb36b;--REVIEW-bg:#3a2715;--WARN:#f2d15c;--WARN-bg:#35300f;--HUMAN:#8fb1ff;--HUMAN-bg:#1c2640;
---NEXT:#aab4c0;--NEXT-bg:#252a30;--WAIVED:#8fd1a5;--WAIVED-bg:#1c2e23;--OK:#7ad6a3;--OK-bg:#18301f;
---L1:#6fd2b9;--L1-bg:#16302a;--L2:#9fa8ff;--L2-bg:#1f2342;--L3:#d7a6f5;--L3-bg:#2e1f39;
---B1:#ff8c5a;--B2:#f2c14e;--B3:#69db7c;--B4:#74c0fc;--B5:#b197fc}}
+""" + brand.tokens_css() + brand.BASE_CSS + """
+:root{--bg:var(--c-paper);--panel:var(--c-panel);--ink:var(--c-ink);--muted:var(--c-ink2);--line:var(--c-line);--code:var(--c-code);
+--BLOCK:#B42318;--BLOCK-bg:#FCE6E1;--REVIEW:#A44A06;--REVIEW-bg:#FDEBD8;--WARN:#7D6200;--WARN-bg:var(--c-sun-bg);
+--HUMAN:var(--c-sky-t);--HUMAN-bg:var(--c-sky-bg);--NEXT:var(--c-ink2);--NEXT-bg:var(--c-code);--WAIVED:var(--c-teal-t);--WAIVED-bg:var(--c-teal-bg);
+--OK:var(--c-teal-t);--OK-bg:var(--c-teal-bg);
+--L1:var(--c-teal-t);--L1-bg:var(--c-teal-bg);--L2:var(--c-indigo-t);--L2-bg:var(--c-indigo-bg);--L3:var(--c-lilac-t);--L3-bg:var(--c-lilac-bg);
+--B1:var(--c-coral-t);--B2:var(--c-sun-t);--B3:var(--c-teal-t);--B4:var(--c-sky-t);--B5:var(--c-lilac-t);
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--BLOCK:#FF9B8A;--BLOCK-bg:#4A2333;--REVIEW:#FFB879;--REVIEW-bg:#45302E;--WARN:#F6C969}}
+:root[data-theme=dark]{--BLOCK:#FF9B8A;--BLOCK-bg:#4A2333;--REVIEW:#FFB879;--REVIEW-bg:#45302E;--WARN:#F6C969}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.5 var(--font)}
 a{color:var(--L2)}.wrap{max-width:1200px;margin:0 auto;padding:20px 16px 48px}
 h1{font-size:1.65rem;margin:0}h2{font-size:1.2rem;margin:0 0 4px}h3{font-size:1rem;margin:0}
@@ -287,9 +289,10 @@ def render_html(model: dict, for_print: bool = False) -> str:
     a = out.append
     op = " open" if for_print else ""
     a(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
-      f'<title>CSEF dashboard: {e(product)}</title><style>{CSS}</style></head>'
-      f'<body data-product="{e(product)}"><div class="wrap">')
+      f'<title>CSEF dashboard: {e(product)}</title>{brand.head()}<style>{CSS}</style></head>'
+      f'<body data-product="{e(product)}"><div class="csef-stripe"></div><div class="wrap">')
     a('<div class="top"><div>')
+    a(brand.logo("lockup", 40))
     a(f'<h1>CSEF pre-compliance dashboard</h1><p class="sub"><strong>{e(product)}</strong> · scanned {e(gen)} · '
       f'Child-Safe EdTech Framework v{e(d["tool"]["standard_version"])} · {e(d["tool"]["name"])} {e(d["tool"]["version"])}</p></div>')
     if not for_print:
@@ -579,6 +582,11 @@ def render_docx(model: dict, path: Path) -> None:
 
     d, rules, level = model["d"], model["rules"], model["level"]
     doc = Document()
+    brand.style_docx(doc)
+    _logo = brand.png("csef-lockup-on-light")
+    if _logo:
+        from docx.shared import Cm
+        doc.add_picture(str(_logo), width=Cm(5.5))
     sec = doc.sections[0]
     sec.left_margin = sec.right_margin = Cm(2)
     sec.top_margin = sec.bottom_margin = Cm(1.8)

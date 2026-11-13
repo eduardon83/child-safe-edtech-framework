@@ -221,29 +221,72 @@ def load_and_validate():
 # --------------------------------------------------------------------------- generation
 LANDING = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Child-Safe EdTech Framework</title>
-<style>
-:root{--bg:#f7f7f4;--ink:#1d2321;--muted:#5d6763;--accent:#1f6f5c;--panel:#fff;--line:#dcdfd9}
-@media (prefers-color-scheme:dark){:root{--bg:#121514;--ink:#e8ebe9;--muted:#a2aba7;--accent:#5cc3a6;--panel:#1b1f1e;--line:#2e3432}}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-main{max-width:760px;margin:0 auto;padding:40px 16px}
-h1{font-size:1.9rem;margin:0 0 6px}p.lead{color:var(--muted);margin:0 0 28px}
-a{color:var(--accent)}.cards{display:grid;gap:12px}
-.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;text-decoration:none;color:var(--ink)}
-.card strong{color:var(--accent)}.card span{display:block;color:var(--muted);font-size:.95rem}
-</style></head><body><main>
-<h1>Child-Safe EdTech Framework</h1>
-<p class="lead">An open framework and toolkit for software children use for learning. CSEF v{version}, {rules} rules, draft for public comment.</p>
-<div class="cards">
-<a class="card" href="questionnaire/"><strong>Policy questionnaire</strong><span>Answer questions about your boundaries. Get your guardrails file, a report matched with the law and a plain-language staff policy.</span></a>
-<a class="card" href="pack-builder/"><strong>Pack Builder</strong><span>Define your organisation's minimum level, no-gos and rules, and publish your pack to GitHub.</span></a>
-<a class="card" href="https://github.com/eduardon83/child-safe-edtech-framework"><strong>Repository</strong><span>The framework, the scanner, the Claude skill and the GitHub Action.</span></a>
-<a class="card" href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/catalogue/index.md"><strong>Rule catalogue</strong><span>Every rule with requirement, rationale, improvement and sources.</span></a>
-<a class="card" href="https://github.com/eduardon83/child-safe-edtech-framework/issues"><strong>Give feedback</strong><span>Open an issue: false positives, rule wording, sources, country packs.</span></a>
-</div>
-<p class="lead" style="margin-top:28px;font-size:.9rem">Not legal advice or a certification. Framework content CC BY 4.0, code Apache 2.0.</p>
-</main></body></html>
-"""
+<title>CSEF, Child-Safe EdTech Framework</title>
+<meta name="description" content="An open framework and toolkit to build safe digital learning for children. Set your boundaries, check your products, share a plain-language policy.">
+<meta property="og:title" content="CSEF, Child-Safe EdTech Framework"><meta property="og:description" content="Build safe things for kids. Together.">
+<meta property="og:image" content="brand/csef-social-preview-on-light.png">
+{head}<link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="site.webmanifest">
+<style>{brand_css}
+*{box-sizing:border-box}body{margin:0;background:var(--c-paper);color:var(--c-ink);font:17px/1.6 var(--font)}
+a{color:var(--c-teal-t)}.in{max-width:1080px;margin:0 auto;padding:0 16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:18px}
+.top .csef-brand{margin:0}.top nav{display:flex;gap:18px;flex-wrap:wrap}.top nav a{text-decoration:none;color:var(--c-ink2);font-weight:500;font-size:.95rem}
+.top nav a:hover{color:var(--c-ink)}
+.hero{padding:56px 16px 40px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:820px){.hero{grid-template-columns:minmax(0,1fr);padding-top:36px}.hero .art{display:none}}
+.hero h1{font-size:clamp(2.3rem,5.5vw,3.6rem);line-height:1.04;margin:0 0 16px}
+.hero p{font-size:1.15rem;color:var(--c-ink2);margin:0 0 26px;max-width:52ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap}.btn{display:inline-block;font-weight:600;text-decoration:none;border-radius:12px;padding:13px 20px}
+.btn.p{background:var(--c-ink);color:var(--c-paper)}.btn.s{border:1.5px solid var(--c-line);color:var(--c-ink);background:var(--c-panel)}
+.art svg{width:100%;height:auto;max-width:340px;display:block;margin:0 auto}
+h2{font-size:1.7rem;margin:0 0 8px}.sub{color:var(--c-ink2);margin:0 0 22px;max-width:62ch}
+.band{padding-top:40px;padding-bottom:40px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (max-width:520px){.grid{grid-template-columns:minmax(0,1fr)}}
+.who{background:var(--c-panel);border:1px solid var(--c-line);border-radius:18px;padding:20px;border-top:6px solid var(--r);display:flex;flex-direction:column}
+.who h3{margin:0 0 6px;font-size:1.15rem}.who p{margin:0 0 14px;color:var(--c-ink2);font-size:.95rem;flex:1}
+.who a{font-weight:600;text-decoration:none;color:var(--c-ink)}.who a::after{content:" \\2192"}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;counter-reset:s}
+@media (max-width:820px){.steps{grid-template-columns:minmax(0,1fr)}}
+.st{background:var(--c-panel);border:1px solid var(--c-line);border-radius:18px;padding:20px}
+.st b{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--r);color:var(--t,#fff);font-family:var(--font-display);margin-bottom:10px}
+.st h3{margin:0 0 6px;font-size:1.1rem}.st p{margin:0;color:var(--c-ink2);font-size:.95rem}
+.note{background:var(--c-panel);border:1px solid var(--c-line);border-left:5px solid var(--c-sky);border-radius:12px;padding:16px 18px;color:var(--c-ink2);font-size:.95rem}
+footer{border-top:1px solid var(--c-line);margin-top:30px;padding:22px 0 40px;color:var(--c-ink2);font-size:.9rem}
+footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style></head><body><div class="csef-stripe"></div>
+<header class="in top">{logo}<nav aria-label="Main"><a href="questionnaire/">Questionnaire</a><a href="pack-builder/">Pack Builder</a>
+<a href="https://github.com/eduardon83/child-safe-edtech-framework">GitHub</a></nav></header>
+<main>
+<section class="in hero"><div>
+<h1>Build safe things for kids. Together.</h1>
+<p>CSEF is an open framework and toolkit for digital learning used by children. It turns EU law, coming rules and research
+into clear boundaries for your company and checks you can run on every product.</p>
+<div class="cta"><a class="btn p" href="questionnaire/">Set your boundaries</a>
+<a class="btn s" href="https://github.com/eduardon83/child-safe-edtech-framework">Get the toolkit</a></div></div>
+<div class="art" aria-hidden="true">{mark}</div></section>
+
+<section class="in band"><h2>For everyone who builds it</h2>
+<p class="sub">Each block of the house is one group. You do not need to be a developer to start.</p>
+<div class="grid">
+<div class="who" style="--r:var(--c-lilac)"><h3>Companies</h3><p>Decide your red lines in a short questionnaire. Get a staff policy in plain language and a report to discuss with legal counsel.</p><a href="questionnaire/">Start the questionnaire</a></div>
+<div class="who" style="--r:var(--c-indigo)"><h3>Designers</h3><p>What research says about rewards, motion, colour and calm screens for children, as design rules you can use.</p><a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/03-design-and-motivation.md">Design for learning</a></div>
+<div class="who" style="--r:var(--c-sky)"><h3>Educators</h3><p>Every rule, why it exists and its sources: law, proposals and research, in one catalogue.</p><a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/catalogue/index.md">Rule catalogue</a></div>
+<div class="who" style="--r:var(--c-teal)"><h3>Developers</h3><p>A scanner, a GitHub Action, a Claude skill and a dashboard. Your company's guardrails, checked in every pull request.</p><a href="https://github.com/eduardon83/child-safe-edtech-framework#quick-start">Quick start</a></div>
+</div></section>
+
+<section class="in band"><h2>How it works</h2>
+<div class="steps">
+<div class="st" style="--r:var(--c-teal)"><b>1</b><h3>Answer</h3><p>Who you build for, your level of ambition, and what you will never do. About 15 minutes.</p></div>
+<div class="st" style="--r:var(--c-indigo)"><b>2</b><h3>Share</h3><p>Get your staff policy, a boundaries report matched with the law and your guardrails file.</p></div>
+<div class="st" style="--r:var(--c-sky);--t:#17233F"><b>3</b><h3>Check</h3><p>Your developers run the check on every project. Change your answers anytime.</p></div>
+</div></section>
+
+<section class="in band"><p class="note"><strong>A framework, not a standard.</strong> CSEF v{version}, {rules} rules, draft for public comment.
+Not legal advice and not a certification. <a href="https://github.com/eduardon83/child-safe-edtech-framework/issues">Give feedback</a>.</p></section>
+</main>
+<footer><div class="in"><span>Child-Safe EdTech Framework (CSEF), maintained by Kendir Studios with the EdTech community.</span>
+<span>Framework content CC BY 4.0 · code Apache 2.0</span></div></footer>
+</body></html>"""
 
 HEADER = "<!-- GENERATED by tooling/build.py from framework/rules.yaml. Do not edit by hand. -->\n\n"
 
@@ -404,10 +447,19 @@ def generate(std, packs) -> dict[Path, str]:
                    "profiles": r["profiles"], "requirement": " ".join(r["requirement"].split())} for r in rules],
     }, ensure_ascii=False).replace("</", "<\\/")
     tpl = (ROOT / "tooling" / "pack-builder.template.html").read_text(encoding="utf-8")
+    import brand
+    tpl = (tpl.replace("<!--BRAND_HEAD-->", brand.head("../favicon.svg"))
+              .replace("/*BRAND_CSS*/", brand.tokens_css() + brand.BASE_CSS)
+              .replace("<!--BRAND_LOGO-->", '<a href="../" aria-label="CSEF home" style="display:inline-block">'
+                       + brand.logo("lockup", 40) + "</a>"))
     files[ROOT / "docs" / "pack-builder" / "index.html"] = tpl.replace("/*CATALOGUE*/null", cat_json)
     import policy
-    files[ROOT / "docs" / "questionnaire" / "index.html"] = policy.render_form(policy.Q(ROOT), None, False)
-    files[ROOT / "docs" / "index.html"] = LANDING.replace("{version}", std.version).replace("{rules}", str(len(rules)))
+    files[ROOT / "docs" / "questionnaire" / "index.html"] = policy.render_form(policy.Q(ROOT), None, False, home="../")
+    files[ROOT / "docs" / "index.html"] = (LANDING.replace("{version}", std.version).replace("{rules}", str(len(rules)))
+                                           .replace("{head}", brand.head("favicon.svg"))
+                                           .replace("{brand_css}", brand.tokens_css() + brand.BASE_CSS)
+                                           .replace("{logo}", brand.logo("lockup", 44))
+                                           .replace("{mark}", brand.logo("mark", 300)))
 
     sk = ROOT / "skill" / "csef-review"
     files[sk / "framework" / "rules.yaml"] = (ROOT / "framework" / "rules.yaml").read_text(encoding="utf-8")
@@ -415,7 +467,10 @@ def generate(std, packs) -> dict[Path, str]:
     for pf in sorted((ROOT / "packs").glob("*.yaml")):
         files[sk / "packs" / pf.name] = pf.read_text(encoding="utf-8")
     files[sk / "scripts" / "scan.py"] = (ROOT / "tooling" / "scan.py").read_text(encoding="utf-8")
-    for t in ("export.py", "comms.py", "coc.py", "policy.py"):
+    for name in ("csef-lockup-on-light.svg", "csef-mark-on-light.svg"):
+        files[sk / "brand" / "svg" / name] = (ROOT / "brand" / "svg" / name).read_text(encoding="utf-8")
+    files[sk / "brand" / "web" / "favicon.svg"] = (ROOT / "brand" / "web" / "favicon.svg").read_text(encoding="utf-8")
+    for t in ("export.py", "comms.py", "coc.py", "policy.py", "brand.py"):
         files[sk / "scripts" / t] = (ROOT / "tooling" / t).read_text(encoding="utf-8")
     for t in ("coc-topics.yaml", "questionnaire.yaml"):
         files[sk / "framework" / t] = (ROOT / "framework" / t).read_text(encoding="utf-8")

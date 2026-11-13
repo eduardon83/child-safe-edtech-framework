@@ -1,10 +1,17 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="brand/github/csef-banner-on-dark.png">
+    <img alt="CSEF, Child-Safe EdTech Framework. Build safe things for kids. Together." src="brand/github/csef-banner-on-light.png" width="640">
+  </picture>
+</p>
+
 # Child-Safe EdTech Framework (CSEF)
 
 An open framework and toolkit for building safe educational software for under-18 students.
 It turns EU law, pending EU proposals (EU KIDS Act, Digital Fairness Act) and expert recommendations into
 rules a team can check in code, in CI and in review.
 
-> **Status:** v0.7.0, draft for public comment (November 2026).
+> **Status:** v0.8.0, draft for public comment (November 2026).
 > **Not legal advice and not a certification.** CSEF produces *pre-compliance* reports. Legal compliance
 > depends on facts code cannot show; involve your DPO and legal counsel. See [Limitations](#limitations).
 >
@@ -39,6 +46,7 @@ Site and Pack Builder: <https://eduardon83.github.io/child-safe-edtech-framework
 |---|---|
 | **v0.3** | Interactive dashboard, PDF and Word exports (`--export html,pdf,docx`). |
 | **v0.4** | EU KIDS Act commercial practices (Recital 31, Art. 13): real-time purchase labels, no design for impulsive spending, no disguised advertising, no commercial content in learning. AI companions and chatbots (Recitals 32 to 34, Art. 14): memory off by default, regular re-testing and monitoring, opt-in assistants inside games, no AI nudging to spend. |
+| **v0.8** | **CSEF brand** on everything: logo, colours and fonts in the questionnaire, staff policy, boundaries report, dashboard, code-of-conduct report, Pack Builder, Word exports and a new landing page for non-developers. Brand kit in `brand/`. |
 | **v0.7** | **Policy questionnaire**: boundaries in, guardrails file, boundaries report, staff policy, agent instructions and CI workflow out. Versioned, with a list of changes on every run. |
 | **v0.6** | Renamed to **Child-Safe EdTech Framework (CSEF)**: `framework/` folder, `csef.yaml` manifest, `csef-review` skill, `csef-scan` and `csef-coc` tools, repository `child-safe-edtech-framework`. Old names (`cses.yaml`, `cses-ignore`, `--standard-root`) still work. |
 | **v0.5** | **Communications audit**: inventory of chat, direct messages, voice, video, comments and live streaming, and of the safeguards around them (report, block, moderation, filters, link filtering), with nine CORE-CHT rules from KIDS Act Art. 12, 15(2) and Recital 36. **Code-of-conduct comparison tool.** **Unity support** and more ecosystems (see below). `legislation.md` and `research.md`. Output folders now relative to the current directory. |
@@ -210,7 +218,8 @@ templates/       manifest, DPIA starter, AI risk file, waiver, agent instruction
 self-assessment/ generated checklists per profile and level
 examples/        non-compliant, compliant and Unity sample products; example company pack and code of conduct
 tests/           test-suite
-docs/            GitHub Pages site, Pack Builder (generated), release notes
+docs/            GitHub Pages site, questionnaire and Pack Builder (generated), release notes
+brand/           logo, icons, colours and fonts (see brand/README.md)
 ```
 
 Edit `framework/rules.yaml`, `framework/sources.yaml`, `framework/coc-topics.yaml` or `packs/*.yaml`, then run

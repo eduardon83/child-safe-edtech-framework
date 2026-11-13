@@ -1,0 +1,29 @@
+:root {
+  color-scheme: light dark;
+  --csef-paper: #F6F3EC;
+  --csef-ink: #17233F;
+  --csef-ink-secondary: #4A5468;
+  --csef-ink-secondary-on-dark: #B8C0D0;
+  --csef-developers: #1F8A7A;
+  --csef-designers: #4A5FC1;
+  --csef-educators: #5DA9DD;
+  --csef-companies: #9A7AD0;
+  --csef-child-head: #E2674A;
+  --csef-child-body: #F2B441;
+  --csef-bg: var(--csef-paper);
+  --csef-text: var(--csef-ink);
+  --csef-roof: var(--csef-ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --csef-developers: #3FBFA8;
+    --csef-designers: #8A9BEA;
+    --csef-educators: #5DA9DD;
+    --csef-companies: #B59BE6;
+    --csef-bg: var(--csef-ink);
+    --csef-text: var(--csef-paper);
+    --csef-roof: var(--csef-paper);
+    --csef-ink-secondary: #B8C0D0;
+  }
+}

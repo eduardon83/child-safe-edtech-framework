@@ -332,7 +332,7 @@ def render_html(res: dict) -> str:
     o = []
     a = o.append
     a(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
-      f'<title>Code of conduct comparison: {e(res["code"]["name"])}</title><style>{export.CSS}</style></head><body><div class="wrap">')
+      f'<title>Code of conduct comparison: {e(res["code"]["name"])}</title>{export.brand.head()}<style>{export.CSS}</style></head><body><div class="csef-stripe"></div><div class="wrap">{export.brand.logo("lockup", 40)}')
     a(f'<h1>Code of conduct comparison</h1><p class="sub"><strong>{e(res["code"]["name"])}</strong> · {res["code"]["clauses"]} clauses · '
       f'Level {lv} ({e(scan.LEVEL_NAMES[lv])}) · core + {e(", ".join(res["scope"]["profiles"]))} · bands {e(", ".join(res["scope"]["age_bands"]))} · '
       f'CSEF v{e(res["tool"]["standard_version"])}</p>')

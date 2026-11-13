@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.8.0 (2026-11-13)
+
+- CSEF brand kit in `brand/` (logo, icons, colour tokens, fonts, GitHub banner and social preview).
+- `tooling/brand.py`: one inline logo that follows light and dark mode, brand colour tokens, Space Grotesk and
+  Inter with system fallbacks, favicon. Outputs stay self-contained.
+- Branded: policy questionnaire (new hero, steps, role colours), staff policy and boundaries report, scan
+  dashboard, code-of-conduct report, Pack Builder, Word exports (logo and heading colours), PDF.
+- New landing page for companies, designers, educators and developers, with favicons and web manifest.
+- README banner. LICENSE: the logo is not under CC BY or Apache; use it to refer to CSEF.
+
 ## v0.7.0 (2026-11-13)
 
 - Policy questionnaire (`tooling/policy.py`, `framework/questionnaire.yaml`): 31 boundary questions in six

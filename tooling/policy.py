@@ -34,6 +34,7 @@ import zipfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import brand  # noqa: E402
 import scan  # noqa: E402
 
 try:
@@ -42,6 +43,7 @@ except ImportError:  # pragma: no cover
     sys.exit("CSEF policy needs PyYAML: pip install pyyaml")
 
 TOOL = "csef-policy"
+REPO_URL = "https://github.com/eduardon83/child-safe-edtech-framework"
 ROOT = scan.default_root()
 LEVEL_NAMES = {1: "Legal baseline", 2: "Forward-compliant", 3: "Best practice"}
 TIER_LABEL = {1: "Law", 2: "Coming", 3: "Recommended"}
@@ -362,9 +364,10 @@ def bump(version: str) -> str:
 # A document is a list of blocks: ("h1"|"h2"|"h3"|"p"|"note"|"warn", text), ("ul", [text]),
 # ("table", headers, rows, keys). **bold** is supported in text.
 
-KEY_COL = {"red": ("#FDECEA", "#B42318"), "amber": ("#FFF1E0", "#B45309"), "covered": ("#E3F4EA", "#1F7A4D"),
-           "gap": ("#EEF0F3", "#5F6B7A"), "na": ("#F6F7F9", "#8A94A3"),
-           1: ("#E1F1EC", "#0F5C4D"), 2: ("#E8EAFB", "#3949AB"), 3: ("#F3E8FA", "#7B3FA0")}
+KEY_COL = {"red": ("#FBE7E1", "#B3452B"), "amber": ("#FDF1D8", "#8A5C00"), "covered": ("#E0F0EC", "#16695D"),
+           "gap": ("#EEEAE0", "#4A5468"), "na": ("#F6F3EC", "#4A5468"),
+           1: ("#E0F0EC", "#16695D"), 2: ("#E6E9F8", "#3B4DA6"), 3: ("#EFE8F8", "#6F51A8")}
+KEY_CLASS = {"red": "coral", "amber": "sun", "covered": "teal", "gap": "neutral", "na": "faint", 1: "teal", 2: "indigo", 3: "lilac"}
 
 
 def to_md(blocks) -> str:
@@ -393,30 +396,33 @@ def _inline(text: str) -> str:
     return re.sub(r"(https?://[^\s<)]+)", r'<a href="\1">\1</a>', t)
 
 
-HTML_CSS = """
-:root{--bg:#fbfaf7;--card:#fff;--ink:#1b1f24;--muted:#5f6b7a;--line:#e4e2dc;--accent:#0f5c4d}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#15181c;--card:#1d2126;--ink:#eceae4;--muted:#a3abb6;--line:#2d333a;--accent:#5fc2a8}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-main{max-width:920px;margin:0 auto;padding:32px 16px 64px}h1{font-size:1.9rem;line-height:1.2;margin:0 0 6px}
-h2{font-size:1.3rem;margin:36px 0 10px;padding-top:12px;border-top:1px solid var(--line)}h3{font-size:1.05rem;margin:22px 0 8px}
-p,li{overflow-wrap:anywhere}a{color:var(--accent)}code{font-size:.9em;background:rgba(127,127,127,.12);padding:1px 4px;border-radius:4px}
-.note,.warn{border-left:4px solid var(--accent);background:var(--card);padding:10px 14px;margin:12px 0;border-radius:0 8px 8px 0}
-.warn{border-color:#b45309;background:#fff7ed;color:#1b1f24}
-.tw{overflow-x:auto;margin:10px 0 18px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
-table{border-collapse:collapse;width:100%;font-size:.92rem}th,td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
-th{font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}tr:last-child td{border-bottom:0}
-.pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:.82rem;font-weight:600;line-height:1.35}
+HTML_CSS = brand.tokens_css() + brand.BASE_CSS + """
+*{box-sizing:border-box}body{margin:0;background:var(--c-paper);color:var(--c-ink);font:16px/1.6 var(--font)}
+main{max-width:920px;margin:0 auto;padding:28px 16px 64px}h1{font-size:2rem;line-height:1.15;margin:0 0 8px}
+h2{font-size:1.35rem;margin:40px 0 12px;padding-top:14px;border-top:1px solid var(--c-line)}h3{font-size:1.08rem;margin:24px 0 8px}
+p,li{overflow-wrap:anywhere}a{color:var(--c-teal-t)}code{font-size:.9em;background:var(--c-code);padding:1px 5px;border-radius:5px}
+.note,.warn{border-left:4px solid var(--c-teal);background:var(--c-panel);padding:12px 16px;margin:12px 0;border-radius:0 10px 10px 0}
+.warn{border-color:var(--c-sun);background:var(--c-sun-bg)}
+.tw{overflow-x:auto;margin:10px 0 18px;border:1px solid var(--c-line);border-radius:12px;background:var(--c-panel)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}th,td{padding:9px 11px;text-align:left;vertical-align:top;border-bottom:1px solid var(--c-line)}
+th{font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;color:var(--c-ink2);font-weight:600}tr:last-child td{border-bottom:0}
 td:first-child{min-width:150px;width:30%}
-ul{padding-left:22px}li{margin:4px 0}
-@media print{body{background:#fff;color:#000;font-size:11pt}main{max-width:none;padding:0}h2{break-after:avoid}tr{break-inside:avoid}
-.tw{overflow:visible}@page{size:A4;margin:16mm}}
+.pill{display:inline-block;padding:2px 9px;border-radius:8px;font-size:.82rem;font-weight:600;line-height:1.4}
+.k-coral{background:var(--c-coral-bg);color:var(--c-coral-t)}.k-sun{background:var(--c-sun-bg);color:var(--c-sun-t)}
+.k-teal{background:var(--c-teal-bg);color:var(--c-teal-t)}.k-indigo{background:var(--c-indigo-bg);color:var(--c-indigo-t)}
+.k-lilac{background:var(--c-lilac-bg);color:var(--c-lilac-t)}.k-neutral{background:var(--c-code);color:var(--c-ink2)}
+.k-faint{background:transparent;color:var(--c-ink2);font-weight:500}
+.meta{color:var(--c-ink2);margin:0 0 14px}ul{padding-left:22px}li{margin:5px 0}
+footer{margin-top:48px;padding-top:14px;border-top:1px solid var(--c-line);color:var(--c-ink2);font-size:.85rem}
+@media print{body{font-size:10.5pt}main{max-width:none;padding:0}h2{break-after:avoid}tr{break-inside:avoid}
+.tw{overflow:visible}@page{size:A4;margin:14mm 14mm 16mm}}
 """
 
 
 def to_html(blocks, title: str) -> str:
     out = [f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" '
-           f'content="width=device-width,initial-scale=1"><title>{html.escape(title)}</title><style>{HTML_CSS}</style>'
-           '</head><body><main>']
+           f'content="width=device-width,initial-scale=1"><title>{html.escape(title)}</title>{brand.head()}'
+           f'<style>{HTML_CSS}</style></head><body><div class="csef-stripe"></div><main>{brand.logo("lockup", 44)}']
     for b in blocks:
         k = b[0]
         if k in ("h1", "h2", "h3"):
@@ -436,13 +442,13 @@ def to_html(blocks, title: str) -> str:
                 for ci, c in enumerate(r):
                     txt = _inline(str(c))
                     if kk is not None and ci in cols:
-                        bg, fg = KEY_COL.get(kk, ("transparent", "inherit"))
-                        txt = f'<span class="pill" style="background:{bg};color:{fg}">{txt}</span>'
+                        txt = f'<span class="pill k-{KEY_CLASS.get(kk, "neutral")}">{txt}</span>'
                     cells.append(f"<td>{txt}</td>")
                 rows.append("<tr>" + "".join(cells) + "</tr>")
             out.append('<div class="tw"><table><thead><tr>' + "".join(f"<th>{html.escape(h)}</th>" for h in b[1]) +
                        "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
-    out.append("</main></body></html>")
+    out.append(f'<footer>Child-Safe EdTech Framework (CSEF). {brand.TAGLINE} A framework, not a standard. '
+               'Not legal advice.</footer></main></body></html>')
     return "\n".join(out)
 
 
@@ -455,6 +461,11 @@ def to_docx(blocks, path: Path, title: str) -> None:
 
     d = Document()
     d.core_properties.title = title
+    brand.style_docx(d)
+    logo_png = brand.png("csef-lockup-on-light")
+    if logo_png:
+        from docx.shared import Cm
+        d.add_picture(str(logo_png), width=Cm(5.5))
     st = d.styles["Normal"]
     st.font.name, st.font.size = "Calibri", Pt(10.5)
 
@@ -956,42 +967,62 @@ def ask_terminal(q: Q, prev: dict) -> dict:  # pragma: no cover (interactive)
 
 # --------------------------------------------------------------------------- web
 
-FORM_CSS = """
-:root{--bg:#fbfaf7;--card:#fff;--ink:#1b1f24;--muted:#5f6b7a;--line:#e4e2dc;--accent:#0f5c4d;--accent-ink:#fff;
---t1:#0f5c4d;--t1b:#e1f1ec;--t2:#3949ab;--t2b:#e8eafb;--t3:#7b3fa0;--t3b:#f3e8fa;--red:#b42318;--redb:#fdecea;--amb:#b45309;--ambb:#fff1e0}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#15181c;--card:#1d2126;--ink:#eceae4;--muted:#a3abb6;--line:#2d333a;
---accent:#5fc2a8;--accent-ink:#0b1714;--t1:#7fd3bd;--t1b:#17332c;--t2:#a7b1f5;--t2b:#232a4d;--t3:#d4a7ee;--t3b:#352442;--red:#ff9b8f;--redb:#3a1f1c;--amb:#ffbf78;--ambb:#3a2a17}}
-:root[data-theme=dark]{--bg:#15181c;--card:#1d2126;--ink:#eceae4;--muted:#a3abb6;--line:#2d333a;--accent:#5fc2a8;--accent-ink:#0b1714;
---t1:#7fd3bd;--t1b:#17332c;--t2:#a7b1f5;--t2b:#232a4d;--t3:#d4a7ee;--t3b:#352442;--red:#ff9b8f;--redb:#3a1f1c;--amb:#ffbf78;--ambb:#3a2a17}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-.wrap{max-width:1080px;margin:0 auto;padding:28px 16px 80px;display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:24px}
-@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}aside{position:static}}
-h1{font-size:1.8rem;line-height:1.2;margin:0 0 6px}.lead{color:var(--muted);margin:0 0 18px}
-section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 8px;margin:0 0 18px;min-width:0}
-section h2{margin:0 0 4px;font-size:1.25rem}section>.intro{color:var(--muted);margin:0 0 12px}
-h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:18px 0 6px}
-.q{padding:12px 0;border-top:1px solid var(--line)}.q:first-of-type{border-top:0}
-.q>label,.q>.lab{display:block;font-weight:600;margin-bottom:6px}.help{font-size:.88rem;color:var(--muted);margin:-2px 0 8px}
-input[type=text],textarea{width:100%;font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink)}
-textarea{min-height:78px}.opts{display:flex;flex-wrap:wrap;gap:8px}
-.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:8px 11px;cursor:pointer;background:var(--bg);min-width:0}
-.opt input{margin-top:4px}.opt:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+FORM_CSS = brand.tokens_css() + brand.BASE_CSS + """
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:16px}
+body{margin:0;background:var(--c-paper);color:var(--c-ink);font:16px/1.55 var(--font)}
+a{color:var(--c-teal-t)}
+.top{max-width:1120px;margin:0 auto;padding:18px 16px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.top .csef-brand{margin:0}.top nav a{font-weight:500;text-decoration:none;color:var(--c-ink2);margin-left:16px;font-size:.95rem}
+.top nav a:hover{color:var(--c-ink)}
+.hero{max-width:1120px;margin:0 auto;padding:36px 16px 8px}
+.hero h1{font-size:clamp(2rem,4.5vw,3rem);line-height:1.08;margin:0 0 12px;max-width:16ch}
+.hero .lead{font-size:1.12rem;color:var(--c-ink2);max-width:62ch;margin:0 0 22px}
+.gets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 10px}
+@media (max-width:860px){.gets{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.get{background:var(--c-panel);border:1px solid var(--c-line);border-radius:14px;padding:14px 14px 12px;border-top:5px solid var(--r)}
+.get strong{display:block;font-family:var(--font-display);font-size:1.02rem;margin-bottom:2px}.get span{font-size:.9rem;color:var(--c-ink2)}
+.privacy{display:inline-flex;gap:8px;align-items:center;font-size:.92rem;color:var(--c-ink2);margin:12px 0 0}
+.privacy::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c-teal);flex:none}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 16px 80px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px}
+@media (max-width:900px){.wrap{grid-template-columns:minmax(0,1fr)}aside{position:static!important}.steps-panel{display:none}}
+section{background:var(--c-panel);border:1px solid var(--c-line);border-radius:18px;padding:22px 22px 10px;margin:0 0 20px;min-width:0}
+section h2{margin:0 0 4px;font-size:1.4rem;display:flex;align-items:center;gap:12px}
+.num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--r,var(--c-teal));color:var(--nt,#fff);
+font-size:1rem;flex:none}
+section>.intro{color:var(--c-ink2);margin:6px 0 12px;max-width:68ch}
+h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.07em;color:var(--c-ink2);margin:22px 0 4px;font-family:var(--font)}
+.q{padding:14px 0;border-top:1px solid var(--c-line)}h3+.q{border-top:0}
+.q>label,.q>.lab{display:block;font-weight:600;margin-bottom:8px}.help{font-size:.88rem;color:var(--c-ink2);margin:-4px 0 8px}
+input[type=text],textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-paper);color:var(--c-ink)}
+input[type=text]:focus,textarea:focus{outline:2px solid var(--c-teal);outline-offset:1px;border-color:transparent}
+textarea{min-height:80px}.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{display:flex;gap:9px;align-items:flex-start;border:1.5px solid var(--c-line);border-radius:11px;padding:8px 12px;cursor:pointer;background:var(--c-paper);min-width:0}
+.opt input{margin-top:4px;accent-color:var(--c-teal)}.opt:has(input:checked){border-color:var(--c-teal);background:var(--c-teal-bg)}
+.opt:has(input:focus-visible){outline:2px solid var(--c-teal);outline-offset:2px}
 .col .opts{flex-direction:column}
-.b .opts{flex-wrap:wrap}.b .opt:has(input[value=never]:checked){background:var(--redb);border-color:var(--red);box-shadow:none}
-.b .opt:has(input[value=approval]:checked){background:var(--ambb);border-color:var(--amb);box-shadow:none}
-.tier{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:2px}
-.tier1{background:var(--t1b);color:var(--t1)}.tier2{background:var(--t2b);color:var(--t2)}.tier3{background:var(--t3b);color:var(--t3)}
-.hint{font-size:.85rem;margin-top:6px;color:var(--muted)}.hint.warn{color:var(--amb)}
+.b .opt:has(input[value=never]:checked){background:var(--c-coral-bg);border-color:var(--c-coral)}
+.b .opt:has(input[value=never]) input{accent-color:var(--c-coral)}
+.b .opt:has(input[value=approval]:checked){background:var(--c-sun-bg);border-color:var(--c-sun)}
+.b .opt:has(input[value=approval]) input{accent-color:#B07A0A}
+.tier{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 9px;border-radius:999px;margin-left:8px;vertical-align:2px;letter-spacing:.02em}
+.tier1{background:var(--c-teal-bg);color:var(--c-teal-t)}.tier2{background:var(--c-indigo-bg);color:var(--c-indigo-t)}.tier3{background:var(--c-lilac-bg);color:var(--c-lilac-t)}
+.hint{font-size:.86rem;margin-top:7px;color:var(--c-ink2)}.hint.warn{color:var(--c-sun-t)}
 .hidden{display:none}aside{position:sticky;top:16px;align-self:start}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
-.panel h2{font-size:1rem;margin:0 0 10px}.stat{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed var(--line)}
-.stat:last-of-type{border-bottom:0}.stat b{font-variant-numeric:tabular-nums}
-button,.btn{font:inherit;font-weight:600;border:0;border-radius:10px;padding:11px 14px;cursor:pointer;width:100%;margin-top:10px;
-background:var(--accent);color:var(--accent-ink);text-decoration:none;display:block;text-align:center}
-button.sec{background:transparent;color:var(--accent);border:1px solid var(--accent)}
-#result{margin-top:12px;font-size:.92rem}#result ul{padding-left:18px;margin:6px 0}#result .err{color:var(--red)}
-.legend{font-size:.82rem;color:var(--muted);margin-top:10px}.legend>span{display:block;margin:5px 0}
-.foot{color:var(--muted);font-size:.82rem;margin-top:20px}
+.panel{background:var(--c-panel);border:1px solid var(--c-line);border-radius:18px;padding:18px;margin-bottom:14px}
+.panel h2{font-size:1.05rem;margin:0 0 10px}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}.steps li{margin:2px 0}
+.steps a{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--c-ink);padding:5px 6px;border-radius:8px;font-size:.95rem}
+.steps a:hover{background:var(--c-code)}.steps i{width:10px;height:10px;border-radius:3px;background:var(--r);flex:none}
+.stat{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed var(--c-line)}
+.stat:last-of-type{border-bottom:0}.stat b{font-variant-numeric:tabular-nums;font-family:var(--font-display);font-size:1.1rem}
+.stat span{display:flex;align-items:center;gap:8px}.stat span::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--d)}
+button,.btn{font:inherit;font-weight:600;border:0;border-radius:12px;padding:12px 14px;cursor:pointer;width:100%;margin-top:10px;
+background:var(--c-ink);color:var(--c-paper);text-decoration:none;display:block;text-align:center}
+button:hover{filter:brightness(1.12)}
+button.sec,.btn.sec{background:transparent;color:var(--c-ink);border:1.5px solid var(--c-line)}
+#result{margin-top:12px;font-size:.92rem}#result ul{padding-left:18px;margin:6px 0}#result .err{color:var(--c-coral-t)}
+.legend{font-size:.84rem;color:var(--c-ink2)}.legend>span{display:block;margin:6px 0}.legend .tier{margin:0 6px 0 0}
+.foot{color:var(--c-ink2);font-size:.85rem;margin-top:24px}
 """
 
 FORM_JS = r"""
@@ -1005,9 +1036,10 @@ let A = Object.assign({}, PREV.answers || {});
 function val(q){ return (q.id in A) ? A[q.id] : q.default; }
 function render(){
   const f = $('#form'); f.innerHTML = '';
-  S.sections.forEach(s => {
+  const R = ['var(--c-teal)','var(--c-indigo)','var(--c-sky)','var(--c-lilac)','var(--c-coral)','var(--c-sun)'];
+  S.sections.forEach((s, i) => {
     const sec = document.createElement('section'); sec.id = 's-' + s.id;
-    sec.innerHTML = `<h2>${esc(s.title)}</h2>` + (s.intro ? `<p class="intro">${esc(s.intro)}</p>` : '');
+    sec.innerHTML = `<h2><span class="num" style="--r:${R[i % R.length]};${[2, 5].includes(i % R.length) ? '--nt:#17233F' : ''}">${i + 1}</span>${esc(s.title)}</h2>` + (s.intro ? `<p class="intro">${esc(s.intro)}</p>` : '');
     s.questions.forEach(q => sec.appendChild(field(q)));
     s.groups.forEach(g => { const h = document.createElement('h3'); h.textContent = g.title; sec.appendChild(h);
       g.questions.forEach(q => sec.appendChild(field(q))); });
@@ -1059,7 +1091,7 @@ function update(){
     el.classList.toggle('hidden', !vis);
     if (!vis) { c.na++; return; }
     const ch = val(q); const req = q.tier <= level; const hint = el.querySelector('.hint'); hint.classList.remove('warn');
-    if (ch === 'never') { c.red++; hint.textContent = q.tier === 1 ? 'Required by law already. A red line also blocks weak signals.' : 'Red line beyond ' + (req ? 'the law (also required at your level).' : 'the law and your level.'); }
+    if (ch === 'never') { c.red++; hint.textContent = q.tier === 1 ? 'Required by law already. A red line also blocks weak signals.' : (req ? 'Red line. Also required at your level.' : 'Red line beyond the law and your level.'); }
     else if (ch === 'approval') { c.amber++; hint.textContent = req ? 'These rules already apply at your level. Approval documents how you comply; it cannot switch them off.' : 'Allowed only with a written decision record.'; if (req) hint.classList.add('warn'); }
     else if (req) { c.covered++; hint.textContent = q.tier === 1 ? 'Covered by the law.' : 'Covered by your level.'; }
     else { c.gap++; hint.textContent = `Not adopted. Recommended at Level ${q.tier}.`; }
@@ -1091,36 +1123,56 @@ render();
 """
 
 
-def render_form(q: Q, previous: dict | None, served: bool) -> str:
+def render_form(q: Q, previous: dict | None, served: bool, home: str | None = None) -> str:
     schema = json.dumps(q.schema(), ensure_ascii=False).replace("</", "<\\/")
     prev = json.dumps(previous or {}, ensure_ascii=False).replace("</", "<\\/")
     ver = (previous or {}).get("pack_version")
     sub = (f"Editing version {html.escape(ver)}. Change any answer and generate again." if ver else
            "Answer the questions. Your guardrails file, reports and staff policy are generated from them.")
     gen = "Generate the policy kit" if served else "Download answers"
+    privacy = ("Everything runs on this computer. Nothing is sent anywhere." if served else
+               "Your answers stay in this browser. Nothing is sent anywhere.")
+    roles = ["var(--c-teal)", "var(--c-indigo)", "var(--c-sky)", "var(--c-lilac)", "var(--c-coral)", "var(--c-sun)"]
+    steps = "".join(f'<li><a href="#s-{s["id"]}"><i style="--r:{roles[i % len(roles)]}"></i>{html.escape(s["title"])}</a></li>'
+                    for i, s in enumerate(q.doc["sections"]))
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>CSEF Policy Questionnaire</title>
-<style>{FORM_CSS}</style></head><body data-served="{1 if served else 0}">
+<meta name="description" content="Set your organisation's child-safety boundaries and get a staff policy, a report matched with the law and a guardrails file.">
+{brand.head()}<style>{FORM_CSS}</style></head><body data-served="{1 if served else 0}">
+<div class="csef-stripe"></div>
+<header class="top"><a href="{home or REPO_URL}" aria-label="CSEF home">{brand.logo("lockup", 40)}</a>
+<nav aria-label="CSEF"><a href="{home or REPO_URL}">About CSEF</a></nav></header>
+<div class="hero">
+<h1>Set your child-safety boundaries</h1>
+<p class="lead">{sub} It takes about 15 minutes. You do not need to be a developer.</p>
+<div class="gets">
+<div class="get" style="--r:var(--c-teal)"><strong>Staff policy</strong><span>Plain language, for everyone in your organisation.</span></div>
+<div class="get" style="--r:var(--c-indigo)"><strong>Boundaries report</strong><span>Each answer matched with the law, for management and legal counsel.</span></div>
+<div class="get" style="--r:var(--c-sky)"><strong>Guardrails file</strong><span>Your rules, checked automatically in every project.</span></div>
+<div class="get" style="--r:var(--c-lilac)"><strong>For developers</strong><span>Instructions for AI coding tools and a ready CI check.</span></div>
+</div>
+<p class="privacy">{privacy}</p>
+</div>
 <div class="wrap"><main>
-<h1>Your child-safety boundaries</h1>
-<p class="lead">{sub} Everything stays on this computer.</p>
 <div id="form"></div>
-<p class="foot">Child-Safe EdTech Framework (CSEF) v{html.escape(q.std.version)}. A framework, not a standard. Not legal advice.</p>
-</main><aside><div class="panel"><h2>So far</h2>
-<div class="stat"><span>Red lines</span><b id="c-red">0</b></div>
-<div class="stat"><span>Only with approval</span><b id="c-amber">0</b></div>
-<div class="stat"><span>Covered by law or level</span><b id="c-covered">0</b></div>
-<div class="stat"><span>Recommended, not adopted</span><b id="c-gap">0</b></div>
-<div class="stat"><span>Not applicable</span><b id="c-na">0</b></div>
+<p class="foot">Child-Safe EdTech Framework (CSEF) v{html.escape(q.std.version)}. {brand.TAGLINE} A framework, not a standard. Not legal advice.</p>
+</main><aside>
+<div class="panel steps-panel"><h2>Steps</h2><ol class="steps">{steps}</ol></div>
+<div class="panel"><h2>Your answers so far</h2>
+<div class="stat" style="--d:var(--c-coral)"><span>Red lines</span><b id="c-red">0</b></div>
+<div class="stat" style="--d:var(--c-sun)"><span>Only with approval</span><b id="c-amber">0</b></div>
+<div class="stat" style="--d:var(--c-teal)"><span>Covered by law or level</span><b id="c-covered">0</b></div>
+<div class="stat" style="--d:var(--c-ink2)"><span>Recommended, not adopted</span><b id="c-gap">0</b></div>
+<div class="stat" style="--d:var(--c-line)"><span>Not applicable</span><b id="c-na">0</b></div>
 <button id="go">{gen}</button>
 {"" if not served else '<button id="dl" class="sec" type="button">Save answers.json</button>'}
-<label class="btn sec" style="background:transparent;color:var(--accent);border:1px solid var(--accent)">Load answers.json
+<label class="btn sec">Load answers.json
 <input id="load" type="file" accept=".json,application/json" hidden></label>
-<div id="result" aria-live="polite"></div>
-<div class="legend"><span><span class="tier tier1">Law</span> required today</span>
-<span><span class="tier tier2">Coming</span> EU KIDS Act proposal, official guidelines (Level 2)</span>
-<span><span class="tier tier3">Recommended</span> research and experts (Level 3)</span></div>
-</div></aside></div>
+<div id="result" aria-live="polite"></div></div>
+<div class="panel legend"><span><span class="tier tier1">Law</span>required today</span>
+<span><span class="tier tier2">Coming</span>EU KIDS Act proposal, official guidelines (Level 2)</span>
+<span><span class="tier tier3">Recommended</span>research and experts (Level 3)</span></div>
+</aside></div>
 <script type="application/json" id="schema">{schema}</script>
 <script type="application/json" id="prev">{prev}</script>
 <script>{FORM_JS}</script></body></html>"""
