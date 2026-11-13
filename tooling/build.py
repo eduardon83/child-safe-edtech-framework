@@ -10,6 +10,7 @@ Generated (never edit by hand):
   self-assessment/*.md         checklists per profile, grouped by compliance level
   tooling/semgrep/csef.yml     Semgrep rules from the regex patterns
   docs/index.html, docs/pack-builder/index.html   GitHub Pages site and Pack Builder
+  docs/questionnaire/index.html                    static policy questionnaire (answers download)
   skill/csef-review/framework/  copies of rules.yaml and sources.yaml
   skill/csef-review/packs/     copies of the packs
   skill/csef-review/scripts/scan.py
@@ -185,6 +186,28 @@ def load_and_validate():
             except re.error as ex:
                 err(f"coc-topics.yaml: {rid} bad conflict_regex: {ex}")
 
+    qdoc = scan.load_yaml(ROOT / "framework" / "questionnaire.yaml")
+    seen = set()
+    for s in qdoc.get("sections", []):
+        for qq in (s.get("questions") or []) + [x for g in s.get("groups") or [] for x in g["questions"]]:
+            if qq["id"] in seen:
+                err(f"questionnaire.yaml: duplicate question id {qq['id']}")
+            seen.add(qq["id"])
+            for rid in qq.get("rules", []) or []:
+                if rid not in std.rules:
+                    err(f"questionnaire.yaml: {qq['id']} refers to unknown rule {rid}")
+            if "rules" in qq and not (qq.get("never") and qq.get("level")):
+                err(f"questionnaire.yaml: boundary {qq['id']} needs 'never' and 'level' text")
+            if not set(qq.get("features", []) or []) <= FEATURES:
+                err(f"questionnaire.yaml: {qq['id']} has an unknown feature")
+    for x in qdoc.get("always", []):
+        for rid in x["rules"]:
+            if rid not in std.rules:
+                err(f"questionnaire.yaml: always item refers to unknown rule {rid}")
+    for k, v in qdoc.get("phrase_sets", {}).items():
+        if any(not isinstance(ph, str) for ph in v["phrases"]):
+            err(f"questionnaire.yaml: phrase set {k} has a non-text entry (quote it)")
+
     packs = {}
     for pf in sorted((ROOT / "packs").glob("*.yaml")):
         if pf.name.startswith("_"):
@@ -212,6 +235,7 @@ a{color:var(--accent)}.cards{display:grid;gap:12px}
 <h1>Child-Safe EdTech Framework</h1>
 <p class="lead">An open framework and toolkit for software children use for learning. CSEF v{version}, {rules} rules, draft for public comment.</p>
 <div class="cards">
+<a class="card" href="questionnaire/"><strong>Policy questionnaire</strong><span>Answer questions about your boundaries. Get your guardrails file, a report matched with the law and a plain-language staff policy.</span></a>
 <a class="card" href="pack-builder/"><strong>Pack Builder</strong><span>Define your organisation's minimum level, no-gos and rules, and publish your pack to GitHub.</span></a>
 <a class="card" href="https://github.com/eduardon83/child-safe-edtech-framework"><strong>Repository</strong><span>The framework, the scanner, the Claude skill and the GitHub Action.</span></a>
 <a class="card" href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/catalogue/index.md"><strong>Rule catalogue</strong><span>Every rule with requirement, rationale, improvement and sources.</span></a>
@@ -381,6 +405,8 @@ def generate(std, packs) -> dict[Path, str]:
     }, ensure_ascii=False).replace("</", "<\\/")
     tpl = (ROOT / "tooling" / "pack-builder.template.html").read_text(encoding="utf-8")
     files[ROOT / "docs" / "pack-builder" / "index.html"] = tpl.replace("/*CATALOGUE*/null", cat_json)
+    import policy
+    files[ROOT / "docs" / "questionnaire" / "index.html"] = policy.render_form(policy.Q(ROOT), None, False)
     files[ROOT / "docs" / "index.html"] = LANDING.replace("{version}", std.version).replace("{rules}", str(len(rules)))
 
     sk = ROOT / "skill" / "csef-review"
@@ -389,9 +415,10 @@ def generate(std, packs) -> dict[Path, str]:
     for pf in sorted((ROOT / "packs").glob("*.yaml")):
         files[sk / "packs" / pf.name] = pf.read_text(encoding="utf-8")
     files[sk / "scripts" / "scan.py"] = (ROOT / "tooling" / "scan.py").read_text(encoding="utf-8")
-    for t in ("export.py", "comms.py", "coc.py"):
+    for t in ("export.py", "comms.py", "coc.py", "policy.py"):
         files[sk / "scripts" / t] = (ROOT / "tooling" / t).read_text(encoding="utf-8")
-    files[sk / "framework" / "coc-topics.yaml"] = (ROOT / "framework" / "coc-topics.yaml").read_text(encoding="utf-8")
+    for t in ("coc-topics.yaml", "questionnaire.yaml"):
+        files[sk / "framework" / t] = (ROOT / "framework" / t).read_text(encoding="utf-8")
     for t in ("csef.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md"):
         files[sk / "templates" / t] = (ROOT / "templates" / t).read_text(encoding="utf-8")
     return files

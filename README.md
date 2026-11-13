@@ -4,7 +4,7 @@ An open framework and toolkit for building safe educational software for under-1
 It turns EU law, pending EU proposals (EU KIDS Act, Digital Fairness Act) and expert recommendations into
 rules a team can check in code, in CI and in review.
 
-> **Status:** v0.6.0, draft for public comment (November 2026).
+> **Status:** v0.7.0, draft for public comment (November 2026).
 > **Not legal advice and not a certification.** CSEF produces *pre-compliance* reports. Legal compliance
 > depends on facts code cannot show; involve your DPO and legal counsel. See [Limitations](#limitations).
 >
@@ -23,6 +23,7 @@ Site and Pack Builder: <https://eduardon83.github.io/child-safe-edtech-framework
 | **The framework** | 106 rules: a core set plus three profiles, **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Rules on data, safety by design, commercial practices, AI companions and chatbots, communications, accessibility, security, and design for learning (visuals, sound, motion, motivation). |
 | **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). You decide which level of compliance you want in your software. |
 | **Sources on every rule** | 50 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
+| **Policy questionnaire** | `tooling/policy.py`: answer questions about your boundaries (terminal or local web form). Get your guardrails file, a report that matches each answer with the law and recommendations, a plain-language staff policy, AI agent instructions and a ready CI workflow. Run it again anytime. |
 | **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included (draft, not legally reviewed). |
 | **Company packs and Pack Builder** | Each organisation sets its minimum level, no-gos, forbidden SDKs and phrases and its own rules, in a web form, then publishes the pack to GitHub. |
 | **Scanner** | `tooling/scan.py`: pre-compliance report, prioritised improvement plan, communications inventory, JSON and SARIF. |
@@ -38,6 +39,7 @@ Site and Pack Builder: <https://eduardon83.github.io/child-safe-edtech-framework
 |---|---|
 | **v0.3** | Interactive dashboard, PDF and Word exports (`--export html,pdf,docx`). |
 | **v0.4** | EU KIDS Act commercial practices (Recital 31, Art. 13): real-time purchase labels, no design for impulsive spending, no disguised advertising, no commercial content in learning. AI companions and chatbots (Recitals 32 to 34, Art. 14): memory off by default, regular re-testing and monitoring, opt-in assistants inside games, no AI nudging to spend. |
+| **v0.7** | **Policy questionnaire**: boundaries in, guardrails file, boundaries report, staff policy, agent instructions and CI workflow out. Versioned, with a list of changes on every run. |
 | **v0.6** | Renamed to **Child-Safe EdTech Framework (CSEF)**: `framework/` folder, `csef.yaml` manifest, `csef-review` skill, `csef-scan` and `csef-coc` tools, repository `child-safe-edtech-framework`. Old names (`cses.yaml`, `cses-ignore`, `--standard-root`) still work. |
 | **v0.5** | **Communications audit**: inventory of chat, direct messages, voice, video, comments and live streaming, and of the safeguards around them (report, block, moderation, filters, link filtering), with nine CORE-CHT rules from KIDS Act Art. 12, 15(2) and Recital 36. **Code-of-conduct comparison tool.** **Unity support** and more ecosystems (see below). `legislation.md` and `research.md`. Output folders now relative to the current directory. |
 
@@ -95,7 +97,34 @@ Reads `.txt`, `.md`, `.html`, `.pdf` and `.docx`. Writes `coc-comparison.md`, `.
 
 Example: `examples/codes-of-conduct/example-code.md` (fictional).
 
-### Your organisation's pack
+### Your organisation's policy
+
+Answer the questionnaire once. Run it again whenever your boundaries change.
+
+```bash
+pip install pyyaml python-docx
+python3 tooling/policy.py --web                    # local web form at http://127.0.0.1:8765
+python3 tooling/policy.py                          # or in the terminal
+python3 tooling/policy.py --answers acme-policy/answers.json --out-dir acme-policy --web   # change it later
+```
+
+It writes a kit to share:
+
+| File | For whom |
+|---|---|
+| `staff-policy` (.md, .html, .pdf, .docx) | Everyone. The policy in plain language: never, only with approval, always, how to check, exceptions. |
+| `boundaries-report` (.md, .html, .pdf, .docx) | Management, DPO, legal counsel. Each answer matched with the law (Law, Coming, Recommended), warnings, what adopting each recommendation would take, changes since the last version, sources. |
+| `<id>.yaml` | Product teams. The guardrails file the scanner applies. |
+| `agent-instructions.md`, `csef-check.yml`, `csef-review.zip` | Developers. Rules for AI coding agents, CI workflow with your pack, the Claude skill. |
+| `answers.json` | The policy owner. Input for the next run. |
+
+Answers can only make rules stricter. "Only with approval" never switches off a rule that applies at your
+level; the report says so. Try it with `examples/policy/answers.json` (fictional). A static copy of the form
+is on the [site](https://eduardon83.github.io/child-safe-edtech-framework/questionnaire/); there it downloads
+`answers.json` for `--batch` instead of generating files. Nothing leaves your computer in either mode.
+
+### Your organisation's pack, by hand
+
 
 Open the [Pack Builder](https://eduardon83.github.io/child-safe-edtech-framework/pack-builder/), choose your
 minimum level and no-gos, add your rules, and publish the pack to your repository. Then list it in each
@@ -173,9 +202,9 @@ compares meaning and reads any language.
 ## Repository layout
 
 ```
-framework/        rules.yaml + sources.yaml (single source of truth), coc-topics.yaml, docs, generated catalogue
+framework/        rules.yaml + sources.yaml (single source of truth), coc-topics.yaml, questionnaire.yaml, docs, generated catalogue
 packs/           country and extra packs (pt.yaml, _template.yaml)
-tooling/         scan.py, comms.py, export.py, coc.py, build.py, generated Semgrep rules
+tooling/         scan.py, comms.py, export.py, coc.py, policy.py, build.py, generated Semgrep rules
 skill/           csef-review skill for Claude (generated copies + SKILL.md + references)
 templates/       manifest, DPIA starter, AI risk file, waiver, agent instructions, GitHub files
 self-assessment/ generated checklists per profile and level

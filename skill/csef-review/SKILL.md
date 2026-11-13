@@ -132,6 +132,23 @@ It writes `coc-comparison.md`, `.html` and `.json`: structural criteria from the
 Recital 39) and, per rule, covered, partial, missing or possible conflict. The tool matches wording;
 you then read the code and confirm or correct every result by meaning, in any language.
 
+## Company policy questionnaire
+
+When someone wants to set or change their organisation's boundaries ("define our policy", "what are our red
+lines", "make a pack like Kendir's"), run the questionnaire with them:
+
+1. If they have an earlier `answers.json`, read it and only ask what they want to change.
+2. Otherwise ask the questions in `framework/questionnaire.yaml`, section by section, in their language.
+   Skip boundary questions whose `features` or `profiles` do not match their answers. For each boundary, say
+   whether it is Law (tier 1), Coming (tier 2) or Recommended (tier 3), and offer Never, Only with approval
+   (when the question has an `approval` text) or Follow our level.
+3. Write the answers to `answers.json` as `{"answers": {...}}` using the question ids and option values.
+4. Run `python3 scripts/policy.py --answers answers.json --batch --out-dir <id>-policy`.
+5. Share the staff policy and the boundaries report, point out the "Check these first" warnings, and explain
+   that answers can only make rules stricter: an approval never switches off a rule that applies at their level.
+
+People who prefer a form can run `python3 tooling/policy.py --web` from the repository.
+
 ## Limits to state in every report
 
 - Static analysis reads files; it does not run the product, inspect live databases, cloud consoles or

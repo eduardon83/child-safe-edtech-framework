@@ -15,7 +15,7 @@
 #   effort      low | medium | high (used to prioritise the improvement list)
 #   detection   method: static | manifest | manual | mixed, plus patterns
 
-version: "0.6.0"
+version: "0.7.0"
 
 rules:
 

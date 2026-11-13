@@ -1,0 +1,435 @@
+# CSEF boundaries questionnaire.
+# Used by tooling/policy.py (terminal and local web form) to turn an organisation's answers into
+# a company pack, a boundaries report and a plain-language staff policy.
+#
+# Boundary questions map to framework rules. The tier of those rules decides how an answer is read:
+#   tier 1 = the law already requires it; tier 2 = proposals and official benchmarks; tier 3 = research.
+# Answers can only make rules stricter. They never relax the law.
+#
+# Placeholders in plain-language text: {org} organisation name, {approvers} who approves exceptions.
+
+version: 1
+
+sections:
+  - id: org
+    title: Your organisation
+    intro: Who you are and who owns these rules.
+    questions:
+      - id: org_name
+        type: text
+        label: Organisation name
+        required: true
+      - id: pack_id
+        type: text
+        label: Short id for your pack (2 to 8 lowercase letters, e.g. acme)
+        help: Used in file names and rule ids, such as ACME-POL-01.
+        pattern: '^[a-z]{2,8}$'
+        required: true
+      - id: jurisdictions
+        type: multi
+        label: Countries where your products are used
+        help: EU law always applies. Country packs add national rules where one exists.
+        options_from: packs
+      - id: scope
+        type: text
+        label: Which products does this policy cover?
+        default: All our products used by or designed for children
+      - id: owner
+        type: text
+        label: Who owns this policy? (a role, e.g. CEO)
+        default: CEO
+      - id: approvers
+        type: text
+        label: Who can approve exceptions and sensitive features? (roles)
+        default: Data Protection Officer or CEO
+      - id: contact
+        type: text
+        label: Where should staff send questions? (a role, channel or shared mailbox)
+        default: The Data Protection Officer
+
+  - id: products
+    title: Your products
+    intro: What you build and for whom. This decides which questions come next.
+    questions:
+      - id: profiles
+        type: multi
+        label: What kind of products do you make?
+        required: true
+        options:
+          - {value: A, label: "Educational games"}
+          - {value: B, label: "Game-based applications and software (platforms, assessment, simulations)"}
+          - {value: C, label: "Gamified applications (points, badges, streaks on top of learning)"}
+      - id: age_bands
+        type: multi
+        label: Which ages use your products?
+        required: true
+        options:
+          - {value: B1, label: "3 to 5"}
+          - {value: B2, label: "6 to 9"}
+          - {value: B3, label: "10 to 12"}
+          - {value: B4, label: "13 to 15"}
+          - {value: B5, label: "16 to 17"}
+      - id: buyers
+        type: single
+        label: Who chooses or pays for your products?
+        options:
+          - {value: schools, label: "Schools or education authorities"}
+          - {value: families, label: "Families"}
+          - {value: both, label: "Both"}
+        default: both
+      - id: features
+        type: multi
+        label: Which of these do your products have, or might have soon?
+        help: Pick everything that applies now or in the next year. Questions about features you do not pick are skipped.
+        options:
+          - {value: accounts, label: "Child accounts or logins"}
+          - {value: multiplayer, label: "Multiplayer or playing with others"}
+          - {value: chat, label: "Chat or messages"}
+          - {value: ugc, label: "Content children create and share (drawings, posts, uploads)"}
+          - {value: social, label: "Social features (friends, profiles, likes, comments)"}
+          - {value: notifications, label: "Notifications"}
+          - {value: streaks, label: "Streaks (days in a row)"}
+          - {value: leaderboards, label: "Leaderboards or rankings"}
+          - {value: purchases, label: "Purchases, subscriptions or in-app items"}
+          - {value: assessment, label: "Tests, grades or progress tracking"}
+          - {value: ai_generative, label: "Generative AI (chatbots, tutors, AI-made text, images or voice)"}
+          - {value: ai_assessment, label: "AI that marks or evaluates learners"}
+          - {value: ai_adaptive, label: "AI that adapts levels, paths or access"}
+          - {value: recommender, label: "Recommendations of content"}
+
+  - id: level
+    title: Your level of ambition
+    intro: The minimum level every product is checked against. Products can choose a higher level, never a lower one.
+    questions:
+      - id: minimum_level
+        type: single
+        label: Which minimum level do you choose?
+        required: true
+        default: "2"
+        options:
+          - {value: "1", label: "Level 1, Legal baseline: what the law requires today"}
+          - {value: "2", label: "Level 2, Forward-compliant: also what is coming (EU KIDS Act proposal, official guidelines)"}
+          - {value: "3", label: "Level 3, Best practice: also what research and experts recommend"}
+
+  - id: boundaries
+    title: Your boundaries
+    intro: >
+      For each practice, say how strict you are. "Never" makes it a red line: the scanner blocks it at every
+      level, even on weak signals. "Only with approval" means a named person must approve it in writing.
+      "Follow our level" means the framework rules for your level apply.
+    groups:
+      - title: Money and advertising
+        questions:
+          - id: ads
+            label: Advertising or ad tracking shown to children
+            rules: [CORE-COM-01, CORE-COM-07]
+            never: We never show advertising to children. We never track children for ads.
+            level: We follow the law on advertising to children.
+          - id: lootboxes
+            label: Paid random rewards (loot boxes, paid card packs, gacha)
+            rules: [A-ECO-01]
+            profiles: [A, B, C]
+            never: We never sell random rewards. Children always know what they get.
+            level: Paid random rewards follow the framework rules for our level.
+          - id: pay_to_win
+            label: Paying to win, skip learning or get ahead of others
+            rules: [A-ECO-02]
+            profiles: [A, B, C]
+            never: Nobody can pay to win or to skip learning.
+            level: Paying to get ahead follows the framework rules for our level.
+          - id: currency
+            label: Virtual coins or gems that children can buy
+            rules: [A-ECO-03, C-ENG-03]
+            profiles: [A, C]
+            never: Children never buy virtual coins. Points and badges have no money value.
+            level: Virtual currency follows the framework rules for our level.
+          - id: purchases
+            label: Purchases that children can start themselves
+            rules: [CORE-COM-04, CORE-COM-05, CORE-COM-06]
+            features: [purchases]
+            never: Only adults can buy. Children never see a buy button.
+            approval: Any purchase flow needs written approval from {approvers}.
+            level: Purchases follow the framework rules. Adults buy. Every purchase is clearly labelled.
+          - id: commercial_learning
+            label: Brands, sponsors or product placement inside learning activities
+            rules: [CORE-COM-08]
+            never: Learning activities never contain brands, sponsors or products.
+            level: Commercial content follows the framework rules for our level.
+
+      - title: Attention and pressure
+        questions:
+          - id: dark_patterns
+            label: Pressure design (countdowns, fake scarcity, guilt messages, pre-ticked boxes)
+            rules: [CORE-COM-03]
+            never: We never use countdowns, fake scarcity, guilt messages or pre-ticked boxes.
+            level: We follow the law on manipulative design.
+          - id: streaks
+            label: Streaks that children can lose
+            rules: [C-ENG-01]
+            features: [streaks]
+            never: We never punish a child for missing a day.
+            approval: Streaks need written approval from {approvers}. They are optional and never punish.
+            level: Streaks follow the framework rules. They are optional and never punish.
+          - id: notifications
+            label: Notifications that bring children back
+            rules: [CORE-SAF-02]
+            features: [notifications]
+            never: We never send notifications asking children to come back.
+            approval: Notifications need written approval from {approvers}. They are off by default.
+            level: Notifications follow the framework rules. Off by default, only about the child's own activity.
+          - id: endless
+            label: Autoplay, endless feeds or no natural place to stop
+            rules: [CORE-SAF-03]
+            never: Every activity has a clear end. No autoplay. No endless feeds.
+            level: Stopping points follow the framework rules for our level.
+          - id: penalties
+            label: Penalties for not playing (decay, energy timers, losing progress)
+            rules: [A-PLY-01]
+            profiles: [A, C]
+            never: Children never lose anything for taking a break.
+            level: Breaks follow the framework rules for our level.
+          - id: leaderboards
+            label: Public rankings of children
+            rules: [C-ENG-02]
+            features: [leaderboards]
+            never: We never rank children publicly. Rankings, if any, stay in the class and use nicknames.
+            approval: Leaderboards need written approval from {approvers}. Class only, with nicknames.
+            level: Leaderboards follow the framework rules. Class only, with nicknames.
+          - id: variable_rewards
+            label: Surprise rewards designed to keep children playing
+            rules: [C-ENG-04, A-MOT-01]
+            profiles: [A, B, C]
+            never: Rewards follow learning. We never use surprise rewards to keep children playing.
+            level: Rewards follow the framework rules for our level.
+
+      - title: Contact and communication
+        questions:
+          - id: strangers
+            label: Contact from people outside the child's class or group
+            rules: [CORE-SAF-05]
+            never: Children never get contact from people outside their class or group.
+            level: We follow the law on contact. No contact from strangers.
+          - id: chat
+            label: Free-text chat between children
+            rules: [CORE-CHT-04, CORE-CHT-05, AGE-B2-01]
+            features: [chat, multiplayer, social]
+            never: Children never chat in free text. They use preset messages only.
+            approval: Any chat needs written approval from {approvers}, with moderation, report and block.
+            level: Chat follows the framework rules. Moderated, with report and block, no links or contact details.
+          - id: voice_video
+            label: Voice chat, video or live streaming
+            rules: [CORE-CHT-06]
+            features: [chat, multiplayer, social]
+            never: We never offer voice chat, video calls or live streaming to children.
+            approval: Voice, video or streaming needs written approval from {approvers}. Always off by default.
+            level: Voice and video follow the framework rules. Off by default.
+          - id: ugc
+            label: Content that children share with others
+            rules: [B-UGC-01, B-UGC-02]
+            features: [ugc]
+            never: Children never share content with others outside their teacher.
+            approval: Sharing features need written approval from {approvers}. Teachers always see what is shared.
+            level: Shared content follows the framework rules. Moderated, visible to the teacher, no faces kept.
+          - id: multiplayer
+            label: Playing with children from other classes or schools
+            rules: [A-SOC-01]
+            features: [multiplayer]
+            profiles: [A]
+            never: Multiplayer stays inside closed groups set up by a teacher or parent.
+            approval: Open multiplayer needs written approval from {approvers}.
+            level: Multiplayer follows the framework rules. Closed groups only.
+
+      - title: Artificial intelligence
+        questions:
+          - id: emotion
+            label: Emotion recognition (reading faces, voice or behaviour for feelings)
+            rules: [CORE-AI-01]
+            never: We never use AI to read children's emotions.
+            level: We follow the law. No emotion recognition on learners.
+          - id: companions
+            label: AI characters that act like a friend or remember conversations
+            rules: [CORE-AI-06, CORE-AI-08]
+            features: [ai_generative]
+            never: Our AI never pretends to be a friend. It does not remember conversations by default.
+            approval: AI characters with memory need written approval from {approvers}.
+            level: AI characters follow the framework rules. No simulated friendship, memory off by default.
+          - id: genai
+            label: Generative AI that children talk to or that makes content for them
+            rules: [CORE-AI-03, CORE-AI-05, CORE-AI-09, CORE-AI-10]
+            features: [ai_generative]
+            never: Children never talk directly to generative AI. AI content is made and checked by staff first.
+            approval: Any generative AI for children needs written approval from {approvers}, with tests before release.
+            level: Generative AI follows the framework rules. Always labelled, tested before release and re-tested.
+          - id: ai_decisions
+            label: AI deciding grades, levels or access without a person checking
+            rules: [CORE-AI-07, B-EVL-01]
+            features: [ai_assessment, ai_adaptive]
+            never: A person always checks AI decisions about a child.
+            approval: AI marking or placement needs written approval from {approvers} and human review.
+            level: We follow the law. A person reviews AI decisions about learners.
+          - id: ai_training
+            label: Training AI models on children's data
+            rules: [CORE-AI-04]
+            never: We never train AI on children's data.
+            level: We follow the law. No training on learners' data by default.
+
+      - title: Data and privacy
+        questions:
+          - id: biometrics
+            label: Face, voice or fingerprint identification, webcam proctoring
+            rules: [CORE-DAT-08, B-EVL-02]
+            never: We never identify children by face, voice or fingerprint. No webcam proctoring.
+            level: We follow the law. No biometric identification of minors.
+          - id: third_parties
+            label: Sharing children's data with a company without a signed agreement
+            rules: [CORE-DAT-02]
+            never: Children's data never goes to a company without a signed agreement.
+            level: We follow the law. Every provider has a signed agreement.
+          - id: transfers
+            label: Children's data stored or processed outside Europe
+            rules: [CORE-DAT-03]
+            never: Children's data stays in Europe unless a legal mechanism is in place and recorded.
+            level: We follow the law on transfers outside Europe.
+          - id: test_data
+            label: Real children's data in development, testing or demos
+            rules: [CORE-DAT-07]
+            never: Real children's data never leaves production. We test with made-up data.
+            level: We follow the law. No real learner data outside production.
+          - id: analytics
+            label: Session recording, heatmaps or third-party analytics on child screens
+            rules: [CORE-COM-02, CORE-DAT-04]
+            never: We never record children's sessions. Analytics never contain personal data.
+            level: Analytics follow the framework rules. No personal data in events.
+          - id: location
+            label: Collecting children's location
+            rules: [CORE-DAT-09]
+            never: We never collect children's location.
+            level: Location follows the framework rules. Off unless essential.
+          - id: research
+            label: Using learning data for research or product studies
+            rules: [B-DAT-01]
+            features: [assessment]
+            never: Learning data is used only to run the product, never for research.
+            approval: Research use of learning data needs written approval from {approvers} and a separate legal basis.
+            level: We follow the law. Research data is separated.
+          - id: access_control
+            label: Learner data readable without access rules (e.g. open database tables)
+            rules: [CORE-SEC-02]
+            never: Every store of learner data has access rules. No exceptions.
+            level: We follow the law. Access control on every store of learner data.
+
+  - id: tools
+    title: Tools, packages and words
+    intro: Concrete things the scanner can find in code.
+    questions:
+      - id: forbid_sets
+        type: multi
+        label: Which kinds of packages should never appear in your products?
+        help: Advertising SDKs are already blocked by the framework.
+        options_from: dependency_sets
+      - id: forbid_extra
+        type: list
+        label: Other package names you never use (one per line)
+      - id: phrase_sets
+        type: multi
+        label: Block pressure and guilt phrases in these languages
+        options_from: phrase_sets
+      - id: phrase_extra
+        type: list
+        label: Other phrases that must never appear in child-facing text (one per line)
+      - id: own_rules
+        type: list
+        label: Anything else you never do? (one per line, in plain words)
+        help: Each line becomes a rule that a person checks in every review.
+
+  - id: process
+    title: How you work
+    questions:
+      - id: review_every_days
+        type: single
+        label: How often must each product review its manifest?
+        default: "180"
+        options:
+          - {value: "90", label: "Every 3 months"}
+          - {value: "180", label: "Every 6 months"}
+          - {value: "365", label: "Every year"}
+      - id: agent_instructions
+        type: single
+        label: Must every repository give AI coding agents these rules (CLAUDE.md, AGENTS.md, Cursor rules)?
+        default: "yes"
+        options:
+          - {value: "yes", label: "Yes"}
+          - {value: "no", label: "No"}
+      - id: waiver_days
+        type: single
+        label: How long can an exception (waiver) last before it must be renewed?
+        default: "90"
+        options:
+          - {value: "30", label: "30 days"}
+          - {value: "90", label: "90 days"}
+          - {value: "180", label: "180 days"}
+
+# Plain statements of what everyone always does. Shown in the staff policy for the chosen level.
+always:
+  - {level: 1, rules: [CORE-DAT-01], text: "We check privacy risks (a DPIA) before any launch."}
+  - {level: 1, rules: [CORE-DAT-12], text: "We explain to children, in simple words, what data we use and why."}
+  - {level: 1, rules: [CORE-DAT-05], text: "We delete data when we no longer need it."}
+  - {level: 1, rules: [CORE-ACC-01], text: "Every product meets accessibility rules (WCAG 2.2 AA)."}
+  - {level: 1, rules: [CORE-SEC-01], text: "We never put passwords or keys in code."}
+  - {level: 1, rules: [CORE-SEC-05], text: "We report security problems and data breaches at once."}
+  - {level: 1, rules: [CORE-AI-03], text: "We always say when content or a conversation comes from AI.", features: [ai_generative]}
+  - {level: 1, rules: [CORE-CHT-02], text: "Every chat or sharing feature has report and block.", features: [chat, multiplayer, social, ugc]}
+  - {level: 2, rules: [CORE-SAF-01], text: "New accounts start with the safest settings."}
+  - {level: 2, rules: [CORE-SAF-06], text: "Children can report a problem easily and get help."}
+  - {level: 2, rules: [CORE-SAF-07], text: "Parents and teachers have tools to help, and those tools respect the child."}
+  - {level: 2, rules: [CORE-CHT-08], text: "We have a safeguarding procedure for risks in communication.", features: [chat, multiplayer, social, ugc]}
+  - {level: 2, rules: [CORE-AI-05], text: "We test AI answers for each age group before release.", features: [ai_generative]}
+  - {level: 3, rules: [CORE-GOV-03], text: "We assess the impact on children's rights."}
+  - {level: 3, rules: [A-MOT-03], text: "Our products still work when rewards are switched off."}
+  - {level: 3, rules: [CORE-DES-03], text: "We keep screens calm, especially for children under 8."}
+
+dependency_sets:
+  session_replay:
+    label: "Session recording and heatmaps (Hotjar, FullStory, Clarity, LogRocket, Smartlook)"
+    packages: ["@hotjar/browser", "react-hotjar", "@fullstory/browser", "@fullstory/react-native", "@microsoft/clarity",
+               logrocket, logrocket-react, smartlook-client, smartlook-react-native-wrapper]
+  product_analytics:
+    label: "Third-party product analytics (Mixpanel, Amplitude, Segment, Heap)"
+    packages: [mixpanel-browser, mixpanel-react-native, mixpanel, "@amplitude/analytics-browser", amplitude-js,
+               "@amplitude/analytics-react-native", "@segment/analytics-next", analytics-node, heap-api]
+  social_sdks:
+    label: "Social network SDKs (Facebook, TikTok, Snapchat)"
+    packages: [react-native-fbsdk-next, facebook-sdk, "@snapchat/snap-kit", tiktok-business-sdk, com.facebook.android:facebook-android-sdk]
+  fingerprinting:
+    label: "Device fingerprinting"
+    packages: ["@fingerprintjs/fingerprintjs", "@fingerprintjs/fingerprintjs-pro", clientjs]
+
+phrase_sets:
+  en:
+    label: English
+    phrases: ["lose your streak", "don't break your streak", "we miss you", "your friends are waiting", "last chance",
+              "only a few left", "hurry up", "don't miss out", "come back and play", "before it's too late"]
+  pt:
+    label: Português (PT)
+    phrases: ["perdes a tua sequência", "não quebres a sequência", "temos saudades tuas", "os teus amigos estão à tua espera",
+              "última oportunidade", "só restam", "despacha-te", "não percas", "volta a jogar", "antes que seja tarde"]
+  es:
+    label: Español
+    phrases: ["perderás tu racha", "no rompas tu racha", "te echamos de menos", "tus amigos te esperan", "última oportunidad",
+              "solo quedan pocos", "date prisa", "no te lo pierdas", "vuelve a jugar"]
+  fr:
+    label: Français
+    phrases: ["tu vas perdre ta série", "ne brise pas ta série", "tu nous manques", "tes amis t'attendent", "dernière chance",
+              "plus que quelques", "dépêche-toi", "ne manque pas ça", "reviens jouer"]
+  de:
+    label: Deutsch
+    phrases: ["du verlierst deine serie", "brich deine serie nicht", "wir vermissen dich", "deine freunde warten",
+              "letzte chance", "nur noch wenige", "beeil dich", "verpass es nicht", "komm zurück und spiel"]
+  it:
+    label: Italiano
+    phrases: ["perderai la tua serie", "non interrompere la serie", "ci manchi", "i tuoi amici ti aspettano",
+              "ultima occasione", "ne restano solo", "sbrigati", "non perdere", "torna a giocare"]
+  sv:
+    label: Svenska
+    phrases: ["du förlorar din svit", "bryt inte din svit", "vi saknar dig", "dina vänner väntar", "sista chansen",
+              "bara några kvar", "skynda dig", "missa inte", "kom tillbaka och spela"]

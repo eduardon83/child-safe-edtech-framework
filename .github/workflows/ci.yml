@@ -31,6 +31,8 @@ jobs:
           ls dist/example
       - name: Compare example code of conduct
         run: python3 tooling/coc.py --input examples/codes-of-conduct/example-code.md --level 2 --out-dir dist/example-coc
+      - name: Policy questionnaire example kit
+        run: python3 tooling/policy.py --answers examples/policy/answers.json --batch --out-dir dist/example-policy --formats md,html,pdf,docx --no-skill
       - name: Package skill
         run: python3 tooling/build.py --zip dist
       - uses: actions/upload-artifact@v4
@@ -40,3 +42,4 @@ jobs:
             dist/csef-review.zip
             dist/example/
             dist/example-coc/
+            dist/example-policy/

@@ -1,0 +1,32 @@
+{
+  "answers": {
+    "org_name": "Acme Learning",
+    "pack_id": "acme",
+    "jurisdictions": ["EU", "PT"],
+    "scope": "All Acme games and apps for primary and lower secondary schools",
+    "owner": "CEO",
+    "approvers": "the Data Protection Officer or the CEO",
+    "contact": "the Data Protection Officer (privacy@acme.example)",
+    "profiles": ["A", "C"],
+    "age_bands": ["B2", "B3"],
+    "buyers": "both",
+    "features": ["accounts", "multiplayer", "chat", "streaks", "leaderboards", "notifications", "ai_generative", "assessment"],
+    "minimum_level": "2",
+    "ads": "never", "lootboxes": "never", "pay_to_win": "never", "currency": "never",
+    "commercial_learning": "never", "dark_patterns": "never",
+    "streaks": "approval", "notifications": "approval", "endless": "level", "penalties": "never",
+    "leaderboards": "approval", "variable_rewards": "level",
+    "strangers": "never", "chat": "never", "voice_video": "never", "multiplayer": "level",
+    "emotion": "never", "companions": "never", "genai": "approval", "ai_training": "never",
+    "biometrics": "never", "third_parties": "never", "transfers": "level", "test_data": "never",
+    "analytics": "never", "location": "never", "research": "approval", "access_control": "never",
+    "forbid_sets": ["session_replay", "fingerprinting"],
+    "forbid_extra": [],
+    "phrase_sets": ["en", "pt"],
+    "phrase_extra": [],
+    "own_rules": ["Teachers can switch off every game element for their class."],
+    "review_every_days": "180",
+    "agent_instructions": "yes",
+    "waiver_days": "90"
+  }
+}

@@ -1,0 +1,156 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>CSEF Policy Questionnaire</title>
+<style>
+:root{--bg:#fbfaf7;--card:#fff;--ink:#1b1f24;--muted:#5f6b7a;--line:#e4e2dc;--accent:#0f5c4d;--accent-ink:#fff;
+--t1:#0f5c4d;--t1b:#e1f1ec;--t2:#3949ab;--t2b:#e8eafb;--t3:#7b3fa0;--t3b:#f3e8fa;--red:#b42318;--redb:#fdecea;--amb:#b45309;--ambb:#fff1e0}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#15181c;--card:#1d2126;--ink:#eceae4;--muted:#a3abb6;--line:#2d333a;
+--accent:#5fc2a8;--accent-ink:#0b1714;--t1:#7fd3bd;--t1b:#17332c;--t2:#a7b1f5;--t2b:#232a4d;--t3:#d4a7ee;--t3b:#352442;--red:#ff9b8f;--redb:#3a1f1c;--amb:#ffbf78;--ambb:#3a2a17}}
+:root[data-theme=dark]{--bg:#15181c;--card:#1d2126;--ink:#eceae4;--muted:#a3abb6;--line:#2d333a;--accent:#5fc2a8;--accent-ink:#0b1714;
+--t1:#7fd3bd;--t1b:#17332c;--t2:#a7b1f5;--t2b:#232a4d;--t3:#d4a7ee;--t3b:#352442;--red:#ff9b8f;--redb:#3a1f1c;--amb:#ffbf78;--ambb:#3a2a17}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 16px 80px;display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:24px}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}aside{position:static}}
+h1{font-size:1.8rem;line-height:1.2;margin:0 0 6px}.lead{color:var(--muted);margin:0 0 18px}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 8px;margin:0 0 18px;min-width:0}
+section h2{margin:0 0 4px;font-size:1.25rem}section>.intro{color:var(--muted);margin:0 0 12px}
+h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:18px 0 6px}
+.q{padding:12px 0;border-top:1px solid var(--line)}.q:first-of-type{border-top:0}
+.q>label,.q>.lab{display:block;font-weight:600;margin-bottom:6px}.help{font-size:.88rem;color:var(--muted);margin:-2px 0 8px}
+input[type=text],textarea{width:100%;font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink)}
+textarea{min-height:78px}.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:8px 11px;cursor:pointer;background:var(--bg);min-width:0}
+.opt input{margin-top:4px}.opt:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.col .opts{flex-direction:column}
+.b .opts{flex-wrap:wrap}.b .opt:has(input[value=never]:checked){background:var(--redb);border-color:var(--red);box-shadow:none}
+.b .opt:has(input[value=approval]:checked){background:var(--ambb);border-color:var(--amb);box-shadow:none}
+.tier{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:2px}
+.tier1{background:var(--t1b);color:var(--t1)}.tier2{background:var(--t2b);color:var(--t2)}.tier3{background:var(--t3b);color:var(--t3)}
+.hint{font-size:.85rem;margin-top:6px;color:var(--muted)}.hint.warn{color:var(--amb)}
+.hidden{display:none}aside{position:sticky;top:16px;align-self:start}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.panel h2{font-size:1rem;margin:0 0 10px}.stat{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed var(--line)}
+.stat:last-of-type{border-bottom:0}.stat b{font-variant-numeric:tabular-nums}
+button,.btn{font:inherit;font-weight:600;border:0;border-radius:10px;padding:11px 14px;cursor:pointer;width:100%;margin-top:10px;
+background:var(--accent);color:var(--accent-ink);text-decoration:none;display:block;text-align:center}
+button.sec{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+#result{margin-top:12px;font-size:.92rem}#result ul{padding-left:18px;margin:6px 0}#result .err{color:var(--red)}
+.legend{font-size:.82rem;color:var(--muted);margin-top:10px}.legend>span{display:block;margin:5px 0}
+.foot{color:var(--muted);font-size:.82rem;margin-top:20px}
+</style></head><body data-served="0">
+<div class="wrap"><main>
+<h1>Your child-safety boundaries</h1>
+<p class="lead">Answer the questions. Your guardrails file, reports and staff policy are generated from them. Everything stays on this computer.</p>
+<div id="form"></div>
+<p class="foot">Child-Safe EdTech Framework (CSEF) v0.7.0. A framework, not a standard. Not legal advice.</p>
+</main><aside><div class="panel"><h2>So far</h2>
+<div class="stat"><span>Red lines</span><b id="c-red">0</b></div>
+<div class="stat"><span>Only with approval</span><b id="c-amber">0</b></div>
+<div class="stat"><span>Covered by law or level</span><b id="c-covered">0</b></div>
+<div class="stat"><span>Recommended, not adopted</span><b id="c-gap">0</b></div>
+<div class="stat"><span>Not applicable</span><b id="c-na">0</b></div>
+<button id="go">Download answers</button>
+
+<label class="btn sec" style="background:transparent;color:var(--accent);border:1px solid var(--accent)">Load answers.json
+<input id="load" type="file" accept=".json,application/json" hidden></label>
+<div id="result" aria-live="polite"></div>
+<div class="legend"><span><span class="tier tier1">Law</span> required today</span>
+<span><span class="tier tier2">Coming</span> EU KIDS Act proposal, official guidelines (Level 2)</span>
+<span><span class="tier tier3">Recommended</span> research and experts (Level 3)</span></div>
+</div></aside></div>
+<script type="application/json" id="schema">{"sections": [{"id": "org", "title": "Your organisation", "intro": "Who you are and who owns these rules.", "questions": [{"id": "org_name", "type": "text", "label": "Organisation name", "required": true, "options": [], "default": ""}, {"id": "pack_id", "type": "text", "label": "Short id for your pack (2 to 8 lowercase letters, e.g. acme)", "help": "Used in file names and rule ids, such as ACME-POL-01.", "pattern": "^[a-z]{2,8}$", "required": true, "options": [], "default": ""}, {"id": "jurisdictions", "type": "multi", "label": "Countries where your products are used", "help": "EU law always applies. Country packs add national rules where one exists.", "options_from": "packs", "options": [{"value": "EU", "label": "European Union (always applies)"}, {"value": "PT", "label": "Portugal national pack"}], "default": ["EU"]}, {"id": "scope", "type": "text", "label": "Which products does this policy cover?", "default": "All our products used by or designed for children", "options": []}, {"id": "owner", "type": "text", "label": "Who owns this policy? (a role, e.g. CEO)", "default": "CEO", "options": []}, {"id": "approvers", "type": "text", "label": "Who can approve exceptions and sensitive features? (roles)", "default": "Data Protection Officer or CEO", "options": []}, {"id": "contact", "type": "text", "label": "Where should staff send questions? (a role, channel or shared mailbox)", "default": "The Data Protection Officer", "options": []}], "groups": []}, {"id": "products", "title": "Your products", "intro": "What you build and for whom. This decides which questions come next.", "questions": [{"id": "profiles", "type": "multi", "label": "What kind of products do you make?", "required": true, "options": [{"value": "A", "label": "Educational games"}, {"value": "B", "label": "Game-based applications and software (platforms, assessment, simulations)"}, {"value": "C", "label": "Gamified applications (points, badges, streaks on top of learning)"}], "default": []}, {"id": "age_bands", "type": "multi", "label": "Which ages use your products?", "required": true, "options": [{"value": "B1", "label": "3 to 5"}, {"value": "B2", "label": "6 to 9"}, {"value": "B3", "label": "10 to 12"}, {"value": "B4", "label": "13 to 15"}, {"value": "B5", "label": "16 to 17"}], "default": []}, {"id": "buyers", "type": "single", "label": "Who chooses or pays for your products?", "options": [{"value": "schools", "label": "Schools or education authorities"}, {"value": "families", "label": "Families"}, {"value": "both", "label": "Both"}], "default": "both"}, {"id": "features", "type": "multi", "label": "Which of these do your products have, or might have soon?", "help": "Pick everything that applies now or in the next year. Questions about features you do not pick are skipped.", "options": [{"value": "accounts", "label": "Child accounts or logins"}, {"value": "multiplayer", "label": "Multiplayer or playing with others"}, {"value": "chat", "label": "Chat or messages"}, {"value": "ugc", "label": "Content children create and share (drawings, posts, uploads)"}, {"value": "social", "label": "Social features (friends, profiles, likes, comments)"}, {"value": "notifications", "label": "Notifications"}, {"value": "streaks", "label": "Streaks (days in a row)"}, {"value": "leaderboards", "label": "Leaderboards or rankings"}, {"value": "purchases", "label": "Purchases, subscriptions or in-app items"}, {"value": "assessment", "label": "Tests, grades or progress tracking"}, {"value": "ai_generative", "label": "Generative AI (chatbots, tutors, AI-made text, images or voice)"}, {"value": "ai_assessment", "label": "AI that marks or evaluates learners"}, {"value": "ai_adaptive", "label": "AI that adapts levels, paths or access"}, {"value": "recommender", "label": "Recommendations of content"}], "default": []}], "groups": []}, {"id": "level", "title": "Your level of ambition", "intro": "The minimum level every product is checked against. Products can choose a higher level, never a lower one.", "questions": [{"id": "minimum_level", "type": "single", "label": "Which minimum level do you choose?", "required": true, "default": "2", "options": [{"value": "1", "label": "Level 1, Legal baseline: what the law requires today"}, {"value": "2", "label": "Level 2, Forward-compliant: also what is coming (EU KIDS Act proposal, official guidelines)"}, {"value": "3", "label": "Level 3, Best practice: also what research and experts recommend"}]}], "groups": []}, {"id": "boundaries", "title": "Your boundaries", "intro": "For each practice, say how strict you are. \"Never\" makes it a red line: the scanner blocks it at every level, even on weak signals. \"Only with approval\" means a named person must approve it in writing. \"Follow our level\" means the framework rules for your level apply.\n", "questions": [], "groups": [{"title": "Money and advertising", "questions": [{"id": "ads", "type": "boundary", "label": "Advertising or ad tracking shown to children", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-COM-01", "CORE-COM-07"]}, {"id": "lootboxes", "type": "boundary", "label": "Paid random rewards (loot boxes, paid card packs, gacha)", "tier": 2, "features": [], "profiles": ["A", "B", "C"], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["A-ECO-01"]}, {"id": "pay_to_win", "type": "boundary", "label": "Paying to win, skip learning or get ahead of others", "tier": 2, "features": [], "profiles": ["A", "B", "C"], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["A-ECO-02"]}, {"id": "currency", "type": "boundary", "label": "Virtual coins or gems that children can buy", "tier": 2, "features": [], "profiles": ["A", "C"], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["A-ECO-03", "C-ENG-03"]}, {"id": "purchases", "type": "boundary", "label": "Purchases that children can start themselves", "tier": 1, "features": ["purchases"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-COM-04", "CORE-COM-05", "CORE-COM-06"]}, {"id": "commercial_learning", "type": "boundary", "label": "Brands, sponsors or product placement inside learning activities", "tier": 3, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-COM-08"]}]}, {"title": "Attention and pressure", "questions": [{"id": "dark_patterns", "type": "boundary", "label": "Pressure design (countdowns, fake scarcity, guilt messages, pre-ticked boxes)", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-COM-03"]}, {"id": "streaks", "type": "boundary", "label": "Streaks that children can lose", "tier": 2, "features": ["streaks"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["C-ENG-01"]}, {"id": "notifications", "type": "boundary", "label": "Notifications that bring children back", "tier": 2, "features": ["notifications"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-SAF-02"]}, {"id": "endless", "type": "boundary", "label": "Autoplay, endless feeds or no natural place to stop", "tier": 2, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-SAF-03"]}, {"id": "penalties", "type": "boundary", "label": "Penalties for not playing (decay, energy timers, losing progress)", "tier": 2, "features": [], "profiles": ["A", "C"], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["A-PLY-01"]}, {"id": "leaderboards", "type": "boundary", "label": "Public rankings of children", "tier": 2, "features": ["leaderboards"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["C-ENG-02"]}, {"id": "variable_rewards", "type": "boundary", "label": "Surprise rewards designed to keep children playing", "tier": 3, "features": [], "profiles": ["A", "B", "C"], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["C-ENG-04", "A-MOT-01"]}]}, {"title": "Contact and communication", "questions": [{"id": "strangers", "type": "boundary", "label": "Contact from people outside the child's class or group", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-SAF-05"]}, {"id": "chat", "type": "boundary", "label": "Free-text chat between children", "tier": 2, "features": ["chat", "multiplayer", "social"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-CHT-04", "CORE-CHT-05", "AGE-B2-01"]}, {"id": "voice_video", "type": "boundary", "label": "Voice chat, video or live streaming", "tier": 2, "features": ["chat", "multiplayer", "social"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-CHT-06"]}, {"id": "ugc", "type": "boundary", "label": "Content that children share with others", "tier": 2, "features": ["ugc"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["B-UGC-01", "B-UGC-02"]}, {"id": "multiplayer", "type": "boundary", "label": "Playing with children from other classes or schools", "tier": 2, "features": ["multiplayer"], "profiles": ["A"], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["A-SOC-01"]}]}, {"title": "Artificial intelligence", "questions": [{"id": "emotion", "type": "boundary", "label": "Emotion recognition (reading faces, voice or behaviour for feelings)", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-AI-01"]}, {"id": "companions", "type": "boundary", "label": "AI characters that act like a friend or remember conversations", "tier": 2, "features": ["ai_generative"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-AI-06", "CORE-AI-08"]}, {"id": "genai", "type": "boundary", "label": "Generative AI that children talk to or that makes content for them", "tier": 1, "features": ["ai_generative"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-AI-03", "CORE-AI-05", "CORE-AI-09", "CORE-AI-10"]}, {"id": "ai_decisions", "type": "boundary", "label": "AI deciding grades, levels or access without a person checking", "tier": 1, "features": ["ai_assessment", "ai_adaptive"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-AI-07", "B-EVL-01"]}, {"id": "ai_training", "type": "boundary", "label": "Training AI models on children's data", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-AI-04"]}]}, {"title": "Data and privacy", "questions": [{"id": "biometrics", "type": "boundary", "label": "Face, voice or fingerprint identification, webcam proctoring", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-DAT-08", "B-EVL-02"]}, {"id": "third_parties", "type": "boundary", "label": "Sharing children's data with a company without a signed agreement", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-DAT-02"]}, {"id": "transfers", "type": "boundary", "label": "Children's data stored or processed outside Europe", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-DAT-03"]}, {"id": "test_data", "type": "boundary", "label": "Real children's data in development, testing or demos", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-DAT-07"]}, {"id": "analytics", "type": "boundary", "label": "Session recording, heatmaps or third-party analytics on child screens", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-COM-02", "CORE-DAT-04"]}, {"id": "location", "type": "boundary", "label": "Collecting children's location", "tier": 2, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-DAT-09"]}, {"id": "research", "type": "boundary", "label": "Using learning data for research or product studies", "tier": 1, "features": ["assessment"], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "approval", "label": "Only with written approval"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["B-DAT-01"]}, {"id": "access_control", "type": "boundary", "label": "Learner data readable without access rules (e.g. open database tables)", "tier": 1, "features": [], "profiles": [], "options": [{"value": "never", "label": "Never (red line)"}, {"value": "level", "label": "Follow our level"}], "default": "level", "rules": ["CORE-SEC-02"]}]}]}, {"id": "tools", "title": "Tools, packages and words", "intro": "Concrete things the scanner can find in code.", "questions": [{"id": "forbid_sets", "type": "multi", "label": "Which kinds of packages should never appear in your products?", "help": "Advertising SDKs are already blocked by the framework.", "options_from": "dependency_sets", "options": [{"value": "session_replay", "label": "Session recording and heatmaps (Hotjar, FullStory, Clarity, LogRocket, Smartlook)"}, {"value": "product_analytics", "label": "Third-party product analytics (Mixpanel, Amplitude, Segment, Heap)"}, {"value": "social_sdks", "label": "Social network SDKs (Facebook, TikTok, Snapchat)"}, {"value": "fingerprinting", "label": "Device fingerprinting"}], "default": []}, {"id": "forbid_extra", "type": "list", "label": "Other package names you never use (one per line)", "options": [], "default": []}, {"id": "phrase_sets", "type": "multi", "label": "Block pressure and guilt phrases in these languages", "options_from": "phrase_sets", "options": [{"value": "en", "label": "English"}, {"value": "pt", "label": "Português (PT)"}, {"value": "es", "label": "Español"}, {"value": "fr", "label": "Français"}, {"value": "de", "label": "Deutsch"}, {"value": "it", "label": "Italiano"}, {"value": "sv", "label": "Svenska"}], "default": []}, {"id": "phrase_extra", "type": "list", "label": "Other phrases that must never appear in child-facing text (one per line)", "options": [], "default": []}, {"id": "own_rules", "type": "list", "label": "Anything else you never do? (one per line, in plain words)", "help": "Each line becomes a rule that a person checks in every review.", "options": [], "default": []}], "groups": []}, {"id": "process", "title": "How you work", "intro": "", "questions": [{"id": "review_every_days", "type": "single", "label": "How often must each product review its manifest?", "default": "180", "options": [{"value": "90", "label": "Every 3 months"}, {"value": "180", "label": "Every 6 months"}, {"value": "365", "label": "Every year"}]}, {"id": "agent_instructions", "type": "single", "label": "Must every repository give AI coding agents these rules (CLAUDE.md, AGENTS.md, Cursor rules)?", "default": "yes", "options": [{"value": "yes", "label": "Yes"}, {"value": "no", "label": "No"}]}, {"id": "waiver_days", "type": "single", "label": "How long can an exception (waiver) last before it must be renewed?", "default": "90", "options": [{"value": "30", "label": "30 days"}, {"value": "90", "label": "90 days"}, {"value": "180", "label": "180 days"}]}], "groups": []}], "framework_version": "0.7.0", "tiers": {"1": "Law", "2": "Coming", "3": "Recommended"}}</script>
+<script type="application/json" id="prev">{}</script>
+<script>
+const S = JSON.parse(document.getElementById('schema').textContent);
+const PREV = JSON.parse(document.getElementById('prev').textContent);
+const SERVED = document.body.dataset.served === '1';
+const TIER = {1:'Law',2:'Coming',3:'Recommended'};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let A = Object.assign({}, PREV.answers || {});
+function val(q){ return (q.id in A) ? A[q.id] : q.default; }
+function render(){
+  const f = $('#form'); f.innerHTML = '';
+  S.sections.forEach(s => {
+    const sec = document.createElement('section'); sec.id = 's-' + s.id;
+    sec.innerHTML = `<h2>${esc(s.title)}</h2>` + (s.intro ? `<p class="intro">${esc(s.intro)}</p>` : '');
+    s.questions.forEach(q => sec.appendChild(field(q)));
+    s.groups.forEach(g => { const h = document.createElement('h3'); h.textContent = g.title; sec.appendChild(h);
+      g.questions.forEach(q => sec.appendChild(field(q))); });
+    f.appendChild(sec);
+  });
+  update();
+}
+function field(q){
+  const d = document.createElement('div'); d.className = 'q' + (q.type === 'boundary' ? ' b' : '') +
+    ((q.options || []).some(o => o.label.length > 40) && q.type !== 'boundary' ? ' col' : ''); d.dataset.id = q.id;
+  const v = val(q); const name = 'f-' + q.id;
+  let h = '';
+  if (q.type === 'text') h = `<label for="${name}">${esc(q.label)}</label>` + (q.help ? `<p class="help">${esc(q.help)}</p>` : '') +
+     `<input type="text" id="${name}" value="${esc(v || '')}">`;
+  else if (q.type === 'list') h = `<label for="${name}">${esc(q.label)}</label>` + (q.help ? `<p class="help">${esc(q.help)}</p>` : '') +
+     `<textarea id="${name}">${esc((v || []).join('\n'))}</textarea>`;
+  else {
+    const multi = q.type === 'multi'; const tier = q.tier ? `<span class="tier tier${q.tier}" title="Rules ${esc(q.rules.join(', '))}">${TIER[q.tier]}</span>` : '';
+    h = `<div class="lab" id="${name}-l">${esc(q.label)}${tier}</div>` + (q.help ? `<p class="help">${esc(q.help)}</p>` : '') +
+      `<div class="opts" role="${multi ? 'group' : 'radiogroup'}" aria-labelledby="${name}-l">` +
+      q.options.map(o => `<label class="opt"><input type="${multi ? 'checkbox' : 'radio'}" name="${name}" value="${esc(o.value)}"
+        ${(multi ? (v || []).includes(o.value) : v === o.value) ? 'checked' : ''}><span>${esc(o.label)}</span></label>`).join('') + '</div>' +
+      (q.type === 'boundary' ? '<div class="hint"></div>' : '');
+  }
+  d.innerHTML = h;
+  d.addEventListener('input', () => { read(q, d); update(); });
+  d.addEventListener('change', () => { read(q, d); update(); });
+  return d;
+}
+function read(q, d){
+  if (q.type === 'text') A[q.id] = d.querySelector('input').value.trim();
+  else if (q.type === 'list') A[q.id] = d.querySelector('textarea').value.split('\n').map(x => x.trim()).filter(Boolean);
+  else if (q.type === 'multi') A[q.id] = [...d.querySelectorAll('input:checked')].map(i => i.value);
+  else { const c = d.querySelector('input:checked'); A[q.id] = c ? c.value : ''; }
+  if (q.id === 'org_name' && !PREV.answers?.pack_id) {
+    const p = document.querySelector('[data-id=pack_id] input');
+    if (p && !p.dataset.touched) { p.value = A.org_name.toLowerCase().replace(/[^a-z]/g, '').slice(0, 8); A.pack_id = p.value; }
+  }
+  if (q.id === 'pack_id') d.querySelector('input').dataset.touched = '1';
+}
+function all(){ const qs = []; S.sections.forEach(s => { qs.push(...s.questions); s.groups.forEach(g => qs.push(...g.questions)); }); return qs; }
+function update(){
+  const feats = val({id:'features', default:[]}) || [], profs = val({id:'profiles', default:[]}) || [];
+  const level = parseInt(val({id:'minimum_level', default:'2'}) || '1', 10);
+  const c = {red:0, amber:0, covered:0, gap:0, na:0};
+  all().filter(q => q.type === 'boundary').forEach(q => {
+    const el = document.querySelector(`[data-id="${q.id}"]`);
+    const vis = (!q.features.length || q.features.some(f => feats.includes(f))) && (!q.profiles.length || q.profiles.some(p => profs.includes(p)));
+    el.classList.toggle('hidden', !vis);
+    if (!vis) { c.na++; return; }
+    const ch = val(q); const req = q.tier <= level; const hint = el.querySelector('.hint'); hint.classList.remove('warn');
+    if (ch === 'never') { c.red++; hint.textContent = q.tier === 1 ? 'Required by law already. A red line also blocks weak signals.' : 'Red line beyond ' + (req ? 'the law (also required at your level).' : 'the law and your level.'); }
+    else if (ch === 'approval') { c.amber++; hint.textContent = req ? 'These rules already apply at your level. Approval documents how you comply; it cannot switch them off.' : 'Allowed only with a written decision record.'; if (req) hint.classList.add('warn'); }
+    else if (req) { c.covered++; hint.textContent = q.tier === 1 ? 'Covered by the law.' : 'Covered by your level.'; }
+    else { c.gap++; hint.textContent = `Not adopted. Recommended at Level ${q.tier}.`; }
+  });
+  for (const k in c) { const e = document.getElementById('c-' + k); if (e) e.textContent = c[k]; }
+}
+function payload(){ const out = {}; all().forEach(q => out[q.id] = val(q)); return out; }
+function download(name, text, type){ const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type}));
+  a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
+$('#dl') && $('#dl').addEventListener('click', () => download('answers.json', JSON.stringify({answers: payload()}, null, 2), 'application/json'));
+$('#load').addEventListener('change', e => { const f = e.target.files[0]; if (!f) return; f.text().then(t => {
+  try { const d = JSON.parse(t); A = Object.assign({}, d.answers || d); render(); $('#result').textContent = 'Answers loaded.'; }
+  catch (x) { $('#result').innerHTML = '<p class="err">That file is not an answers.json.</p>'; } }); });
+$('#go').addEventListener('click', async () => {
+  const r = $('#result');
+  if (!SERVED) { download('answers.json', JSON.stringify({answers: payload()}, null, 2), 'application/json');
+    r.innerHTML = '<p>Answers downloaded. Generate the kit with:<br><code>python3 tooling/policy.py --answers answers.json --batch</code></p>'; return; }
+  r.textContent = 'Generating...';
+  try {
+    const res = await fetch('/api/generate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload())});
+    const d = await res.json();
+    if (!d.ok) { r.innerHTML = '<p class="err">Please fix:</p><ul>' + d.errors.map(x => `<li class="err">${esc(x)}</li>`).join('') + '</ul>'; return; }
+    r.innerHTML = `<p><strong>Version ${esc(d.version)}</strong> written to <code>${esc(d.out_dir)}</code>.</p>` +
+      (d.changes.length ? '<p>Changes:</p><ul>' + d.changes.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>' : '') +
+      '<ul>' + d.files.map(f => `<li><a href="/files/${encodeURIComponent(f)}" target="_blank" rel="noopener">${esc(f)}</a></li>`).join('') + '</ul>';
+  } catch (x) { r.innerHTML = '<p class="err">Could not reach the local tool. Is it still running?</p>'; }
+});
+render();
+</script></body></html>

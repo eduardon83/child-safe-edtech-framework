@@ -289,3 +289,48 @@ def test_legacy_cses_names_still_work(tmp_path):
     assert scan.find_manifest(tmp_path, None) == tmp_path / "csef.yaml"
     assert scan.IGNORE_RE.search("// cses-ignore: CORE-DAT-01 -- reason")
     assert scan.IGNORE_RE.search("// csef-ignore: CORE-DAT-01 -- reason")
+
+
+def test_policy_questionnaire(tmp_path):
+    import policy
+    q = policy.Q(ROOT)
+    raw = json.loads((ROOT / "examples" / "policy" / "answers.json").read_text())["answers"]
+    out = tmp_path / "kit"
+    res = policy.generate(q, raw, out, formats=("md", "html"), with_skill=False, today="2026-11-13")
+    assert res["ok"], res
+    assert res["version"] == "1.0.0"
+    for f in ("acme.yaml", "answers.json", "boundaries-report.md", "staff-policy.html", "agent-instructions.md",
+              "csef-check.yml", "README.md"):
+        assert (out / f).exists(), f
+    pack = scan.load_yaml(out / "acme.yaml")
+    assert pack["policy"]["minimum_level"] == 2
+    assert "CORE-COM-01" in pack["policy"]["no_go"] and "C-ENG-01" not in pack["policy"]["no_go"]
+    assert "streaks" in pack["policy"]["require_decision_for_features"]
+    assert pack["rules"][0]["id"] == "ACME-OWN-01"
+    std = scan.load_standard(ROOT)
+    scan.apply_pack(std, out / "acme.yaml")
+    assert std.minimum_level == 2 and std.rules["A-ECO-01"]["no_go"]
+    # Redo with one change: version goes up and the change is reported.
+    prev = policy.load_previous(out / "answers.json")
+    res2 = policy.generate(q, dict(raw, streaks="never"), out, formats=("md",), previous=prev, with_skill=False)
+    assert res2["version"] == "1.1.0" and any("Streaks" in c for c in res2["changes"])
+    assert "C-ENG-01" in scan.load_yaml(out / "acme.yaml")["policy"]["no_go"]
+    # Same answers again: version unchanged.
+    res3 = policy.generate(q, dict(raw, streaks="never"), out, formats=("md",),
+                           previous=policy.load_previous(out / "answers.json"), with_skill=False)
+    assert res3["version"] == "1.1.0" and not res3["changes"]
+    # Invalid answers are rejected, never written.
+    bad = policy.generate(q, dict(raw, pack_id="X1", minimum_level="5"), tmp_path / "bad", formats=("md",), with_skill=False)
+    assert not bad["ok"] and len(bad["errors"]) == 2
+
+
+def test_policy_hides_questions_for_unused_features():
+    import policy
+    q = policy.Q(ROOT)
+    a, errs = policy.normalise(q, {"org_name": "Tiny", "profiles": ["B"], "age_bands": ["B4"], "features": [],
+                                   "minimum_level": "1", "streaks": "approval"})
+    assert not errs and a["pack_id"] == "tiny"
+    res = policy.assess(q, a)
+    items = {i["id"]: i for i in res["items"]}
+    assert items["streaks"]["key"] == "na" and items["ads"]["key"] == "covered"
+    assert items["commercial_learning"]["key"] == "gap"

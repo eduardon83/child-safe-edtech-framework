@@ -28,6 +28,11 @@ to a higher (less binding) level.
 
 ## Company packs: your organisation's policy
 
+The easiest way to write one is the **policy questionnaire** (`python3 tooling/policy.py --web`). It asks
+about your boundaries, matches each answer with the law and recommendations, and writes the pack together with
+a boundaries report and a plain-language staff policy. Run it again with `answers.json` to change anything.
+You can also write or extend the pack by hand, for example to add amendments (see `examples/company-packs/`).
+
 A company pack can also carry a `policy` section. It turns your organisation's decisions into checks:
 
 | Key | Effect |

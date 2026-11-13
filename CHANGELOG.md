@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.7.0 (2026-11-13)
+
+- Policy questionnaire (`tooling/policy.py`, `framework/questionnaire.yaml`): 31 boundary questions in six
+  groups (money and advertising, attention and pressure, contact, AI, data, security), plus organisation,
+  products, level, tools and process. Runs in the terminal or as a local web form (`--web`); a static copy is
+  on the site.
+- Each answer is matched with the tier of the rules behind it (Law, Coming, Recommended) and the chosen level:
+  red line, allowed with approval, covered, or recommended but not adopted. Warnings for risky combinations.
+- Writes a kit: company pack (validated), boundaries report and plain-language staff policy (Markdown, HTML,
+  PDF, Word), AI agent instructions, a CI workflow with the pack, the skill zip and a README.
+- Re-runnable: `answers.json` keeps the answers and a version history; each run with changes bumps the policy
+  version and lists the changes.
+- Pressure-phrase sets in English, Portuguese, Spanish, French, German, Italian and Swedish.
+- The `csef-review` skill can run the questionnaire in conversation.
+
 ## v0.6.0 (2026-11-12)
 
 - Renamed from Child-Safe EdTech Standard (CSES) to **Child-Safe EdTech Framework (CSEF)**. CSEF is a
