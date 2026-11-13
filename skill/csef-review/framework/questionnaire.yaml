@@ -76,26 +76,103 @@ sections:
           - {value: schools, label: "Schools or education authorities"}
           - {value: families, label: "Families"}
           - {value: both, label: "Both"}
+          - value: other
+            label: "None of these (free, publicly funded, sponsored or other)"
+            desc: >
+              Nothing changes in the rules: who pays does not decide whether children are protected. The EU KIDS Act
+              proposal covers games "irrespective of whether the service is provided free of charge, against payment,
+              or against hybrid remuneration" (Recital 12). The report adds a note on the education exemption.
         default: both
       - id: features
         type: multi
-        label: Which of these do your products have, or might have soon?
-        help: Pick everything that applies now or in the next year. Questions about features you do not pick are skipped.
+        label: Which of these mechanisms do your products have, or might have soon?
+        help: >
+          Pick everything that applies now or in the next year. Questions about mechanisms you do not pick are
+          skipped. Each one shows what it means and where the official wording comes from.
+        exclusive: none
         options:
-          - {value: accounts, label: "Child accounts or logins"}
-          - {value: multiplayer, label: "Multiplayer or playing with others"}
-          - {value: chat, label: "Chat or messages"}
-          - {value: ugc, label: "Content children create and share (drawings, posts, uploads)"}
-          - {value: social, label: "Social features (friends, profiles, likes, comments)"}
-          - {value: notifications, label: "Notifications"}
-          - {value: streaks, label: "Streaks (days in a row)"}
-          - {value: leaderboards, label: "Leaderboards or rankings"}
-          - {value: purchases, label: "Purchases, subscriptions or in-app items"}
-          - {value: assessment, label: "Tests, grades or progress tracking"}
-          - {value: ai_generative, label: "Generative AI (chatbots, tutors, AI-made text, images or voice)"}
-          - {value: ai_assessment, label: "AI that marks or evaluates learners"}
-          - {value: ai_adaptive, label: "AI that adapts levels, paths or access"}
-          - {value: recommender, label: "Recommendations of content"}
+          - value: accounts
+            label: "Child accounts or logins"
+            desc: >
+              Children sign in or have a profile that keeps personal data. Under GDPR Art. 8, consent for children
+              below the national digital consent age (13 in Portugal) is given or authorised by a parent.
+          - value: multiplayer
+            label: "Multiplayer or playing with others"
+            desc: >
+              Children share a game session with other users, at the same time or in turns. The EU KIDS Act proposal
+              requires a high level of privacy, safety and security for "contacts between minors and other recipients
+              of the game" (Art. 15(1)(c)).
+          - value: chat
+            label: "Chat or messages"
+            desc: >
+              Children send messages to other users: free text, voice, or preset messages, emoji and emotes. Preset
+              emotes are still messages. Contact rules: EU KIDS Act proposal Art. 12 and Art. 15(1)(c) and (2).
+          - value: ugc
+            label: "Content children create and share (drawings, posts, uploads)"
+            desc: >
+              Anything a child makes that other users can see. Hosted content needs a way to report it (DSA Art. 16).
+              The EU KIDS Act proposal treats "incentivising or rewarding minors to share content" with an
+              indeterminate number of recipients as addictive design (Art. 9(2)(c)).
+          - value: social
+            label: "Social features (friends, profiles, likes, comments)"
+            desc: >
+              Friend lists, public profiles, likes, followers, comments. If being social is the main purpose, the service
+              may count as an "online social networking service" (EU KIDS Act proposal Art. 3(2)), which has the
+              strictest obligations.
+          - value: notifications
+            label: "Notifications"
+            desc: >
+              Messages to the child outside the activity: push, e-mail, badges. The EU KIDS Act proposal targets
+              "notifications not triggered by, or not directly related to, the minor's interaction or activity on the
+              service" (Art. 9(2)(b)).
+          - value: streaks
+            label: "Streaks (days in a row)"
+            desc: >
+              Counting or rewarding regular return. The EU KIDS Act proposal targets "incentivising engagement at
+              regular times or with greater frequency, including through penalties or loss of benefits for failing to
+              engage regularly" (Art. 9(2)(d)).
+          - value: leaderboards
+            label: "Leaderboards or rankings"
+            desc: >
+              Lists that compare children by score, speed or progress. Not named in the law; CSEF treats them as
+              social comparison and asks for class-only, nickname rankings (rule C-ENG-02).
+          - value: purchases
+            label: "Purchases, subscriptions or in-app items"
+            desc: >
+              Anything paid with money, or with virtual currency bought with money. The minor must know "in real time,
+              that this is an economic transaction" and virtual currency must show its value in euros (EU KIDS Act
+              proposal Art. 13(1)).
+          - value: assessment
+            label: "Tests, grades or progress tracking"
+            desc: >
+              Scores, levels, grades or reports about what a child knows. This is about the data and how it is used,
+              with or without AI.
+          - value: ai_generative
+            label: "Generative AI (chatbots, tutors, AI-made text, images or voice)"
+            desc: >
+              An AI system that produces text, images, audio or video. People must be told when they interact with AI,
+              and AI-made content must be marked (AI Act Art. 50). Scripted dialogue written by people is not AI.
+          - value: ai_assessment
+            label: "AI that marks or evaluates learners"
+            desc: >
+              AI used "to evaluate learning outcomes" is high-risk under the AI Act (Annex III, point 3(b)), with
+              obligations applying from December 2027.
+          - value: ai_adaptive
+            label: "AI that adapts levels, paths or access"
+            desc: >
+              AI that steers the learning process or decides "the appropriate level of education" a learner gets is
+              high-risk under the AI Act (Annex III, point 3(b) and (c)). Fixed rules written by people are not AI.
+          - value: recommender
+            label: "Recommendations of content"
+            desc: >
+              A system that suggests or ranks content for the child: a "recommender system" in the sense of DSA
+              Art. 3(s). Stricter rules for social and video platforms in the EU KIDS Act proposal (Art. 10).
+          - value: none
+            label: "None of these"
+            desc: >
+              All questions about these mechanisms are skipped and your guardrails file declares none of them. The
+              scanner still reads your code: if it finds one (for example a chat or ads SDK), it reports it as
+              undeclared, so nothing is missed by accident.
 
   - id: level
     title: Your level of ambition
@@ -118,7 +195,8 @@ sections:
       level, even on weak signals. "Only with approval" means a named person must approve it in writing.
       "Follow our level" means the framework rules for your level apply.
     groups:
-      - title: Money and advertising
+      - id: money
+        title: Money and advertising
         questions:
           - id: ads
             label: Advertising or ad tracking shown to children
@@ -156,7 +234,8 @@ sections:
             never: Learning activities never contain brands, sponsors or products.
             level: Commercial content follows the framework rules for our level.
 
-      - title: Attention and pressure
+      - id: attention
+        title: Attention and pressure
         questions:
           - id: dark_patterns
             label: Pressure design (countdowns, fake scarcity, guilt messages, pre-ticked boxes)
@@ -188,6 +267,16 @@ sections:
             profiles: [A, C]
             never: Children never lose anything for taking a break.
             level: Breaks follow the framework rules for our level.
+          - id: characters
+            label: Characters without AI that act like a friend (mascots, guides, scripted companions)
+            help: >
+              Characters with dialogue written by people. Being friendly is fine, and remembering progress or past
+              missions is normal save data. The concern is pressure: "I missed you", guilt when a child leaves, or a
+              character that gets sad if the child does not play. That is manipulative design, which consumer law
+              already forbids towards children, with or without AI.
+            rules: [CORE-COM-03]
+            never: Our characters never use friendship, guilt or "I missed you" to keep children playing.
+            level: Our characters follow the law on manipulative design. No guilt, no pressure to come back.
           - id: leaderboards
             label: Public rankings of children
             rules: [C-ENG-02]
@@ -202,7 +291,8 @@ sections:
             never: Rewards follow learning. We never use surprise rewards to keep children playing.
             level: Rewards follow the framework rules for our level.
 
-      - title: Contact and communication
+      - id: contact
+        title: Contact and communication
         questions:
           - id: strangers
             label: Contact from people outside the child's class or group
@@ -239,22 +329,44 @@ sections:
             approval: Open multiplayer needs written approval from {approvers}.
             level: Multiplayer follows the framework rules. Closed groups only.
 
-      - title: Artificial intelligence
+      - id: ai
+        title: Artificial intelligence
+        intro: >
+          These questions are only about AI systems. The AI Act (Art. 3(1)) defines an AI system as a machine-based
+          system that "infers, from the input it receives, how to generate outputs such as predictions, content,
+          recommendations, or decisions". Fixed rules, scripted dialogue and choices written by people are not AI.
+          Characters without AI are asked about in "Attention and pressure".
         questions:
           - id: emotion
-            label: Emotion recognition (reading faces, voice or behaviour for feelings)
+            label: Emotion recognition (AI reading feelings from faces, voice or behaviour)
+            help: >
+              An "emotion recognition system" is "an AI system for the purpose of identifying or inferring emotions or
+              intentions of natural persons on the basis of their biometric data" (AI Act Art. 3(39)). It is banned in
+              education (Art. 5(1)(f)). A child choosing an emote, emoji or avatar mood is not emotion recognition: the
+              child decides and nothing is inferred. If children send those emotes to each other, that is
+              communication (see "Contact and communication").
             rules: [CORE-AI-01]
             never: We never use AI to read children's emotions.
             level: We follow the law. No emotion recognition on learners.
           - id: companions
             label: AI characters that act like a friend or remember conversations
-            rules: [CORE-AI-06, CORE-AI-08]
+            help: >
+              The EU KIDS Act proposal defines an "AI companion" as "an AI system ... that provides sustained,
+              personalised interaction or companionship which simulates or facilitates a social, emotional or
+              interpersonal relationship with a user" (Art. 3(5)(c)). Its rules (Art. 14) apply to AI only. Characters
+              with scripted dialogue are a separate question. Saving a child's progress or past missions is not
+              conversation memory.
             features: [ai_generative]
+            rules: [CORE-AI-06, CORE-AI-08]
             never: Our AI never pretends to be a friend. It does not remember conversations by default.
             approval: AI characters with memory need written approval from {approvers}.
             level: AI characters follow the framework rules. No simulated friendship, memory off by default.
           - id: genai
             label: Generative AI that children talk to or that makes content for them
+            help: >
+              AI Act Art. 50 applies to every AI that talks with people or makes content. The EU KIDS Act proposal's
+              rules for a "general conversational chatbot" (Art. 3(5)(d), Art. 14) exclude AI limited to a specialised
+              educational task, but CSEF applies the same safeguards to educational AI.
             rules: [CORE-AI-03, CORE-AI-05, CORE-AI-09, CORE-AI-10]
             features: [ai_generative]
             never: Children never talk directly to generative AI. AI content is made and checked by staff first.
@@ -262,6 +374,9 @@ sections:
             level: Generative AI follows the framework rules. Always labelled, tested before release and re-tested.
           - id: ai_decisions
             label: AI deciding grades, levels or access without a person checking
+            help: >
+              High-risk under the AI Act when AI evaluates learning outcomes, steers learning or decides access or the
+              level of education (Annex III, point 3). Scoring rules written by people are not AI.
             rules: [CORE-AI-07, B-EVL-01]
             features: [ai_assessment, ai_adaptive]
             never: A person always checks AI decisions about a child.
@@ -269,11 +384,13 @@ sections:
             level: We follow the law. A person reviews AI decisions about learners.
           - id: ai_training
             label: Training AI models on children's data
+            help: Using children's answers, texts, voices or behaviour to train or fine-tune any AI model, yours or a supplier's.
             rules: [CORE-AI-04]
             never: We never train AI on children's data.
             level: We follow the law. No training on learners' data by default.
 
-      - title: Data and privacy
+      - id: data
+        title: Data and privacy
         questions:
           - id: biometrics
             label: Face, voice or fingerprint identification, webcam proctoring

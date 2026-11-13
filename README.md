@@ -133,6 +133,8 @@ level; the report says so. Try it with `examples/policy/answers.json` (fictional
 makes the same kit (Markdown, HTML, Word, guardrails file, agent instructions, CI workflow) inside the
 browser and downloads it as a zip. It runs the same Python code with [Pyodide](https://pyodide.org), loaded
 from the jsDelivr CDN; the answers never leave the browser. For PDF, open a document and print it.
+The form is in English and Portuguese (`framework/i18n/`); add a language by copying `pt.yaml`. The
+documents in the kit are in English for now.
 
 ### Your organisation's pack, by hand
 

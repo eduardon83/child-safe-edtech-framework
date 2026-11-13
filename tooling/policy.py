@@ -54,6 +54,47 @@ CHOICE_LABEL = {"never": "Never (red line)", "approval": "Only with written appr
 BAND_AGES = {"B1": "3 to 5", "B2": "6 to 9", "B3": "10 to 12", "B4": "13 to 15", "B5": "16 to 17"}
 PROFILE_NAMES = {"A": "Educational games", "B": "Game-based applications and software", "C": "Gamified applications"}
 
+# Interface text of the web form. Translations live in framework/i18n/<code>.yaml (same keys).
+UI_EN = {
+    "lang_label": "Language", "about": "About CSEF", "hero_title": "Set your child-safety boundaries",
+    "lead_new": "Answer the questions. Your guardrails file, reports and staff policy are generated from them.",
+    "lead_edit": "Editing version {v}. Change any answer and generate again.",
+    "lead_tail": "It takes about 15 minutes. You do not need to be a developer.",
+    "get1_t": "Staff policy", "get1_d": "Plain language, for everyone in your organisation.",
+    "get2_t": "Boundaries report", "get2_d": "Each answer matched with the law, for management and legal counsel.",
+    "get3_t": "Guardrails file", "get3_d": "Your rules, checked automatically in every project.",
+    "get4_t": "For developers", "get4_d": "Instructions for AI coding tools and a ready CI check.",
+    "privacy_local": "Everything runs on this computer. Nothing is sent anywhere.",
+    "privacy_web": "Your answers stay in this browser. Nothing is sent anywhere. The kit is made on your device.",
+    "output_note": "",
+    "steps": "Steps", "so_far": "Your answers so far", "c_red": "Red lines", "c_amber": "Only with approval",
+    "c_covered": "Covered by law or level", "c_gap": "Recommended, not adopted", "c_na": "Not applicable",
+    "generate": "Generate the policy kit", "save": "Save answers.json", "load": "Load answers.json",
+    "legend_law": "required today", "legend_coming": "EU KIDS Act proposal, official guidelines (Level 2)",
+    "legend_rec": "research and experts (Level 3)", "tier1": "Law", "tier2": "Coming", "tier3": "Recommended",
+    "ch_never": "Never (red line)", "ch_approval": "Only with written approval", "ch_level": "Follow our level",
+    "rules": "Rules",
+    "foot": "Child-Safe EdTech Framework (CSEF) v{v}. Build safe things for kids. Together. A framework, not a standard. Not legal advice.",
+    "hint_red_law": "Required by law already. A red line also blocks weak signals.",
+    "hint_red_req": "Red line. Also required at your level.",
+    "hint_red_above": "Red line beyond the law and your level.",
+    "hint_amber_req": "These rules already apply at your level. Approval documents how you comply; it cannot switch them off.",
+    "hint_amber": "Allowed only with a written decision record.",
+    "hint_cov_law": "Covered by the law.", "hint_cov": "Covered by your level.",
+    "hint_gap": "Not adopted. Recommended at Level {n}.",
+    "loaded": "Answers loaded", "loaded_v": " (version {v})", "loaded_tail": ". Change what you need, then generate again.",
+    "bad_file": "That file is not an answers.json.",
+    "st_engine": "Loading the policy engine. The first time takes up to a minute.",
+    "st_rules": "Loading the CSEF rules...", "st_gen": "Generating your kit...", "fix": "Please fix:",
+    "ready": "Version {v} is ready.", "dl_kit": "Download the kit (.zip)", "open_policy": "Open the staff policy",
+    "open_report": "Open the boundaries report",
+    "pdf_tip": "To get a PDF, open a document and print it to PDF. The zip has Word versions too.",
+    "changes": "Changes since the last version:", "check_first": "Check these first:",
+    "gen_fail": "The kit could not be generated in this browser. Save your answers and try again later, or use the command line tool.",
+    "served_written": "written to", "served_changes": "Changes:",
+    "served_unreach": "Could not reach the local tool. Is it still running?",
+}
+
 
 # --------------------------------------------------------------------------- loading
 
@@ -71,6 +112,10 @@ class Q:
             meta = (scan.load_yaml(p) or {}).get("pack", {})
             self.packs.append({"value": str(meta.get("jurisdiction", p.stem)).upper(),
                                "label": meta.get("title", p.stem), "file": p.name})
+        self.i18n = {}
+        for f in sorted((root / "framework" / "i18n").glob("*.yaml")):
+            doc = scan.load_yaml(f) or {}
+            self.i18n[doc.get("code", f.stem)] = doc
         self.questions = {}
         self.boundaries = []
         for s in self.doc["sections"]:
@@ -78,7 +123,7 @@ class Q:
                 self.questions[q["id"]] = dict(q, section=s["id"])
             for g in s.get("groups", []) or []:
                 for q in g["questions"]:
-                    b = dict(q, type="boundary", group=g["title"], section=s["id"])
+                    b = dict(q, type="boundary", group=g["title"], group_id=g.get("id", g["title"]), section=s["id"])
                     b["tier"] = min(int(self.std.rules[r]["tier"]) for r in b["rules"])
                     self.questions[b["id"]] = b
                     self.boundaries.append(b)
@@ -119,20 +164,56 @@ class Q:
         return True
 
     def schema(self) -> dict:
-        """What the web form needs."""
+        """What the web form needs: questions, options, translations and interface text."""
         secs = []
         for s in self.doc["sections"]:
-            sec = {"id": s["id"], "title": s["title"], "intro": s.get("intro", ""), "questions": [], "groups": []}
+            sec = {"id": s["id"], "title": s["title"], "intro": " ".join(str(s.get("intro", "")).split()),
+                   "questions": [], "groups": []}
             for q in s.get("questions", []) or []:
-                sec["questions"].append(dict(q, options=self.options(q), default=self.default(q)))
+                opts = [dict(o, desc=" ".join(str(o.get("desc", "")).split())) if o.get("desc") else o
+                        for o in self.options(q)]
+                sec["questions"].append(dict(q, help=" ".join(str(q.get("help", "")).split()), options=opts,
+                                             default=self.default(q)))
             for g in s.get("groups", []) or []:
-                sec["groups"].append({"title": g["title"], "questions": [
+                sec["groups"].append({"id": g.get("id", g["title"]), "title": g["title"],
+                                      "intro": " ".join(str(g.get("intro", "")).split()), "questions": [
                     {"id": b["id"], "type": "boundary", "label": b["label"], "tier": b["tier"],
+                     "help": " ".join(str(b.get("help", "")).split()),
                      "features": b.get("features", []), "profiles": b.get("profiles", []),
                      "options": self.options(b), "default": "level", "rules": b["rules"]}
                     for b in (self.questions[x["id"]] for x in g["questions"])]})
             secs.append(sec)
-        return {"sections": secs, "framework_version": self.std.version, "tiers": TIER_LABEL}
+        langs = [{"code": "en", "name": "English"}] + [
+            {"code": c, "name": d.get("language", c)} for c, d in self.i18n.items()]
+        return {"sections": secs, "framework_version": self.std.version, "tiers": TIER_LABEL, "ui": UI_EN,
+                "languages": langs, "i18n": {c: {k: d.get(k, {}) for k in ("ui", "sections", "groups", "questions")}
+                                             for c, d in self.i18n.items()}}
+
+    def i18n_missing(self, code: str) -> list[str]:
+        """Texts of the form that a translation does not cover."""
+        d, miss = self.i18n.get(code, {}), []
+        for k in UI_EN:
+            if k not in (d.get("ui") or {}) and UI_EN[k]:
+                miss.append(f"ui.{k}")
+        for s in self.doc["sections"]:
+            if "title" not in (d.get("sections") or {}).get(s["id"], {}):
+                miss.append(f"sections.{s['id']}")
+            for g in s.get("groups", []) or []:
+                gt = (d.get("groups") or {}).get(g.get("id"), {})
+                if "title" not in gt or (g.get("intro") and "intro" not in gt):
+                    miss.append(f"groups.{g.get('id')}")
+        for qid, q in self.questions.items():
+            qt = (d.get("questions") or {}).get(qid, {})
+            if "label" not in qt:
+                miss.append(f"questions.{qid}.label")
+            if q.get("help") and "help" not in qt:
+                miss.append(f"questions.{qid}.help")
+            if q["type"] != "boundary" and not q.get("options_from") or q.get("options_from") in ("dependency_sets",):
+                for o in self.options(q):
+                    ot = (qt.get("options") or {}).get(str(o["value"]), {})
+                    if "label" not in ot or (o.get("desc") and "desc" not in ot):
+                        miss.append(f"questions.{qid}.options.{o['value']}")
+        return miss
 
 
 def normalise(q: Q, raw: dict) -> tuple[dict, list[str]]:
@@ -162,6 +243,8 @@ def normalise(q: Q, raw: dict) -> tuple[dict, list[str]]:
         if qq.get("pattern") and v and not re.match(qq["pattern"], v):
             errs.append(f"{qq['label']}: '{v}' does not match {qq['pattern']}")
         a[qid] = v
+    if "none" in a.get("features", []):
+        a["features"] = []
     if "EU" not in a.get("jurisdictions", []):
         a["jurisdictions"] = ["EU"] + a.get("jurisdictions", [])
     return a, errs
@@ -218,6 +301,11 @@ def assess(q: Q, a: dict) -> dict:
     if buyers in ("families", "both"):
         notes.append("The EU KIDS Act proposal exempts services operated by or on behalf of schools (Art. 2(4)(c)). "
                      "Products sold to families are not covered by that exemption.")
+    if buyers == "other":
+        notes.append("Your products are free, publicly funded, sponsored or paid for in another way. That does not change "
+                     "the protections: the EU KIDS Act proposal covers games whether they are free, paid or mixed "
+                     "(Recital 12). Its education exemption (Art. 2(4)(c)) depends on who operates the service (schools "
+                     "or others on their behalf), not on who pays. Ask legal counsel if it may apply.")
     if buyers in ("schools", "both"):
         notes.append("Even when the education exemption of the EU KIDS Act proposal applies, GDPR, the DSA and the "
                      "AI Act still apply. CSEF applies the same protections in every channel. Ask legal counsel "
@@ -904,6 +992,8 @@ def web_bundle(root: Path = ROOT) -> str:
     files = {f: (root / f).read_text(encoding="utf-8") for f in WEB_BUNDLE_FILES}
     for pf in sorted((root / "packs").glob("*.yaml")):
         files[f"packs/{pf.name}"] = pf.read_text(encoding="utf-8")
+    for pf in sorted((root / "framework" / "i18n").glob("*.yaml")):
+        files[f"framework/i18n/{pf.name}"] = pf.read_text(encoding="utf-8")
     binary = {f: base64.b64encode((root / f).read_bytes()).decode() for f in WEB_BUNDLE_BINARY if (root / f).exists()}
     version = scan.load_yaml(root / "framework" / "rules.yaml").get("version", "?")
     return json.dumps({"version": str(version), "files": files, "binary": binary}, ensure_ascii=False) + "\n"
@@ -1059,50 +1149,97 @@ button.sec,.btn.sec{background:transparent;color:var(--c-ink);border:1.5px solid
 button:disabled{opacity:.6;cursor:wait}#result ul{padding-left:18px;margin:6px 0}#result .err{color:var(--c-coral-t)}
 .legend{font-size:.84rem;color:var(--c-ink2)}.legend>span{display:block;margin:6px 0}.legend .tier{margin:0 6px 0 0}
 .foot{color:var(--c-ink2);font-size:.85rem;margin-top:24px}
+.langs{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 18px;font-size:.92rem;color:var(--c-ink2)}
+.seg{display:inline-flex;background:var(--c-panel);border:1px solid var(--c-line);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{width:auto;margin:0;padding:6px 14px;border-radius:999px;background:transparent;color:var(--c-ink);font-weight:500;font-size:.92rem}
+.seg button[aria-pressed=true]{background:var(--c-ink);color:var(--c-paper);font-weight:600}
+.opt .ol{display:block}.desc{display:block;font-size:.84rem;color:var(--c-ink2);margin-top:3px;line-height:1.45}
+.col .opt{width:100%}.opt.excl{border-style:dashed}
+.gintro{font-size:.9rem;color:var(--c-ink2);background:var(--c-code);border-radius:10px;padding:10px 12px;margin:4px 0 6px}
+.outnote{font-size:.9rem;color:var(--c-ink2);margin:6px 0 0}
 """
 
 FORM_JS = r"""
 const S = JSON.parse(document.getElementById('schema').textContent);
 const PREV = JSON.parse(document.getElementById('prev').textContent);
 const SERVED = document.body.dataset.served === '1';
-const TIER = {1:'Law',2:'Coming',3:'Recommended'};
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LANGS = S.languages;
+let LANG = 'en';
+try {
+  const pick = [new URLSearchParams(location.search).get('lang'), localStorage.getItem('csef-lang'), (navigator.language || '').slice(0, 2)];
+  LANG = pick.find(x => x && LANGS.some(l => l.code === x)) || 'en';
+} catch (e) {}
+const TR = () => S.i18n[LANG] || {};
+function T(k, vars){ let s = (TR().ui || {})[k]; if (s == null) s = S.ui[k]; if (s == null) s = k;
+  for (const [a, b] of Object.entries(vars || {})) s = s.split('{' + a + '}').join(b); return s; }
+function QT(q, f){ const x = ((TR().questions || {})[q.id] || {})[f]; return (x != null && x !== '') ? x : q[f]; }
+function OT(q, o, f){ if (q.type === 'boundary' && f === 'label') return T('ch_' + o.value);
+  const x = ((((TR().questions || {})[q.id] || {}).options || {})[o.value] || {})[f]; return x || o[f]; }
+function ST(s, f){ const x = ((TR().sections || {})[s.id] || {})[f]; return x != null ? x : s[f]; }
+function GT(g, f){ const x = ((TR().groups || {})[g.id] || {})[f]; return x || g[f]; }
+const TIER = k => T('tier' + k);
 let A = Object.assign({}, PREV.answers || {});
-function val(q){ return (q.id in A) ? A[q.id] : q.default; }
+let PREVDOC = PREV.answers ? PREV : null;
+function val(q){ return (q.id in A) ? A[q.id] : (q.type === 'text' ? QT(q, 'default') : q.default); }
+const ROLE = ['var(--c-teal)','var(--c-indigo)','var(--c-sky)','var(--c-lilac)','var(--c-coral)','var(--c-sun)'];
+function chrome(){
+  document.documentElement.lang = LANG;
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n, {v: el.dataset.v || ''}); });
+  const ver = PREVDOC && PREVDOC.pack_version;
+  $('#lead').textContent = (ver ? T('lead_edit', {v: ver}) : T('lead_new')) + ' ' + T('lead_tail');
+  const note = T('output_note'); $('#outnote').textContent = note; $('#outnote').hidden = !note;
+  $('#langs').innerHTML = LANGS.map(l => `<button type="button" lang="${l.code}" aria-pressed="${l.code === LANG}" data-code="${l.code}">${esc(l.name)}</button>`).join('');
+  $('#steps').innerHTML = S.sections.map((s, i) => `<li><a href="#s-${s.id}"><i style="--r:${ROLE[i % ROLE.length]}"></i>${esc(ST(s, 'title'))}</a></li>`).join('');
+}
+function setLang(code){
+  LANG = code;
+  try { localStorage.setItem('csef-lang', code); const u = new URL(location.href); u.searchParams.set('lang', code); history.replaceState(null, '', u); } catch (e) {}
+  chrome(); render();
+}
+document.addEventListener('click', e => { const b = e.target.closest('#langs button'); if (b) setLang(b.dataset.code); });
 function render(){
   const f = $('#form'); f.innerHTML = '';
-  const R = ['var(--c-teal)','var(--c-indigo)','var(--c-sky)','var(--c-lilac)','var(--c-coral)','var(--c-sun)'];
   S.sections.forEach((s, i) => {
     const sec = document.createElement('section'); sec.id = 's-' + s.id;
-    sec.innerHTML = `<h2><span class="num" style="--r:${R[i % R.length]};${[2, 5].includes(i % R.length) ? '--nt:#17233F' : ''}">${i + 1}</span>${esc(s.title)}</h2>` + (s.intro ? `<p class="intro">${esc(s.intro)}</p>` : '');
+    const intro = ST(s, 'intro');
+    sec.innerHTML = `<h2><span class="num" style="--r:${ROLE[i % ROLE.length]};${[2, 5].includes(i % ROLE.length) ? '--nt:#17233F' : ''}">${i + 1}</span>${esc(ST(s, 'title'))}</h2>` + (intro ? `<p class="intro">${esc(intro)}</p>` : '');
     s.questions.forEach(q => sec.appendChild(field(q)));
-    s.groups.forEach(g => { const h = document.createElement('h3'); h.textContent = g.title; sec.appendChild(h);
+    s.groups.forEach(g => { const h = document.createElement('h3'); h.textContent = GT(g, 'title'); sec.appendChild(h);
+      const gi = GT(g, 'intro'); if (gi) { const p = document.createElement('p'); p.className = 'gintro'; p.textContent = gi; sec.appendChild(p); }
       g.questions.forEach(q => sec.appendChild(field(q))); });
     f.appendChild(sec);
   });
   update();
 }
 function field(q){
+  const hasDesc = (q.options || []).some(o => o.desc);
   const d = document.createElement('div'); d.className = 'q' + (q.type === 'boundary' ? ' b' : '') +
-    ((q.options || []).some(o => o.label.length > 40) && q.type !== 'boundary' ? ' col' : ''); d.dataset.id = q.id;
-  const v = val(q); const name = 'f-' + q.id;
+    (((q.options || []).some(o => OT(q, o, 'label').length > 40) || hasDesc) && q.type !== 'boundary' ? ' col' : ''); d.dataset.id = q.id;
+  const v = val(q); const name = 'f-' + q.id; const help = QT(q, 'help');
+  const helpH = help ? `<p class="help">${esc(help)}</p>` : '';
   let h = '';
-  if (q.type === 'text') h = `<label for="${name}">${esc(q.label)}</label>` + (q.help ? `<p class="help">${esc(q.help)}</p>` : '') +
-     `<input type="text" id="${name}" value="${esc(v || '')}">`;
-  else if (q.type === 'list') h = `<label for="${name}">${esc(q.label)}</label>` + (q.help ? `<p class="help">${esc(q.help)}</p>` : '') +
-     `<textarea id="${name}">${esc((v || []).join('\n'))}</textarea>`;
+  if (q.type === 'text') h = `<label for="${name}">${esc(QT(q, 'label'))}</label>` + helpH + `<input type="text" id="${name}" value="${esc(v || '')}">`;
+  else if (q.type === 'list') h = `<label for="${name}">${esc(QT(q, 'label'))}</label>` + helpH + `<textarea id="${name}">${esc((v || []).join('\n'))}</textarea>`;
   else {
-    const multi = q.type === 'multi'; const tier = q.tier ? `<span class="tier tier${q.tier}" title="Rules ${esc(q.rules.join(', '))}">${TIER[q.tier]}</span>` : '';
-    h = `<div class="lab" id="${name}-l">${esc(q.label)}${tier}</div>` + (q.help ? `<p class="help">${esc(q.help)}</p>` : '') +
+    const multi = q.type === 'multi';
+    const tier = q.tier ? `<span class="tier tier${q.tier}" title="${esc(T('rules'))}: ${esc(q.rules.join(', '))}">${esc(TIER(q.tier))}</span>` : '';
+    h = `<div class="lab" id="${name}-l">${esc(QT(q, 'label'))}${tier}</div>` + helpH +
       `<div class="opts" role="${multi ? 'group' : 'radiogroup'}" aria-labelledby="${name}-l">` +
-      q.options.map(o => `<label class="opt"><input type="${multi ? 'checkbox' : 'radio'}" name="${name}" value="${esc(o.value)}"
-        ${(multi ? (v || []).includes(o.value) : v === o.value) ? 'checked' : ''}><span>${esc(o.label)}</span></label>`).join('') + '</div>' +
+      q.options.map(o => { const desc = OT(q, o, 'desc');
+        return `<label class="opt${desc ? ' has-desc' : ''}${o.value === q.exclusive ? ' excl' : ''}"><input type="${multi ? 'checkbox' : 'radio'}" name="${name}" value="${esc(o.value)}"
+        ${(multi ? (v || []).includes(o.value) : v === o.value) ? 'checked' : ''}><span><span class="ol">${esc(OT(q, o, 'label'))}</span>${desc ? `<small class="desc">${esc(desc)}</small>` : ''}</span></label>`; }).join('') + '</div>' +
       (q.type === 'boundary' ? '<div class="hint"></div>' : '');
   }
   d.innerHTML = h;
   d.addEventListener('input', () => { read(q, d); update(); });
-  d.addEventListener('change', () => { read(q, d); update(); });
+  d.addEventListener('change', e => {
+    if (q.exclusive && e.target.type === 'checkbox' && e.target.checked) {
+      d.querySelectorAll('input[type=checkbox]').forEach(i => {
+        if (e.target.value === q.exclusive ? i !== e.target : i.value === q.exclusive) i.checked = false; });
+    }
+    read(q, d); update(); });
   return d;
 }
 function read(q, d){
@@ -1127,10 +1264,10 @@ function update(){
     el.classList.toggle('hidden', !vis);
     if (!vis) { c.na++; return; }
     const ch = val(q); const req = q.tier <= level; const hint = el.querySelector('.hint'); hint.classList.remove('warn');
-    if (ch === 'never') { c.red++; hint.textContent = q.tier === 1 ? 'Required by law already. A red line also blocks weak signals.' : (req ? 'Red line. Also required at your level.' : 'Red line beyond the law and your level.'); }
-    else if (ch === 'approval') { c.amber++; hint.textContent = req ? 'These rules already apply at your level. Approval documents how you comply; it cannot switch them off.' : 'Allowed only with a written decision record.'; if (req) hint.classList.add('warn'); }
-    else if (req) { c.covered++; hint.textContent = q.tier === 1 ? 'Covered by the law.' : 'Covered by your level.'; }
-    else { c.gap++; hint.textContent = `Not adopted. Recommended at Level ${q.tier}.`; }
+    if (ch === 'never') { c.red++; hint.textContent = q.tier === 1 ? T('hint_red_law') : (req ? T('hint_red_req') : T('hint_red_above')); }
+    else if (ch === 'approval') { c.amber++; hint.textContent = req ? T('hint_amber_req') : T('hint_amber'); if (req) hint.classList.add('warn'); }
+    else if (req) { c.covered++; hint.textContent = q.tier === 1 ? T('hint_cov_law') : T('hint_cov'); }
+    else { c.gap++; hint.textContent = T('hint_gap', {n: q.tier}); }
   });
   for (const k in c) { const e = document.getElementById('c-' + k); if (e) e.textContent = c[k]; }
 }
@@ -1138,20 +1275,19 @@ function payload(){ const out = {}; all().forEach(q => out[q.id] = val(q)); retu
 function download(name, text, type){ const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type}));
   a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
 $('#dl').addEventListener('click', () => download('answers.json', JSON.stringify(Object.assign({}, PREVDOC || {}, {answers: payload()}), null, 2), 'application/json'));
-let PREVDOC = PREV.answers ? PREV : null;
 $('#load').addEventListener('change', e => { const f = e.target.files[0]; if (!f) return; f.text().then(t => {
-  try { const d = JSON.parse(t); A = Object.assign({}, d.answers || d); PREVDOC = d.answers ? d : {answers: d}; render();
-    $('#result').innerHTML = '<p>Answers loaded' + (PREVDOC.pack_version ? ` (version ${esc(PREVDOC.pack_version)})` : '') + '. Change what you need, then generate again.</p>'; }
-  catch (x) { $('#result').innerHTML = '<p class="err">That file is not an answers.json.</p>'; } }); });
+  try { const d = JSON.parse(t); A = Object.assign({}, d.answers || d); PREVDOC = d.answers ? d : {answers: d}; chrome(); render();
+    $('#result').innerHTML = '<p>' + esc(T('loaded') + (PREVDOC.pack_version ? T('loaded_v', {v: PREVDOC.pack_version}) : '') + T('loaded_tail')) + '</p>'; }
+  catch (x) { $('#result').innerHTML = `<p class="err">${esc(T('bad_file'))}</p>`; } }); });
 const PYODIDE = document.body.dataset.pyodide || '';
 let PY = null;
 async function engine(status){
   if (PY) return PY;
-  status('Loading the policy engine. The first time takes up to a minute.');
+  status(T('st_engine'));
   const { loadPyodide } = await import(PYODIDE + 'pyodide.mjs');
   const py = await loadPyodide({ indexURL: PYODIDE });
   await py.loadPackage(['pyyaml', 'lxml', 'typing-extensions', 'micropip']);
-  status('Loading the CSEF rules...');
+  status(T('st_rules'));
   const b = await (await fetch('csef-bundle.json', {cache: 'no-cache'})).json();
   for (const [path, text] of Object.entries(b.files)) { const full = '/csef/' + path;
     py.FS.mkdirTree(full.slice(0, full.lastIndexOf('/'))); py.FS.writeFile(full, text); }
@@ -1179,94 +1315,89 @@ async function browserGenerate(r){
   const status = m => { r.innerHTML = `<p class="busy">${esc(m)}</p>`; };
   try {
     const py = await engine(status);
-    status('Generating your kit...');
+    status(T('st_gen'));
     py.globals.set('RAW', JSON.stringify(payload()));
     py.globals.set('PREVJSON', PREVDOC ? JSON.stringify(PREVDOC) : '');
     const d = JSON.parse(await py.runPythonAsync(GEN_PY));
-    if (!d.ok) { r.innerHTML = '<p class="err">Please fix:</p><ul>' + d.errors.map(x => `<li class="err">${esc(x)}</li>`).join('') + '</ul>'; return; }
+    if (!d.ok) { r.innerHTML = `<p class="err">${esc(T('fix'))}</p><ul>` + d.errors.map(x => `<li class="err">${esc(x)}</li>`).join('') + '</ul>'; return; }
     PREVDOC = JSON.parse(new TextDecoder().decode(py.FS.readFile('/out/answers.json')));
     setTimeout(() => r.scrollIntoView({block: 'nearest', behavior: 'smooth'}), 50);
     const zipUrl = blobUrl(py.FS.readFile('/kit.zip'), 'application/zip');
     const open = f => blobUrl(py.FS.readFile('/out/' + f), 'text/html');
     const name = d.pack_id + '-policy-kit.zip';
-    r.innerHTML = `<p><strong>Version ${esc(d.version)}</strong> is ready.</p>` +
-      `<a class="btn" href="${zipUrl}" download="${esc(name)}">Download the kit (.zip)</a>` +
-      `<a class="btn sec" href="${open('staff-policy.html')}" target="_blank" rel="noopener">Open the staff policy</a>` +
-      `<a class="btn sec" href="${open('boundaries-report.html')}" target="_blank" rel="noopener">Open the boundaries report</a>` +
-      '<p class="small">To get a PDF, open a document and print it to PDF. The zip has Word versions too.</p>' +
-      (d.changes.length ? '<p>Changes since the last version:</p><ul>' + d.changes.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>' : '') +
-      (d.warnings.length ? '<p>Check these first:</p><ul>' + d.warnings.map(x => `<li>${esc(x.replace(/\*\*/g, ''))}</li>`).join('') + '</ul>' : '');
+    r.innerHTML = `<p><strong>${esc(T('ready', {v: d.version}))}</strong></p>` +
+      `<a class="btn" href="${zipUrl}" download="${esc(name)}">${esc(T('dl_kit'))}</a>` +
+      `<a class="btn sec" href="${open('staff-policy.html')}" target="_blank" rel="noopener">${esc(T('open_policy'))}</a>` +
+      `<a class="btn sec" href="${open('boundaries-report.html')}" target="_blank" rel="noopener">${esc(T('open_report'))}</a>` +
+      `<p class="small">${esc(T('pdf_tip'))}</p>` +
+      (d.changes.length ? `<p>${esc(T('changes'))}</p><ul>` + d.changes.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>' : '') +
+      (d.warnings.length ? `<p>${esc(T('check_first'))}</p><ul>` + d.warnings.map(x => `<li>${esc(x.replace(/\*\*/g, ''))}</li>`).join('') + '</ul>' : '');
   } catch (x) {
     console.error(x);
-    r.innerHTML = '<p class="err">The kit could not be generated in this browser. Save your answers and try again later, or use the command line tool.</p>';
+    r.innerHTML = `<p class="err">${esc(T('gen_fail'))}</p>`;
   }
 }
 $('#go').addEventListener('click', async () => {
   const r = $('#result');
   if (!SERVED) { $('#go').disabled = true; try { await browserGenerate(r); } finally { $('#go').disabled = false; } return; }
-  r.textContent = 'Generating...';
+  r.textContent = T('st_gen');
   try {
     const res = await fetch('/api/generate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload())});
     const d = await res.json();
-    if (!d.ok) { r.innerHTML = '<p class="err">Please fix:</p><ul>' + d.errors.map(x => `<li class="err">${esc(x)}</li>`).join('') + '</ul>'; return; }
-    r.innerHTML = `<p><strong>Version ${esc(d.version)}</strong> written to <code>${esc(d.out_dir)}</code>.</p>` +
-      (d.changes.length ? '<p>Changes:</p><ul>' + d.changes.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>' : '') +
+    if (!d.ok) { r.innerHTML = `<p class="err">${esc(T('fix'))}</p><ul>` + d.errors.map(x => `<li class="err">${esc(x)}</li>`).join('') + '</ul>'; return; }
+    r.innerHTML = `<p><strong>${esc(T('ready', {v: d.version}))}</strong> ${esc(T('served_written'))} <code>${esc(d.out_dir)}</code>.</p>` +
+      (d.changes.length ? `<p>${esc(T('served_changes'))}</p><ul>` + d.changes.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>' : '') +
       '<ul>' + d.files.map(f => `<li><a href="/files/${encodeURIComponent(f)}" target="_blank" rel="noopener">${esc(f)}</a></li>`).join('') + '</ul>';
-  } catch (x) { r.innerHTML = '<p class="err">Could not reach the local tool. Is it still running?</p>'; }
+  } catch (x) { r.innerHTML = `<p class="err">${esc(T('served_unreach'))}</p>`; }
 });
-render();
+chrome(); render();
 """
 
 
 def render_form(q: Q, previous: dict | None, served: bool, home: str | None = None) -> str:
     schema = json.dumps(q.schema(), ensure_ascii=False).replace("</", "<\\/")
     prev = json.dumps(previous or {}, ensure_ascii=False).replace("</", "<\\/")
-    ver = (previous or {}).get("pack_version")
-    sub = (f"Editing version {html.escape(ver)}. Change any answer and generate again." if ver else
-           "Answer the questions. Your guardrails file, reports and staff policy are generated from them.")
-    gen = "Generate the policy kit"
-    privacy = ("Everything runs on this computer. Nothing is sent anywhere." if served else
-               "Your answers stay in this browser. Nothing is sent anywhere. The kit is made on your device.")
-    roles = ["var(--c-teal)", "var(--c-indigo)", "var(--c-sky)", "var(--c-lilac)", "var(--c-coral)", "var(--c-sun)"]
-    steps = "".join(f'<li><a href="#s-{s["id"]}"><i style="--r:{roles[i % len(roles)]}"></i>{html.escape(s["title"])}</a></li>'
-                    for i, s in enumerate(q.doc["sections"]))
+    ui = UI_EN
+    privacy = "privacy_local" if served else "privacy_web"
+
+    def tx(key, tag="span", attrs=""):
+        return f'<{tag} data-i18n="{key}"{attrs}>{html.escape(ui[key])}</{tag}>'
+
+    gets = "".join(f'<div class="get" style="--r:var(--c-{c})"><strong data-i18n="get{i}_t">{html.escape(ui[f"get{i}_t"])}</strong>'
+                   f'<span data-i18n="get{i}_d">{html.escape(ui[f"get{i}_d"])}</span></div>'
+                   for i, c in enumerate(("teal", "indigo", "sky", "lilac"), 1))
+    stats = "".join(f'<div class="stat" style="--d:var(--c-{d})">{tx("c_" + k)}<b id="c-{k}">0</b></div>'
+                    for k, d in (("red", "coral"), ("amber", "sun"), ("covered", "teal"), ("gap", "ink2"), ("na", "line")))
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>CSEF Policy Questionnaire</title>
 <meta name="description" content="Set your organisation's child-safety boundaries and get a staff policy, a report matched with the law and a guardrails file.">
 {brand.head()}<style>{FORM_CSS}</style></head><body data-served="{1 if served else 0}" data-pyodide="{PYODIDE_URL}">
 <div class="csef-stripe"></div>
 <header class="top"><a href="{home or REPO_URL}" aria-label="CSEF home">{brand.logo("lockup", 40)}</a>
-<nav aria-label="CSEF"><a href="{home or REPO_URL}">About CSEF</a></nav></header>
+<nav aria-label="CSEF"><a href="{home or REPO_URL}" data-i18n="about">{ui["about"]}</a></nav></header>
 <div class="hero">
-<h1>Set your child-safety boundaries</h1>
-<p class="lead">{sub} It takes about 15 minutes. You do not need to be a developer.</p>
-<div class="gets">
-<div class="get" style="--r:var(--c-teal)"><strong>Staff policy</strong><span>Plain language, for everyone in your organisation.</span></div>
-<div class="get" style="--r:var(--c-indigo)"><strong>Boundaries report</strong><span>Each answer matched with the law, for management and legal counsel.</span></div>
-<div class="get" style="--r:var(--c-sky)"><strong>Guardrails file</strong><span>Your rules, checked automatically in every project.</span></div>
-<div class="get" style="--r:var(--c-lilac)"><strong>For developers</strong><span>Instructions for AI coding tools and a ready CI check.</span></div>
-</div>
-<p class="privacy">{privacy}</p>
+<div class="langs" role="group" aria-labelledby="lang-l"><span id="lang-l" data-i18n="lang_label">{ui["lang_label"]}</span><span class="seg" id="langs"></span></div>
+{tx("hero_title", "h1")}
+<p class="lead" id="lead">{html.escape(ui["lead_new"] + " " + ui["lead_tail"])}</p>
+<div class="gets">{gets}</div>
+<p class="privacy">{tx(privacy, "span")}</p>
+<p class="outnote" id="outnote" hidden></p>
 </div>
 <div class="wrap"><main>
 <div id="form"></div>
-<p class="foot">Child-Safe EdTech Framework (CSEF) v{html.escape(q.std.version)}. {brand.TAGLINE} A framework, not a standard. Not legal advice.</p>
+<p class="foot" data-i18n="foot" data-v="{html.escape(q.std.version)}">{html.escape(ui["foot"].replace("{v}", q.std.version))}</p>
 </main><aside>
-<div class="panel steps-panel"><h2>Steps</h2><ol class="steps">{steps}</ol></div>
-<div class="panel"><h2>Your answers so far</h2>
-<div class="stat" style="--d:var(--c-coral)"><span>Red lines</span><b id="c-red">0</b></div>
-<div class="stat" style="--d:var(--c-sun)"><span>Only with approval</span><b id="c-amber">0</b></div>
-<div class="stat" style="--d:var(--c-teal)"><span>Covered by law or level</span><b id="c-covered">0</b></div>
-<div class="stat" style="--d:var(--c-ink2)"><span>Recommended, not adopted</span><b id="c-gap">0</b></div>
-<div class="stat" style="--d:var(--c-line)"><span>Not applicable</span><b id="c-na">0</b></div>
-<button id="go">{gen}</button>
-<button id="dl" class="sec" type="button">Save answers.json</button>
-<label class="btn sec">Load answers.json
+<div class="panel steps-panel">{tx("steps", "h2")}<ol class="steps" id="steps"></ol></div>
+<div class="panel">{tx("so_far", "h2")}
+{stats}
+<button id="go" data-i18n="generate">{ui["generate"]}</button>
+<button id="dl" class="sec" type="button" data-i18n="save">{ui["save"]}</button>
+<label class="btn sec"><span data-i18n="load">{ui["load"]}</span>
 <input id="load" type="file" accept=".json,application/json" hidden></label>
 <div id="result" aria-live="polite"></div></div>
-<div class="panel legend"><span><span class="tier tier1">Law</span>required today</span>
-<span><span class="tier tier2">Coming</span>EU KIDS Act proposal, official guidelines (Level 2)</span>
-<span><span class="tier tier3">Recommended</span>research and experts (Level 3)</span></div>
+<div class="panel legend"><span><span class="tier tier1" data-i18n="tier1">{ui["tier1"]}</span>{tx("legend_law")}</span>
+<span><span class="tier tier2" data-i18n="tier2">{ui["tier2"]}</span>{tx("legend_coming")}</span>
+<span><span class="tier tier3" data-i18n="tier3">{ui["tier3"]}</span>{tx("legend_rec")}</span></div>
 </aside></div>
 <script type="application/json" id="schema">{schema}</script>
 <script type="application/json" id="prev">{prev}</script>

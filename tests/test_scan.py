@@ -377,3 +377,18 @@ def test_web_bundle_runs_policy_from_its_own_files(tmp_path):
     names = zipfile.ZipFile(str(out) + ".zip").namelist()
     assert "kit/acme.yaml" in names and "kit/staff-policy.html" in names
     assert "csef-review.zip" not in (out / "README.md").read_text()
+
+
+def test_questionnaire_none_options_and_translations():
+    import policy
+    q = policy.Q(ROOT)
+    a, errs = policy.normalise(q, {"org_name": "Free Co", "profiles": ["A"], "age_bands": ["B2"],
+                                   "features": ["none"], "buyers": "other", "minimum_level": "2"})
+    assert not errs and a["features"] == []
+    res = policy.assess(q, a)
+    assert any("Recital 12" in n for n in res["notes"])
+    items = {i["id"]: i for i in res["items"]}
+    assert items["chat"]["key"] == "na" and items["characters"]["key"] == "covered"
+    assert "pt" in q.i18n and q.i18n_missing("pt") == []
+    schema = q.schema()
+    assert any(lang["code"] == "pt" for lang in schema["languages"])

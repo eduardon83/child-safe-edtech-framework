@@ -208,6 +208,12 @@ def load_and_validate():
         if any(not isinstance(ph, str) for ph in v["phrases"]):
             err(f"questionnaire.yaml: phrase set {k} has a non-text entry (quote it)")
 
+    import policy
+    pq = policy.Q(ROOT)
+    for code in pq.i18n:
+        for m in pq.i18n_missing(code):
+            err(f"framework/i18n/{code}.yaml: missing translation {m}")
+
     packs = {}
     for pf in sorted((ROOT / "packs").glob("*.yaml")):
         if pf.name.startswith("_"):
