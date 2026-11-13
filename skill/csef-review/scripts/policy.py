@@ -66,7 +66,7 @@ UI_EN = {
     "get4_t": "For developers", "get4_d": "Instructions for AI coding tools and a ready CI check.",
     "privacy_local": "Everything runs on this computer. Nothing is sent anywhere.",
     "privacy_web": "Your answers stay in this browser. Nothing is sent anywhere. The kit is made on your device.",
-    "output_note": "",
+    "output_note": "", "mt_note": "",
     "steps": "Steps", "so_far": "Your answers so far", "c_red": "Red lines", "c_amber": "Only with approval",
     "c_covered": "Covered by law or level", "c_gap": "Recommended, not adopted", "c_na": "Not applicable",
     "generate": "Generate the policy kit", "save": "Save answers.json", "load": "Load answers.json",
@@ -113,9 +113,9 @@ class Q:
             self.packs.append({"value": str(meta.get("jurisdiction", p.stem)).upper(),
                                "label": meta.get("title", p.stem), "file": p.name})
         self.i18n = {}
-        for f in sorted((root / "framework" / "i18n").glob("*.yaml")):
-            doc = scan.load_yaml(f) or {}
-            self.i18n[doc.get("code", f.stem)] = doc
+        docs = [scan.load_yaml(f) or {} for f in (root / "framework" / "i18n").glob("*.yaml")]
+        for doc in sorted(docs, key=lambda d: (d.get("order", 99), d.get("code", ""))):
+            self.i18n[doc["code"]] = doc
         self.questions = {}
         self.boundaries = []
         for s in self.doc["sections"]:
@@ -183,8 +183,9 @@ class Q:
                      "options": self.options(b), "default": "level", "rules": b["rules"]}
                     for b in (self.questions[x["id"]] for x in g["questions"])]})
             secs.append(sec)
-        langs = [{"code": "en", "name": "English"}] + [
-            {"code": c, "name": d.get("language", c)} for c, d in self.i18n.items()]
+        langs = [{"code": "en", "name": "English", "mt": False}] + [
+            {"code": c, "name": d.get("language", c), "mt": bool(d.get("machine_translated"))}
+            for c, d in self.i18n.items()]
         return {"sections": secs, "framework_version": self.std.version, "tiers": TIER_LABEL, "ui": UI_EN,
                 "languages": langs, "i18n": {c: {k: d.get(k, {}) for k in ("ui", "sections", "groups", "questions")}
                                              for c, d in self.i18n.items()}}
@@ -1150,7 +1151,7 @@ button:disabled{opacity:.6;cursor:wait}#result ul{padding-left:18px;margin:6px 0
 .legend{font-size:.84rem;color:var(--c-ink2)}.legend>span{display:block;margin:6px 0}.legend .tier{margin:0 6px 0 0}
 .foot{color:var(--c-ink2);font-size:.85rem;margin-top:24px}
 .langs{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 18px;font-size:.92rem;color:var(--c-ink2)}
-.seg{display:inline-flex;background:var(--c-panel);border:1px solid var(--c-line);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--c-panel);border:1px solid var(--c-line);border-radius:20px;padding:3px;gap:2px;flex-wrap:wrap}
 .seg button{width:auto;margin:0;padding:6px 14px;border-radius:999px;background:transparent;color:var(--c-ink);font-weight:500;font-size:.92rem}
 .seg button[aria-pressed=true]{background:var(--c-ink);color:var(--c-paper);font-weight:600}
 .opt .ol{display:block}.desc{display:block;font-size:.84rem;color:var(--c-ink2);margin-top:3px;line-height:1.45}
@@ -1168,7 +1169,8 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':
 const LANGS = S.languages;
 let LANG = 'en';
 try {
-  const pick = [new URLSearchParams(location.search).get('lang'), localStorage.getItem('csef-lang'), (navigator.language || '').slice(0, 2)];
+  const alias = x => ({no: 'nb', nn: 'nb'})[x] || x;
+  const pick = [new URLSearchParams(location.search).get('lang'), localStorage.getItem('csef-lang'), (navigator.language || '').slice(0, 2)].map(x => x && alias(x));
   LANG = pick.find(x => x && LANGS.some(l => l.code === x)) || 'en';
 } catch (e) {}
 const TR = () => S.i18n[LANG] || {};
@@ -1189,7 +1191,8 @@ function chrome(){
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n, {v: el.dataset.v || ''}); });
   const ver = PREVDOC && PREVDOC.pack_version;
   $('#lead').textContent = (ver ? T('lead_edit', {v: ver}) : T('lead_new')) + ' ' + T('lead_tail');
-  const note = T('output_note'); $('#outnote').textContent = note; $('#outnote').hidden = !note;
+  const mt = (LANGS.find(l => l.code === LANG) || {}).mt;
+  const note = [mt ? T('mt_note') : '', T('output_note')].filter(Boolean).join(' '); $('#outnote').textContent = note; $('#outnote').hidden = !note;
   $('#langs').innerHTML = LANGS.map(l => `<button type="button" lang="${l.code}" aria-pressed="${l.code === LANG}" data-code="${l.code}">${esc(l.name)}</button>`).join('');
   $('#steps').innerHTML = S.sections.map((s, i) => `<li><a href="#s-${s.id}"><i style="--r:${ROLE[i % ROLE.length]}"></i>${esc(ST(s, 'title'))}</a></li>`).join('');
 }

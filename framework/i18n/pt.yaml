@@ -4,6 +4,7 @@
 
 language: Português
 code: pt
+order: 1
 
 ui:
   lang_label: Idioma

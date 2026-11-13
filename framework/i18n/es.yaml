@@ -1,0 +1,430 @@
+# Español. Machine translation of the CSEF questionnaire form, pending review by a native speaker.
+# Legal wording is paraphrased with the article reference; see the official Spanish text on EUR-Lex.
+
+language: Español
+code: es
+order: 2
+machine_translated: true
+
+ui:
+  lang_label: Idioma
+  about: Sobre CSEF
+  hero_title: Defina los límites de seguridad infantil de su empresa
+  lead_new: Responda a las preguntas. De ellas salen el archivo de reglas, los informes y la política para el equipo.
+  lead_edit: "Editando la versión {v}. Cambie lo que necesite y vuelva a generar."
+  lead_tail: Tarda unos 15 minutos. No hace falta ser programador.
+  get1_t: Política para el equipo
+  get1_d: En lenguaje sencillo, para toda la organización.
+  get2_t: Informe de límites
+  get2_d: Cada respuesta comparada con la ley, para la dirección y la asesoría jurídica.
+  get3_t: Archivo de reglas
+  get3_d: Sus reglas, comprobadas automáticamente en cada proyecto.
+  get4_t: Para desarrolladores
+  get4_d: Instrucciones para herramientas de IA de programación y una comprobación automática lista.
+  privacy_local: Todo se ejecuta en este ordenador. No se envía nada a ningún sitio.
+  privacy_web: Las respuestas se quedan en este navegador. No se envía nada a ningún sitio. El kit se crea en su dispositivo.
+  output_note: Los documentos del kit se generan en inglés por ahora.
+  mt_note: Traducción automática, pendiente de revisión por un hablante nativo.
+  steps: Pasos
+  so_far: Sus respuestas hasta ahora
+  c_red: Líneas rojas
+  c_amber: Solo con aprobación
+  c_covered: Cubiertos por la ley o el nivel
+  c_gap: Recomendados, no adoptados
+  c_na: No aplicable
+  generate: Generar el kit de la política
+  save: Guardar answers.json
+  load: Cargar answers.json
+  legend_law: obligatorio hoy
+  legend_coming: propuesta EU KIDS Act, directrices oficiales (Nivel 2)
+  legend_rec: investigación y expertos (Nivel 3)
+  tier1: Ley
+  tier2: Próximo
+  tier3: Recomendado
+  ch_never: Nunca (línea roja)
+  ch_approval: Solo con aprobación escrita
+  ch_level: Seguir nuestro nivel
+  rules: Reglas
+  foot: "Child-Safe EdTech Framework (CSEF) v{v}. Construir cosas seguras para los niños. Juntos. Un marco, no una norma. No es asesoramiento jurídico."
+  hint_red_law: Ya es obligatorio por ley. Una línea roja también bloquea las señales débiles.
+  hint_red_req: Línea roja. También obligatorio en su nivel.
+  hint_red_above: Línea roja más allá de la ley y de su nivel.
+  hint_amber_req: Estas reglas ya se aplican en su nivel. La aprobación documenta cómo las cumple; no las desactiva.
+  hint_amber: Permitido solo con un registro de decisión por escrito.
+  hint_cov_law: Cubierto por la ley.
+  hint_cov: Cubierto por su nivel.
+  hint_gap: "No adoptado. Recomendado en el Nivel {n}."
+  loaded: Respuestas cargadas
+  loaded_v: " (versión {v})"
+  loaded_tail: ". Cambie lo que necesite y vuelva a generar."
+  bad_file: Ese archivo no es un answers.json.
+  st_engine: Cargando el motor de la política. La primera vez puede tardar hasta un minuto.
+  st_rules: Cargando las reglas de CSEF...
+  st_gen: Generando su kit...
+  fix: "Corrija, por favor:"
+  ready: "La versión {v} está lista."
+  dl_kit: Descargar el kit (.zip)
+  open_policy: Abrir la política para el equipo
+  open_report: Abrir el informe de límites
+  pdf_tip: Para obtener un PDF, abra un documento e imprímalo como PDF. El zip también incluye versiones Word.
+  changes: "Cambios desde la última versión:"
+  check_first: "Revise primero:"
+  gen_fail: No se pudo generar el kit en este navegador. Guarde sus respuestas e inténtelo más tarde, o use la herramienta de línea de comandos.
+  served_written: guardada en
+  served_changes: "Cambios:"
+  served_unreach: No se pudo contactar con la herramienta local. ¿Sigue en marcha?
+
+sections:
+  org:
+    title: "Su organización"
+    intro: "Quiénes son y quién es responsable de estas reglas."
+  products:
+    title: "Sus productos"
+    intro: "Qué construyen y para quién. Esto decide las siguientes preguntas."
+  level:
+    title: "Su nivel de ambición"
+    intro: "El nivel mínimo con el que se comprueba cada producto. Un producto puede elegir un nivel más alto, nunca más bajo."
+  boundaries:
+    title: Sus límites
+    intro: >
+      Para cada práctica, indique lo exigentes que son. "Nunca" la convierte en una línea roja: el verificador la
+      bloquea en cualquier nivel, incluso con señales débiles. "Solo con aprobación" significa que una persona
+      designada debe aprobarla por escrito. "Seguir nuestro nivel" significa que se aplican las reglas del marco para
+      su nivel.
+  tools:
+    title: "Herramientas, paquetes y palabras"
+    intro: "Cosas concretas que el verificador encuentra en el código."
+  process:
+    title: "Cómo trabajan"
+    intro: ""
+
+groups:
+  money:
+    title: "Dinero y publicidad"
+  attention:
+    title: "Atención y presión"
+  contact:
+    title: "Contacto y comunicación"
+  ai:
+    title: Inteligencia artificial
+    intro: >
+      Estas preguntas tratan solo de sistemas de IA. El Reglamento de IA (art. 3, punto 1) define un sistema de IA
+      como un sistema basado en máquinas que infiere, a partir de la información que recibe, cómo generar resultados
+      como predicciones, contenidos, recomendaciones o decisiones. Las reglas fijas, los diálogos con guion y las
+      decisiones escritas por personas no son IA. Los personajes sin IA están en "Atención y presión".
+  data:
+    title: "Datos y privacidad"
+
+questions:
+  org_name:
+    label: "Nombre de la organización"
+  pack_id:
+    label: Identificador corto del paquete (de 2 a 8 letras minúsculas, p. ej. acme)
+    help: Se usa en los nombres de archivos y de reglas, como ACME-POL-01.
+  jurisdictions:
+    label: Países donde se usan sus productos
+    help: La ley de la UE se aplica siempre. Los paquetes nacionales añaden las reglas del país cuando existen.
+    options:
+      EU:
+        label: "Unión Europea (se aplica siempre)"
+      PT:
+        label: "Paquete nacional de Portugal"
+  scope:
+    label: "¿Qué productos cubre esta política?"
+    default: "Todos nuestros productos usados por niños o pensados para niños"
+  owner:
+    label: "¿Quién es responsable de esta política? (un cargo, p. ej. CEO)"
+    default: "CEO"
+  approvers:
+    label: "¿Quién puede aprobar excepciones y funciones sensibles? (cargos)"
+    default: "El Delegado de Protección de Datos o el CEO"
+  contact:
+    label: "¿Adónde debe enviar el equipo sus dudas? (un cargo, canal o buzón compartido)"
+    default: "El Delegado de Protección de Datos"
+  profiles:
+    label: ¿Qué tipo de productos hacen?
+    options:
+      A:
+        label: "Juegos educativos"
+      B:
+        label: "Aplicaciones y software basados en juegos (plataformas, evaluación, simulaciones)"
+      C:
+        label: "Aplicaciones gamificadas (puntos, insignias, rachas sobre el aprendizaje)"
+  age_bands:
+    label: ¿Qué edades usan sus productos?
+    options:
+      B1:
+        label: "3 a 5"
+      B2:
+        label: "6 a 9"
+      B3:
+        label: "10 a 12"
+      B4:
+        label: "13 a 15"
+      B5:
+        label: "16 a 17"
+  buyers:
+    label: ¿Quién elige o paga sus productos?
+    options:
+      schools:
+        label: "Centros educativos o autoridades educativas"
+      families:
+        label: "Familias"
+      both:
+        label: "Ambos"
+      other:
+        label: "Ninguna de estas (gratuito, financiación pública, patrocinio u otro)"
+        desc: >
+          Las reglas no cambian: quién paga no decide si los niños están protegidos. La propuesta EU KIDS Act cubre
+          los juegos tanto si el servicio es gratuito como de pago o con remuneración mixta (considerando 12). El
+          informe añade una nota sobre la exención educativa.
+  features:
+    label: ¿Cuáles de estos mecanismos tienen sus productos, o podrían tener pronto?
+    help: >
+      Marque todo lo que aplique ahora o el próximo año. Las preguntas sobre mecanismos que no marque se omiten.
+      Cada uno muestra qué significa y de dónde viene la definición oficial.
+    options:
+      accounts:
+        label: "Cuentas o inicio de sesión de niños"
+        desc: >
+          Los niños inician sesión o tienen un perfil con datos personales. Según el RGPD (art. 8), por debajo de la
+          edad de consentimiento digital del país, el consentimiento lo da o lo autoriza un progenitor.
+      multiplayer:
+        label: "Multijugador o jugar con otros"
+        desc: >
+          Los niños comparten una sesión de juego con otros usuarios, a la vez o por turnos. La propuesta EU KIDS Act
+          exige un alto nivel de privacidad, seguridad y protección en los contactos entre menores y otros
+          destinatarios del juego (art. 15, apartado 1, letra c)).
+      chat:
+        label: "Chat o mensajes"
+        desc: >
+          Los niños envían mensajes a otros: texto libre, voz o mensajes predefinidos, emojis y emotes. Los emotes
+          predefinidos siguen siendo mensajes. Reglas de contacto: propuesta EU KIDS Act, art. 12 y art. 15,
+          apartado 1, letra c), y apartado 2.
+      ugc:
+        label: "Contenidos que los niños crean y comparten (dibujos, publicaciones, archivos)"
+        desc: >
+          Todo lo que un niño crea y otros pueden ver. El contenido alojado necesita una forma de denunciarlo (DSA,
+          art. 16). La propuesta EU KIDS Act considera diseño adictivo incentivar o premiar a los menores por
+          compartir contenidos con un número indeterminado de destinatarios (art. 9, apartado 2, letra c)).
+      social:
+        label: "Funciones sociales (amigos, perfiles, me gusta, comentarios)"
+        desc: >
+          Listas de amigos, perfiles públicos, me gusta, seguidores, comentarios. Si lo social es el objetivo
+          principal, el servicio puede ser un servicio de redes sociales en línea (propuesta EU KIDS Act, art. 3,
+          apartado 2), con las obligaciones más estrictas.
+      notifications:
+        label: "Notificaciones"
+        desc: >
+          Mensajes al niño fuera de la actividad: push, correo, insignias. La propuesta EU KIDS Act se dirige a las
+          notificaciones que no provoca la interacción o actividad del menor en el servicio, ni están directamente
+          relacionadas con ella (art. 9, apartado 2, letra b)).
+      streaks:
+        label: "Rachas (días seguidos)"
+        desc: >
+          Contar o premiar el regreso regular. La propuesta EU KIDS Act se dirige a incentivar el uso a horas fijas o
+          con más frecuencia, incluso con penalizaciones o pérdida de ventajas por no volver con regularidad (art. 9,
+          apartado 2, letra d)).
+      leaderboards:
+        label: "Clasificaciones o rankings"
+        desc: >
+          Listas que comparan a los niños por puntuación, rapidez o progreso. La ley no las nombra; CSEF las trata
+          como comparación social y pide rankings solo de la clase y con apodos (regla C-ENG-02).
+      purchases:
+        label: "Compras, suscripciones o artículos en la aplicación"
+        desc: >
+          Todo lo que se paga con dinero, o con moneda virtual comprada con dinero. El menor debe saber, en tiempo
+          real, que se trata de una transacción económica, y la moneda virtual debe mostrar su valor en euros
+          (propuesta EU KIDS Act, art. 13, apartado 1).
+      assessment:
+        label: "Pruebas, notas o seguimiento del progreso"
+        desc: Puntuaciones, niveles, notas o informes sobre lo que sabe un niño. Se trata de los datos y su uso, con o sin IA.
+      ai_generative:
+        label: "IA generativa (chatbots, tutores, texto, imágenes o voz hechos por IA)"
+        desc: >
+          Un sistema de IA que produce texto, imágenes, audio o vídeo. Las personas deben saber cuándo interactúan con
+          IA y el contenido hecho por IA debe marcarse (Reglamento de IA, art. 50). Los diálogos escritos por personas
+          no son IA.
+      ai_assessment:
+        label: "IA que corrige o evalúa a los alumnos"
+        desc: >
+          La IA usada para evaluar resultados de aprendizaje es de alto riesgo en el Reglamento de IA (anexo III,
+          punto 3, letra b)), con obligaciones desde diciembre de 2027.
+      ai_adaptive:
+        label: "IA que adapta niveles, itinerarios o acceso"
+        desc: >
+          La IA que orienta el proceso de aprendizaje o decide el nivel educativo adecuado de un alumno es de alto
+          riesgo en el Reglamento de IA (anexo III, punto 3, letras b) y c)). Las reglas fijas escritas por personas no
+          son IA.
+      recommender:
+        label: "Recomendaciones de contenidos"
+        desc: >
+          Un sistema que sugiere u ordena contenidos para el niño: un sistema de recomendación en el sentido de la DSA
+          (art. 3, letra s)). Reglas más estrictas para plataformas sociales y de vídeo en la propuesta EU KIDS Act
+          (art. 10).
+      none:
+        label: "Ninguno de estos"
+        desc: >
+          Se omiten todas las preguntas sobre estos mecanismos y el archivo de reglas no declara ninguno. El
+          verificador sigue leyendo el código: si encuentra uno (por ejemplo, un SDK de chat o de anuncios), lo marca
+          como no declarado, para que nada se escape por error.
+  minimum_level:
+    label: ¿Qué nivel mínimo eligen?
+    options:
+      "1":
+        label: "Nivel 1, Base legal: lo que la ley exige hoy"
+      "2":
+        label: "Nivel 2, Preparado para el futuro: también lo que viene (propuesta EU KIDS Act, directrices oficiales)"
+      "3":
+        label: "Nivel 3, Buenas prácticas: también lo que recomiendan la investigación y los expertos"
+  ads:
+    label: "Publicidad o seguimiento publicitario mostrado a niños"
+  lootboxes:
+    label: "Recompensas aleatorias de pago (cajas de botín, sobres de cartas de pago, gacha)"
+  pay_to_win:
+    label: "Pagar para ganar, saltarse el aprendizaje o adelantar a otros"
+  currency:
+    label: "Monedas o gemas virtuales que los niños pueden comprar"
+  purchases:
+    label: "Compras que los propios niños pueden iniciar"
+  commercial_learning:
+    label: "Marcas, patrocinios o emplazamiento de productos dentro de las actividades de aprendizaje"
+  dark_patterns:
+    label: "Diseño de presión (cuentas atrás, falsa escasez, mensajes de culpa, casillas premarcadas)"
+  streaks:
+    label: "Rachas que los niños pueden perder"
+  notifications:
+    label: "Notificaciones que hacen volver a los niños"
+  endless:
+    label: "Reproducción automática, feeds infinitos o falta de puntos naturales para parar"
+  penalties:
+    label: "Penalizaciones por no jugar (pérdida de progreso, temporizadores de energía)"
+  characters:
+    label: Personajes sin IA que actúan como amigos (mascotas, guías, compañeros con guion)
+    help: >
+      Personajes con diálogos escritos por personas. Ser simpático está bien, y recordar el progreso o misiones
+      anteriores es un dato de juego normal. El problema es la presión: "te he echado de menos", culpa cuando el
+      niño se va, o un personaje que se pone triste si el niño no juega. Eso es diseño manipulador, que el derecho de
+      consumo ya prohíbe frente a los niños, con o sin IA.
+  leaderboards:
+    label: "Rankings públicos de niños"
+  variable_rewards:
+    label: "Recompensas sorpresa pensadas para que los niños sigan jugando"
+  strangers:
+    label: "Contacto de personas de fuera de la clase o del grupo del niño"
+  chat:
+    label: "Chat de texto libre entre niños"
+  voice_video:
+    label: "Chat de voz, vídeo o retransmisiones en directo"
+  ugc:
+    label: "Contenidos que los niños comparten con otros"
+  multiplayer:
+    label: "Jugar con niños de otras clases o centros"
+  emotion:
+    label: Reconocimiento de emociones (IA que lee sentimientos en la cara, la voz o el comportamiento)
+    help: >
+      Un sistema de reconocimiento de emociones es un sistema de IA que identifica o infiere emociones o intenciones
+      de personas a partir de sus datos biométricos (Reglamento de IA, art. 3, punto 39). Está prohibido en la
+      educación (art. 5, apartado 1, letra f)). Que un niño elija un emote, un emoji o el estado de ánimo de su avatar
+      no es reconocimiento de emociones: decide el niño y no se infiere nada. Si los niños se envían esos emotes, es
+      comunicación (véase "Contacto y comunicación").
+  companions:
+    label: Personajes de IA que actúan como amigos o recuerdan conversaciones
+    help: >
+      La propuesta EU KIDS Act define "compañero de IA" como un sistema de IA que ofrece interacción o compañía
+      continuada y personalizada que simula o facilita una relación social, emocional o interpersonal con el usuario
+      (art. 3, apartado 5, letra c)). Sus reglas (art. 14) solo se aplican a la IA. Los personajes con guion son otra
+      pregunta. Guardar el progreso o las misiones anteriores no es memoria de conversaciones.
+  genai:
+    label: IA generativa con la que hablan los niños o que crea contenidos para ellos
+    help: >
+      El art. 50 del Reglamento de IA se aplica a toda IA que hable con personas o cree contenidos. Las reglas de la
+      propuesta EU KIDS Act para los "chatbots conversacionales generales" (art. 3, apartado 5, letra d), y art. 14)
+      excluyen la IA limitada a una tarea educativa específica, pero CSEF aplica las mismas salvaguardias a la IA
+      educativa.
+  ai_decisions:
+    label: IA que decide notas, niveles o acceso sin que una persona lo revise
+    help: >
+      Es de alto riesgo en el Reglamento de IA cuando la IA evalúa resultados de aprendizaje, orienta el aprendizaje
+      o decide el acceso o el nivel educativo (anexo III, punto 3). Las reglas de puntuación escritas por personas no
+      son IA.
+  ai_training:
+    label: Entrenar modelos de IA con datos de niños
+    help: Usar respuestas, textos, voz o comportamiento de los niños para entrenar o ajustar cualquier modelo de IA, propio o de un proveedor.
+  biometrics:
+    label: "Identificación por cara, voz o huella, supervisión de exámenes por cámara"
+  third_parties:
+    label: "Compartir datos de niños con una empresa sin acuerdo firmado"
+  transfers:
+    label: "Datos de niños almacenados o tratados fuera de Europa"
+  test_data:
+    label: "Datos reales de niños en desarrollo, pruebas o demostraciones"
+  analytics:
+    label: "Grabación de sesiones, mapas de calor o analítica de terceros en pantallas de niños"
+  location:
+    label: "Recoger la ubicación de los niños"
+  research:
+    label: "Usar datos de aprendizaje para investigación o estudios de producto"
+  access_control:
+    label: "Datos de alumnos legibles sin reglas de acceso (p. ej. tablas de base de datos abiertas)"
+  forbid_sets:
+    label: ¿Qué tipos de paquetes no deben aparecer nunca en sus productos?
+    help: Los SDK de publicidad ya los bloquea el marco.
+    options:
+      session_replay:
+        label: "Grabación de sesiones y mapas de calor (Hotjar, FullStory, Clarity, LogRocket, Smartlook)"
+      product_analytics:
+        label: "Analítica de producto de terceros (Mixpanel, Amplitude, Segment, Heap)"
+      social_sdks:
+        label: "SDK de redes sociales (Facebook, TikTok, Snapchat)"
+      fingerprinting:
+        label: "Huella digital del dispositivo (fingerprinting)"
+  forbid_extra:
+    label: "Otros nombres de paquetes que nunca usan (uno por línea)"
+  phrase_sets:
+    label: Bloquear frases de presión y culpa en estos idiomas
+    options:
+      en:
+        label: "Inglés"
+      pt:
+        label: "Portugués (PT)"
+      es:
+        label: "Español"
+      fr:
+        label: "Francés"
+      de:
+        label: "Alemán"
+      it:
+        label: "Italiano"
+      sv:
+        label: "Sueco"
+  phrase_extra:
+    label: "Otras frases que nunca deben aparecer en textos para niños (una por línea)"
+  own_rules:
+    label: ¿Hay algo más que nunca hagan? (uno por línea, en lenguaje sencillo)
+    help: Cada línea se convierte en una regla que una persona revisa en cada revisión.
+  review_every_days:
+    label: ¿Con qué frecuencia debe revisar cada producto su manifiesto?
+    options:
+      "90":
+        label: "Cada 3 meses"
+      "180":
+        label: "Cada 6 meses"
+      "365":
+        label: "Cada año"
+  agent_instructions:
+    label: ¿Deben todos los repositorios dar estas reglas a las herramientas de IA de programación (CLAUDE.md, AGENTS.md, reglas de Cursor)?
+    options:
+      "yes":
+        label: "Sí"
+      "no":
+        label: "No"
+  waiver_days:
+    label: ¿Cuánto puede durar una excepción antes de tener que renovarse?
+    options:
+      "30":
+        label: "30 días"
+      "90":
+        label: "90 días"
+      "180":
+        label: "180 días"

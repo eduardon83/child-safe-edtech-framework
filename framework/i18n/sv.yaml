@@ -1,0 +1,425 @@
+# Svenska. Machine translation of the CSEF questionnaire form, pending review by a native speaker.
+# Legal wording is paraphrased with the article reference; see the official Swedish text on EUR-Lex.
+
+language: Svenska
+code: sv
+order: 6
+machine_translated: true
+
+ui:
+  lang_label: Språk
+  about: Om CSEF
+  hero_title: Bestäm företagets gränser för barns säkerhet
+  lead_new: Svara på frågorna. Utifrån dem skapas regelfilen, rapporterna och policyn för medarbetarna.
+  lead_edit: "Du redigerar version {v}. Ändra det du behöver och generera igen."
+  lead_tail: Det tar ungefär 15 minuter. Du behöver inte vara utvecklare.
+  get1_t: Policy för medarbetare
+  get1_d: På enkelt språk, för hela organisationen.
+  get2_t: Rapport om gränser
+  get2_d: Varje svar jämfört med lagen, för ledningen och juridisk rådgivning.
+  get3_t: Regelfil
+  get3_d: Era regler, kontrollerade automatiskt i varje projekt.
+  get4_t: För utvecklare
+  get4_d: Instruktioner för AI-verktyg för kodning och en färdig automatisk kontroll.
+  privacy_local: Allt körs på den här datorn. Ingenting skickas någonstans.
+  privacy_web: Svaren stannar i den här webbläsaren. Ingenting skickas någonstans. Paketet skapas på din enhet.
+  output_note: Dokumenten i paketet skapas på engelska tills vidare.
+  mt_note: Maskinöversättning, ännu inte granskad av någon med svenska som modersmål.
+  steps: Steg
+  so_far: Era svar hittills
+  c_red: Röda linjer
+  c_amber: Bara med godkännande
+  c_covered: Täcks av lagen eller nivån
+  c_gap: Rekommenderat, inte valt
+  c_na: Inte tillämpligt
+  generate: Generera policypaketet
+  save: Spara answers.json
+  load: Läs in answers.json
+  legend_law: krävs i dag
+  legend_coming: förslaget till EU KIDS Act, officiella riktlinjer (nivå 2)
+  legend_rec: forskning och experter (nivå 3)
+  tier1: Lag
+  tier2: På väg
+  tier3: Rekommenderat
+  ch_never: Aldrig (röd linje)
+  ch_approval: Bara med skriftligt godkännande
+  ch_level: Följ vår nivå
+  rules: Regler
+  foot: "Child-Safe EdTech Framework (CSEF) v{v}. Bygg säkra saker för barn. Tillsammans. Ett ramverk, inte en standard. Inte juridisk rådgivning."
+  hint_red_law: Krävs redan enligt lag. En röd linje blockerar också svaga signaler.
+  hint_red_req: Röd linje. Krävs också på er nivå.
+  hint_red_above: Röd linje utöver lagen och er nivå.
+  hint_amber_req: Reglerna gäller redan på er nivå. Godkännandet dokumenterar hur ni följer dem; det stänger inte av dem.
+  hint_amber: Bara tillåtet med ett skriftligt beslut.
+  hint_cov_law: Täcks av lagen.
+  hint_cov: Täcks av er nivå.
+  hint_gap: "Inte valt. Rekommenderas på nivå {n}."
+  loaded: Svaren har lästs in
+  loaded_v: " (version {v})"
+  loaded_tail: ". Ändra det du behöver och generera igen."
+  bad_file: Den filen är inte en answers.json.
+  st_engine: Läser in policymotorn. Första gången kan det ta upp till en minut.
+  st_rules: Läser in CSEF-reglerna...
+  st_gen: Skapar ert paket...
+  fix: "Rätta följande:"
+  ready: "Version {v} är klar."
+  dl_kit: Ladda ner paketet (.zip)
+  open_policy: Öppna policyn för medarbetare
+  open_report: Öppna rapporten om gränser
+  pdf_tip: Om du vill ha en PDF öppnar du ett dokument och skriver ut det som PDF. Zip-filen innehåller också Word-versioner.
+  changes: "Ändringar sedan förra versionen:"
+  check_first: "Kontrollera detta först:"
+  gen_fail: Paketet kunde inte skapas i den här webbläsaren. Spara svaren och försök igen senare, eller använd kommandoradsverktyget.
+  served_written: sparad i
+  served_changes: "Ändringar:"
+  served_unreach: Kunde inte nå det lokala verktyget. Körs det fortfarande?
+
+sections:
+  org:
+    title: "Er organisation"
+    intro: "Vilka ni är och vem som ansvarar för reglerna."
+  products:
+    title: "Era produkter"
+    intro: "Vad ni bygger och för vem. Det avgör nästa frågor."
+  level:
+    title: "Er ambitionsnivå"
+    intro: "Den lägsta nivå som varje produkt kontrolleras mot. En produkt kan välja en högre nivå, aldrig en lägre."
+  boundaries:
+    title: Era gränser
+    intro: >
+      Ange för varje metod hur strikta ni är. "Aldrig" gör den till en röd linje: kontrollen blockerar den på alla
+      nivåer, även vid svaga signaler. "Bara med godkännande" betyder att en utsedd person måste godkänna den
+      skriftligt. "Följ vår nivå" betyder att ramverkets regler för er nivå gäller.
+  tools:
+    title: "Verktyg, paket och ord"
+    intro: "Konkreta saker som kontrollen kan hitta i koden."
+  process:
+    title: "Hur ni arbetar"
+    intro: ""
+
+groups:
+  money:
+    title: "Pengar och reklam"
+  attention:
+    title: "Uppmärksamhet och press"
+  contact:
+    title: "Kontakt och kommunikation"
+  ai:
+    title: Artificiell intelligens
+    intro: >
+      De här frågorna gäller bara AI-system. AI-förordningen (art. 3.1) definierar ett AI-system som ett
+      maskinbaserat system som utifrån den indata det tar emot härleder hur det ska generera utdata som prognoser,
+      innehåll, rekommendationer eller beslut. Fasta regler, manusbaserade dialoger och val som skrivits av människor
+      är inte AI. Figurer utan AI finns under "Uppmärksamhet och press".
+  data:
+    title: "Data och integritet"
+
+questions:
+  org_name:
+    label: "Organisationens namn"
+  pack_id:
+    label: Kort id för ert paket (2 till 8 små bokstäver, t.ex. acme)
+    help: Används i filnamn och regel-id, som ACME-POL-01.
+  jurisdictions:
+    label: Länder där era produkter används
+    help: EU-rätten gäller alltid. Nationella paket lägger till landets regler där sådana finns.
+    options:
+      EU:
+        label: "Europeiska unionen (gäller alltid)"
+      PT:
+        label: "Portugals nationella paket"
+  scope:
+    label: "Vilka produkter omfattas av policyn?"
+    default: "Alla våra produkter som används av eller är gjorda för barn"
+  owner:
+    label: "Vem ansvarar för policyn? (en roll, t.ex. vd)"
+    default: "Vd"
+  approvers:
+    label: "Vem kan godkänna undantag och känsliga funktioner? (roller)"
+    default: "Dataskyddsombudet eller vd"
+  contact:
+    label: "Vart ska medarbetare skicka frågor? (en roll, kanal eller delad brevlåda)"
+    default: "Dataskyddsombudet"
+  profiles:
+    label: Vilken sorts produkter gör ni?
+    options:
+      A:
+        label: "Lärospel"
+      B:
+        label: "Spelbaserade applikationer och programvara (plattformar, bedömning, simuleringar)"
+      C:
+        label: "Spelifierade applikationer (poäng, märken, sviter ovanpå lärandet)"
+  age_bands:
+    label: Vilka åldrar använder era produkter?
+    options:
+      B1:
+        label: "3 till 5"
+      B2:
+        label: "6 till 9"
+      B3:
+        label: "10 till 12"
+      B4:
+        label: "13 till 15"
+      B5:
+        label: "16 till 17"
+  buyers:
+    label: Vem väljer eller betalar för era produkter?
+    options:
+      schools:
+        label: "Skolor eller skolhuvudmän"
+      families:
+        label: "Familjer"
+      both:
+        label: "Båda"
+      other:
+        label: "Inget av dessa (gratis, offentligt finansierat, sponsrat eller annat)"
+        desc: >
+          Reglerna ändras inte: vem som betalar avgör inte om barn skyddas. Förslaget till EU KIDS Act omfattar spel
+          oavsett om tjänsten är gratis, betald eller har blandad ersättning (skäl 12). Rapporten lägger till en
+          anteckning om undantaget för utbildning.
+  features:
+    label: Vilka av dessa mekanismer har era produkter, eller kan få snart?
+    help: >
+      Välj allt som gäller nu eller under nästa år. Frågor om mekanismer ni inte väljer hoppas över. Varje mekanism
+      visar vad den betyder och var den officiella formuleringen kommer ifrån.
+    options:
+      accounts:
+        label: "Konton eller inloggning för barn"
+        desc: >
+          Barn loggar in eller har en profil med personuppgifter. Enligt GDPR (art. 8) ges eller godkänns samtycket av
+          en förälder när barnet är under landets åldersgräns för digitalt samtycke.
+      multiplayer:
+        label: "Flerspelarläge eller att spela med andra"
+        desc: >
+          Barn delar en spelsession med andra användare, samtidigt eller turvis. Förslaget till EU KIDS Act kräver en
+          hög nivå av integritet, säkerhet och trygghet i kontakter mellan minderåriga och andra mottagare av spelet
+          (art. 15.1 c).
+      chat:
+        label: "Chatt eller meddelanden"
+        desc: >
+          Barn skickar meddelanden till andra: fritext, röst eller färdiga meddelanden, emojier och emotes. Färdiga
+          emotes är fortfarande meddelanden. Kontaktregler: förslaget till EU KIDS Act, art. 12 samt art. 15.1 c och
+          15.2.
+      ugc:
+        label: "Innehåll som barn skapar och delar (teckningar, inlägg, uppladdningar)"
+        desc: >
+          Allt ett barn skapar som andra kan se. Lagrat innehåll ska kunna anmälas (DSA, art. 16). Förslaget till EU
+          KIDS Act räknar det som beroendeframkallande design att uppmuntra eller belöna minderåriga för att dela
+          innehåll med ett obestämt antal mottagare (art. 9.2 c).
+      social:
+        label: "Sociala funktioner (vänner, profiler, gillamarkeringar, kommentarer)"
+        desc: >
+          Vänlistor, offentliga profiler, gillamarkeringar, följare, kommentarer. Om det sociala är huvudsyftet kan
+          tjänsten vara en social nätverkstjänst online (förslaget till EU KIDS Act, art. 3.2), med de strängaste
+          skyldigheterna.
+      notifications:
+        label: "Aviseringar"
+        desc: >
+          Meddelanden till barnet utanför aktiviteten: push, e-post, märken. Förslaget till EU KIDS Act riktar sig mot
+          aviseringar som inte utlöses av, eller hänger direkt ihop med, den minderåriges interaktion eller aktivitet i
+          tjänsten (art. 9.2 b).
+      streaks:
+        label: "Sviter (dagar i rad)"
+        desc: >
+          Att räkna eller belöna att man kommer tillbaka regelbundet. Förslaget till EU KIDS Act riktar sig mot att
+          uppmuntra användning vid fasta tider eller oftare, även genom straff eller förlorade förmåner för den som inte
+          kommer tillbaka (art. 9.2 d).
+      leaderboards:
+        label: "Topplistor eller rankningar"
+        desc: >
+          Listor som jämför barn efter poäng, snabbhet eller framsteg. Lagen nämner dem inte; CSEF ser dem som social
+          jämförelse och kräver listor bara för klassen och med smeknamn (regel C-ENG-02).
+      purchases:
+        label: "Köp, prenumerationer eller saker i appen"
+        desc: >
+          Allt som betalas med pengar eller med virtuell valuta köpt för pengar. Den minderårige ska veta, i realtid,
+          att det är en ekonomisk transaktion, och virtuell valuta ska visa sitt värde i riktig valuta (förslaget till
+          EU KIDS Act, art. 13.1).
+      assessment:
+        label: "Prov, betyg eller uppföljning av framsteg"
+        desc: Poäng, nivåer, betyg eller rapporter om vad ett barn kan. Det gäller uppgifterna och hur de används, med eller utan AI.
+      ai_generative:
+        label: "Generativ AI (chattbotar, handledare, text, bilder eller röst skapade av AI)"
+        desc: >
+          Ett AI-system som skapar text, bilder, ljud eller video. Människor ska få veta när de interagerar med AI, och
+          innehåll skapat av AI ska märkas (AI-förordningen, art. 50). Dialog som skrivits av människor är inte AI.
+      ai_assessment:
+        label: "AI som rättar eller bedömer elever"
+        desc: >
+          AI som används för att utvärdera läranderesultat är hög risk enligt AI-förordningen (bilaga III, punkt 3 b),
+          med skyldigheter från december 2027.
+      ai_adaptive:
+        label: "AI som anpassar nivåer, vägar eller tillgång"
+        desc: >
+          AI som styr lärprocessen eller avgör vilken utbildningsnivå en elev ska få är hög risk enligt
+          AI-förordningen (bilaga III, punkt 3 b och c). Fasta regler som skrivits av människor är inte AI.
+      recommender:
+        label: "Rekommendationer av innehåll"
+        desc: >
+          Ett system som föreslår eller rangordnar innehåll för barnet: ett rekommendationssystem i DSA:s mening
+          (art. 3 s). Strängare regler för sociala plattformar och videoplattformar i förslaget till EU KIDS Act
+          (art. 10).
+      none:
+        label: "Inget av dessa"
+        desc: >
+          Alla frågor om dessa mekanismer hoppas över och regelfilen anger ingen av dem. Kontrollen läser fortfarande
+          koden: hittar den en (till exempel ett SDK för chatt eller reklam) markeras den som odeklarerad, så att
+          inget missas av misstag.
+  minimum_level:
+    label: Vilken lägsta nivå väljer ni?
+    options:
+      "1":
+        label: "Nivå 1, Lagkrav: det lagen kräver i dag"
+      "2":
+        label: "Nivå 2, Framtidssäkrat: även det som är på väg (förslaget till EU KIDS Act, officiella riktlinjer)"
+      "3":
+        label: "Nivå 3, God praxis: även det som forskning och experter rekommenderar"
+  ads:
+    label: "Reklam eller reklamspårning som visas för barn"
+  lootboxes:
+    label: "Betalda slumpmässiga belöningar (lootlådor, betalda kortpaket, gacha)"
+  pay_to_win:
+    label: "Att betala för att vinna, hoppa över lärandet eller komma före andra"
+  currency:
+    label: "Virtuella mynt eller ädelstenar som barn kan köpa"
+  purchases:
+    label: "Köp som barn själva kan starta"
+  commercial_learning:
+    label: "Varumärken, sponsorer eller produktplacering i lärandeaktiviteter"
+  dark_patterns:
+    label: "Påtryckande design (nedräkningar, falsk brist, skuldbeläggande meddelanden, förkryssade rutor)"
+  streaks:
+    label: "Sviter som barn kan förlora"
+  notifications:
+    label: "Aviseringar som får barn att komma tillbaka"
+  endless:
+    label: "Automatisk uppspelning, oändliga flöden eller inget naturligt ställe att sluta"
+  penalties:
+    label: "Straff för att inte spela (förlorade framsteg, energitimer)"
+  characters:
+    label: Figurer utan AI som beter sig som en vän (maskotar, guider, figurer med manus)
+    help: >
+      Figurer med dialog som skrivits av människor. Att vara vänlig är bra, och att minnas framsteg eller tidigare
+      uppdrag är vanliga speldata. Problemet är press: "jag har saknat dig", skuld när barnet slutar, eller en figur
+      som blir ledsen om barnet inte spelar. Det är manipulativ design, som konsumenträtten redan förbjuder mot barn,
+      med eller utan AI.
+  leaderboards:
+    label: "Offentliga rankningar av barn"
+  variable_rewards:
+    label: "Överraskningsbelöningar som är gjorda för att få barn att fortsätta spela"
+  strangers:
+    label: "Kontakt från personer utanför barnets klass eller grupp"
+  chat:
+    label: "Chatt med fritext mellan barn"
+  voice_video:
+    label: "Röstchatt, video eller livesändningar"
+  ugc:
+    label: "Innehåll som barn delar med andra"
+  multiplayer:
+    label: "Att spela med barn från andra klasser eller skolor"
+  emotion:
+    label: Känsloigenkänning (AI som läser känslor i ansikte, röst eller beteende)
+    help: >
+      Ett system för känsloigenkänning är ett AI-system som identifierar eller härleder personers känslor eller
+      avsikter utifrån deras biometriska uppgifter (AI-förordningen, art. 3.39). Det är förbjudet inom utbildning
+      (art. 5.1 f). När ett barn väljer en emote, en emoji eller sin avatars humör är det inte känsloigenkänning:
+      barnet bestämmer och ingenting härleds. Om barn skickar sådana emotes till varandra är det kommunikation (se
+      "Kontakt och kommunikation").
+  companions:
+    label: AI-figurer som beter sig som en vän eller minns samtal
+    help: >
+      Förslaget till EU KIDS Act definierar en "AI-följeslagare" som ett AI-system som ger varaktig, personlig
+      interaktion eller sällskap som efterliknar eller underlättar en social, känslomässig eller mellanmänsklig
+      relation med användaren (art. 3.5 c). Reglerna (art. 14) gäller bara AI. Figurer med manus är en annan fråga.
+      Att spara framsteg eller tidigare uppdrag är inte samtalsminne.
+  genai:
+    label: Generativ AI som barn pratar med eller som skapar innehåll åt dem
+    help: >
+      Art. 50 i AI-förordningen gäller all AI som pratar med människor eller skapar innehåll. Reglerna i förslaget
+      till EU KIDS Act om "allmänna konversationschattbotar" (art. 3.5 d och art. 14) undantar AI som är begränsad till
+      en särskild utbildningsuppgift, men CSEF tillämpar samma skyddsåtgärder på AI för lärande.
+  ai_decisions:
+    label: AI som avgör betyg, nivåer eller tillgång utan att en människa kontrollerar
+    help: >
+      Det är hög risk enligt AI-förordningen när AI utvärderar läranderesultat, styr lärandet eller avgör tillgång
+      eller utbildningsnivå (bilaga III, punkt 3). Poängregler som skrivits av människor är inte AI.
+  ai_training:
+    label: Att träna AI-modeller med barns uppgifter
+    help: Att använda barns svar, texter, röster eller beteende för att träna eller finjustera en AI-modell, er egen eller en leverantörs.
+  biometrics:
+    label: "Identifiering med ansikte, röst eller fingeravtryck, övervakning av prov via webbkamera"
+  third_parties:
+    label: "Att dela barns uppgifter med ett företag utan undertecknat avtal"
+  transfers:
+    label: "Barns uppgifter som lagras eller behandlas utanför Europa"
+  test_data:
+    label: "Riktiga barns uppgifter i utveckling, test eller demonstrationer"
+  analytics:
+    label: "Sessionsinspelning, värmekartor eller tredjepartsanalys på barns skärmar"
+  location:
+    label: "Att samla in barns position"
+  research:
+    label: "Att använda lärandedata för forskning eller produktstudier"
+  access_control:
+    label: "Elevuppgifter som kan läsas utan åtkomstregler (t.ex. öppna databastabeller)"
+  forbid_sets:
+    label: Vilka typer av paket får aldrig finnas i era produkter?
+    help: Reklam-SDK:er blockeras redan av ramverket.
+    options:
+      session_replay:
+        label: "Sessionsinspelning och värmekartor (Hotjar, FullStory, Clarity, LogRocket, Smartlook)"
+      product_analytics:
+        label: "Produktanalys från tredje part (Mixpanel, Amplitude, Segment, Heap)"
+      social_sdks:
+        label: "SDK:er från sociala nätverk (Facebook, TikTok, Snapchat)"
+      fingerprinting:
+        label: "Fingeravtryck av enheten (fingerprinting)"
+  forbid_extra:
+    label: "Andra paketnamn som ni aldrig använder (ett per rad)"
+  phrase_sets:
+    label: Blockera fraser med press och skuld på dessa språk
+    options:
+      en:
+        label: "Engelska"
+      pt:
+        label: "Portugisiska (PT)"
+      es:
+        label: "Spanska"
+      fr:
+        label: "Franska"
+      de:
+        label: "Tyska"
+      it:
+        label: "Italienska"
+      sv:
+        label: "Svenska"
+  phrase_extra:
+    label: "Andra fraser som aldrig får förekomma i text till barn (en per rad)"
+  own_rules:
+    label: Finns det något mer som ni aldrig gör? (en per rad, på enkelt språk)
+    help: Varje rad blir en regel som en person kontrollerar vid varje granskning.
+  review_every_days:
+    label: Hur ofta ska varje produkt gå igenom sitt manifest?
+    options:
+      "90":
+        label: "Var tredje månad"
+      "180":
+        label: "Var sjätte månad"
+      "365":
+        label: "Varje år"
+  agent_instructions:
+    label: Ska alla repon ge dessa regler till AI-verktyg för kodning (CLAUDE.md, AGENTS.md, Cursor-regler)?
+    options:
+      "yes":
+        label: "Ja"
+      "no":
+        label: "Nej"
+  waiver_days:
+    label: Hur länge får ett undantag gälla innan det måste förnyas?
+    options:
+      "30":
+        label: "30 dagar"
+      "90":
+        label: "90 dagar"
+      "180":
+        label: "180 dagar"
