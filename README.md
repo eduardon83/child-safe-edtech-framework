@@ -21,7 +21,7 @@ rules a team can check in code, in CI and in review.
 > Until v0.5 it was called the Child-Safe EdTech Standard (CSES). See [why we renamed it](framework/00-introduction.md#a-framework-not-a-standard).
 
 Repository: <https://github.com/eduardon83/child-safe-edtech-framework> ·
-Site and Pack Builder: <https://eduardon83.github.io/child-safe-edtech-framework/>
+Site and Pack Builder: <https://csef.kendirstudios.pt/>
 
 ## What you get
 
@@ -128,13 +128,13 @@ It writes a kit to share:
 
 Answers can only make rules stricter. "Only with approval" never switches off a rule that applies at your
 level; the report says so. Try it with `examples/policy/answers.json` (fictional). A static copy of the form
-is on the [site](https://eduardon83.github.io/child-safe-edtech-framework/questionnaire/); there it downloads
+is on the [site](https://csef.kendirstudios.pt/questionnaire/); there it downloads
 `answers.json` for `--batch` instead of generating files. Nothing leaves your computer in either mode.
 
 ### Your organisation's pack, by hand
 
 
-Open the [Pack Builder](https://eduardon83.github.io/child-safe-edtech-framework/pack-builder/), choose your
+Open the [Pack Builder](https://csef.kendirstudios.pt/pack-builder/), choose your
 minimum level and no-gos, add your rules, and publish the pack to your repository. Then list it in each
 product's `csef.yaml` under `packs:`. See [framework/02-packs.md](framework/02-packs.md).
 
