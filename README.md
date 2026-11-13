@@ -127,9 +127,12 @@ It writes a kit to share:
 | `answers.json` | The policy owner. Input for the next run. |
 
 Answers can only make rules stricter. "Only with approval" never switches off a rule that applies at your
-level; the report says so. Try it with `examples/policy/answers.json` (fictional). A static copy of the form
-is on the [site](https://csef.kendirstudios.pt/questionnaire/); there it downloads
-`answers.json` for `--batch` instead of generating files. Nothing leaves your computer in either mode.
+level; the report says so. Try it with `examples/policy/answers.json` (fictional).
+
+**No installation needed:** the questionnaire on the [site](https://csef.kendirstudios.pt/questionnaire/)
+makes the same kit (Markdown, HTML, Word, guardrails file, agent instructions, CI workflow) inside the
+browser and downloads it as a zip. It runs the same Python code with [Pyodide](https://pyodide.org), loaded
+from the jsDelivr CDN; the answers never leave the browser. For PDF, open a document and print it.
 
 ### Your organisation's pack, by hand
 

@@ -455,6 +455,7 @@ def generate(std, packs) -> dict[Path, str]:
     files[ROOT / "docs" / "pack-builder" / "index.html"] = tpl.replace("/*CATALOGUE*/null", cat_json)
     import policy
     files[ROOT / "docs" / "questionnaire" / "index.html"] = policy.render_form(policy.Q(ROOT), None, False, home="../")
+    files[ROOT / "docs" / "questionnaire" / "csef-bundle.json"] = policy.web_bundle(ROOT)
     files[ROOT / "docs" / "index.html"] = (LANDING.replace("{version}", std.version).replace("{rules}", str(len(rules)))
                                            .replace("{head}", brand.head("favicon.svg"))
                                            .replace("{brand_css}", brand.tokens_css() + brand.BASE_CSS)

@@ -43,6 +43,7 @@ except ImportError:  # pragma: no cover
     sys.exit("CSEF policy needs PyYAML: pip install pyyaml")
 
 TOOL = "csef-policy"
+PYODIDE_URL = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/"
 REPO_URL = "https://github.com/eduardon83/child-safe-edtech-framework"
 ROOT = scan.default_root()
 LEVEL_NAMES = {1: "Legal baseline", 2: "Forward-compliant", 3: "Best practice"}
@@ -783,6 +784,17 @@ jobs:
 
 def kit_readme(a: dict, pack: dict, files: list[str]) -> str:
     pid = a["pack_id"]
+    rows = [("staff-policy", "staff-policy.*", "Everyone", "The policy in plain language. Share it with all staff and suppliers."),
+            ("boundaries-report", "boundaries-report.*", "Management, DPO, legal counsel",
+             "Your answers, matched with the law and recommendations."),
+            (f"{pid}.yaml", f"{pid}.yaml", "Product teams", "The guardrails file the scanner applies."),
+            ("agent-instructions.md", "agent-instructions.md", "Developers",
+             "Rules to paste into CLAUDE.md, AGENTS.md or Cursor rules."),
+            ("csef-check.yml", "csef-check.yml", "Developers", "GitHub Actions workflow that runs the check with your pack."),
+            ("csef-review.zip", "csef-review.zip", "Anyone using Claude", "The Claude skill for reviews."),
+            ("answers.json", "answers.json", "Policy owner", "Your answers. Use them to change the policy later.")]
+    table = "\n".join(f"| `{shown}` | {who} | {what} |" for key, shown, who, what in rows
+                      if any(f == key or f.startswith(key + ".") for f in files))
     return f"""# {a['org_name']} child-safety policy kit
 
 Version {pack['pack']['version']}, {pack['pack']['date']}. Made with the CSEF policy questionnaire.
@@ -791,13 +803,7 @@ Version {pack['pack']['version']}, {pack['pack']['date']}. Made with the CSEF po
 
 | File | For whom | What it is |
 |---|---|---|
-| `staff-policy.*` | Everyone | The policy in plain language. Share it with all staff and suppliers. |
-| `boundaries-report.*` | Management, DPO, legal counsel | Your answers, matched with the law and recommendations. |
-| `{pid}.yaml` | Product teams | The guardrails file the scanner applies. |
-| `agent-instructions.md` | Developers | Rules to paste into CLAUDE.md, AGENTS.md or Cursor rules. |
-| `csef-check.yml` | Developers | GitHub Actions workflow that runs the check with your pack. |
-| `csef-review.zip` | Anyone using Claude | The Claude skill for reviews. |
-| `answers.json` | Policy owner | Your answers. Use them to change the policy later. |
+{table}
 
 ## Use it in a project
 
@@ -811,13 +817,15 @@ Version {pack['pack']['version']}, {pack['pack']['date']}. Made with the CSEF po
 ## Change the policy
 
 Run the questionnaire again with your answers. Everything is regenerated, the version goes up, and the
-report lists what changed:
+report lists what changed.
 
-```bash
-python3 tooling/policy.py --web --answers {pid}-policy/answers.json --out-dir {pid}-policy
-```
+- In the browser: open https://csef.kendirstudios.pt/questionnaire/, choose **Load answers.json**, change
+  what you need and generate the kit again.
+- With the CSEF repository: `python3 tooling/policy.py --web --answers {pid}-policy/answers.json --out-dir {pid}-policy`
 
-Files in this kit: {', '.join(files)}.
+PDF: open the `.html` files in a browser and print to PDF, or use the Word files.
+
+The scanner, the GitHub Action and the Claude skill are at https://github.com/eduardon83/child-safe-edtech-framework.
 
 Not legal advice and not a certification. The Child-Safe EdTech Framework (CSEF) is a framework, not a standard.
 """
@@ -882,6 +890,31 @@ def generate(q: Q, raw: dict, out: Path, formats=("md", "html", "pdf", "docx"), 
     written.append(out / "README.md")
     return {"ok": True, "version": version, "changes": changes, "counts": res["counts"],
             "warnings": res["warnings"], "files": [p.name for p in written], "out_dir": str(out), "pack_id": pid}
+
+
+WEB_BUNDLE_FILES = ["tooling/policy.py", "tooling/scan.py", "tooling/comms.py", "tooling/brand.py",
+                    "framework/rules.yaml", "framework/sources.yaml", "framework/questionnaire.yaml",
+                    "brand/svg/csef-lockup-on-light.svg", "brand/svg/csef-mark-on-light.svg", "brand/web/favicon.svg"]
+WEB_BUNDLE_BINARY = ["brand/png/csef-lockup-on-light.png"]
+
+
+def web_bundle(root: Path = ROOT) -> str:
+    """Everything the in-browser questionnaire needs to run generate() in Pyodide, as one JSON file."""
+    import base64
+    files = {f: (root / f).read_text(encoding="utf-8") for f in WEB_BUNDLE_FILES}
+    for pf in sorted((root / "packs").glob("*.yaml")):
+        files[f"packs/{pf.name}"] = pf.read_text(encoding="utf-8")
+    binary = {f: base64.b64encode((root / f).read_bytes()).decode() for f in WEB_BUNDLE_BINARY if (root / f).exists()}
+    version = scan.load_yaml(root / "framework" / "rules.yaml").get("version", "?")
+    return json.dumps({"version": str(version), "files": files, "binary": binary}, ensure_ascii=False) + "\n"
+
+
+def zip_kit(out: Path, dest: Path, folder: str) -> Path:
+    with zipfile.ZipFile(dest, "w", zipfile.ZIP_DEFLATED) as zf:
+        for f in sorted(out.iterdir()):
+            if f.is_file():
+                zf.write(f, f"{folder}/{f.name}")
+    return dest
 
 
 def load_previous(path: Path | None) -> dict | None:
@@ -1020,7 +1053,10 @@ button,.btn{font:inherit;font-weight:600;border:0;border-radius:12px;padding:12p
 background:var(--c-ink);color:var(--c-paper);text-decoration:none;display:block;text-align:center}
 button:hover{filter:brightness(1.12)}
 button.sec,.btn.sec{background:transparent;color:var(--c-ink);border:1.5px solid var(--c-line)}
-#result{margin-top:12px;font-size:.92rem}#result ul{padding-left:18px;margin:6px 0}#result .err{color:var(--c-coral-t)}
+#result{margin-top:12px;font-size:.92rem}#result .btn{margin-top:8px}#result .small{font-size:.84rem;color:var(--c-ink2)}
+.busy{display:flex;gap:10px;align-items:center}.busy::before{content:"";width:14px;height:14px;border-radius:50%;border:2px solid var(--c-line);border-top-color:var(--c-teal);animation:spin .8s linear infinite;flex:none}
+@keyframes spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){.busy::before{animation:none}}
+button:disabled{opacity:.6;cursor:wait}#result ul{padding-left:18px;margin:6px 0}#result .err{color:var(--c-coral-t)}
 .legend{font-size:.84rem;color:var(--c-ink2)}.legend>span{display:block;margin:6px 0}.legend .tier{margin:0 6px 0 0}
 .foot{color:var(--c-ink2);font-size:.85rem;margin-top:24px}
 """
@@ -1101,14 +1137,73 @@ function update(){
 function payload(){ const out = {}; all().forEach(q => out[q.id] = val(q)); return out; }
 function download(name, text, type){ const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type}));
   a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
-$('#dl') && $('#dl').addEventListener('click', () => download('answers.json', JSON.stringify({answers: payload()}, null, 2), 'application/json'));
+$('#dl').addEventListener('click', () => download('answers.json', JSON.stringify(Object.assign({}, PREVDOC || {}, {answers: payload()}), null, 2), 'application/json'));
+let PREVDOC = PREV.answers ? PREV : null;
 $('#load').addEventListener('change', e => { const f = e.target.files[0]; if (!f) return; f.text().then(t => {
-  try { const d = JSON.parse(t); A = Object.assign({}, d.answers || d); render(); $('#result').textContent = 'Answers loaded.'; }
+  try { const d = JSON.parse(t); A = Object.assign({}, d.answers || d); PREVDOC = d.answers ? d : {answers: d}; render();
+    $('#result').innerHTML = '<p>Answers loaded' + (PREVDOC.pack_version ? ` (version ${esc(PREVDOC.pack_version)})` : '') + '. Change what you need, then generate again.</p>'; }
   catch (x) { $('#result').innerHTML = '<p class="err">That file is not an answers.json.</p>'; } }); });
+const PYODIDE = document.body.dataset.pyodide || '';
+let PY = null;
+async function engine(status){
+  if (PY) return PY;
+  status('Loading the policy engine. The first time takes up to a minute.');
+  const { loadPyodide } = await import(PYODIDE + 'pyodide.mjs');
+  const py = await loadPyodide({ indexURL: PYODIDE });
+  await py.loadPackage(['pyyaml', 'lxml', 'typing-extensions', 'micropip']);
+  status('Loading the CSEF rules...');
+  const b = await (await fetch('csef-bundle.json', {cache: 'no-cache'})).json();
+  for (const [path, text] of Object.entries(b.files)) { const full = '/csef/' + path;
+    py.FS.mkdirTree(full.slice(0, full.lastIndexOf('/'))); py.FS.writeFile(full, text); }
+  for (const [path, b64] of Object.entries(b.binary || {})) { const full = '/csef/' + path;
+    py.FS.mkdirTree(full.slice(0, full.lastIndexOf('/'))); py.FS.writeFile(full, Uint8Array.from(atob(b64), c => c.charCodeAt(0))); }
+  py.globals.set('DOCX_WHEEL', new URL('vendor/python_docx-1.1.2-py3-none-any.whl', location.href).href);
+  try { await py.runPythonAsync('import micropip\nawait micropip.install(DOCX_WHEEL, deps=False)'); }
+  catch (x) { console.warn('Word export unavailable', x); }
+  await py.runPythonAsync('import sys\nsys.path.insert(0, "/csef/tooling")\nimport policy\nQ = policy.Q()');
+  PY = py; return py;
+}
+const GEN_PY = `
+import json, shutil, importlib.util
+from pathlib import Path
+raw = json.loads(RAW); prev = json.loads(PREVJSON) if PREVJSON else None
+out = Path("/out"); shutil.rmtree(out, ignore_errors=True)
+fmts = ("md", "html", "docx") if importlib.util.find_spec("docx") else ("md", "html")
+res = policy.generate(Q, raw, out, formats=fmts, previous=prev, with_skill=False)
+if res["ok"]:
+    policy.zip_kit(out, Path("/kit.zip"), res["pack_id"] + "-policy")
+json.dumps(res)
+`;
+function blobUrl(bytes, type){ return URL.createObjectURL(new Blob([bytes], {type})); }
+async function browserGenerate(r){
+  const status = m => { r.innerHTML = `<p class="busy">${esc(m)}</p>`; };
+  try {
+    const py = await engine(status);
+    status('Generating your kit...');
+    py.globals.set('RAW', JSON.stringify(payload()));
+    py.globals.set('PREVJSON', PREVDOC ? JSON.stringify(PREVDOC) : '');
+    const d = JSON.parse(await py.runPythonAsync(GEN_PY));
+    if (!d.ok) { r.innerHTML = '<p class="err">Please fix:</p><ul>' + d.errors.map(x => `<li class="err">${esc(x)}</li>`).join('') + '</ul>'; return; }
+    PREVDOC = JSON.parse(new TextDecoder().decode(py.FS.readFile('/out/answers.json')));
+    setTimeout(() => r.scrollIntoView({block: 'nearest', behavior: 'smooth'}), 50);
+    const zipUrl = blobUrl(py.FS.readFile('/kit.zip'), 'application/zip');
+    const open = f => blobUrl(py.FS.readFile('/out/' + f), 'text/html');
+    const name = d.pack_id + '-policy-kit.zip';
+    r.innerHTML = `<p><strong>Version ${esc(d.version)}</strong> is ready.</p>` +
+      `<a class="btn" href="${zipUrl}" download="${esc(name)}">Download the kit (.zip)</a>` +
+      `<a class="btn sec" href="${open('staff-policy.html')}" target="_blank" rel="noopener">Open the staff policy</a>` +
+      `<a class="btn sec" href="${open('boundaries-report.html')}" target="_blank" rel="noopener">Open the boundaries report</a>` +
+      '<p class="small">To get a PDF, open a document and print it to PDF. The zip has Word versions too.</p>' +
+      (d.changes.length ? '<p>Changes since the last version:</p><ul>' + d.changes.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>' : '') +
+      (d.warnings.length ? '<p>Check these first:</p><ul>' + d.warnings.map(x => `<li>${esc(x.replace(/\*\*/g, ''))}</li>`).join('') + '</ul>' : '');
+  } catch (x) {
+    console.error(x);
+    r.innerHTML = '<p class="err">The kit could not be generated in this browser. Save your answers and try again later, or use the command line tool.</p>';
+  }
+}
 $('#go').addEventListener('click', async () => {
   const r = $('#result');
-  if (!SERVED) { download('answers.json', JSON.stringify({answers: payload()}, null, 2), 'application/json');
-    r.innerHTML = '<p>Answers downloaded. Generate the kit with:<br><code>python3 tooling/policy.py --answers answers.json --batch</code></p>'; return; }
+  if (!SERVED) { $('#go').disabled = true; try { await browserGenerate(r); } finally { $('#go').disabled = false; } return; }
   r.textContent = 'Generating...';
   try {
     const res = await fetch('/api/generate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload())});
@@ -1129,16 +1224,16 @@ def render_form(q: Q, previous: dict | None, served: bool, home: str | None = No
     ver = (previous or {}).get("pack_version")
     sub = (f"Editing version {html.escape(ver)}. Change any answer and generate again." if ver else
            "Answer the questions. Your guardrails file, reports and staff policy are generated from them.")
-    gen = "Generate the policy kit" if served else "Download answers"
+    gen = "Generate the policy kit"
     privacy = ("Everything runs on this computer. Nothing is sent anywhere." if served else
-               "Your answers stay in this browser. Nothing is sent anywhere.")
+               "Your answers stay in this browser. Nothing is sent anywhere. The kit is made on your device.")
     roles = ["var(--c-teal)", "var(--c-indigo)", "var(--c-sky)", "var(--c-lilac)", "var(--c-coral)", "var(--c-sun)"]
     steps = "".join(f'<li><a href="#s-{s["id"]}"><i style="--r:{roles[i % len(roles)]}"></i>{html.escape(s["title"])}</a></li>'
                     for i, s in enumerate(q.doc["sections"]))
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>CSEF Policy Questionnaire</title>
 <meta name="description" content="Set your organisation's child-safety boundaries and get a staff policy, a report matched with the law and a guardrails file.">
-{brand.head()}<style>{FORM_CSS}</style></head><body data-served="{1 if served else 0}">
+{brand.head()}<style>{FORM_CSS}</style></head><body data-served="{1 if served else 0}" data-pyodide="{PYODIDE_URL}">
 <div class="csef-stripe"></div>
 <header class="top"><a href="{home or REPO_URL}" aria-label="CSEF home">{brand.logo("lockup", 40)}</a>
 <nav aria-label="CSEF"><a href="{home or REPO_URL}">About CSEF</a></nav></header>
@@ -1165,7 +1260,7 @@ def render_form(q: Q, previous: dict | None, served: bool, home: str | None = No
 <div class="stat" style="--d:var(--c-ink2)"><span>Recommended, not adopted</span><b id="c-gap">0</b></div>
 <div class="stat" style="--d:var(--c-line)"><span>Not applicable</span><b id="c-na">0</b></div>
 <button id="go">{gen}</button>
-{"" if not served else '<button id="dl" class="sec" type="button">Save answers.json</button>'}
+<button id="dl" class="sec" type="button">Save answers.json</button>
 <label class="btn sec">Load answers.json
 <input id="load" type="file" accept=".json,application/json" hidden></label>
 <div id="result" aria-live="polite"></div></div>

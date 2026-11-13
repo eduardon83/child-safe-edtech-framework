@@ -348,3 +348,32 @@ def test_brand_in_html_outputs(tmp_path):
                           "--formats", "html"], capture_output=True, text=True)
     assert res.returncode == 0, res.stderr
     assert "csef-brand" in (tmp_path / "k" / "staff-policy.html").read_text()
+
+
+def test_web_bundle_runs_policy_from_its_own_files(tmp_path):
+    """The in-browser questionnaire runs policy.generate from csef-bundle.json; check the bundle is complete."""
+    import base64
+    import policy
+    bundle = json.loads(policy.web_bundle(ROOT))
+    root = tmp_path / "csef"
+    for rel, text in bundle["files"].items():
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        (root / rel).write_text(text, encoding="utf-8")
+    for rel, b64 in bundle["binary"].items():
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        (root / rel).write_bytes(base64.b64decode(b64))
+    code = (
+        "import sys, json; sys.path.insert(0, sys.argv[1]); import policy; from pathlib import Path\n"
+        "raw = json.load(open(sys.argv[2]))['answers']\n"
+        "res = policy.generate(policy.Q(), raw, Path(sys.argv[3]), formats=('md', 'html'), with_skill=False)\n"
+        "assert res['ok'], res\n"
+        "policy.zip_kit(Path(sys.argv[3]), Path(sys.argv[3] + '.zip'), 'kit')\n"
+    )
+    out = tmp_path / "out"
+    r = subprocess.run([sys.executable, "-I", "-c", code, str(root / "tooling"),
+                        str(ROOT / "examples" / "policy" / "answers.json"), str(out)], capture_output=True, text=True)
+    assert r.returncode == 0, r.stderr
+    import zipfile
+    names = zipfile.ZipFile(str(out) + ".zip").namelist()
+    assert "kit/acme.yaml" in names and "kit/staff-policy.html" in names
+    assert "csef-review.zip" not in (out / "README.md").read_text()
