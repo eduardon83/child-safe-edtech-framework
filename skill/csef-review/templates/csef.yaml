@@ -39,8 +39,21 @@ gdpr_role: processor          # controller | processor | joint
 
 # Declare every feature present. Rules that depend on a feature only appear when it is declared.
 # accounts, multiplayer, chat, ugc, social, notifications, streaks, leaderboards, purchases,
-# assessment, ai_generative, ai_assessment, ai_adaptive, recommender
+# assessment, ai_generative, ai_assessment, ai_adaptive, recommender, survey
+# survey = questions to the child or family about the child's life, family, opinions, interests or feelings
+# (surveys, "about me" profiles, mood check-ins, onboarding questions). Quizzes about learning are assessment.
 features: [accounts]
+
+# Required when `survey` is declared (rules CORE-DAT-13 to 18, CORE-SAF-11).
+# survey:
+#   register: docs/survey-register.md   # from templates/survey-register.md: each question, purpose, answers, who sees, retention
+#   answered_by: guardian               # guardian | child_with_guardian | child  (below 10: guardian or child_with_guardian)
+#   teacher_view: aggregate             # aggregate | individual | none
+#   min_group: 5                        # smallest group behind any total a teacher sees (5 or more)
+#   free_text: false                    # true only with a safeguarding route
+#   safeguarding: docs/safeguarding.md  # disclosure route agreed with schools (required if free_text: true)
+#   uses: [personalisation]             # personalisation | teacher | evaluation | research
+#   research_approval: null             # ethics and national approval record (required for evaluation or research)
 
 ai:
   inventory: null             # e.g. docs/ai-inventory.md (required if any ai_* feature)

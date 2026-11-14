@@ -364,7 +364,7 @@ targets:
     axis: COM
     title: Manage digital identity and footprint
     scope: claimed
-    features: [accounts, ugc, social]
+    features: [accounts, ugc, social, survey]
     age_bands: [all]
     target: Learners understand what they leave behind online, how identity is presented and how to manage it.
     why: Managing digital identity is a DigComp competence; footprint management is a DQ competence.
@@ -444,7 +444,7 @@ targets:
     axis: SAF
     title: Understand personal data and privacy choices
     scope: claimed
-    features: [accounts, ai_adaptive, recommender]
+    features: [accounts, ai_adaptive, recommender, survey]
     age_bands: [all]
     target: Learners understand what personal data is, who can see it, how products use it, and how to make privacy choices.
     why: Protecting personal data and privacy is a DigComp competence and a right under the GDPR.
@@ -800,6 +800,21 @@ targets:
     terms: [[hidden curriculum, content review, copy review, dialogue review, curriculo oculto, revisao de conteudos, revisao de dialogos]]
     need: 1
 
+  - id: TRN-08
+    axis: TRN
+    title: Personal questions say why they are asked
+    scope: feature
+    features: [survey]
+    age_bands: [all]
+    target: Before any question about their life, children read or hear why it is asked, who will see the answer and that they can skip it, so answering becomes a lesson in their own data.
+    why: GDPR Art. 12 and 13 ask for clear information at the moment data is collected; DigComp 4.2 asks learners to understand how their data is used. A survey is the most concrete data moment a child meets in a product.
+    look_for: Child-facing lines before each question or set of questions, a visible skip or "prefer not to say", and a way to see one's own answers later.
+    ideas: [Why-we-ask card before the questions, My-answers page the child can open and change]
+    improvement: Add one plain sentence per question set on why it is asked and who sees the answer, test it with the age band, and link it in the survey register.
+    refs: {DIGCOMP3: ["4.2"]}
+    sources: [GDPR, UNCRC-GC25]
+    terms: [[why we ask, why are we asking, we ask this, porque perguntamos, para que serve esta pergunta], [skip, prefer not to say, who sees, only you, saltar, prefiro nao dizer, quem ve, so tu]]
+
   # ================================================================ EDU: educator and family enablement (design lens)
   - id: EDU-01
     axis: EDU
@@ -837,9 +852,9 @@ targets:
     age_bands: [all]
     target: The product or its documentation shows how learning of the targets can be seen (formative checks, learner products, evaluation), not only time on task or points.
     why: Impact and assessment is an EU-DEC criterion; EdTech for Good asks for outcome measurement beyond engagement; the Dutch 3E framework grades evidence strength.
-    look_for: Assessment aligned to goals, evaluation plans or results, without surveillance of learners.
+    look_for: Assessment aligned to goals, evaluation plans or results, without surveillance of learners and without personal questions beyond a survey register.
     ideas: [Exit-ticket after each mission, Portfolio of learner decisions]
-    improvement: Add a light formative check per goal and plan a small evaluation with a partner school.
+    improvement: Add a light formative check per goal and plan a small evaluation with a partner school, collecting evidence under the CSEF rules on personal questions (CORE-DAT-13 to 18).
     refs: {AILIT: ["learner expectations"]}
     sources: [EU-DEC, ET4G2, NL-3E]
     terms: [[assessment, evaluation, evidence of learning, learning outcomes, formative, exit ticket, pilot, piloted, study, avaliacao, evidencias de aprendizagem, formativa, piloto, estudo]]

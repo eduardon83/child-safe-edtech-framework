@@ -167,6 +167,13 @@ sections:
             desc: >
               A system that suggests or ranks content for the child: a "recommender system" in the sense of DSA
               Art. 3(s). Stricter rules for social and video platforms in the EU KIDS Act proposal (Art. 10).
+          - value: survey
+            label: "Questions about the child's life (surveys, profiles, moods)"
+            desc: >
+              Questions to the child or family about the child's life, family, opinions, interests or feelings:
+              surveys, "about me" profiles, mood check-ins, onboarding questions. Quizzes about the learning content
+              are a separate option (tests and grades). Each question needs a purpose (GDPR Art. 5(1)(b)) and a way
+              to skip it.
           - value: none
             label: "None of these"
             desc: >
@@ -429,6 +436,18 @@ sections:
             never: Learning data is used only to run the product, never for research.
             approval: Research use of learning data needs written approval from {approvers} and a separate legal basis.
             level: We follow the law. Research data is separated.
+          - id: personal_questions
+            label: Questions to children or families about the child's life, family or feelings
+            help: >
+              Surveys, "about me" profiles, mood check-ins and onboarding questions; quizzes about the learning content
+              do not count. Data that reveal origin, religion or health, even indirectly, are special category data
+              under GDPR Art. 9 (CJEU C-184/20). National rules may require approval for questionnaires in schools
+              (in Portugal, the DGE's MIME system).
+            rules: [CORE-DAT-13, CORE-DAT-15, CORE-DAT-17]
+            features: [survey]
+            never: We never ask children or families about the child's life, family or feelings.
+            approval: Every personal question needs written approval from {approvers}, a purpose in the survey register and a "prefer not to say" answer.
+            level: Personal questions have a recorded purpose, can be skipped, never touch origin, religion, health or family situation, and teachers see class totals only.
           - id: access_control
             label: Learner data readable without access rules (e.g. open database tables)
             rules: [CORE-SEC-02]

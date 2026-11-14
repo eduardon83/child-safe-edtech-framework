@@ -4,7 +4,7 @@
 
 - **Literacy Compass**, a second lens next to the rules: what does the product teach about digital, media and
   AI literacy, and how do we know? (`framework/04-literacy-compass.md`).
-  - `framework/compass/targets.yaml`: 44 targets on 8 axes. Learner lens (INF, COM, CRE, SAF, PRB, AI), counted
+  - `framework/compass/targets.yaml`: 45 targets on 8 axes. Learner lens (INF, COM, CRE, SAF, PRB, AI), counted
     only when the product claims the axis; design lens (TRN transparency that teaches, EDU educator and family
     enablement), universal or feature-triggered. Each target has framework references (DigComp 3.0, AILit,
     UNESCO), sources, terms in English and European Portuguese, improvement, design ideas and, where relevant,
@@ -25,7 +25,29 @@
   ET4G2, SWE-KP, NL-3E, IEEE3527, IEEE2089, 5R-AICODE, UNICEF-AI, RPF-PRINC; PT-EPM in the Portugal pack.
 - Correction: AIA-OMNIBUS is now law (adopted June 2026, published 24 Jul 2026, in force 27 Jul 2026); AIA
   status notes that Art. 4 now asks providers and deployers to take measures to support staff AI literacy.
-- Rules unchanged (106).
+- **Personal questions**: new manifest feature `survey` (questions to the child or family about the child's
+  life, family, opinions, interests or feelings: surveys, "about me" profiles, mood check-ins, onboarding).
+  - Eight new core rules: CORE-DAT-13 (purpose and skip, no rewards for answering), CORE-DAT-14 (no data about
+    other people), CORE-DAT-15 (no special category or vulnerability questions, including indirect ones, per
+    CJEU C-184/20; needs asked as settings; mood check-ins without history or labels), CORE-DAT-16 (who answers
+    by age; teenagers' opinions private by default), CORE-DAT-17 (teachers see totals of 5 or more, uniform and
+    small cells hidden), CORE-DAT-18 (purpose, deletion, see, correct, delete), CORE-SAF-11 (disclosures in
+    open answers and AI chats reach the school's safeguarding lead), CORE-DES-08 (families without one default
+    model).
+  - `survey` section in `csef.yaml` and six manifest checks (`survey_register_missing`,
+    `survey_teacher_view_individual`, `survey_answered_by_child`, `survey_min_group_low`,
+    `survey_free_text_without_route`, `survey_research_without_approval`); detection patterns in English and
+    European Portuguese for family, third-party and reward-for-answering questions.
+  - `templates/survey-register.md`; review-guide section; code-of-conduct topics; questionnaire mechanism and
+    boundary question in all six form languages.
+  - B-OPS-01 (dashboards show learning, not surveillance) now applies to profile A as well.
+  - Portugal pack: PT-SUR-01 (questionnaires in public schools go through DGE approval, MIME, Despacho
+    15847/2007); sources PT-MIME and PT-LPCJP; notes on CORE-DAT-15, CORE-SAF-11 and B-DAT-01.
+  - New sources: CJEU-ART9, EDPB-DDP (Guidelines 03/2022 on deceptive design patterns), WP216 (anonymisation).
+- **Compass and personal questions joined**: Compass target TRN-08 (personal questions say why they are asked);
+  `survey` makes SAF-02 and COM-05 natural opportunities; evidence collection in pilots and studies follows the
+  personal-question rules, and in Portugal MIME approval (EDU-03, next steps).
+- Rules: 106 to 114. Sources: 66 to 69 (plus 3 in the Portugal pack).
 
 ## v0.8.0 (2026-11-13)
 

@@ -46,7 +46,7 @@ REQUIRED = ["id", "title", "level", "tier", "profiles", "age_bands", "requiremen
             "improvement", "effort", "sources", "detection"]
 FEATURES = {"accounts", "multiplayer", "chat", "ugc", "social", "notifications", "streaks",
             "leaderboards", "purchases", "assessment", "ai_generative", "ai_assessment",
-            "ai_adaptive", "recommender"}
+            "ai_adaptive", "recommender", "survey"}
 ID_RE = re.compile(r"^(CORE|A|B|C|AGE|[A-Z]{2,8})-[A-Z0-9]{2,4}-\d{2}$")
 
 errors: list[str] = []
@@ -599,7 +599,7 @@ def generate(std, packs) -> dict[Path, str]:
         files[sk / "scripts" / t] = (ROOT / "tooling" / t).read_text(encoding="utf-8")
     for t in ("coc-topics.yaml", "questionnaire.yaml"):
         files[sk / "framework" / t] = (ROOT / "framework" / t).read_text(encoding="utf-8")
-    for t in ("csef.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md"):
+    for t in ("csef.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md", "survey-register.md"):
         files[sk / "templates" / t] = (ROOT / "templates" / t).read_text(encoding="utf-8")
     return files
 

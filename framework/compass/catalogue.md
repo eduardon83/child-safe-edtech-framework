@@ -2,7 +2,7 @@
 
 # Literacy Compass: target catalogue
 
-Compass v0.1.0: 44 targets on 8 axes. See [04-literacy-compass.md](../04-literacy-compass.md) for how the Compass works.
+Compass v0.1.0: 45 targets on 8 axes. See [04-literacy-compass.md](../04-literacy-compass.md) for how the Compass works.
 
 Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 
@@ -127,7 +127,7 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 
 ### COM-05 Manage digital identity and footprint
 
-- **Scope:** claimed. **Age bands:** all. **Natural fit for:** accounts, ugc, social.
+- **Scope:** claimed. **Age bands:** all. **Natural fit for:** accounts, ugc, social, survey.
 - **Target:** Learners understand what they leave behind online, how identity is presented and how to manage it.
 - **Why:** Managing digital identity is a DigComp competence; footprint management is a DQ competence.
 - **Look for:** Activities on profiles, avatars, permanence of posts and what others can see.
@@ -192,7 +192,7 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 
 ### SAF-02 Understand personal data and privacy choices
 
-- **Scope:** claimed. **Age bands:** all. **Natural fit for:** accounts, ai_adaptive, recommender.
+- **Scope:** claimed. **Age bands:** all. **Natural fit for:** accounts, ai_adaptive, recommender, survey.
 - **Target:** Learners understand what personal data is, who can see it, how products use it, and how to make privacy choices.
 - **Why:** Protecting personal data and privacy is a DigComp competence and a right under the GDPR.
 - **Look for:** Activities on personal data, permissions, privacy settings, or what the product itself collects.
@@ -462,6 +462,17 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Framework references:** AILIT Engage 2
 - **Sources:** [UNESCO-AIAGE](https://www.unesco.org/en/digital-education), [AILIT](https://ailiteracyframework.org/), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
 
+### TRN-08 Personal questions say why they are asked
+
+- **Scope:** feature (survey). **Age bands:** all.
+- **Target:** Before any question about their life, children read or hear why it is asked, who will see the answer and that they can skip it, so answering becomes a lesson in their own data.
+- **Why:** GDPR Art. 12 and 13 ask for clear information at the moment data is collected; DigComp 4.2 asks learners to understand how their data is used. A survey is the most concrete data moment a child meets in a product.
+- **Look for:** Child-facing lines before each question or set of questions, a visible skip or "prefer not to say", and a way to see one's own answers later.
+- **Improvement:** Add one plain sentence per question set on why it is asked and who sees the answer, test it with the age band, and link it in the survey register.
+- **Ideas:** Why-we-ask card before the questions; My-answers page the child can open and change
+- **Framework references:** DIGCOMP3 4.2
+- **Sources:** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
+
 
 ## EDU: Educator and family enablement
 
@@ -494,8 +505,8 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Scope:** universal. **Age bands:** all.
 - **Target:** The product or its documentation shows how learning of the targets can be seen (formative checks, learner products, evaluation), not only time on task or points.
 - **Why:** Impact and assessment is an EU-DEC criterion; EdTech for Good asks for outcome measurement beyond engagement; the Dutch 3E framework grades evidence strength.
-- **Look for:** Assessment aligned to goals, evaluation plans or results, without surveillance of learners.
-- **Improvement:** Add a light formative check per goal and plan a small evaluation with a partner school.
+- **Look for:** Assessment aligned to goals, evaluation plans or results, without surveillance of learners and without personal questions beyond a survey register.
+- **Improvement:** Add a light formative check per goal and plan a small evaluation with a partner school, collecting evidence under the CSEF rules on personal questions (CORE-DAT-13 to 18).
 - **Ideas:** Exit-ticket after each mission; Portfolio of learner decisions
 - **Framework references:** AILIT learner expectations
 - **Sources:** [EU-DEC](https://op.europa.eu/en/publication-detail/-/publication/1fa0183b-dbbe-11f0-8da2-01aa75ed71a1/language-en), [ET4G2](https://www.unicef.org/digitaleducation/edtech-for-good), [NL-3E](https://www.thuas.com/research/centre-expertise/3e-evidence-based-evaluation-edtech)

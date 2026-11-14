@@ -18,6 +18,19 @@ The scanner finds patterns. These are the places to read by hand. For each, the 
 | Help and report screens | One step away; priority handling; national helplines | CORE-SAF-06, PT-SUP-01 |
 | UI components | Alt text, labels, contrast, keyboard, reduced motion | CORE-ACC-01, CORE-ACC-02 |
 
+## Personal questions (feature `survey`)
+
+| Look at | What to check | Rules |
+|---|---|---|
+| Question sets, onboarding, "about me" screens, mood check-ins, i18n files | Each question is in the survey register with a purpose; "prefer not to say" has equal weight; no rewards for answering | CORE-DAT-13 |
+| Question wording, AI system prompts | Nothing about relatives or friends by name, photo or detail; nothing that reveals origin, religion, health, separation, care, income or parents' jobs, even indirectly; needs asked as settings | CORE-DAT-14, CORE-DAT-15 |
+| Who answers (guardian page, child flow) | Guardian with child below 10; teenagers' opinions private by default | CORE-DAT-16 |
+| Teacher dashboards and exports | Totals only, at least 5 per figure, uniform or small cells hidden, no per-child export, nothing on projected screens | CORE-DAT-17, B-OPS-01 |
+| Storage, deletion, personalisation code | Answers stay in the class instance, are deleted on schedule, never feed ads, AI training or research without approval; child and guardian can see, change, delete | CORE-DAT-18, B-DAT-01 |
+| Open questions, voice answers, AI chats | Help shown next to open questions; disclosures go to the school's safeguarding lead, not to guardians or logs | CORE-SAF-11 |
+| Family-themed content and illustrations | Works with any family; "I don't have one" path; content note and calm exit for loss or separation | CORE-DES-08 |
+| Portugal | Evaluation and research questionnaires in public schools approved by the DGE through MIME | PT-SUR-01 |
+
 ## AI features
 
 | Look at | What to check | Rules |

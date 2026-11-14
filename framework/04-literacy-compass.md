@@ -38,7 +38,7 @@ reuses the evidence for those frameworks (section 7).
 | **Learner**: what learners should know and be able to do | INF Information and media · COM Communication, citizenship and rights · CRE Creation and computational thinking · SAF Safety, privacy and wellbeing · PRB Problem solving and learning to learn · AI AI literacy | When the product **claims** the axis or target (in `csef.yaml` or in its own documents). Otherwise the target is shown as an opportunity, never as a failure. A maths game is not marked down for not teaching media literacy. |
 | **Design**: what the product teaches by how it is built and supported | TRN Transparency that teaches · EDU Educator and family enablement | **Universal** targets apply to every product used by children. **Feature** targets apply when the product has the feature (AI, purchases, chat, recommender), using the same feature names as `csef.yaml`. |
 
-The full list of 44 targets, with sources and framework references, is in the
+The full list of 45 targets, with sources and framework references, is in the
 [target catalogue](compass/catalogue.md). Each target says what to look for, why it matters, how to improve
 and gives design ideas, mostly for games.
 

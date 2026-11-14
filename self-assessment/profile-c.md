@@ -47,7 +47,7 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **A-MOT-05** (SHOULD) Helping and creativity are recognised, not paid. Helping others and cooperating are not paid with points or items. Creative tasks reward creative quality with informative feedback, not mere completion.  
       Evidence: 
-- [ ] **B-OPS-01** (SHOULD) Dashboards show learning, not surveillance. Teacher and guardian dashboards show what helps learning; they avoid minute-by-minute activity logs and are explained to the child.  
+- [ ] **B-OPS-01** (SHOULD) Dashboards show learning, not surveillance. Teacher and guardian dashboards show what helps learning; they avoid minute-by-minute activity logs and are explained to the child. Answers to personal questions follow CORE-DAT-17.  
       Evidence: 
 - [ ] **C-ENG-04** (SHOULD) No variable reward schedules designed for engagement. Rewards are predictable and earned. Random bonus drops and slot-machine style surprises are avoided.  
       Evidence: 

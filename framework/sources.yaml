@@ -413,6 +413,32 @@ sources:
     url: "https://www.frontiersin.org/article/10.3389/fpsyg.2020.00974"
     verified: 2026-11-11
 
+  # ------------------------------------------------------------------ Personal questions (v0.9)
+
+  - id: CJEU-ART9
+    title: "CJEU (Grand Chamber), C-184/20, OT v Vyriausioji tarnybinės etikos komisija, 1 Aug 2022 (EU:C:2022:601); see also C-252/21, Meta Platforms v Bundeskartellamt, 4 Jul 2023"
+    type: law
+    jurisdiction: EU
+    status: "Case law. Data liable to reveal special categories indirectly, by deduction or cross-referencing, fall under GDPR Art. 9"
+    url: "https://curia.europa.eu/juris/liste.jsf?num=C-184/20"
+    verified: 2026-11-14
+
+  - id: EDPB-DDP
+    title: "EDPB Guidelines 03/2022 on deceptive design patterns in social media platform interfaces: how to recognise and avoid them, version 2.0"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 14 Feb 2023. Written for social media, but the patterns (overloading, skipping, stirring, obstructing, fickle, left in the dark) apply to any interface that asks for personal data"
+    url: "https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-032022-deceptive-design-patterns-social-media_en"
+    verified: 2026-11-14
+
+  - id: WP216
+    title: "Article 29 Working Party, Opinion 05/2014 on Anonymisation Techniques (WP216)"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 10 Apr 2014; endorsed by the EDPB. Aggregation and k-anonymity fail when groups are small or every member shares the same value"
+    url: "https://ec.europa.eu/justice/article-29/documentation/opinion-recommendation/files/2014/wp216_en.pdf"
+    verified: 2026-11-14
+
   # ------------------------------------------------------------------ Literacy Compass (v0.9)
   # Competence frameworks, quality frameworks and policy the Literacy Compass maps to.
 

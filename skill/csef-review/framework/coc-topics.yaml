@@ -101,6 +101,20 @@ rules:
     terms: [[cookie, local storage, tracking technolog], [consent, parental consent, guardian consent]]
   CORE-DAT-12:
     terms: [[privacy notice, privacy policy, privacy information], [child friendly, age appropriate, easy to understand, plain language, simple language]]
+  CORE-DAT-13:
+    terms: [[survey, questionnaire, personal questions, questions about, about me], [purpose, prefer not to say, optional, skip, no reward, not required, register]]
+  CORE-DAT-14:
+    terms: [[family members, relatives, friends, third parties, other people, siblings, parents], [not ask, not collect, do not request, fictional, never ask]]
+  CORE-DAT-15:
+    terms: [[religion, ethnic, origin, health, disability, migration, family situation, special categor, sensitive data], [not ask, never ask, not collect, avoid, prohibit]]
+    conflict: [religion, ethnic origin, nationality, family situation, parents' occupation, household income]
+  CORE-DAT-16:
+    terms: [[survey, questionnaire, personal questions], [parent, guardian, with the child, age appropriate, evolving capacit]]
+  CORE-DAT-17:
+    terms: [[teacher, school, dashboard, report], [aggregate, totals, class level, anonymi, minimum group, not individual]]
+    conflict: [individual answers, individual responses, per child answers]
+  CORE-DAT-18:
+    terms: [[answers, responses, survey data, questionnaire data], [purpose, delete, deletion, not share, not used for, access, correct]]
   CORE-COM-01:
     terms: [[advertis, ads, ad network, marketing], [profiling, behavioural, behavioral, targeted, personalised, personalized, minors, children]]
     conflict: [advertising, advertisements, targeted ads, personalised advertising, personalized advertising, ad network]
@@ -285,6 +299,8 @@ rules:
   CORE-DES-06:
     terms: [[celebration, reward animation, fanfare, confetti, win sound], [short, brief, proportional, skippable, skip]]
   CORE-DES-07: {skip: true}
+  CORE-DES-08:
+    terms: [[family, families, home life, daily life], [diverse, diversity, inclusive, all kinds, different shapes, not assume, stereotyp]]
   A-MOT-01:
     terms: [[reward, points, badges, coins, streaks, leaderboards], [stack, layers, too many, excessive, pile, number of rewards]]
   A-MOT-02:
@@ -316,5 +332,7 @@ rules:
     terms: [[images, photos, media, files, screenshots], [protect, not download, not share, moderat, review, private]]
   CORE-CHT-08:
     terms: [[grooming, exploitation, extortion, radicali, safeguarding, child protection], [procedure, escalat, train, report to authorities, law enforcement, hotline, policy]]
+  CORE-SAF-11:
+    terms: [[disclos, free text, open answers, concerns about a child, child at risk], [safeguarding, designated lead, trusted adult, helpline, escalat, child protection]]
   CORE-CHT-09:
     terms: [[messages, chat logs, conversations], [retention, delete, deletion, kept for, no longer than]]

@@ -2,13 +2,13 @@
 
 # Rule catalogue
 
-CSEF v0.9.0: 106 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
+CSEF v0.9.0: 114 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
 
 | Level | MUST | SHOULD |
 |---|---|---|
-| 1 Legal baseline | 35 | 2 |
-| 2 Forward-compliant | 38 | 4 |
-| 3 Best practice | 0 | 27 |
+| 1 Legal baseline | 39 | 2 |
+| 2 Forward-compliant | 41 | 4 |
+| 3 Best practice | 0 | 28 |
 
 | ID | Title | Profiles | Strength | Level | Age bands |
 |---|---|---|---|---|---|
@@ -35,7 +35,7 @@ CSEF v0.9.0: 106 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Bes
 | B-EVL-02 | No camera-based or biometric proctoring of minors | B | MUST | 1 | all |
 | B-EVL-03 | Results are explainable and contestable | B | MUST | 2 | all |
 | B-EVL-04 | Validity, fairness and accessibility of assessment | B | SHOULD | 3 | all |
-| B-OPS-01 | Dashboards show learning, not surveillance | B, C | SHOULD | 3 | all |
+| B-OPS-01 | Dashboards show learning, not surveillance | A, B, C | SHOULD | 3 | all |
 | B-SIM-01 | Sensitive simulations include warnings and debrief | B | SHOULD | 3 | all |
 | B-UGC-01 | User-generated content is moderated and visible to the teacher | B, A, C | MUST | 2 | all |
 | B-UGC-02 | No photos of children's faces kept or shared beyond need | B, A, C | MUST | 2 | all |
@@ -92,6 +92,12 @@ CSEF v0.9.0: 106 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Bes
 | CORE-DAT-10 | Microphone and camera off by default | core | MUST | 2 | all |
 | CORE-DAT-11 | Consent for non-essential storage and cookies | core | MUST | 1 | all |
 | CORE-DAT-12 | Child-friendly privacy information | core | MUST | 1 | all |
+| CORE-DAT-13 | Every personal question has a recorded purpose and can be skipped | core | MUST | 1 | all |
+| CORE-DAT-14 | No personal data about other people is collected from children | core | MUST | 1 | all |
+| CORE-DAT-15 | No questions that reveal special category data or family vulnerability | core | MUST | 1 | all |
+| CORE-DAT-16 | Who answers personal questions fits the child's age | core | MUST | 2 | all |
+| CORE-DAT-17 | Teachers see answers about children's lives only as class totals | core | MUST | 2 | all |
+| CORE-DAT-18 | Answers stay with their purpose and under the family's control | core | MUST | 1 | all |
 | CORE-DES-01 | Motion and sound can be turned down or off | core | SHOULD | 2 | all |
 | CORE-DES-02 | Motion shows the content, not decoration | core | SHOULD | 3 | all |
 | CORE-DES-03 | Calm screens, especially under 8 | core | SHOULD | 3 | B1 (3-5), B2 (6-9) |
@@ -99,6 +105,7 @@ CSEF v0.9.0: 106 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Bes
 | CORE-DES-05 | Visual style matches the concept, especially in maths | core | SHOULD | 3 | all |
 | CORE-DES-06 | Celebrations are short and proportional | core | SHOULD | 3 | all |
 | CORE-DES-07 | No colour-psychology claims | core | SHOULD | 3 | all |
+| CORE-DES-08 | Families and lives are shown without one default model | core | SHOULD | 3 | all |
 | CORE-GOV-01 | Product declares its CSEF manifest | core | MUST | 1 | all |
 | CORE-GOV-02 | Legal scope of the EU KIDS Act is assessed and recorded | core | SHOULD | 2 | all |
 | CORE-GOV-03 | Child rights impact assessment | core | SHOULD | 3 | all |
@@ -112,6 +119,7 @@ CSEF v0.9.0: 106 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Bes
 | CORE-SAF-08 | Proportionate, privacy-preserving age assurance | core | MUST | 2 | all |
 | CORE-SAF-09 | Children can control and give feedback on what they see | core | SHOULD | 2 | B3 (10-12), B4 (13-15), B5 (16-17) |
 | CORE-SAF-10 | No social comparison or image-altering features | core | MUST | 2 | all |
+| CORE-SAF-11 | Disclosures in answers reach a trusted adult, not a log | core | MUST | 2 | all |
 | CORE-SEC-01 | No secrets in the repository | core | MUST | 1 | all |
 | CORE-SEC-02 | Access control on every store of learner data | core | MUST | 1 | all |
 | CORE-SEC-03 | Encryption in transit | core | MUST | 1 | all |

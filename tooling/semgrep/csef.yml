@@ -473,6 +473,72 @@ rules:
     sources:
     - KIDS
     - GDPR
+- id: core-dat-13-2
+  message: 'CORE-DAT-13 (MUST, level 1): Every personal question has a recorded purpose and can be skipped. Write the register from templates/survey-register.md, delete every question without a purpose,
+    add "prefer not to say" and remove rewards for answering.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)((answer|complete|fill in|finish) (the |this |our )?(survey|questions?|questionnaire|about me)\W.{0,40}(earn|get|win|receive|unlock)\W.{0,20}(coins?|points?|gems?|xp|badges?|stars?)|(responde|completa|preenche|termina)
+    (ao |o |a )?(inqu[eé]rito|question[aá]rio|perguntas?)\W.{0,40}(ganha|recebe|desbloqueia)\W.{0,20}(moedas|pontos|gemas|medalhas?|estrelas))
+  metadata:
+    csef_rule: CORE-DAT-13
+    tier: 1
+    sources:
+    - GDPR
+    - EDPB-DDP
+    - UNCRC-GC25
+- id: core-dat-14-1
+  message: 'CORE-DAT-14 (MUST, level 1): No personal data about other people is collected from children. Replace name and detail fields about other people with fictional characters picked from a list, and
+    tell AI prompts not to ask about real people.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)((mum|mom|mother|dad|father|grand(ma|pa|mother|father)|brother|sister|best friend)'?s? (full )?(name|job|age|phone|address|school)\b)
+  metadata:
+    csef_rule: CORE-DAT-14
+    tier: 1
+    sources: &id005
+    - GDPR
+    - UNCRC-GC25
+- id: core-dat-14-2
+  message: 'CORE-DAT-14 (MUST, level 1): No personal data about other people is collected from children. Replace name and detail fields about other people with fictional characters picked from a list, and
+    tell AI prompts not to ask about real people.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)((nome|idade|profiss[aã]o|trabalho|telefone|morada|escola) d[oa]s? (teu|tua|teus|tuas) (pai|m[aã]e|av[oóô]s?|irm[aã]os?|irm[aã]s?|tio|tia|primo|prima|amig[oa]s?|melhor amig[oa]))
+  metadata:
+    csef_rule: CORE-DAT-14
+    tier: 1
+    sources: *id005
+- id: core-dat-15-1
+  message: 'CORE-DAT-15 (MUST, level 1): No questions that reveal special category data or family vulnerability. Remove these questions, turn diagnoses into settings, and keep low-risk closed questions
+    or move the activity to fiction. If a question is truly needed, the controller (usually the school) decides it with a DPIA and an Art. 9(2) exception.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)(what is your (religion|ethnicity|nationality)|are you (christian|muslim|jewish|catholic|hindu)|where (are|were) your parents (from|born)|are your parents (separated|divorced)|do you
+    live with (your )?(mum|mom|dad|both)|how much do your parents earn|what (does|do) your (mum|mom|dad|parents) do for (a )?(living|work))
+  metadata:
+    csef_rule: CORE-DAT-15
+    tier: 1
+    sources: &id006
+    - GDPR
+    - CJEU-ART9
+    - UNCRC-GC25
+- id: core-dat-15-2
+  message: 'CORE-DAT-15 (MUST, level 1): No questions that reveal special category data or family vulnerability. Remove these questions, turn diagnoses into settings, and keep low-risk closed questions
+    or move the activity to fiction. If a question is truly needed, the controller (usually the school) decides it with a DPIA and an Art. 9(2) exception.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)(qual (é|e) a tua (religi[aã]o|etnia|nacionalidade)|de onde s[aã]o os teus pais|onde nasceram os teus pais|os teus pais (est[aã]o|s[aã]o) (separados|divorciados)|vives com (a tua m[aã]e|o
+    teu pai|os dois)|quanto ganham os teus pais|em que trabalh(a|am) (o teu pai|a tua m[aã]e|os teus pais))
+  metadata:
+    csef_rule: CORE-DAT-15
+    tier: 1
+    sources: *id006
 - id: core-saf-01-1
   message: 'CORE-SAF-01 (MUST, level 2): Most protective settings by default. Flip the defaults in the settings model and add a test that asserts them.'
   severity: WARNING
@@ -495,7 +561,7 @@ rules:
   metadata:
     csef_rule: CORE-SAF-02
     tier: 2
-    sources: &id005
+    sources: &id007
     - KIDS
     - DSA-G28
     - DFA
@@ -509,7 +575,7 @@ rules:
   metadata:
     csef_rule: CORE-SAF-02
     tier: 2
-    sources: *id005
+    sources: *id007
 - id: core-saf-03-1
   message: 'CORE-SAF-03 (MUST, level 2): Natural stopping points, no autoplay or endless feeds. Remove autoplay; end each activity with a clear ''done'' screen and an explicit choice to continue.'
   severity: WARNING

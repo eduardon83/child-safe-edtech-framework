@@ -53,6 +53,7 @@ targets:
   TRN-04: {EU-DEC: [LEG], SWE-KP: ["5"], ET4G2: [SAF]}
   TRN-06: {EU-DEC: [LEG], SWE-KP: ["1"], ET4G2: [SAF]}
   TRN-07: {EU-DEC: [REL, ENG], SWE-KP: ["5"], ET4G2: [SAF, IMP]}
+  TRN-08: {EU-DEC: [LEG, REL], SWE-KP: ["1"], ET4G2: [SAF]}
   EDU-01: {EU-DEC: [PED], SWE-KP: ["5"], ET4G2: [DTL]}
   EDU-02: {EU-DEC: [PED], SWE-KP: ["6"], ET4G2: [DTL]}
   EDU-03: {EU-DEC: [IMP], SWE-KP: ["7"], ET4G2: [IMP]}

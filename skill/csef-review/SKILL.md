@@ -144,7 +144,7 @@ python3 <skill-folder>/scripts/compass.py --input docs/ --input content/ --manif
         [--csef-findings csef-report/findings.json] --out-dir csef-compass
 ```
 
-It writes `compass.md`, `compass.html` and `compass.json`: 44 targets on 8 axes (learner lens: claimed axes
+It writes `compass.md`, `compass.html` and `compass.json`: 45 targets on 8 axes (learner lens: claimed axes
 only; design lens: every product), an evidence level per target (0 Not found to 4 Measured), unsupported
 claims, hidden-curriculum conflicts and the next three steps. Verify every level by meaning, in any language.
 Never turn it into a score or a ranking.

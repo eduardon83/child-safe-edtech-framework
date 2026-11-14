@@ -53,6 +53,12 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-DAT-10](#core-dat-10-microphone-and-camera-off-by-default) | Microphone and camera off by default | MUST | 2 | static |
 | [CORE-DAT-11](#core-dat-11-consent-for-non-essential-storage-and-cookies) | Consent for non-essential storage and cookies | MUST | 1 | manual |
 | [CORE-DAT-12](#core-dat-12-child-friendly-privacy-information) | Child-friendly privacy information | MUST | 1 | manual |
+| [CORE-DAT-13](#core-dat-13-every-personal-question-has-a-recorded-purpose-and-can-be-skipped) | Every personal question has a recorded purpose and can be skipped | MUST | 1 | mixed |
+| [CORE-DAT-14](#core-dat-14-no-personal-data-about-other-people-is-collected-from-children) | No personal data about other people is collected from children | MUST | 1 | static |
+| [CORE-DAT-15](#core-dat-15-no-questions-that-reveal-special-category-data-or-family-vulnerability) | No questions that reveal special category data or family vulnerability | MUST | 1 | mixed |
+| [CORE-DAT-16](#core-dat-16-who-answers-personal-questions-fits-the-childs-age) | Who answers personal questions fits the child's age | MUST | 2 | manifest |
+| [CORE-DAT-17](#core-dat-17-teachers-see-answers-about-childrens-lives-only-as-class-totals) | Teachers see answers about children's lives only as class totals | MUST | 2 | manifest |
+| [CORE-DAT-18](#core-dat-18-answers-stay-with-their-purpose-and-under-the-familys-control) | Answers stay with their purpose and under the family's control | MUST | 1 | manifest |
 | [CORE-DES-01](#core-des-01-motion-and-sound-can-be-turned-down-or-off) | Motion and sound can be turned down or off | SHOULD | 2 | static |
 | [CORE-DES-02](#core-des-02-motion-shows-the-content-not-decoration) | Motion shows the content, not decoration | SHOULD | 3 | manual |
 | [CORE-DES-03](#core-des-03-calm-screens-especially-under-8) | Calm screens, especially under 8 | SHOULD | 3 | manual |
@@ -60,6 +66,7 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-DES-05](#core-des-05-visual-style-matches-the-concept-especially-in-maths) | Visual style matches the concept, especially in maths | SHOULD | 3 | manual |
 | [CORE-DES-06](#core-des-06-celebrations-are-short-and-proportional) | Celebrations are short and proportional | SHOULD | 3 | static |
 | [CORE-DES-07](#core-des-07-no-colour-psychology-claims) | No colour-psychology claims | SHOULD | 3 | manual |
+| [CORE-DES-08](#core-des-08-families-and-lives-are-shown-without-one-default-model) | Families and lives are shown without one default model | SHOULD | 3 | manual |
 | [CORE-GOV-01](#core-gov-01-product-declares-its-csef-manifest) | Product declares its CSEF manifest | MUST | 1 | manifest |
 | [CORE-GOV-02](#core-gov-02-legal-scope-of-the-eu-kids-act-is-assessed-and-recorded) | Legal scope of the EU KIDS Act is assessed and recorded | SHOULD | 2 | manifest |
 | [CORE-GOV-03](#core-gov-03-child-rights-impact-assessment) | Child rights impact assessment | SHOULD | 3 | manual |
@@ -73,6 +80,7 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-SAF-08](#core-saf-08-proportionate-privacy-preserving-age-assurance) | Proportionate, privacy-preserving age assurance | MUST | 2 | mixed |
 | [CORE-SAF-09](#core-saf-09-children-can-control-and-give-feedback-on-what-they-see) | Children can control and give feedback on what they see | SHOULD | 2 | manual |
 | [CORE-SAF-10](#core-saf-10-no-social-comparison-or-image-altering-features) | No social comparison or image-altering features | MUST | 2 | static |
+| [CORE-SAF-11](#core-saf-11-disclosures-in-answers-reach-a-trusted-adult-not-a-log) | Disclosures in answers reach a trusted adult, not a log | MUST | 2 | manifest |
 | [CORE-SEC-01](#core-sec-01-no-secrets-in-the-repository) | No secrets in the repository | MUST | 1 | static |
 | [CORE-SEC-02](#core-sec-02-access-control-on-every-store-of-learner-data) | Access control on every store of learner data | MUST | 1 | mixed |
 | [CORE-SEC-03](#core-sec-03-encryption-in-transit) | Encryption in transit | MUST | 1 | static |
@@ -644,6 +652,78 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
 
+### CORE-DAT-13: Every personal question has a recorded purpose and can be skipped
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Features: survey · Detection: mixed · Effort: low
+
+**Requirement.** Each question asked to a child or guardian about the child's life, family, opinions, interests or feelings is listed in a survey register with its learning purpose, the closed answers, who answers it, who can see the answers, how long they are kept and the legal basis. Every question offers "prefer not to say" with the same weight as the other answers, the whole set can be skipped, no part of the product depends on answering, and answering earns no points, coins, badges or other rewards.
+
+**Why.** Purpose limitation and data minimisation (GDPR Art. 5(1)(b)(c)) and data protection by design (Art. 25). A question without a purpose is data collected "just in case". Forcing, nudging or rewarding answers are deceptive design patterns (EDPB Guidelines 03/2022: skipping, stirring, obstructing), and a reward for telling turns disclosure into a game.
+
+**How to improve.** Write the register from templates/survey-register.md, delete every question without a purpose, add "prefer not to say" and remove rewards for answering.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [EDPB-DDP](https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-032022-deceptive-design-patterns-social-media_en), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
+
+### CORE-DAT-14: No personal data about other people is collected from children
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Features: survey, ugc, chat, ai_generative · Detection: static · Effort: low
+
+**Requirement.** The product does not ask children for the names, photos, voices, ages, jobs, health, whereabouts or contact details of relatives, friends or other people, and AI characters do not ask for them either. Where an activity needs such people, the child uses fictional characters or a generic role ("a grandparent"), and creation tools offer avatars instead of photos of real people.
+
+**Why.** The other person is not informed and cannot exercise their rights (GDPR Art. 14), there is rarely a legal basis (Art. 6), and children cannot judge what is safe to tell about others. Details about relatives can also reveal special category data (see CORE-DAT-15).
+
+**How to improve.** Replace name and detail fields about other people with fictional characters picked from a list, and tell AI prompts not to ask about real people.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
+
+### CORE-DAT-15: No questions that reveal special category data or family vulnerability
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Features: survey, ai_generative · Detection: mixed · Effort: low
+
+**Requirement.** Children and guardians are not asked, directly or indirectly, about racial or ethnic origin, religion or beliefs, health or disability (of the child or of relatives), sexual orientation or political opinions, nor about family vulnerability: migration or residence status, parents' separation, bereavement, foster or residential care, income, debts or parents' jobs. Support needs are asked as product settings (bigger text, read-aloud, support language) chosen by the guardian or the child, never as a diagnosis or an origin. Mood check-ins are allowed only when the child picks the answer, it is not kept as a history per child (unless the child keeps it for themselves), it never becomes a label, and it is never inferred by AI (CORE-AI-01).
+
+**Why.** Data that reveal a special category indirectly, by deduction or cross-referencing, fall under GDPR Art. 9 (CJEU C-184/20): an innocent family question can reveal religion, origin or health. Vulnerability data is not Art. 9 but is high risk: it can hurt the child, expose them to peers and adults, and calls for a DPIA (Art. 35). UN General Comment 25 protects children's privacy, including towards the adults around them.
+
+**How to improve.** Remove these questions, turn diagnoses into settings, and keep low-risk closed questions or move the activity to fiction. If a question is truly needed, the controller (usually the school) decides it with a DPIA and an Art. 9(2) exception.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [CJEU-ART9](https://curia.europa.eu/juris/liste.jsf?num=C-184/20), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
+
+### CORE-DAT-16: Who answers personal questions fits the child's age
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: survey · Detection: manifest · Effort: medium
+
+**Requirement.** For ages 3 to 9 (B1, B2), questions about the child's life are answered by a guardian with the child, not by the child alone. From 10, the child answers for themselves and guardians are told what is asked. From 13 (B4, B5), the child's answers about their opinions and feelings are not shown to guardians or teachers by default, unless the child chooses to share them or there is a safeguarding concern (CORE-SAF-11).
+
+**Why.** Children's evolving capacities and their right to privacy, including towards parents (UN General Comment 25). Guardian tools in the EU KIDS Act proposal (Art. 20) must respect the child's privacy. Young children cannot yet weigh what they share; teenagers need a private space.
+
+**How to improve.** Move questions for under-10s to the guardian page; for teenagers, keep answers private by default and say so.
+
+**Sources.** [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+
+### CORE-DAT-17: Teachers see answers about children's lives only as class totals
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: survey · Detection: manifest · Effort: medium
+
+**Requirement.** Teachers and schools see answers to personal questions only as totals for a group of at least 5 children per figure. A figure is hidden when it would still reveal a child: when every child gave the same answer, when two views differ by one child, or when filters narrow the group. Answers are never shown per child, on shared or projected screens, or in rankings. A per-child view exists only where the register's purpose requires it (for example, a child asks for help) and the child knows.
+
+**Why.** Aggregation over small or uniform groups still identifies people (Article 29 Working Party Opinion 05/2014). Minimisation and data protection by default (GDPR Art. 5(1)(c), 25(2)). Knowing a child's private life changes how adults and peers treat them. Extends B-OPS-01 to personal questions.
+
+**How to improve.** Show only totals with a minimum group size, hide uniform or small cells, and remove per-child exports.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [WP216](https://ec.europa.eu/justice/article-29/documentation/opinion-recommendation/files/2014/wp216_en.pdf), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
+
+### CORE-DAT-18: Answers stay with their purpose and under the family's control
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Features: survey · Detection: manifest · Effort: medium
+
+**Requirement.** Answers are used only for the purpose in the register. They stay within the school's deployment and follow its instructions, are deleted at the end of the retention period, and are not used for advertising, profiling beyond the declared personalisation, AI training, or research unless B-DAT-01 is met and the approval is recorded. Personalisation based on the answers is explained to the child, shown to the guardian for children under 13, and can be changed or switched off. The child or guardian can see, correct and delete the answers at any time.
+
+**Why.** Purpose limitation (GDPR Art. 5(1)(b)), rights of access, rectification and erasure (Art. 15 to 17), processor duties (Art. 28). Recital 71: decisions based on profiling should not concern a child. The EU KIDS Act proposal asks for high privacy by default for minors.
+
+**How to improve.** Keep answers in the class instance, add see, correct and delete for answers, and make personalisation visible and reversible.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
+
 ### CORE-DES-01: Motion and sound can be turned down or off
 
 **SHOULD** · Level 2 (Forward-compliant) · Age bands: all · Detection: static · Effort: low
@@ -727,6 +807,18 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Justify colour choices by function (contrast, coding, highlighting) and accessibility, not by colour-psychology claims.
 
 **Sources.** [R-GNAMBS2020](https://link.springer.com/article/10.3758/s13423-020-01772-1)
+
+### CORE-DES-08: Families and lives are shown without one default model
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: low
+
+**Requirement.** Content about families, homes and daily life does not assume one model (a mother and a father, living grandparents, siblings, a room of one's own, holidays, money for extras). Every activity works with any answer, including "I don't have one" and "I'd rather not say", and families of many shapes appear in examples and illustrations. Themes such as loss, illness, separation or moving home come with a content note for the teacher, a calm exit for the child and a debrief.
+
+**Why.** Children in care, bereaved, in single-parent, same-sex-parent or reconstituted families, or living in poverty should not feel excluded or have to explain themselves (non-discrimination, UN General Comment 25). Same aim as B-SIM-01, for every profile and every content type. Inclusion is one of the EU quality criteria for digital education content.
+
+**How to improve.** Review family-themed content with a teacher and a school psychologist, add "I don't have one" paths, and add content notes for sensitive themes.
+
+**Sources.** [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [EU-DEC](https://op.europa.eu/en/publication-detail/-/publication/1fa0183b-dbbe-11f0-8da2-01aa75ed71a1/language-en), [ET4G2](https://www.unicef.org/digitaleducation/edtech-for-good)
 
 ### CORE-GOV-01: Product declares its CSEF manifest
 
@@ -883,6 +975,18 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Remove public counters and appearance filters; use avatars instead of photos.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
+
+### CORE-SAF-11: Disclosures in answers reach a trusted adult, not a log
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: survey, ai_generative · Detection: manifest · Effort: medium
+
+**Requirement.** Where children can answer in their own words (free text, voice, drawings) or talk with an AI, a disclosure of harm (abuse, self-harm, bullying, danger at home) is a safeguarding matter. The child sees, in age-appropriate words, where to get help now (a trusted adult, a national helpline). The answer goes to the safeguarding lead named by the school, never automatically to guardians (who may be the source of harm) or to peers. No AI analysis scans answers for risk without a DPIA and human review, and records are kept only as the safeguarding procedure requires. Closed answers are preferred where free text is not needed.
+
+**Why.** Children disclose in unexpected places. A disclosure left in a log, or sent to the wrong adult, can put the child in danger. UN General Comment 25 asks for child-friendly reporting and remedies; the EU KIDS Act proposal requires information on support services. National child-protection law decides who must act. Same aim as CORE-CHT-08, for answers and AI conversations.
+
+**How to improve.** Replace free text with closed answers where possible, agree a disclosure route with each school, and add help information next to every open question.
+
+**Sources.** [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [BIK](https://digital-strategy.ec.europa.eu/en/policies/strategy-better-internet-kids)
 
 ### CORE-SEC-01: No secrets in the repository
 

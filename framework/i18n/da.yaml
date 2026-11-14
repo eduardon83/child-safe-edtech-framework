@@ -257,6 +257,13 @@ questions:
         desc: >
           Et system, der foreslår eller rangerer indhold for barnet: et anbefalingssystem i DSA's forstand (art. 3,
           litra s)). Strengere regler for sociale platforme og videoplatforme i forslaget til EU KIDS Act (art. 10).
+      survey:
+        label: "Spørgsmål om barnets liv (spørgeskemaer, profiler, humør)"
+        desc: >
+          Spørgsmål til barnet eller familien om barnets liv, familie, holdninger, interesser eller følelser:
+          spørgeskemaer, "om mig"-profiler, humørregistreringer, spørgsmål ved opstart. Quizzer om fagstoffet
+          hører under en anden mulighed (test og karakterer). Hvert spørgsmål skal have et formål (GDPR art.
+          5, stk. 1, litra b)) og kunne springes over.
       none:
         label: "Ingen af disse"
         desc: >
@@ -358,6 +365,13 @@ questions:
     label: "Indsamling af børns placering"
   research:
     label: "Brug af læringsdata til forskning eller produktundersøgelser"
+  personal_questions:
+    label: "Spørgsmål til børn eller familier om barnets liv, familie eller følelser"
+    help: >
+      Spørgeskemaer, "om mig"-profiler, humørregistreringer og spørgsmål ved opstart; quizzer om fagstoffet
+      tæller ikke med. Oplysninger, der selv indirekte afslører oprindelse, religion eller helbred, er særlige
+      kategorier efter GDPR (art. 9; EU-Domstolens dom C-184/20). Nationale regler kan kræve godkendelse af
+      spørgeskemaer i skolen (i Portugal DGE's MIME-system).
   access_control:
     label: "Elevdata, der kan læses uden adgangsregler (fx åbne databasetabeller)"
   forbid_sets:

@@ -43,7 +43,7 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **B-EVL-04** (SHOULD) Validity, fairness and accessibility of assessment. Assessment validity is documented, results are checked for bias across groups (gender, language background, SEN), and accommodations (extra time, audio) do not disadvantage learners.  
       Evidence: 
-- [ ] **B-OPS-01** (SHOULD) Dashboards show learning, not surveillance. Teacher and guardian dashboards show what helps learning; they avoid minute-by-minute activity logs and are explained to the child.  
+- [ ] **B-OPS-01** (SHOULD) Dashboards show learning, not surveillance. Teacher and guardian dashboards show what helps learning; they avoid minute-by-minute activity logs and are explained to the child. Answers to personal questions follow CORE-DAT-17.  
       Evidence: 
 - [ ] **B-SIM-01** (SHOULD) Sensitive simulations include warnings and debrief. Simulations about health, conflict, loss or other sensitive themes include a content note, an exit at any time, and a guided debrief.  
       Evidence: 

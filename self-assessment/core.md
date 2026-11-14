@@ -61,6 +61,14 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **CORE-DAT-12** (MUST) Child-friendly privacy information. Privacy information exists in a version the target age can understand (very short sentences, icons, audio for non-readers), plus a full version for adults.  
       Evidence: 
+- [ ] **CORE-DAT-13** (MUST) Every personal question has a recorded purpose and can be skipped. Each question asked to a child or guardian about the child's life, family, opinions, interests or feelings is listed in a survey register with its learning purpose, the closed answers, who answers it, who can see the answers, how long they are kept and the legal basis. Every question offers "prefer not to say" with the same weight as the other answers, the whole set can be skipped, no part of the product depends on answering, and answering earns no points, coins, badges or other rewards.  
+      Evidence: 
+- [ ] **CORE-DAT-14** (MUST) No personal data about other people is collected from children. The product does not ask children for the names, photos, voices, ages, jobs, health, whereabouts or contact details of relatives, friends or other people, and AI characters do not ask for them either. Where an activity needs such people, the child uses fictional characters or a generic role ("a grandparent"), and creation tools offer avatars instead of photos of real people.  
+      Evidence: 
+- [ ] **CORE-DAT-15** (MUST) No questions that reveal special category data or family vulnerability. Children and guardians are not asked, directly or indirectly, about racial or ethnic origin, religion or beliefs, health or disability (of the child or of relatives), sexual orientation or political opinions, nor about family vulnerability: migration or residence status, parents' separation, bereavement, foster or residential care, income, debts or parents' jobs. Support needs are asked as product settings (bigger text, read-aloud, support language) chosen by the guardian or the child, never as a diagnosis or an origin. Mood check-ins are allowed only when the child picks the answer, it is not kept as a history per child (unless the child keeps it for themselves), it never becomes a label, and it is never inferred by AI (CORE-AI-01).  
+      Evidence: 
+- [ ] **CORE-DAT-18** (MUST) Answers stay with their purpose and under the family's control. Answers are used only for the purpose in the register. They stay within the school's deployment and follow its instructions, are deleted at the end of the retention period, and are not used for advertising, profiling beyond the declared personalisation, AI training, or research unless B-DAT-01 is met and the approval is recorded. Personalisation based on the answers is explained to the child, shown to the guardian for children under 13, and can be changed or switched off. The child or guardian can see, correct and delete the answers at any time.  
+      Evidence: 
 - [ ] **CORE-GOV-01** (MUST) Product declares its CSEF manifest. The repository contains a CSEF manifest (csef.yaml) declaring profiles, age bands, context of use, GDPR role, features, AI use, third parties and chosen compliance level.  
       Evidence: 
 - [ ] **CORE-SAF-05** (MUST) No contact from strangers. Nobody outside the child's approved group (class, guardian-approved contacts) can initiate contact, see the child's profile or content, or add the child to a group.  
@@ -112,6 +120,10 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **CORE-DAT-10** (MUST) Microphone and camera off by default. Access to microphone and camera is off by default, requested only at the moment of use for a clear learning purpose, and the recording is not kept longer than needed.  
       Evidence: 
+- [ ] **CORE-DAT-16** (MUST) Who answers personal questions fits the child's age. For ages 3 to 9 (B1, B2), questions about the child's life are answered by a guardian with the child, not by the child alone. From 10, the child answers for themselves and guardians are told what is asked. From 13 (B4, B5), the child's answers about their opinions and feelings are not shown to guardians or teachers by default, unless the child chooses to share them or there is a safeguarding concern (CORE-SAF-11).  
+      Evidence: 
+- [ ] **CORE-DAT-17** (MUST) Teachers see answers about children's lives only as class totals. Teachers and schools see answers to personal questions only as totals for a group of at least 5 children per figure. A figure is hidden when it would still reveal a child: when every child gave the same answer, when two views differ by one child, or when filters narrow the group. Answers are never shown per child, on shared or projected screens, or in rankings. A per-child view exists only where the register's purpose requires it (for example, a child asks for help) and the child knows.  
+      Evidence: 
 - [ ] **CORE-DES-01** (SHOULD) Motion and sound can be turned down or off. The product honours the device's reduced-motion setting and offers in-app controls to reduce animation and sound, including motion triggered by the learner's own actions.  
       Evidence: 
 - [ ] **CORE-GOV-02** (SHOULD) Legal scope of the EU KIDS Act is assessed and recorded. The manifest records whether the product is in scope of the EU KIDS Act (online game, AI companion, general conversational chatbot, social or video-sharing service) or exempt as a service designed primarily for education and operated by or on behalf of an educational establishment (Art. 2(4)(c)).  
@@ -131,6 +143,8 @@ Product: ____________________  Date: __________  Assessor: ____________________
 - [ ] **CORE-SAF-09** (SHOULD) Children can control and give feedback on what they see. Children can adjust settings that affect how they interact and what they are shown, give feedback with lasting effect, and easily return to default settings.  
       Evidence: 
 - [ ] **CORE-SAF-10** (MUST) No social comparison or image-altering features. No follower counts, likes on the child's appearance, beauty filters, or features that embellish or idealise the child's image.  
+      Evidence: 
+- [ ] **CORE-SAF-11** (MUST) Disclosures in answers reach a trusted adult, not a log. Where children can answer in their own words (free text, voice, drawings) or talk with an AI, a disclosure of harm (abuse, self-harm, bullying, danger at home) is a safeguarding matter. The child sees, in age-appropriate words, where to get help now (a trusted adult, a national helpline). The answer goes to the safeguarding lead named by the school, never automatically to guardians (who may be the source of harm) or to peers. No AI analysis scans answers for risk without a DPIA and human review, and records are kept only as the safeguarding procedure requires. Closed answers are preferred where free text is not needed.  
       Evidence: 
 
 ## Level 3: Best practice
@@ -154,6 +168,8 @@ Product: ____________________  Date: __________  Assessor: ____________________
 - [ ] **CORE-DES-06** (SHOULD) Celebrations are short and proportional. Reward animations and sounds are brief, proportional to the achievement and skippable. Win sounds are not used to make small or no progress feel like a big win.  
       Evidence: 
 - [ ] **CORE-DES-07** (SHOULD) No colour-psychology claims. Design decisions and product claims do not rely on popular colour-psychology effects (e.g. "red lowers performance") that are not supported by robust evidence.  
+      Evidence: 
+- [ ] **CORE-DES-08** (SHOULD) Families and lives are shown without one default model. Content about families, homes and daily life does not assume one model (a mother and a father, living grandparents, siblings, a room of one's own, holidays, money for extras). Every activity works with any answer, including "I don't have one" and "I'd rather not say", and families of many shapes appear in examples and illustrations. Themes such as loss, illness, separation or moving home come with a content note for the teacher, a calm exit for the child and a debrief.  
       Evidence: 
 - [ ] **CORE-GOV-03** (SHOULD) Child rights impact assessment. A child rights impact assessment (or a risk review in the sense of the DSA Art. 28 guidelines) is documented, considers the best interests of the child, and involves children, guardians and educators in testing.  
       Evidence: 

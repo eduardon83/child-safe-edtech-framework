@@ -65,6 +65,22 @@ sources:
     url: "https://cidadania.dge.mec.pt/sites/default/files/pdfs/referencial-epm-versaoatualizada-12dez2023.pdf"
     verified: 2026-11-14
 
+  - id: PT-MIME
+    title: "Despacho n.º 15847/2007, de 19 de junho (DR 2.ª série, n.º 140, 23 jul 2007): inquéritos em meio escolar; sistema MIME (Monitorização de Inquéritos em Meio Escolar), apreciação pela DGE"
+    type: law
+    jurisdiction: PT
+    status: "In force. Questionnaires and surveys in public schools need prior authorisation (now DGE, through MIME); DGE says when guardian authorisation is needed. Sensitive questions may need a prior CNPD opinion"
+    url: "https://www.dge.mec.pt/sites/default/files/DSPE/mime/despacho_n_15_846_de_2007.pdf"
+    verified: 2026-11-14
+
+  - id: PT-LPCJP
+    title: "Lei de Proteção de Crianças e Jovens em Perigo, Lei n.º 147/99, de 1 de setembro (versão atual)"
+    type: law
+    jurisdiction: PT
+    status: "In force, as amended (latest by Lei 26/2018). Schools are entities with competence in childhood matters; danger situations are reported to the CPCJ"
+    url: "https://diariodarepublica.pt/dr/detalhe/lei/147-1999-581619"
+    verified: 2026-11-14
+
 amend:
   - rule: AGE-B4-01
     add_sources: [PT-LEI58]
@@ -90,6 +106,18 @@ amend:
   - rule: CORE-SEC-05
     add_sources: [PT-CNPD]
     note: "Portugal: personal data breaches are notified to the CNPD by the controller within 72 hours."
+
+  - rule: CORE-DAT-15
+    add_sources: [PT-CNPD, PT-MIME]
+    note: "Portugal: questionnaires with sensitive questions applied in public schools may need a prior CNPD opinion within the DGE (MIME) procedure."
+
+  - rule: CORE-SAF-11
+    add_sources: [PT-LPCJP, PT-ISEGURA]
+    note: "Portugal: the school, as an entity with competence in childhood matters, acts on danger situations and reports them to the CPCJ (Lei 147/99). Show Linha Internet Segura (800 21 90 90) and SOS Criança (116 111) next to open questions."
+
+  - rule: B-DAT-01
+    add_sources: [PT-MIME]
+    note: "Portugal: research or evaluation questionnaires in public schools need prior DGE authorisation through MIME (Despacho 15847/2007)."
 
   - rule: CORE-COM-03
     add_patterns:
@@ -131,6 +159,33 @@ rules:
     detection:
       method: manual
 
+  - id: PT-SUR-01
+    title: Questionnaires to pupils in public schools go through DGE approval (MIME)
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [survey]
+    requirement: >
+      Questionnaires or surveys applied to pupils in Portuguese public schools for evaluation,
+      research or product studies, on paper or inside the product, are submitted to the DGE through
+      MIME (Monitorização de Inquéritos em Meio Escolar) before use, unless they are registered in the
+      national statistical system. The school also authorises, and guardian authorisation is obtained
+      where the DGE requires it. Questions that are part of the learning activity itself are agreed
+      with the school and kept in the survey register.
+    rationale: >
+      Despacho 15847/2007 requires prior authorisation for questionnaires and surveys in public
+      schools, proposed by internal or external entities, and lets the DGE decide when guardian
+      authorisation is needed. Questionnaires with sensitive questions have been withdrawn from schools
+      for lacking it.
+    improvement: Register evaluation and research questionnaires in MIME, keep the approval number in `survey.research_approval`, and plan the timeline around it.
+    effort: medium
+    sources: [PT-MIME]
+    detection:
+      method: manifest
+      patterns:
+        - {type: manifest, check: survey_research_without_approval, confidence: medium}
+
 # Literacy Compass (tooling/compass.py): Portuguese references for the literacy targets.
 compass:
   amend:
@@ -146,6 +201,9 @@ compass:
     - target: SAF-03
       add_sources: [PT-ISEGURA]
       note: "Name Linha Internet Segura (800 21 90 90) as the helpline for learners in Portugal."
+    - target: EDU-03
+      add_sources: [PT-MIME]
+      note: "Portugal: evaluation questionnaires to pupils in public schools need DGE approval through MIME before a pilot (rule PT-SUR-01)."
     - target: EDU-01
       add_sources: [PT-EPM]
       add_terms: [[referencial de educacao para os media, educacao para os media, perfil dos alunos]]

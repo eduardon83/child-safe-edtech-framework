@@ -20,6 +20,7 @@ Profile A: educational games. Read together with the core rules.
 | [A-PLY-02](#a-ply-02-non-shaming-failure-and-feedback) | Non-shaming failure and feedback | SHOULD | 3 | manual |
 | [A-SOC-01](#a-soc-01-multiplayer-limited-to-closed-groups) | Multiplayer limited to closed groups | MUST | 2 | manual |
 | [B-DAT-01](#b-dat-01-research-use-of-learning-data-is-separated) | Research use of learning data is separated | MUST | 1 | manual |
+| [B-OPS-01](#b-ops-01-dashboards-show-learning-not-surveillance) | Dashboards show learning, not surveillance | SHOULD | 3 | manual |
 | [B-UGC-01](#b-ugc-01-user-generated-content-is-moderated-and-visible-to-the-teacher) | User-generated content is moderated and visible to the teacher | MUST | 2 | mixed |
 | [B-UGC-02](#b-ugc-02-no-photos-of-childrens-faces-kept-or-shared-beyond-need) | No photos of children's faces kept or shared beyond need | MUST | 2 | manual |
 | [C-ENG-01](#c-eng-01-streaks-are-optional-and-never-punish) | Streaks are optional and never punish | MUST | 2 | static |
@@ -195,6 +196,18 @@ Profile A: educational games. Read together with the core rules.
 **How to improve.** Create a research export pipeline that pseudonymises and logs every extract.
 
 **Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+
+### B-OPS-01: Dashboards show learning, not surveillance
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: medium
+
+**Requirement.** Teacher and guardian dashboards show what helps learning; they avoid minute-by-minute activity logs and are explained to the child. Answers to personal questions follow CORE-DAT-17.
+
+**Why.** Respect for the child's privacy and agency (KIDS Act Art. 20(1)(f), UN GC 25).
+
+**How to improve.** Aggregate activity data and show learning progress instead of raw logs.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
 
 ### B-UGC-01: User-generated content is moderated and visible to the teacher
 

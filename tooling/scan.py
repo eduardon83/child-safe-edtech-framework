@@ -79,7 +79,10 @@ MANIFEST_CHECKS = [
     "gdpr_role_missing", "transfer_outside_eea", "retention_missing", "monetisation_for_minors",
     "ai_without_inventory", "high_risk_without_risk_file", "security_policy_missing",
     "decision_records", "review_stale",
+    "survey_register_missing", "survey_teacher_view_individual", "survey_answered_by_child", "survey_min_group_low",
+    "survey_free_text_without_route", "survey_research_without_approval",
 ]
+SURVEY_MIN_GROUP = 5
 
 
 # --------------------------------------------------------------------------- data
@@ -524,6 +527,39 @@ def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set, pat
         except ValueError:
             return [f"`last_review` is not a date: {lr}"]
         return [f"`last_review` is {age} days old (limit {days})."] if age > days else []
+    if name.startswith("survey_"):
+        if "survey" not in features:
+            return []
+        sv = m.get("survey") or {}
+        if name == "survey_register_missing":
+            return [] if path_exists(repo, sv.get("register")) else [
+                "Feature 'survey' declared but no survey register found (`survey.register`): each question needs its purpose, answers, who sees them and retention."]
+        if name == "survey_teacher_view_individual":
+            return ["`survey.teacher_view` is 'individual': teachers would see each child's answers about their life."] \
+                if sv.get("teacher_view") == "individual" else []
+        if name == "survey_answered_by_child":
+            young = sorted(bands & {"B1", "B2"})
+            if sv.get("answered_by", "child") == "child" and young:
+                return [f"`survey.answered_by` is 'child' (or not declared) for age bands {', '.join(young)}: below 10, a guardian answers with the child."]
+            return []
+        if name == "survey_min_group_low":
+            if sv.get("teacher_view", "aggregate") != "aggregate":
+                return []
+            try:
+                mg = int(sv.get("min_group", 0))
+            except (TypeError, ValueError):
+                mg = 0
+            return [] if mg >= SURVEY_MIN_GROUP else [
+                f"`survey.min_group` is {sv.get('min_group', 'not declared')}: class totals need at least {SURVEY_MIN_GROUP} answers per figure."]
+        if name == "survey_free_text_without_route":
+            if sv.get("free_text") is True and not path_exists(repo, sv.get("safeguarding")):
+                return ["Free-text answers are allowed (`survey.free_text: true`) but no safeguarding route is linked (`survey.safeguarding`)."]
+            return []
+        if name == "survey_research_without_approval":
+            uses = set(sv.get("uses") or [])
+            if uses & {"research", "evaluation"} and not path_exists(repo, sv.get("research_approval")):
+                return ["Answers are used for research or evaluation but no approval record is linked (`survey.research_approval`): ethics, legal basis, and national approval where required."]
+            return []
     if name == "security_policy_missing":
         candidates = [m.get("security_policy"), "SECURITY.md", ".github/SECURITY.md", ".well-known/security.txt", "public/.well-known/security.txt"]
         return [] if any(path_exists(repo, c) for c in candidates) else ["No SECURITY.md or security.txt found."]

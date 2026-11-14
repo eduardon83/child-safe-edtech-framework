@@ -259,6 +259,12 @@ questions:
           Ett system som föreslår eller rangordnar innehåll för barnet: ett rekommendationssystem i DSA:s mening
           (art. 3 s). Strängare regler för sociala plattformar och videoplattformar i förslaget till EU KIDS Act
           (art. 10).
+      survey:
+        label: "Frågor om barnets liv (enkäter, profiler, humör)"
+        desc: >
+          Frågor till barnet eller familjen om barnets liv, familj, åsikter, intressen eller känslor: enkäter,
+          "om mig"-profiler, humörincheckningar, frågor vid start. Quiz om ämnesinnehållet hör till ett annat
+          val (prov och betyg). Varje fråga behöver ett syfte (GDPR art. 5.1 b) och ska gå att hoppa över.
       none:
         label: "Inget av dessa"
         desc: >
@@ -360,6 +366,13 @@ questions:
     label: "Att samla in barns position"
   research:
     label: "Att använda lärandedata för forskning eller produktstudier"
+  personal_questions:
+    label: "Frågor till barn eller familjer om barnets liv, familj eller känslor"
+    help: >
+      Enkäter, "om mig"-profiler, humörincheckningar och frågor vid start; quiz om ämnesinnehållet räknas
+      inte. Uppgifter som även indirekt avslöjar ursprung, religion eller hälsa är särskilda kategorier enligt
+      GDPR (art. 9; EU-domstolens dom C-184/20). Nationella regler kan kräva godkännande av enkäter i skolan
+      (i Portugal DGE:s MIME-system).
   access_control:
     label: "Elevuppgifter som kan läsas utan åtkomstregler (t.ex. öppna databastabeller)"
   forbid_sets:

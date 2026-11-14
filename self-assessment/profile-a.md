@@ -51,6 +51,8 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **A-PLY-02** (SHOULD) Non-shaming failure and feedback. Errors and failures are presented as part of learning, without ridicule, sad animations directed at the child, or public exposure.  
       Evidence: 
+- [ ] **B-OPS-01** (SHOULD) Dashboards show learning, not surveillance. Teacher and guardian dashboards show what helps learning; they avoid minute-by-minute activity logs and are explained to the child. Answers to personal questions follow CORE-DAT-17.  
+      Evidence: 
 - [ ] **C-ENG-04** (SHOULD) No variable reward schedules designed for engagement. Rewards are predictable and earned. Random bonus drops and slot-machine style surprises are avoided.  
       Evidence: 
 - [ ] **C-ENG-05** (SHOULD) Engagement metrics balanced by wellbeing metrics. Product KPIs for minors include learning and wellbeing outcomes, not only time spent, sessions or retention.  

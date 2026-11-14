@@ -265,6 +265,13 @@ questions:
           Un système qui suggère ou classe des contenus pour l'enfant : un système de recommandation au sens du DSA
           (art. 3, point s)). Règles plus strictes pour les plateformes sociales et vidéo dans la proposition EU KIDS
           Act (art. 10).
+      survey:
+        label: "Questions sur la vie de l'enfant (enquêtes, profils, humeur)"
+        desc: >
+          Questions posées à l'enfant ou à la famille sur la vie, la famille, les opinions, les centres
+          d'intérêt ou les sentiments de l'enfant : enquêtes, profils « à propos de moi », relevés d'humeur,
+          questions d'accueil. Les quiz sur la matière relèvent d'une autre option (tests et notes). Chaque
+          question doit avoir une finalité (RGPD, art. 5, paragraphe 1, point b)) et pouvoir être passée.
       none:
         label: "Aucun de ceux-ci"
         desc: >
@@ -369,6 +376,14 @@ questions:
     label: "Collecter la localisation des enfants"
   research:
     label: "Utiliser les données d'apprentissage pour la recherche ou des études produit"
+  personal_questions:
+    label: "Questions aux enfants ou aux familles sur la vie, la famille ou les sentiments de l'enfant"
+    help: >
+      Enquêtes, profils « à propos de moi », relevés d'humeur et questions d'accueil ; les quiz sur la matière
+      ne comptent pas. Les données qui révèlent, même indirectement, l'origine, la religion ou la santé sont
+      des catégories particulières au sens du RGPD (art. 9 ; arrêt de la CJUE C-184/20). Des règles nationales
+      peuvent exiger une autorisation pour les questionnaires à l'école (au Portugal, le système MIME de la
+      DGE).
   access_control:
     label: "Données d'élèves lisibles sans règles d'accès (p. ex. tables de base de données ouvertes)"
   forbid_sets:

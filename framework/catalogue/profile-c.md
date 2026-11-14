@@ -163,7 +163,7 @@ Profile C: gamified applications. Read together with the core rules.
 
 **SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: medium
 
-**Requirement.** Teacher and guardian dashboards show what helps learning; they avoid minute-by-minute activity logs and are explained to the child.
+**Requirement.** Teacher and guardian dashboards show what helps learning; they avoid minute-by-minute activity logs and are explained to the child. Answers to personal questions follow CORE-DAT-17.
 
 **Why.** Respect for the child's privacy and agency (KIDS Act Art. 20(1)(f), UN GC 25).
 
