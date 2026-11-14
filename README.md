@@ -11,7 +11,7 @@ An open framework and toolkit for building safe educational software for under-1
 It turns EU law, pending EU proposals (EU KIDS Act, Digital Fairness Act) and expert recommendations into
 rules a team can check in code, in CI and in review.
 
-> **Status:** v0.8.0, draft for public comment (November 2026).
+> **Status:** v0.9.0, draft for public comment (November 2026).
 > **Not legal advice and not a certification.** CSEF produces *pre-compliance* reports. Legal compliance
 > depends on facts code cannot show; involve your DPO and legal counsel. See [Limitations](#limitations).
 >
@@ -36,6 +36,7 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 | **Scanner** | `tooling/scan.py`: pre-compliance report, prioritised improvement plan, communications inventory, JSON and SARIF. |
 | **Dashboard and exports** | `tooling/export.py`: interactive HTML dashboard (levels, age bands, communications, colour-coded findings, checklists, legal counsel section), PDF and Word. |
 | **Code-of-conduct comparison** | `tooling/coc.py`: compares any code of conduct with the KIDS Act expectations for codes and with CSEF rules; shows what is covered, partial, missing or in conflict. |
+| **Literacy Compass** | `tooling/compass.py`: what does the product teach about digital, media and AI literacy, and how do we know? 44 targets on 8 axes from DigComp 3.0, AILit, UNESCO and EU policy; an evidence level per target (Stated, Designed, Tested, Measured) with the passages behind it; unsupported learning claims; copy that teaches the opposite (hidden curriculum); the next three steps; and a crosswalk to the EU guidelines on digital education content, Swedish Edtech's Kvalitetsportfolio and UNICEF's EdTech for Good. A profile, never a score. |
 | **AI review skill** | `skill/csef-review/`: Claude runs the tools, verifies findings, reviews what patterns cannot see, and finalises the reports. |
 | **CI** | A GitHub Action, generated Semgrep rules, a PR template. |
 | **Templates** | Manifest, DPIA starter, AI risk file, waiver record, instructions for AI coding agents. |
@@ -46,6 +47,7 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 |---|---|
 | **v0.3** | Interactive dashboard, PDF and Word exports (`--export html,pdf,docx`). |
 | **v0.4** | EU KIDS Act commercial practices (Recital 31, Art. 13): real-time purchase labels, no design for impulsive spending, no disguised advertising, no commercial content in learning. AI companions and chatbots (Recitals 32 to 34, Art. 14): memory off by default, regular re-testing and monitoring, opt-in assistants inside games, no AI nudging to spend. |
+| **v0.9** | **Literacy Compass** (`tooling/compass.py`, `framework/compass/`, [04-literacy-compass.md](framework/04-literacy-compass.md)): a second lens on what a product teaches, with a compass-rose HTML report and a reusable JSON dossier. 16 new sources (DigComp 3.0, AILit, UNESCO MIL and AI, EU guidelines on digital education content, Education Package 2026, EdTech for Good 2.0, Swedish Kvalitetsportfolio, IEEE 3527.1 and 2089 and more). AI Omnibus entry corrected: published and in force, Art. 4 recast. |
 | **v0.8** | **CSEF brand** on everything: logo, colours and fonts in the questionnaire, staff policy, boundaries report, dashboard, code-of-conduct report, Pack Builder, Word exports and a new landing page for non-developers. Brand kit in `brand/`. |
 | **v0.7** | **Policy questionnaire**: boundaries in, guardrails file, boundaries report, staff policy, agent instructions and CI workflow out. Versioned, with a list of changes on every run. |
 | **v0.6** | Renamed to **Child-Safe EdTech Framework (CSEF)**: `framework/` folder, `csef.yaml` manifest, `csef-review` skill, `csef-scan` and `csef-coc` tools, repository `child-safe-edtech-framework`. Old names (`cses.yaml`, `cses-ignore`, `--standard-root`) still work. |
@@ -104,6 +106,30 @@ Reads `.txt`, `.md`, `.html`, `.pdf` and `.docx`. Writes `coc-comparison.md`, `.
   disclosed"), with the clauses cited and a suggested addition.
 
 Example: `examples/codes-of-conduct/example-code.md` (fictional).
+
+### What does the product teach? The Literacy Compass
+
+```bash
+python3 tooling/compass.py --input docs/ --input marketing/ --input content/ --manifest csef.yaml \
+        --csef-findings csef-report/findings.json --out-dir csef-compass
+```
+
+Reads design documents, teacher guides, evaluation reports, marketing copy and in-product text (dialogue,
+translation files). Writes `compass.md`, `compass.html` and `compass.json`:
+
+- **Learner lens** (information and media, communication and rights, creation, safety and wellbeing, problem
+  solving, AI literacy): counted only for what the product claims to teach (`compass.claims` in `csef.yaml`,
+  or claims found in its own texts).
+- **Design lens** (transparency that teaches, educator and family enablement): every product used by children.
+- **Evidence ladder** per target: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured. Plans do not count.
+- **Claims**: "teaches critical thinking" with nothing designed behind it, or "proven" without measured
+  outcomes, is flagged.
+- **Hidden curriculum**: copy that teaches the opposite, such as an AI that says it is your best friend.
+- **Heading**: the next three steps, shown as the needle of the compass.
+- **One dossier, many frameworks**: which evidence also answers the EU guidelines on digital education
+  content, Swedish Edtech's Kvalitetsportfolio and UNICEF's EdTech for Good Framework 2.0.
+
+No total, no ranking, no badge. Try it: `python3 tooling/compass.py --input examples/compass/fact-quest --manifest examples/compass/fact-quest/csef.yaml`.
 
 ### Your organisation's policy
 
@@ -211,15 +237,17 @@ compares meaning and reads any language.
 4. [Research](framework/research.md): every study, its findings and limits, the rules that use it
 5. [Packs](framework/02-packs.md): extending with national rules, literature and company policies
 6. [Design for learning](framework/03-design-and-motivation.md): what research says about visuals, motion and rewards
-7. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
-8. [Self-assessment checklists](self-assessment/)
+7. [Literacy Compass](framework/04-literacy-compass.md): what a product teaches about digital, media and AI literacy; [target catalogue](framework/compass/catalogue.md)
+8. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
+9. [Self-assessment checklists](self-assessment/)
 
 ## Repository layout
 
 ```
 framework/        rules.yaml + sources.yaml (single source of truth), coc-topics.yaml, questionnaire.yaml, docs, generated catalogue
+                 compass/targets.yaml + crosswalk.yaml (Literacy Compass), generated compass/catalogue.md
 packs/           country and extra packs (pt.yaml, _template.yaml)
-tooling/         scan.py, comms.py, export.py, coc.py, policy.py, build.py, generated Semgrep rules
+tooling/         scan.py, comms.py, export.py, coc.py, policy.py, compass.py, build.py, generated Semgrep rules
 skill/           csef-review skill for Claude (generated copies + SKILL.md + references)
 templates/       manifest, DPIA starter, AI risk file, waiver, agent instructions, GitHub files
 self-assessment/ generated checklists per profile and level
@@ -229,7 +257,7 @@ docs/            GitHub Pages site, questionnaire and Pack Builder (generated), 
 brand/           logo, icons, colours and fonts (see brand/README.md)
 ```
 
-Edit `framework/rules.yaml`, `framework/sources.yaml`, `framework/coc-topics.yaml` or `packs/*.yaml`, then run
+Edit `framework/rules.yaml`, `framework/sources.yaml`, `framework/coc-topics.yaml`, `framework/compass/*.yaml` or `packs/*.yaml`, then run
 `python3 tooling/build.py`. Never edit generated files by hand; CI checks they are up to date.
 
 ## Licence

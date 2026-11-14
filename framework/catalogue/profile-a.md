@@ -38,7 +38,7 @@ Profile A: educational games. Read together with the core rules.
 
 **How to improve.** Document what is assessed in the teacher guide and the child privacy notice; store assessment data separately.
 
-**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/)
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus)
 
 ### A-ECO-01: No paid randomised rewards (loot boxes)
 

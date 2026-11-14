@@ -18,6 +18,7 @@ Jurisdiction: PT. Version 0.1.0. Draft. Entries marked 'verify' need confirmatio
 - **PT-CNPD** CNPD, guidance and list of processing operations requiring a DPIA. Check the current list on the CNPD website (verify). https://www.cnpd.pt
 - **PT-ANACOM** ANACOM, Portuguese Digital Services Coordinator under the DSA. Designated Digital Services Coordinator. https://www.anacom.pt
 - **PT-ISEGURA** Internet Segura (Portuguese Safer Internet Centre) and Linha Internet Segura. Operating. Helpline for children, guardians and educators. https://www.internetsegura.pt
+- **PT-EPM** Referencial de Educação para os Media para a Educação Pré-escolar, o Ensino Básico e o Ensino Secundário (DGE), versão revista e atualizada. First approved 29 Apr 2014; revised and updated version of Dec 2023 (verify the current edition). https://cidadania.dge.mec.pt/sites/default/files/pdfs/referencial-epm-versaoatualizada-12dez2023.pdf
 
 ## Amendments to framework rules
 

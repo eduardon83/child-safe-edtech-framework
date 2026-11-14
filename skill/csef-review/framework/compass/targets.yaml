@@ -1,0 +1,905 @@
+# CSEF Literacy Compass: target catalogue. Single source of truth for tooling/compass.py.
+#
+# The Compass asks a different question from the CSEF rules. The rules ask "does the product do harm?".
+# The Compass asks "what does the product teach about digital life, and how do we know?".
+#
+# Two lenses:
+#   learner  what learners should know and be able to do (DigComp 3.0, AILit, UNESCO MIL and AI frameworks).
+#            Evaluated when the product claims the axis or target (csef.yaml `compass.claims`, or a claim found
+#            in the documents). Otherwise shown as an opportunity, never as a failure.
+#   design   what the product itself teaches by how it is built and supported ("literacy by design").
+#            Universal targets apply to every product used by children; feature targets apply when the
+#            product has the feature (same feature names as csef.yaml).
+#
+# Evidence ladder, per target (never a total score, never a ranking):
+#   0 Not found   1 Stated   2 Designed   3 Tested   4 Measured
+#
+# Field reference:
+#   id            AXIS-NN
+#   scope         claimed | universal | feature
+#   features      for scope feature: applies if any is declared. For claimed targets: features that make the
+#                 target a natural opportunity (suggest_when).
+#   refs          competence framework references (shown in reports, used for crosswalks)
+#   sources       ids from framework/sources.yaml or a loaded pack
+#   terms         groups of synonyms (English and European Portuguese). A passage matches when it matches
+#                 `need` groups (default: all groups, at most 2).
+#   conflict      phrases that teach the opposite of the target (hidden curriculum). Found = possible conflict.
+#   ideas         short design patterns, mostly for games
+#
+# Matching ignores case, accents and hyphens. The csef-review skill reviews meaning in any language.
+# Licence: CC BY 4.0
+
+version: "0.1.0"
+
+axes:
+  - id: INF
+    title: Information and media
+    lens: learner
+    question: Does it help learners find, judge and use information and media, including AI-generated content?
+    sources: [DIGCOMP3, UNESCO-MIL, UNESCO-AIMIL]
+  - id: COM
+    title: Communication, citizenship and rights
+    lens: learner
+    question: Does it help learners interact well, take part as citizens and know their rights?
+    sources: [DIGCOMP3, UNESCO-MIL, UNCRC-GC25]
+  - id: CRE
+    title: Creation and computational thinking
+    lens: learner
+    question: Does it help learners create, remix responsibly and think computationally?
+    sources: [DIGCOMP3]
+  - id: SAF
+    title: Safety, privacy and wellbeing
+    lens: learner
+    question: Does it help learners stay safe, protect their data, manage money and balance their use?
+    sources: [DIGCOMP3, BIK, IEEE3527]
+  - id: PRB
+    title: Problem solving and learning to learn
+    lens: learner
+    question: Does it help learners solve problems, choose tools and reflect on their own digital skills?
+    sources: [DIGCOMP3, AILIT]
+  - id: AI
+    title: AI literacy
+    lens: learner
+    question: Does it help learners engage with, create with, manage and shape AI?
+    sources: [AILIT, UNESCO-AICFS, DIGCOMP3]
+  - id: TRN
+    title: Transparency that teaches
+    lens: design
+    question: Does the product explain itself to children in a way that builds literacy, and avoid teaching the opposite?
+    sources: [GDPR, AIA, DSA-G28, KIDS, UNCRC-GC25]
+  - id: EDU
+    title: Educator and family enablement
+    lens: design
+    question: Can teachers and families turn use into learning, and see that learning happened?
+    sources: [EU-DEC, ET4G2, AILIT]
+
+evidence_levels:
+  0: {name: Not found, meaning: "Nothing in the documents addresses the target."}
+  1: {name: Stated, meaning: "The documents name the target or claim it, without saying how the product achieves it."}
+  2: {name: Designed, meaning: "Specific activities, mechanics, features or teacher materials are linked to the target."}
+  3: {name: Tested, meaning: "The design was tried with learners or teachers (pilot, playtest, co-design) and results are recorded."}
+  4: {name: Measured, meaning: "Learning outcomes were measured (pre/post, comparison group, independent evaluation)."}
+
+# Signals that raise a matching passage from Stated to Designed, Tested or Measured.
+signals:
+  designed:
+    - activity
+    - activities
+    - mission
+    - quest
+    - challenge
+    - level
+    - mini game
+    - minigame
+    - mechanic
+    - scenario
+    - task
+    - lesson
+    - learning objective
+    - learning outcome
+    - learning goal
+    - debrief
+    - reflection
+    - rubric
+    - feedback
+    - players must
+    - players will
+    - learners will
+    - learners can
+    - pupils will
+    - students will
+    - players can
+    - tells players
+    - shows players
+    - tells learners
+    - shows learners
+    - on every screen
+    - on screen
+    - in the game
+    - the game shows
+    - button
+    - is available
+    - mode
+    - setting
+    - settings
+    - is designed to
+    - maps to
+    - aligned with
+    - digcomp
+    - ailit
+    - atividade
+    - missao
+    - desafio
+    - nivel
+    - mecanica
+    - cenario
+    - tarefa
+    - objetivo de aprendizagem
+    - objetivos de aprendizagem
+    - aprendizagens essenciais
+    - os alunos vao
+    - os alunos devem
+    - os jogadores
+    - reflexao
+    - rubrica
+    - no jogo
+    - no ecra
+    - botao
+    - esta disponivel
+    - modo
+    - definicoes
+  tested:
+    - playtest
+    - play test
+    - pilot
+    - piloted
+    - user test
+    - user testing
+    - usability test
+    - tested with
+    - trialled
+    - trialed
+    - classroom trial
+    - field test
+    - co design
+    - codesign
+    - co designed
+    - focus group
+    - think aloud
+    - teachers tested
+    - testado com
+    - testamos com
+    - piloto
+    - teste com alunos
+    - testes com alunos
+    - grupo focal
+    - sessoes com alunos
+  tested_regex:
+    - '\bn ?= ?\d+'
+    - '\b\d+ (pupils|students|learners|children|teachers|classes|schools|alunos|turmas|professores|escolas)\b'
+  measured:
+    - pre test
+    - post test
+    - pretest
+    - posttest
+    - pre and post
+    - effect size
+    - control group
+    - comparison group
+    - randomised
+    - randomized
+    - quasi experimental
+    - statistically significant
+    - learning gains
+    - impact evaluation
+    - independent evaluation
+    - peer reviewed
+    - cohen
+    - pre teste
+    - pos teste
+    - grupo de controlo
+    - estudo de impacto
+    - ganhos de aprendizagem
+    - estatisticamente significativ
+    - avaliacao independente
+  measured_regex:
+    - '\bp ?< ?0?\.0\d'
+    - '\bd ?= ?0?\.\d+'
+
+# Literacy claims in product or marketing documents. A claim on an axis with no target at Designed or
+# above is reported as an unsupported claim (see UCPD on misleading claims, EU-DEC on reliability).
+claims:
+  verbs: [teaches, teach, develops, develop, builds, build, improves, improve, boosts, boost, strengthens, promotes, fosters, trains, ensina, desenvolve, promove, melhora, reforca, potencia, treina]
+  topics:
+    INF: [critical thinking, media literacy, information literacy, news literacy, fact checking, fake news, disinformation, pensamento critico, literacia mediatica, literacia da informacao, desinformacao, noticias falsas]
+    COM: [digital citizenship, netiquette, online respect, empathy online, cidadania digital, etiqueta digital]
+    CRE: [creativity, coding, programming, computational thinking, digital creativity, criatividade, programacao, pensamento computacional]
+    SAF: [online safety, internet safety, cyber safety, cybersecurity, privacy, digital wellbeing, digital well being, seguranca online, seguranca na internet, ciberseguranca, privacidade, bem estar digital]
+    PRB: [problem solving, problem-solving, learning to learn, resolucao de problemas, aprender a aprender]
+    AI: [ai literacy, artificial intelligence literacy, understanding of ai, responsible use of ai, literacia em ia, literacia de ia, literacia em inteligencia artificial, uso responsavel da ia]
+    ANY: [digital literacy, digital skills, digital competence, 21st century skills, future skills, literacia digital, competencias digitais]
+  proof: [proven, evidence based, research based, scientifically, clinically, guaranteed, comprovad, baseado em evidencia, cientificamente, garantid]
+
+targets:
+
+  # ================================================================ INF: information and media
+  - id: INF-01
+    axis: INF
+    title: Find and choose sources
+    scope: claimed
+    age_bands: [all]
+    target: Learners search with a purpose, compare results and choose sources that fit the question.
+    why: Searching and filtering is the first DigComp competence and the base of every other information skill.
+    look_for: Tasks where learners search, filter or pick between sources and explain the choice.
+    ideas: [A detective quest where clues come from sources of different quality, A search challenge with a budget of queries]
+    improvement: Add tasks where learners must search, filter and pick a source, and say why it fits.
+    refs: {DIGCOMP3: ["1.1"], UNESCO-MIL: ["locate and access information"]}
+    sources: [DIGCOMP3, UNESCO-MIL]
+    terms: [[search, searching, keyword, query, filter results, pesquisa, pesquisar, palavra chave, motor de busca], [source, sources, result, results, fonte, fontes, resultado, resultados]]
+
+  - id: INF-02
+    axis: INF
+    title: Judge credibility by checking across sources
+    scope: claimed
+    age_bands: [all]
+    target: Learners check who is behind information, compare it with other sources (lateral reading) and decide how far to trust it.
+    why: UNESCO's MIL curriculum and its 2026 AI companion guide put source checking and informed trust at the centre.
+    look_for: Activities that ask learners to verify a claim elsewhere, trace a source or rate credibility with reasons.
+    ideas: [Two-tab challenge that rewards checking a claim on another site before answering, Trust meter with reasons instead of a right answer]
+    improvement: Turn at least one task into a verification task with a debrief on why trust went up or down.
+    refs: {DIGCOMP3: ["1.2"], UNESCO-MIL: ["critically evaluate information"], UNESCO-AIMIL: ["3.3"]}
+    sources: [DIGCOMP3, UNESCO-MIL, UNESCO-AIMIL]
+    terms: [[credib, reliab, trustworth, trust, verify, verification, check, checked, checking, fact check, cross check, lateral reading, credivel, fiavel, fiabilidade, confianca, verificar, verificacao, confirmar], [source, sources, claim, claims, information, second source, another source, fonte, fontes, afirmacao, informacao, segunda fonte, outra fonte]]
+
+  - id: INF-03
+    axis: INF
+    title: Recognise persuasion, advertising and commercial intent
+    scope: claimed
+    features: [purchases]
+    age_bands: [all]
+    target: Learners recognise advertising, sponsorship and persuasive design, and can say who benefits.
+    why: Children are a protected group under consumer law; recognising commercial intent is part of evaluating information.
+    look_for: Activities about ads, influencers, sponsored content or persuasive design, with age-appropriate explanations.
+    ideas: [Spot-the-ad level, Learners design an honest and a manipulative version of the same ad and compare]
+    improvement: Add a short activity that unpacks one ad or persuasive pattern the learners meet in daily life.
+    refs: {DIGCOMP3: ["1.2"], UNESCO-MIL: ["evaluate content of all content providers"]}
+    sources: [DIGCOMP3, UNESCO-MIL, UCPD, KIDS]
+    terms: [[advert, advertising, ad, ads, sponsor, influencer, persuasi, marketing, publicidade, anuncio, anuncios, patrocin, influenciador, persuas], [recognis, recogniz, spot, identify, understand, explain, reconhecer, identificar, perceber, explicar]]
+
+  - id: INF-04
+    axis: INF
+    title: Spot mis- and disinformation, including synthetic media
+    scope: claimed
+    features: [ai_generative, ugc]
+    age_bands: [all]
+    target: Learners recognise false or manipulated content, including AI-generated images, audio and text, and know how to check provenance.
+    why: DigComp 3.0 made mis- and disinformation a priority; AILit and UNESCO link it to AI-generated content.
+    look_for: Tasks with manipulated or generated media, provenance checks, or correcting false claims.
+    ideas: [Real-or-generated round with explanations of the tells and their limits, Trace-the-origin puzzle]
+    improvement: Include generated or manipulated examples and teach a check (source, date, reverse search, provenance label).
+    refs: {DIGCOMP3: ["1.2"], AILIT: ["Create 4"], UNESCO-AIMIL: ["2.5", "3.3"]}
+    sources: [DIGCOMP3, AILIT, UNESCO-AIMIL, UNESCO-MIL]
+    terms: [[misinformation, disinformation, fake news, false information, manipulated, deepfake, synthetic media, ai generated image, desinformacao, noticias falsas, informacao falsa, manipulad, gerado por ia, imagem gerada]]
+    need: 1
+
+  - id: INF-05
+    axis: INF
+    title: Organise, keep and cite information
+    scope: claimed
+    age_bands: [B3, B4, B5]
+    target: Learners save, organise and reference what they found so others can check it.
+    why: Managing information is a DigComp competence and supports honest use of sources.
+    look_for: Features or tasks for collecting, organising and citing sources.
+    ideas: [Evidence board where clues must carry their source, Citation as a game resource]
+    improvement: Let learners keep and cite the sources they used, and reward correct attribution.
+    refs: {DIGCOMP3: ["1.3"]}
+    sources: [DIGCOMP3]
+    terms: [[cite, citation, reference, bibliography, organise information, organize information, save sources, citar, citacao, referencia, bibliografia, organizar informacao]]
+    need: 1
+
+  # ================================================================ COM: communication, citizenship and rights
+  - id: COM-01
+    axis: COM
+    title: Interact respectfully and with empathy
+    scope: claimed
+    features: [chat, multiplayer, social]
+    age_bands: [all]
+    target: Learners practise respectful, empathetic communication and understand how tone is read online.
+    why: Digital behaviour and interaction are DigComp competences; empathy is a DQ (IEEE 3527.1) area.
+    look_for: Scenarios about tone, misunderstandings, kindness or conflict online, with discussion.
+    ideas: [Rewrite-the-message challenge, Perspective-switch scenes]
+    improvement: Add scenarios where learners choose and discuss how to respond to others online.
+    refs: {DIGCOMP3: ["2.1", "2.5"], IEEE3527: ["digital empathy"]}
+    sources: [DIGCOMP3, IEEE3527]
+    terms: [[respect, empathy, kindness, netiquette, tone, digital behaviour, digital behavior, respeito, empatia, gentileza, netiqueta, comportamento digital], [online, message, messages, comment, chat, mensagem, mensagens, comentario]]
+
+  - id: COM-02
+    axis: COM
+    title: Collaborate through digital tools
+    scope: claimed
+    features: [multiplayer]
+    age_bands: [all]
+    target: Learners plan, share and build together using digital tools, with roles and shared reflection.
+    why: Collaboration is a DigComp competence and a recurrent quality marker for game-based learning.
+    look_for: Cooperative modes, shared goals, roles, and a debrief of how the group worked.
+    ideas: [Cooperative puzzles that need every role, Team retrospectives after a mission]
+    improvement: Add a cooperative task with roles and a short reflection on how the team worked.
+    refs: {DIGCOMP3: ["2.4"]}
+    sources: [DIGCOMP3]
+    terms: [[collaborat, cooperat, teamwork, team work, group work, colabora, coopera, trabalho de equipa, trabalho em grupo]]
+    need: 1
+
+  - id: COM-03
+    axis: COM
+    title: Know and use digital rights; take part as citizens
+    scope: claimed
+    age_bands: [all]
+    target: Learners know their rights online (privacy, expression, information, protection) and practise civic participation.
+    why: UN General Comment 25 and the UNESCO MIL curriculum frame literacy as a matter of rights and participation.
+    look_for: Content about children's rights online, freedom of expression, participation or complaints.
+    ideas: [Rights cards earned by solving situations, Design a fair rule for an online community]
+    improvement: Add content that names children's rights online and how to use them.
+    refs: {DIGCOMP3: ["2.3"], UNESCO-MIL: ["human rights and dignity"]}
+    sources: [DIGCOMP3, UNCRC-GC25, UNESCO-MIL]
+    terms: [[children's rights, childrens rights, digital rights, rights online, citizenship, civic participation, freedom of expression, direitos das criancas, direitos digitais, direitos online, cidadania, participacao civica, liberdade de expressao]]
+    need: 1
+
+  - id: COM-04
+    axis: COM
+    title: Respond to hate, harassment and harmful content
+    scope: claimed
+    features: [chat, ugc, social]
+    age_bands: [all]
+    target: Learners recognise hate speech, harassment and harmful content, and know how to respond, report and support others.
+    why: The UNESCO MIL curriculum names responding to hate content online as a core competence; BIK+ supports it.
+    look_for: Scenarios on cyberbullying or hate speech with bystander options and where to get help.
+    ideas: [Upstander choices with consequences, Report-and-support walkthrough]
+    improvement: Add a scenario on responding to harassment, including reporting and supporting a peer.
+    refs: {DIGCOMP3: ["2.5"], UNESCO-MIL: ["respond to hate and radical content online"]}
+    sources: [DIGCOMP3, UNESCO-MIL, BIK]
+    terms: [[cyberbullying, bullying, harassment, hate speech, hate, harmful content, ciberbullying, assedio, discurso de odio, odio, conteudo nocivo]]
+    need: 1
+
+  - id: COM-05
+    axis: COM
+    title: Manage digital identity and footprint
+    scope: claimed
+    features: [accounts, ugc, social]
+    age_bands: [all]
+    target: Learners understand what they leave behind online, how identity is presented and how to manage it.
+    why: Managing digital identity is a DigComp competence; footprint management is a DQ competence.
+    look_for: Activities on profiles, avatars, permanence of posts and what others can see.
+    ideas: [Footprint trail mechanic that shows what stays, Avatar choices with privacy trade-offs explained]
+    improvement: Show learners what their actions leave behind and let them practise managing it.
+    refs: {DIGCOMP3: ["2.6"], IEEE3527: ["digital footprint management"]}
+    sources: [DIGCOMP3, IEEE3527]
+    terms: [[digital footprint, digital identity, online identity, reputation, pegada digital, identidade digital, identidade online, reputacao]]
+    need: 1
+
+  # ================================================================ CRE: creation and computational thinking
+  - id: CRE-01
+    axis: CRE
+    title: Create and express with digital media
+    scope: claimed
+    features: [ugc]
+    age_bands: [all]
+    target: Learners make their own digital content (text, images, sound, video, games) for a purpose and an audience.
+    why: Developing digital content is a DigComp competence; creating is also how learners understand media from the inside.
+    look_for: Creation tools, open tasks and sharing with a defined audience.
+    ideas: [Level editor, Make-a-news-story mode]
+    improvement: Add an open creation task with a purpose, an audience and feedback.
+    refs: {DIGCOMP3: ["3.1"]}
+    sources: [DIGCOMP3]
+    terms: [[create, creation, make their own, design their own, produce, criar, criacao, produzir], [content, story, stories, video, image, images, music, comic, level editor, conteudo, historia, imagem, musica, banda desenhada, editor de niveis]]
+
+  - id: CRE-02
+    axis: CRE
+    title: Remix responsibly and give credit
+    scope: claimed
+    features: [ugc, ai_generative]
+    age_bands: [all]
+    target: Learners reuse and remix content legally and fairly, understand licences and credit authors, including when AI is involved.
+    why: Copyright and licences are a DigComp competence; AILit adds authenticity and intellectual property of AI content.
+    look_for: Content on licences (for example Creative Commons), attribution, and honest disclosure of AI help.
+    ideas: [Credits screen learners must fill in, Licence badges on reusable assets]
+    improvement: Teach and require attribution when learners reuse assets or AI output.
+    refs: {DIGCOMP3: ["3.2", "3.3"], AILIT: ["Create 4"]}
+    sources: [DIGCOMP3, AILIT]
+    terms: [[copyright, licence, license, creative commons, attribution, give credit, plagiar, direitos de autor, licenca, atribuicao, plagio, creditos]]
+    need: 1
+
+  - id: CRE-03
+    axis: CRE
+    title: Computational thinking and programming
+    scope: claimed
+    age_bands: [all]
+    target: Learners decompose problems, recognise patterns, build algorithms and debug, with or without code.
+    why: Computational thinking and programming is a DigComp competence and a foundation for shaping AI.
+    look_for: Coding, block programming, algorithm puzzles or unplugged activities with debugging.
+    ideas: [Program-the-robot puzzles, Debug-the-broken-level challenge]
+    improvement: Add tasks where learners build and debug a sequence of instructions.
+    refs: {DIGCOMP3: ["3.4"], AILIT: ["Manage 3"]}
+    sources: [DIGCOMP3, AILIT]
+    terms: [[computational thinking, coding, programming, algorithm, debug, decompos, pensamento computacional, programacao, programar, algoritmo, depurar]]
+    need: 1
+
+  # ================================================================ SAF: safety, privacy and wellbeing
+  - id: SAF-01
+    axis: SAF
+    title: Protect devices and accounts; recognise scams
+    scope: claimed
+    features: [accounts]
+    age_bands: [all]
+    target: Learners use strong passwords or passphrases, recognise phishing and scams, and know what to do when something looks wrong.
+    why: Protecting devices is a DigComp competence; DigComp 3.0 prioritised cybersecurity competence.
+    look_for: Activities on passwords, phishing, scams or suspicious links.
+    ideas: [Phishing inbox sorting game, Build-a-passphrase challenge]
+    improvement: Add a short, age-appropriate activity on scams or account protection.
+    refs: {DIGCOMP3: ["4.1"], IEEE3527: ["personal cyber security management"]}
+    sources: [DIGCOMP3, IEEE3527]
+    terms: [[password, passphrase, phishing, scam, scams, malware, suspicious link, cybersecurity, palavra passe, senha, burla, burlas, phishing, ligacao suspeita, ciberseguranca]]
+    need: 1
+
+  - id: SAF-02
+    axis: SAF
+    title: Understand personal data and privacy choices
+    scope: claimed
+    features: [accounts, ai_adaptive, recommender]
+    age_bands: [all]
+    target: Learners understand what personal data is, who can see it, how products use it, and how to make privacy choices.
+    why: Protecting personal data and privacy is a DigComp competence and a right under the GDPR.
+    look_for: Activities on personal data, permissions, privacy settings, or what the product itself collects.
+    ideas: [Data trail visualiser of the learner's own session, Permission puzzles]
+    improvement: Use the product's own data use as a teaching example, in age-appropriate language.
+    refs: {DIGCOMP3: ["4.2"], IEEE3527: ["privacy management"], UNESCO-AIMIL: ["1.2"]}
+    sources: [DIGCOMP3, GDPR, IEEE3527]
+    terms: [[personal data, privacy, data protection, permissions, who can see, dados pessoais, privacidade, protecao de dados, permissoes, quem pode ver]]
+    need: 1
+
+  - id: SAF-03
+    axis: SAF
+    title: Handle contact risks and seek help
+    scope: claimed
+    features: [chat, multiplayer, social, ugc]
+    age_bands: [all]
+    target: Learners know what to do if someone online makes them uncomfortable, including blocking, reporting and telling a trusted adult or helpline.
+    why: Contact risks are central to the EU KIDS Act proposal and BIK+; help-seeking is the protective skill.
+    look_for: Age-appropriate scenarios on contact from strangers or pressure, and named routes to help.
+    ideas: [Trusted-adult map, Practice report flow in a safe sandbox]
+    improvement: Teach the block, report and tell routes, and name a helpline for the learner's country.
+    refs: {DIGCOMP3: ["4.1", "4.3"]}
+    sources: [DIGCOMP3, BIK, KIDS]
+    terms: [[stranger, strangers, uncomfortable, trusted adult, helpline, block and report, report and block, ask for help, desconhecido, desconhecidos, desconfortavel, adulto de confianca, linha de apoio, pedir ajuda]]
+    need: 1
+
+  - id: SAF-04
+    axis: SAF
+    title: Balance use and self-regulate
+    scope: claimed
+    features: [streaks, notifications, leaderboards]
+    age_bands: [all]
+    target: Learners notice how digital products capture attention, reflect on their own use and practise taking breaks.
+    why: Supporting wellbeing is a DigComp competence; the Education Package launches a European Healthy Screens Pledge.
+    look_for: Activities on attention design, screen time reflection, or built-in stopping points discussed with learners.
+    ideas: [Natural end points with a reflection prompt, Attention-trap spotting activity]
+    improvement: Add a reflection on attention design, using the product's own stopping points as the example.
+    refs: {DIGCOMP3: ["4.3"]}
+    sources: [DIGCOMP3, EU-EDUPKG, KIDS]
+    terms: [[wellbeing, well being, screen time, take a break, breaks, self regulation, attention design, bem estar, tempo de ecra, fazer uma pausa, pausas, autorregulacao]]
+    need: 1
+    conflict: ["don't break your streak", "do not lose your streak", "come back every day", "play every day or", "nao percas a tua sequencia", "volta todos os dias"]
+
+  - id: SAF-05
+    axis: SAF
+    title: Understand money, purchases and chance in digital products
+    scope: claimed
+    features: [purchases]
+    age_bands: [all]
+    target: Learners understand virtual currencies, real costs, in-app purchases and chance-based rewards, and can resist pressure to spend.
+    why: The EU KIDS Act and Digital Fairness Act proposals target spending traps and loot boxes; understanding them is consumer literacy.
+    look_for: Explanations of virtual currency value, odds and spending pressure, in learner language.
+    ideas: [Price-tag converter from coins to euros, Odds explainer before any chance mechanic]
+    improvement: Explain virtual currencies and chance in plain language and show real costs.
+    refs: {DIGCOMP3: ["2.5", "4.3"]}
+    sources: [DIGCOMP3, KIDS, DFA, UCPD]
+    terms: [[virtual currency, in app purchase, in game purchase, loot box, real money, drop rate, odds of winning, moeda virtual, compras na aplicacao, dinheiro real, probabilidade de ganhar, caixa surpresa]]
+    need: 1
+    conflict: ["loot box", "mystery box", "spin the wheel", "caixa mistério", "roda da sorte"]
+
+  - id: SAF-06
+    axis: SAF
+    title: Consider the environmental footprint of digital tech and AI
+    scope: claimed
+    features: [ai_generative]
+    age_bands: [all]
+    target: Learners know that devices, data centres and AI use energy and resources, and weigh that in their choices.
+    why: Protecting the environment is a DigComp competence; AILit includes comparing how AI systems consume energy and resources.
+    look_for: Content on energy, resources, e-waste or the footprint of AI use.
+    ideas: [Energy cost shown for each AI request in a simulation, Repair-not-replace mission]
+    improvement: Add a short activity on the energy and resource cost of the technology learners use.
+    refs: {DIGCOMP3: ["4.4"], AILIT: ["Engage 5"], UNESCO-AIMIL: ["4.5"]}
+    sources: [DIGCOMP3, AILIT]
+    terms: [[energy use, energy consumption, carbon, e waste, environmental impact, data centre, data center, consumo de energia, carbono, residuos eletronicos, impacto ambiental, centro de dados]]
+    need: 1
+
+  # ================================================================ PRB: problem solving and learning to learn
+  - id: PRB-01
+    axis: PRB
+    title: Solve technical problems
+    scope: claimed
+    age_bands: [all]
+    target: Learners identify and solve simple technical problems and know where to find help.
+    why: Identifying and solving technical problems is a DigComp competence.
+    look_for: Troubleshooting tasks, hints that teach strategies rather than give answers.
+    ideas: [Fix-the-machine puzzles, Hint ladder that teaches a troubleshooting method]
+    improvement: Use hints that teach a strategy (check, isolate, try, ask) instead of the answer.
+    refs: {DIGCOMP3: ["5.1"]}
+    sources: [DIGCOMP3]
+    terms: [[troubleshoot, technical problem, fix the problem, solve problems, resolver problemas, problema tecnico, resolver o problema]]
+    need: 1
+
+  - id: PRB-02
+    axis: PRB
+    title: Match tools to needs, including choosing not to use one
+    scope: claimed
+    features: [ai_generative]
+    age_bands: [all]
+    target: Learners choose a digital tool (including AI) that fits the task, and recognise when no tool or AI is the better choice.
+    why: DigComp asks learners to identify needs and technological responses; AILit treats deciding not to use AI as a competent choice.
+    look_for: Tasks where learners pick between tools or decide whether to use AI, and justify it.
+    ideas: [Tool-choice cards with trade-offs, Do-I-need-AI decision step before a task]
+    improvement: Add a decision step where learners choose the tool, or no tool, and explain why.
+    refs: {DIGCOMP3: ["5.2"], AILIT: ["Manage 1", "Manage 2"]}
+    sources: [DIGCOMP3, AILIT]
+    terms: [[choose a tool, choose the right tool, which tool, when to use, whether to use, when not to use, escolher a ferramenta, que ferramenta, quando usar, quando nao usar]]
+    need: 1
+
+  - id: PRB-03
+    axis: PRB
+    title: Reflect on and plan one's own digital competence
+    scope: claimed
+    age_bands: [B3, B4, B5]
+    target: Learners assess what they can already do, set goals and track progress in their digital competence.
+    why: Identifying digital competence needs is a DigComp competence; AILit strengthened metacognition and self-regulation.
+    look_for: Self-assessment, goal setting or learner-facing progress views tied to competences.
+    ideas: ["Skill tree that names the competence, not only the level", End-of-mission self-check]
+    improvement: Show learners the competence they practised and ask them to rate and plan the next step.
+    refs: {DIGCOMP3: ["5.4"], AILIT: ["Manage 4"]}
+    sources: [DIGCOMP3, AILIT]
+    terms: [[self assessment, self evaluation, metacognit, reflect on their learning, set goals, autoavaliacao, metacogni, refletir sobre a aprendizagem, definir objetivos]]
+    need: 1
+
+  # ================================================================ AI: AI literacy (AILit)
+  - id: AI-01
+    axis: AI
+    title: Recognise AI and its influence
+    scope: claimed
+    features: [ai_generative, ai_adaptive, ai_assessment, recommender]
+    age_bands: [all]
+    target: Learners recognise when AI is involved and how it shapes what they see, choose and are offered.
+    why: AILit Engage 1 and 4; UNESCO's human-centred mindset. Recognising AI comes before judging it.
+    look_for: Activities that make AI visible (where is the AI here?) including in the product itself.
+    ideas: [Where-is-the-AI hunt across everyday apps, Show what the game's own adaptive engine decided and why]
+    improvement: Make AI visible in the experience and ask learners where it shapes what they see.
+    refs: {AILIT: ["Engage 1", "Engage 4"], UNESCO-AICFS: ["human-centred mindset"]}
+    sources: [AILIT, UNESCO-AICFS]
+    terms: [[artificial intelligence, ai, algorithm, recommendation, recommender, inteligencia artificial, ia, algoritmo, recomendacao], [recognis, recogniz, identify, spot, notice, influence, shape, reconhecer, identificar, influencia]]
+
+  - id: AI-02
+    axis: AI
+    title: Explain how AI works, without anthropomorphism
+    scope: claimed
+    features: [ai_generative]
+    age_bands: [all]
+    target: Learners describe what AI systems do (predict, classify, generate) in accurate language, and that they do not think or feel.
+    why: AILit Engage 2 asks for language that clears up misconceptions; UNESCO warns children treat fluent AI as having a mind.
+    look_for: Explanations of data, patterns and prediction; AI characters that say clearly what they are.
+    ideas: [Train-a-tiny-model unplugged activity, AI character that explains it predicts words]
+    improvement: Explain how the AI works in plain words and avoid presenting it as a friend or a person.
+    refs: {AILIT: ["Engage 2"], UNESCO-AIMIL: ["1.1", "3.1"], UNESCO-AICFS: ["AI techniques and applications"]}
+    sources: [AILIT, UNESCO-AIMIL, UNESCO-AIAGE]
+    terms: [[how ai works, training data, predicts, prediction, pattern, patterns, machine learning, large language model, como funciona a ia, dados de treino, previsao, padroes, aprendizagem automatica]]
+    need: 1
+    conflict: ["ai friend", "your best friend", "i am your friend", "i'm your friend", "knows everything", "always right", "never wrong", "never makes mistakes", "o teu melhor amigo", "sou teu amigo", "sabe tudo", "nunca se engana", "tem sempre razao"]
+
+  - id: AI-03
+    axis: AI
+    title: "Evaluate AI outputs: accept, revise or reject"
+    scope: claimed
+    features: [ai_generative]
+    age_bands: [all]
+    target: Learners check AI outputs against trusted sources and task needs, and decide to accept, revise or reject them.
+    why: AILit Engage 3; UNESCO's three source questions for AI answers (what shaped it, what is missing, who is accountable).
+    look_for: Tasks where AI output can be wrong and learners must verify and decide.
+    ideas: [Planted AI mistakes to find, Accept-revise-reject buttons with a reason]
+    improvement: Build in AI answers that need checking, and make learners decide with a reason.
+    refs: {AILIT: ["Engage 3"], UNESCO-AIMIL: ["2.5", "3.3"]}
+    sources: [AILIT, UNESCO-AIMIL]
+    terms: [[ai output, ai answer, ai generated, chatbot answer, generated answer, resposta da ia, gerado por ia, resposta do chatbot], [check, verify, evaluate, accept, revise, reject, wrong, mistake, verificar, avaliar, aceitar, rever, rejeitar, errad, erro]]
+
+  - id: AI-04
+    axis: AI
+    title: Recognise bias and fairness issues
+    scope: claimed
+    age_bands: [all]
+    target: Learners explain how data and design choices can make AI unfair, and how to notice it.
+    why: AILit Engage 6; UNESCO highlights cultural and linguistic exclusion by AI.
+    look_for: Activities where learners compare outputs for different groups or examine training data.
+    ideas: [Biased-dataset sorting game, Compare outputs for different names or languages]
+    improvement: Add one activity where learners find and discuss a biased result.
+    refs: {AILIT: ["Engage 6"], UNESCO-AICFS: ["ethics of AI"]}
+    sources: [AILIT, UNESCO-AICFS, UNESCO-AIAGE]
+    terms: [[bias, biased, fairness, unfair, discriminat, stereotype, enviesad, vies, justica, injust, discrimina, estereotipo]]
+    need: 1
+
+  - id: AI-05
+    axis: AI
+    title: Weigh ethics, values and resources of AI use
+    scope: claimed
+    age_bands: [all]
+    target: Learners judge whether a use of AI fits human values and rights, including privacy, accountability and environmental cost.
+    why: AILit Engage 5 and 7; UNESCO's ethics of AI dimension. Ethics is part of literacy, not a separate topic.
+    look_for: Dilemmas, debates or role plays about AI use and who is accountable.
+    ideas: [Who-answers-for-the-algorithm role play, Should-we-use-AI-here debate cards]
+    improvement: Add a dilemma where learners argue whether and how AI should be used.
+    refs: {AILIT: ["Engage 5", "Engage 7"], UNESCO-AICFS: ["ethics of AI"], UNESCO-AIMIL: ["4.4"]}
+    sources: [AILIT, UNESCO-AICFS, UNESCO-AIMIL]
+    terms: [[ai ethics, ethics of ai, ethical, accountab, responsible ai, human values, etica da ia, etic, responsabiliza, ia responsavel, valores humanos]]
+    need: 1
+
+  - id: AI-06
+    axis: AI
+    title: Create with AI while keeping one's own voice
+    scope: claimed
+    features: [ai_generative]
+    age_bands: [B4, B5]
+    target: Learners use AI to explore ideas, get feedback and refine their work, while the work stays theirs and AI help is disclosed.
+    why: AILit Create 1 to 3 keep the learner's own creative vision first. UNESCO recalls a minimum age of 13 for independent use of generative AI in class.
+    look_for: Tasks where AI gives feedback or alternatives and learners decide, with disclosure of AI use.
+    ideas: ["AI as critic, not author", Version history showing learner and AI contributions]
+    improvement: Make AI a feedback partner, keep the learner as author, and show what AI contributed.
+    refs: {AILIT: ["Create 1", "Create 2", "Create 3"]}
+    sources: [AILIT, UNESCO-AIMIL]
+    terms: [[generative ai, prompt, prompting, ai feedback, refine, iterate, ia generativa, comando, feedback da ia, melhorar, iterar]]
+    need: 1
+    conflict: ["the ai will write it for you", "ai does your homework", "no need to think", "a ia faz os trabalhos de casa", "a ia escreve por ti"]
+
+  - id: AI-07
+    axis: AI
+    title: Decide when and how to use AI, and monitor its use
+    scope: claimed
+    features: [ai_generative]
+    age_bands: [all]
+    target: Learners decide whether a task should be done with AI, split tasks between human and AI, and review the result.
+    why: AILit Manage 1 to 4; delegation and oversight are central to agency.
+    look_for: Explicit choices about using AI, task decomposition, and review of AI contribution.
+    ideas: [Human-or-AI task sorter, Oversight checkpoint after each AI step]
+    improvement: Add a decision point and a review step for every AI-assisted task.
+    refs: {AILIT: ["Manage 1", "Manage 3", "Manage 4"]}
+    sources: [AILIT]
+    terms: [[when to use ai, whether to use ai, decide to use ai, human oversight, monitor ai, quando usar a ia, decidir usar a ia, supervisao humana]]
+    need: 1
+
+  - id: AI-08
+    axis: AI
+    title: Investigate and shape AI systems
+    scope: claimed
+    age_bands: [all]
+    target: Learners investigate how an AI system is meant to work, test it with criteria and propose improvements for human wellbeing.
+    why: AILit Shape 1 to 4 and UNESCO's AI system design dimension. Learners can shape technology, not only be shaped by it.
+    look_for: Tasks where learners test, train or redesign a simple AI system, even unplugged.
+    ideas: [Train-and-test a classifier in a sandbox, Redesign a recommender for fairness]
+    improvement: Add a task where learners test an AI system with their own cases and propose a change.
+    refs: {AILIT: ["Shape 1", "Shape 2", "Shape 3", "Shape 4"], UNESCO-AICFS: ["AI system design"]}
+    sources: [AILIT, UNESCO-AICFS]
+    terms: [[train a model, train the ai, test the ai, design an ai, improve the ai, dataset, test cases, treinar um modelo, treinar a ia, testar a ia, conceber uma ia, conjunto de dados]]
+    need: 1
+
+  # ================================================================ TRN: transparency that teaches (design lens)
+  - id: TRN-01
+    axis: TRN
+    title: Child-friendly explanation of how the product works and what data it uses
+    scope: universal
+    age_bands: [all]
+    target: Children get a short, age-appropriate explanation of what the product does, what data it uses and why, inside the product.
+    why: GDPR Art. 12 asks for clear language for children; the DSA Art. 28 guidelines and General Comment 25 ask for child-friendly information.
+    look_for: Child-facing explainers, onboarding, or a data page written for the age band.
+    ideas: [How-this-game-works card at first launch, My-data page with icons]
+    improvement: Write a child-facing explainer of the product and its data use, tested with the age band.
+    refs: {DIGCOMP3: ["4.2"]}
+    sources: [GDPR, DSA-G28, UNCRC-GC25, IEEE2089]
+    terms: [[child friendly, age appropriate, plain language, simple language, for children, kid friendly, linguagem simples, adequada a idade, para criancas, linguagem acessivel], [data, how it works, how the game works, privacy, dados, como funciona, privacidade]]
+
+  - id: TRN-02
+    axis: TRN
+    title: AI disclosure that teaches its limits
+    scope: feature
+    features: [ai_generative, ai_adaptive, ai_assessment]
+    age_bands: [all]
+    target: Wherever AI is used, children are told it is AI, what it can and cannot do, and that it can be wrong, in age-appropriate words.
+    why: AI Act Art. 50 requires disclosure; AILit Engage 2 and 3 turn disclosure into learning; the KIDS Act proposal and UNICEF guidance ask for transparency to children.
+    look_for: In-product AI labels and explanations of limits, written for the age band.
+    ideas: [I am an AI badge with a tap-to-learn explainer, Confidence hints on AI answers]
+    improvement: Add an AI label with a short explanation of what the AI does and that it can make mistakes.
+    refs: {AILIT: ["Engage 2", "Engage 3"]}
+    sources: [AIA, AILIT, KIDS, UNICEF-AI, 5R-AICODE]
+    terms: [[ai, artificial intelligence, chatbot, assistant, ia, inteligencia artificial, assistente], [disclos, label, labelled, labeled, tells, inform, can make mistakes, can be wrong, limitations, rotul, informa, pode errar, pode enganar, limitacoes]]
+
+  - id: TRN-03
+    axis: TRN
+    title: Explain adaptivity and recommendations
+    scope: feature
+    features: [ai_adaptive, recommender]
+    age_bands: [all]
+    target: Children and teachers can see why the product chose a level, task or item, and can change it.
+    why: The DSA and its Art. 28 guidelines ask for recommender transparency and choice; AILit Engage 4 teaches how recommendations shape perspectives.
+    look_for: Why-am-I-seeing-this explanations and a way to choose differently.
+    ideas: ["A why-this-level button", Learner choice to override the next task]
+    improvement: Add a why-am-I-seeing-this explanation and a way to choose another path.
+    refs: {AILIT: ["Engage 4"]}
+    sources: [DSA, DSA-G28, AILIT]
+    terms: [[recommend, adaptive, personalis, personaliz, next task, next level, recomend, adaptativ, personaliza, proxima tarefa, proximo nivel], [why, explain, because, choose, change, porque, explica, escolher, mudar]]
+
+  - id: TRN-04
+    axis: TRN
+    title: Commercial content and purchases explained as a learning moment
+    scope: feature
+    features: [purchases]
+    age_bands: [all]
+    target: Every purchase, ad or sponsored item is clearly labelled with its real cost or commercial intent, in words the child understands.
+    why: UCPD bans direct exhortation to children; the KIDS Act and DFA proposals require real-time purchase labels and ban disguised advertising.
+    look_for: Price labels in real money, ad and sponsorship labels, explanations for children.
+    ideas: [Coins-to-euros label on every price, This is an ad tag with a tap-to-learn note]
+    improvement: Label prices in real money and mark commercial content, with a one-line explanation for children.
+    refs: {DIGCOMP3: ["1.2"]}
+    sources: [UCPD, KIDS, DFA]
+    terms: [[price, purchase, cost, ad, ads, sponsored, advert, preco, compra, custo, anuncio, patrocinad, publicidade], [label, labelled, labeled, real money, euros, explain, rotul, dinheiro real, explica]]
+
+  - id: TRN-05
+    axis: TRN
+    title: Provenance labels for generated or manipulated media
+    scope: feature
+    features: [ai_generative]
+    age_bands: [all]
+    target: AI-generated or altered images, audio and video are labelled, and children can learn what the label means.
+    why: AI Act Art. 50 requires marking of synthetic content; AILit Create 4 addresses authenticity.
+    look_for: Labels or watermarks on generated media and an explanation for learners.
+    ideas: [Made with AI stamp that opens a short explainer, Provenance panel on shared creations]
+    improvement: Label generated media and explain the label to learners.
+    refs: {AILIT: ["Create 4"]}
+    sources: [AIA, AILIT]
+    terms: [[generated, synthetic, ai image, ai made, made with ai, gerad, sintetic, imagem de ia, feito com ia], [label, labelled, labeled, watermark, provenance, mark, rotul, marca de agua, proveniencia, marcad]]
+
+  - id: TRN-06
+    axis: TRN
+    title: Safety tools explained where they are used
+    scope: feature
+    features: [chat, multiplayer, social, ugc]
+    age_bands: [all]
+    target: Block, report, mute and help options are explained to children in context, so using them is itself a lesson.
+    why: The KIDS Act proposal (Art. 12) asks for contact safeguards and child-friendly reporting; DSA Art. 16 for notice mechanisms.
+    look_for: Child-facing explanations next to report and block, practice flows, links to helplines.
+    ideas: [First-time tooltip on the report button, Practice reporting in the tutorial]
+    improvement: Explain report and block in the moment, and show what happens after a report.
+    refs: {DIGCOMP3: ["4.1", "4.3"]}
+    sources: [KIDS, DSA, BIK]
+    terms: [[report, block, mute, help button, denunciar, reportar, bloquear, silenciar, botao de ajuda], [explain, explained, tutorial, tooltip, what happens, explica, explicad, o que acontece]]
+
+  - id: TRN-07
+    axis: TRN
+    title: No hidden curriculum
+    scope: universal
+    age_bands: [all]
+    target: The product does not model what literacy teaches against, such as AI that claims to be a friend or to know everything, pressure loops or disguised selling.
+    why: Children learn from how products behave, not only from lessons. UNESCO and AILit warn about anthropomorphic AI; the KIDS Act and DFA proposals about manipulative design.
+    look_for: Copy, dialogue and mechanics that contradict the learning goals (see the conflict phrases of every target).
+    ideas: [Review all character dialogue against AI-02, Review reward loops against SAF-04]
+    improvement: Remove or rewrite the copy and mechanics flagged as conflicts, and add a review step for new content.
+    refs: {AILIT: ["Engage 2"]}
+    sources: [UNESCO-AIAGE, AILIT, KIDS, DFA]
+    terms: [[hidden curriculum, content review, copy review, dialogue review, curriculo oculto, revisao de conteudos, revisao de dialogos]]
+    need: 1
+
+  # ================================================================ EDU: educator and family enablement (design lens)
+  - id: EDU-01
+    axis: EDU
+    title: Learning goals stated and mapped to a framework or curriculum
+    scope: universal
+    age_bands: [all]
+    target: The product states what learners will know or be able to do, mapped to DigComp, AILit, the national curriculum or another named framework.
+    why: Pedagogical fit and curriculum alignment is the first EU-DEC criterion; learning goals are the starting point of EAF and EdTech for Good reviews.
+    look_for: A list of learning goals with framework references (for example DigComp 1.2, AILit Engage 3, Aprendizagens Essenciais).
+    ideas: [Goal card per mission, Curriculum map for teachers]
+    improvement: Write learning goals per activity and map each to a named framework and age band.
+    refs: {DIGCOMP3: ["all"], AILIT: ["all"]}
+    sources: [EU-DEC, ET4G2, DIGCOMP3, AILIT]
+    terms: [[learning goal, learning goals, learning objective, learning objectives, learning outcome, learning outcomes, objetivo de aprendizagem, objetivos de aprendizagem, aprendizagens essenciais, competencias], [curriculum, framework, digcomp, ailit, aligned, mapped, curriculo, referencial, alinhad, mapead]]
+
+  - id: EDU-02
+    axis: EDU
+    title: Teacher guidance for before, during and after use
+    scope: universal
+    age_bands: [all]
+    target: Teachers get a guide with set-up, facilitation tips and debrief questions that link play to the literacy goals.
+    why: The EU-DEC guidelines and EdTech for Good stress educator judgement and professionalism; in game-based learning the debrief is where learning is made explicit.
+    look_for: Teacher guide, lesson plans, debrief or discussion questions.
+    ideas: ["Three-step lesson card: frame, play, debrief", Printable discussion prompts]
+    improvement: Add a teacher guide with a debrief for each literacy goal.
+    refs: {}
+    sources: [EU-DEC, ET4G2, ARNAB2014]
+    terms: [[teacher guide, teachers guide, lesson plan, lesson plans, debrief, discussion questions, facilitat, guia do professor, plano de aula, planos de aula, debriefing, questoes para discussao, orientacoes para professores]]
+    need: 1
+
+  - id: EDU-03
+    axis: EDU
+    title: Evidence of learning beyond engagement
+    scope: universal
+    age_bands: [all]
+    target: The product or its documentation shows how learning of the targets can be seen (formative checks, learner products, evaluation), not only time on task or points.
+    why: Impact and assessment is an EU-DEC criterion; EdTech for Good asks for outcome measurement beyond engagement; the Dutch 3E framework grades evidence strength.
+    look_for: Assessment aligned to goals, evaluation plans or results, without surveillance of learners.
+    ideas: [Exit-ticket after each mission, Portfolio of learner decisions]
+    improvement: Add a light formative check per goal and plan a small evaluation with a partner school.
+    refs: {AILIT: ["learner expectations"]}
+    sources: [EU-DEC, ET4G2, NL-3E]
+    terms: [[assessment, evaluation, evidence of learning, learning outcomes, formative, exit ticket, pilot, piloted, study, avaliacao, evidencias de aprendizagem, formativa, piloto, estudo]]
+    need: 1
+
+  - id: EDU-04
+    axis: EDU
+    title: Age-appropriate progression
+    scope: universal
+    age_bands: [all]
+    target: Literacy targets are sequenced by age band or level (basic, intermediate, advanced), and AI features respect age guidance.
+    why: AILit gives learner expectations at three levels; DigComp 3.0 has four proficiency levels; UNESCO asks for context-sensitive, age-appropriate AI.
+    look_for: Progression tables, age bands per activity, and age rules for AI features.
+    ideas: [Same goal at three levels of challenge, Age gate for independent AI use]
+    improvement: Map each goal to an age band and level, and state age rules for AI features.
+    refs: {DIGCOMP3: ["proficiency levels"], AILIT: ["learner expectations"]}
+    sources: [DIGCOMP3, AILIT, UNESCO-AIAGE]
+    terms: [[age band, age group, ages, years old, year olds, faixa etaria, grupo etario, anos de idade], [progression, level, levels, basic, intermediate, advanced, progressao, nivel, niveis, basico, intermedio, avancado]]
+
+  - id: EDU-05
+    axis: EDU
+    title: Accessible and inclusive literacy learning
+    scope: universal
+    age_bands: [all]
+    target: Learners with different needs, languages and backgrounds can reach the same literacy goals.
+    why: Design, accessibility and inclusion is an EU-DEC criterion and an EdTech for Good pillar; the European Accessibility Act applies to many services.
+    look_for: Accessibility features, language options, alternative paths, and testing with diverse learners.
+    ideas: [Read-aloud and dyslexia-friendly mode, "Same mission with visual, audio or text clues"]
+    improvement: Offer alternative paths to each goal and test with learners with diverse needs.
+    refs: {}
+    sources: [EU-DEC, ET4G2, EAA]
+    terms: [[accessib, inclusive, inclusion, special educational needs, screen reader, dyslexi, multilingual, acessib, inclusiv, inclusao, necessidades educativas, leitor de ecra, dislexia, multilingue]]
+    need: 1
+
+  - id: EDU-06
+    axis: EDU
+    title: AI literacy support for school staff
+    scope: feature
+    features: [ai_generative, ai_adaptive, ai_assessment]
+    age_bands: [all]
+    target: When the product uses AI, the provider gives schools material so staff understand what the AI does, its limits and how to oversee it.
+    why: AI Act Art. 4, as recast by the AI Omnibus, asks providers and deployers (often the school) to take measures supporting staff AI literacy; Art. 26 requires competent human oversight for high-risk systems.
+    look_for: Staff guides, training, explainers of the AI and its oversight.
+    ideas: [Ten-minute staff explainer of the AI, Oversight checklist for teachers]
+    improvement: Provide a short staff explainer and oversight guide for every AI feature.
+    refs: {}
+    sources: [AIA, AIA-OMNIBUS, EU-EDUPKG]
+    terms: [[staff, teachers, educators, school, professores, docentes, escola], [ai literacy, training, explainer, human oversight, oversight, literacia em ia, formacao, supervisao]]
+
+  - id: EDU-07
+    axis: EDU
+    title: Guidance for families
+    scope: universal
+    age_bands: [all]
+    target: Families get short material on what the product teaches, how to talk about it at home and which settings they control.
+    why: The KIDS Act proposal requires tools for guardians; the Education Package's Healthy Screens Pledge links schools and families; BIK+ supports parents.
+    look_for: Parent or guardian guides, conversation starters, family settings explained.
+    ideas: [Talk-about-it card after each unit, Family settings page in plain language]
+    improvement: Add a one-page family guide with conversation starters linked to the literacy goals.
+    refs: {}
+    sources: [KIDS, EU-EDUPKG, BIK]
+    terms: [[parent, parents, guardian, guardians, family, families, caregiver, pais, encarregados de educacao, familia, familias, cuidadores]]
+    need: 1

@@ -64,6 +64,15 @@ retention:
 dpia: docs/dpia.md
 security_policy: SECURITY.md
 
+# Literacy Compass (tooling/compass.py): what the product claims to teach.
+# Axes: INF information and media, COM communication and rights, CRE creation, SAF safety and wellbeing,
+# PRB problem solving, AI AI literacy. Or list target ids (see framework/compass/catalogue.md).
+compass:
+  claims: []
+#  not_applicable:
+#    - target: INF-05
+#      reason: "Covered elsewhere in the school programme"
+
 # Accepted gaps. A waiver needs a reason, a named approver and an expiry date.
 waivers: []
 #  - rule: CORE-SEC-03

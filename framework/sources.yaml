@@ -42,18 +42,18 @@ sources:
     title: "Regulation (EU) 2024/1689, Artificial Intelligence Act"
     type: law
     jurisdiction: EU
-    status: "Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025. GPAI rules since 2 Aug 2025. Transparency (Art. 50) from 2 Aug 2026"
+    status: "Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025; Art. 4 recast by the AI Omnibus (2026): providers and deployers must take measures to support AI literacy of staff, no specific level required. GPAI rules since 2 Aug 2025. Transparency (Art. 50) from 2 Aug 2026"
     url: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
     verified: 2026-11-11
 
   - id: AIA-OMNIBUS
-    title: "Digital Omnibus on AI: amendments to the AI Act deferring high-risk obligations"
-    type: law-pending
+    title: "Digital Omnibus on AI: Regulation amending the AI Act (reported as Regulation (EU) 2026/1744)"
+    type: law
     jurisdiction: EU
-    status: "Adopted June 2026. Annex III high-risk obligations (incl. education) apply from 2 Dec 2027"
-    url: "https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/"
-    notes: "Secondary source (law firm analysis). Replace with Official Journal reference when cited."
-    verified: 2026-11-11
+    status: "Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026. Annex III high-risk obligations (incl. education) apply from 2 Dec 2027. Art. 4 AI literacy becomes a duty to take measures to support AI literacy"
+    url: "https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus"
+    notes: "Secondary sources (FPF, law firms). Replace with the EUR-Lex reference of the consolidated text when cited."
+    verified: 2026-11-14
 
   - id: KIDS
     title: "Proposal for a Regulation: EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681"
@@ -412,3 +412,134 @@ sources:
     status: "Rewards for completion hurt creativity; rewards for creative quality with informative feedback can help"
     url: "https://www.frontiersin.org/article/10.3389/fpsyg.2020.00974"
     verified: 2026-11-11
+
+  # ------------------------------------------------------------------ Literacy Compass (v0.9)
+  # Competence frameworks, quality frameworks and policy the Literacy Compass maps to.
+
+  - id: DIGCOMP3
+    title: "DigComp 3.0: European Digital Competence Framework, fifth edition (JRC144121). Cosgrove, J. and Cachia, R., Joint Research Centre"
+    type: guidance
+    jurisdiction: EU
+    status: "Published 27 Nov 2025. 5 areas, 21 competences, 4 proficiency levels, AI integrated across all competences. CC BY 4.0"
+    url: "https://data.europa.eu/doi/10.2760/0001149"
+    verified: 2026-11-14
+
+  - id: AILIT
+    title: "Empowering Learners for the Age of AI: an AI Literacy Framework for Primary and Secondary Education (AILit), European Commission and OECD"
+    type: guidance
+    jurisdiction: EU
+    status: "Final version presented 18 Jun 2026. 4 domains (Engage, Create, Manage, Shape AI), 19 competences, learner expectations at basic, intermediate and advanced levels. Informs the PISA 2029 Media and AI Literacy assessment"
+    url: "https://ailiteracyframework.org/"
+    verified: 2026-11-14
+
+  - id: UNESCO-MIL
+    title: "UNESCO (2021). Media and Information Literate Citizens: Think Critically, Click Wisely! Media and Information Literacy Curriculum for Educators and Learners, second edition"
+    type: guidance
+    jurisdiction: international
+    status: "Published 2021. 19 broad learning outcomes and 6 values; 14 modules"
+    url: "https://www.unesco.org/en/media-information-literacy"
+    verified: 2026-11-14
+
+  - id: UNESCO-AIMIL
+    title: "UNESCO (2026). AI Answers. You Decide. A Companion Guide to the UNESCO Media and Information Literacy Curriculum"
+    type: guidance
+    jurisdiction: international
+    status: "Published 2026. Extends MIL to AI: sources, accountability, filtering, lateral reading, rights. Recalls UNESCO's minimum age of 13 for independent use of generative AI in class"
+    url: "https://doi.org/10.58338/JXYO3928"
+    verified: 2026-11-14
+
+  - id: UNESCO-AICFS
+    title: "UNESCO (2024). AI Competency Framework for Students"
+    type: guidance
+    jurisdiction: international
+    status: "Published 2024. Human-centred mindset, ethics of AI, AI techniques and applications, AI system design"
+    url: "https://www.unesco.org/en/articles/ai-competency-framework-students"
+    verified: 2026-11-14
+
+  - id: UNESCO-AIAGE
+    title: "UNESCO (2026). Is there a right age for AI in education? Deciding whether AI is age-appropriate and why (ED/FLI/ICT/2026/02)"
+    type: guidance
+    jurisdiction: international
+    status: "Published 2026. Calls for shared, evidence-based criteria for age-appropriate AI and for independent evaluation schemes"
+    url: "https://www.unesco.org/en/digital-education"
+    verified: 2026-11-14
+
+  - id: EU-DEC
+    title: "European Commission (2025). Making informed choices on digital education content: EU guidelines for teachers and educators"
+    type: guidance
+    jurisdiction: EU
+    status: "Published Dec 2025. Eight quality criteria (pedagogical fit and curriculum alignment, engaging learning experiences, design, accessibility and inclusion, reliability, impact and assessment, legal compliance, technical interoperability, financial viability); suggests a radar chart"
+    url: "https://op.europa.eu/en/publication-detail/-/publication/1fa0183b-dbbe-11f0-8da2-01aa75ed71a1/language-en"
+    verified: 2026-11-14
+
+  - id: EU-EDUPKG
+    title: "European Commission (2026). Education and Skills Package (factsheet), with the Communication on stronger education foundations in the age of AI"
+    type: policy
+    jurisdiction: EU
+    status: "Presented 2026. Mainstreams AI literacy on the AILit framework; AI Literacy Certificate pilot for 15-year-olds in 2027/2028; European Healthy Screens Pledge; EU 2030 target: under 15% low achievers in computer and information literacy (age 13-14)"
+    url: "https://doi.org/10.2766/6358386"
+    verified: 2026-11-14
+
+  - id: ET4G2
+    title: "UNICEF (2026). EdTech for Good Framework, Version 2.0"
+    type: guidance
+    jurisdiction: international
+    status: "Launched 24 Jun 2026. Five pillars (safety and well-being, educational impact, designed for teaching and learning, contextual readiness, inclusive access); evidence portfolio; does not rank or certify. CC BY 4.0"
+    url: "https://www.unicef.org/digitaleducation/edtech-for-good"
+    verified: 2026-11-14
+
+  - id: SWE-KP
+    title: "Swedish Edtech Industry (2026). Kvalitetsportfolio för edtech, version 1.0 (published on Edtechkartan)"
+    type: guidance
+    jurisdiction: SE
+    status: "Version 1.0 of 18 Aug 2026. Self-declaration in seven quality areas for members; not a rating, certification or evidence framework"
+    url: "https://edtechkartan.se/kvalitetsportfolio/"
+    verified: 2026-11-14
+
+  - id: NL-3E
+    title: "Garg, M. and Bakker, T. (2025). Dutch 3E Framework: Evidence-informed Evaluation of EdTech (The Hague University of Applied Sciences, Npuls)"
+    type: guidance
+    jurisdiction: NL
+    status: "Launched 10 Apr 2025. Bronze, Silver and Gold tiers for the strength of evidence"
+    url: "https://www.thuas.com/research/centre-expertise/3e-evidence-based-evaluation-edtech"
+    verified: 2026-11-14
+
+  - id: IEEE3527
+    title: "IEEE 3527.1-2020, Standard for Digital Intelligence (DQ): Framework for Digital Literacy, Skills, and Readiness"
+    type: standard
+    jurisdiction: international
+    status: "Active standard, published 15 Jan 2021. 8 areas of digital life, 3 levels, 24 competences"
+    url: "https://standards.ieee.org/ieee/3527.1/7589/"
+    verified: 2026-11-14
+
+  - id: IEEE2089
+    title: "IEEE 2089-2021, Standard for an Age Appropriate Digital Services Framework Based on the 5Rights Principles for Children"
+    type: standard
+    jurisdiction: international
+    status: "Active standard (2021)"
+    url: "https://ieeexplore.ieee.org/document/9627644"
+    verified: 2026-11-14
+
+  - id: 5R-AICODE
+    title: "5Rights Foundation (2025). Children and AI Design Code"
+    type: guidance
+    jurisdiction: international
+    status: "Published 2025"
+    url: "https://5rightsfoundation.com/resource/children-ai-design-code/"
+    verified: 2026-11-14
+
+  - id: UNICEF-AI
+    title: "UNICEF Innocenti (2025). Guidance on AI and Children, version 3: checklist of 10 requirements and 48 recommendations"
+    type: guidance
+    jurisdiction: international
+    status: "Published 2025"
+    url: "https://www.unicef.org/innocenti/media/11996/file/UNICEF-Innocenti-Guidance-on-AI-and-Children-3-Checklist-2025.pdf"
+    verified: 2026-11-14
+
+  - id: RPF-PRINC
+    title: "Raspberry Pi Foundation (2026). Design principles for safe and responsible education technology, version 1.0 (draft for feedback)"
+    type: guidance
+    jurisdiction: international
+    status: "Published Jul 2026 for feedback. Eight principles drawing on RITEC, UN General Comment 25, Child Rights by Design and EdTech for Good"
+    url: "https://www.raspberrypi.org/blog/draft-principles-for-safe-responsible-edtech/"
+    verified: 2026-11-14

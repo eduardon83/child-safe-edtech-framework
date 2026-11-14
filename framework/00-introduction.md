@@ -110,5 +110,8 @@ or any badge implying third-party approval.
 
 ## 9. What CSEF does not cover
 
-Contracts, legal bases and the work of the controller (often the school); content quality and curriculum
-alignment; physical hardware safety; and the full DSA obligations of very large platforms.
+Contracts, legal bases and the work of the controller (often the school); general content quality and
+curriculum alignment; physical hardware safety; and the full DSA obligations of very large platforms.
+
+Since v0.9 the [Literacy Compass](04-literacy-compass.md) adds a second lens: what a product teaches about
+digital, media and AI literacy, and how strong the evidence is. It is a profile, not a score.

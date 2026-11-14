@@ -31,6 +31,8 @@ jobs:
           ls dist/example
       - name: Compare example code of conduct
         run: python3 tooling/coc.py --input examples/codes-of-conduct/example-code.md --level 2 --out-dir dist/example-coc
+      - name: Literacy Compass example
+        run: python3 tooling/compass.py --input examples/compass/fact-quest --manifest examples/compass/fact-quest/csef.yaml --csef-findings dist/example/findings.json --out-dir dist/example-compass
       - name: Policy questionnaire example kit
         run: python3 tooling/policy.py --answers examples/policy/answers.json --batch --out-dir dist/example-policy --formats md,html,pdf,docx --no-skill
       - name: Package skill
@@ -43,3 +45,4 @@ jobs:
             dist/example/
             dist/example-coc/
             dist/example-policy/
+            dist/example-compass/

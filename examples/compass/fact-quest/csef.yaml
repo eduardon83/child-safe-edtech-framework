@@ -1,0 +1,29 @@
+# Fictional example for the CSEF Literacy Compass. Not a real product.
+cses_version: "0.1"
+product: "Fact Quest (fictional example)"
+description: "A detective game for ages 10 to 15 about checking information and understanding AI answers."
+profiles: [A]
+age_bands: [B3, B4]
+compliance_level: 2
+jurisdictions: [EU]
+context: mixed
+distribution:
+  - channel: school
+    operated_by: school
+  - channel: app_store
+    operated_by: provider
+legal_scope:
+  kids_act: in_scope_online_game
+gdpr_role: processor
+features: [accounts, ai_generative, purchases]
+ai:
+  inventory: docs/design-document.md
+  act_class: limited_risk_art50
+monetisation: in_app_purchases
+
+# Literacy Compass: what the product claims to teach (axes or target ids).
+compass:
+  claims: [INF, AI]
+  not_applicable:
+    - target: INF-05
+      reason: "Citation is covered by the school's library programme, not by the game."

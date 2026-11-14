@@ -222,7 +222,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Make automated results provisional until a teacher confirms; show the reasons.
 
-**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/)
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus)
 
 ### CORE-AI-08: Conversation memory is off by default
 

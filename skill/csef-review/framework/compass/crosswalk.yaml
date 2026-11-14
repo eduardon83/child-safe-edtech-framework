@@ -1,0 +1,62 @@
+# CSEF Literacy Compass: crosswalk to quality frameworks.
+#
+# One dossier, many frameworks. Evidence collected for a Compass target also answers questions in these
+# frameworks, so a provider can reuse it instead of writing the same description several times.
+# The mapping is indicative: each framework keeps its own method, and none of them is a rating.
+#
+# Axis-level mappings apply to every target on the axis unless the target has its own entry.
+# Licence: CC BY 4.0
+
+frameworks:
+  EU-DEC:
+    title: EU guidelines on digital education content (8 criteria)
+    items:
+      PED: Pedagogical fit and curriculum alignment
+      ENG: Engaging learning experiences
+      ACC: Design, accessibility and inclusion
+      REL: Reliability
+      IMP: Impact and assessment
+      LEG: Legal compliance
+      INT: Technical interoperability
+      FIN: Financial viability
+  SWE-KP:
+    title: Swedish Edtech Kvalitetsportfolio v1.0 (7 quality areas)
+    items:
+      "1": Informationshantering, dataskydd och livscykel (information handling, data protection and lifecycle)
+      "2": AI, transparens och ansvar (AI, transparency and responsibility)
+      "3": Teknisk arkitektur, robusthet och interoperabilitet (technical architecture, robustness and interoperability)
+      "4": Tillgänglighet och användbarhet (accessibility and usability)
+      "5": Innehåll, design och utveckling (content, design and development)
+      "6": Implementering (implementation)
+      "7": Löpande förbättring (continuous improvement)
+  ET4G2:
+    title: UNICEF EdTech for Good Framework 2.0 (5 pillars)
+    items:
+      SAF: Safety and Well-being
+      IMP: Educational Impact
+      DTL: Designed for Teaching and Learning
+      CTX: Contextual Readiness
+      INC: Inclusive Access
+
+axes:
+  INF: {EU-DEC: [PED, ENG], SWE-KP: ["5"], ET4G2: [DTL, IMP]}
+  COM: {EU-DEC: [PED, ENG], SWE-KP: ["5"], ET4G2: [DTL, IMP]}
+  CRE: {EU-DEC: [PED, ENG], SWE-KP: ["5"], ET4G2: [DTL, IMP]}
+  SAF: {EU-DEC: [PED, ENG], SWE-KP: ["5"], ET4G2: [DTL, IMP, SAF]}
+  PRB: {EU-DEC: [PED, ENG], SWE-KP: ["5"], ET4G2: [DTL, IMP]}
+  AI: {EU-DEC: [PED, ENG], SWE-KP: ["5", "2"], ET4G2: [DTL, IMP]}
+  TRN: {EU-DEC: [REL, LEG], SWE-KP: ["2"], ET4G2: [SAF]}
+  EDU: {EU-DEC: [PED], SWE-KP: ["5", "6"], ET4G2: [DTL]}
+
+targets:
+  TRN-01: {EU-DEC: [LEG, REL], SWE-KP: ["1"], ET4G2: [SAF]}
+  TRN-04: {EU-DEC: [LEG], SWE-KP: ["5"], ET4G2: [SAF]}
+  TRN-06: {EU-DEC: [LEG], SWE-KP: ["1"], ET4G2: [SAF]}
+  TRN-07: {EU-DEC: [REL, ENG], SWE-KP: ["5"], ET4G2: [SAF, IMP]}
+  EDU-01: {EU-DEC: [PED], SWE-KP: ["5"], ET4G2: [DTL]}
+  EDU-02: {EU-DEC: [PED], SWE-KP: ["6"], ET4G2: [DTL]}
+  EDU-03: {EU-DEC: [IMP], SWE-KP: ["7"], ET4G2: [IMP]}
+  EDU-04: {EU-DEC: [PED], SWE-KP: ["5"], ET4G2: [CTX]}
+  EDU-05: {EU-DEC: [ACC], SWE-KP: ["4"], ET4G2: [INC]}
+  EDU-06: {EU-DEC: [LEG], SWE-KP: ["2", "6"], ET4G2: [DTL, SAF]}
+  EDU-07: {EU-DEC: [PED], SWE-KP: ["6"], ET4G2: [CTX, SAF]}

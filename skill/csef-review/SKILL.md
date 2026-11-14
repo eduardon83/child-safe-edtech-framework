@@ -1,6 +1,6 @@
 ---
 name: csef-review
-description: Pre-compliance review of a codebase used by children (educational games, game-based applications, gamified apps) against the Child-Safe EdTech Framework (CSEF, formerly CSES), covering GDPR, DSA, AI Act, EU KIDS Act and DFA proposals, accessibility and national packs. Produces a pre-compliance report and a prioritised improvement plan with sources, an interactive dashboard, PDF and Word exports, a communications audit, and code-of-conduct gap analysis. Use when asked to check, audit or review child safety, children's privacy or EU compliance of an app, game, repository or code of conduct.
+description: Pre-compliance review of a codebase used by children (educational games, game-based applications, gamified apps) against the Child-Safe EdTech Framework (CSEF, formerly CSES), covering GDPR, DSA, AI Act, EU KIDS Act and DFA proposals, accessibility and national packs. Produces a pre-compliance report and a prioritised improvement plan with sources, an interactive dashboard, PDF and Word exports, a communications audit, code-of-conduct gap analysis, and a Literacy Compass that shows what a product teaches about digital, media and AI literacy (DigComp 3.0, AILit, UNESCO) with evidence levels, claim checks and hidden-curriculum conflicts. Use when asked to check, audit or review child safety, children's privacy or EU compliance of an app, game, repository or code of conduct, or what a product teaches about digital, media or AI literacy and whether its learning claims hold up.
 ---
 
 # CSEF review
@@ -20,6 +20,7 @@ Bundled files (paths relative to this skill folder):
 - `packs/*.yaml`: national and extra packs; `packs/_template.yaml` shows how to write one
 - `references/review-guide.md`: what to inspect by hand, per profile
 - `references/report-additions.md`: how to add your judgement to the generated report
+- `scripts/compass.py`, `framework/compass/`: the Literacy Compass (targets, crosswalk); `references/compass-review.md`: how to review it
 - `templates/`: manifest, DPIA starter, AI risk file, waiver record, agent instructions
 
 ## Workflow
@@ -131,6 +132,22 @@ python3 <skill-folder>/scripts/coc.py --input code.pdf --name "Code name" --leve
 It writes `coc-comparison.md`, `.html` and `.json`: structural criteria from the KIDS Act (Art. 17, 23,
 Recital 39) and, per rule, covered, partial, missing or possible conflict. The tool matches wording;
 you then read the code and confirm or correct every result by meaning, in any language.
+
+## Literacy Compass
+
+When the user asks what a product teaches about digital, media or AI literacy, whether its learning claims
+hold up, or wants a quality description they can reuse (EU guidelines on digital education content, Swedish
+Edtech Kvalitetsportfolio, UNICEF EdTech for Good), follow `references/compass-review.md`. In short:
+
+```bash
+python3 <skill-folder>/scripts/compass.py --input docs/ --input content/ --manifest csef.yaml \
+        [--csef-findings csef-report/findings.json] --out-dir csef-compass
+```
+
+It writes `compass.md`, `compass.html` and `compass.json`: 44 targets on 8 axes (learner lens: claimed axes
+only; design lens: every product), an evidence level per target (0 Not found to 4 Measured), unsupported
+claims, hidden-curriculum conflicts and the next three steps. Verify every level by meaning, in any language.
+Never turn it into a score or a ranking.
 
 ## Company policy questionnaire
 

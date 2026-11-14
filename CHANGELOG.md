@@ -1,5 +1,32 @@
 # Changelog
 
+## v0.9.0 (2026-11-14)
+
+- **Literacy Compass**, a second lens next to the rules: what does the product teach about digital, media and
+  AI literacy, and how do we know? (`framework/04-literacy-compass.md`).
+  - `framework/compass/targets.yaml`: 44 targets on 8 axes. Learner lens (INF, COM, CRE, SAF, PRB, AI), counted
+    only when the product claims the axis; design lens (TRN transparency that teaches, EDU educator and family
+    enablement), universal or feature-triggered. Each target has framework references (DigComp 3.0, AILit,
+    UNESCO), sources, terms in English and European Portuguese, improvement, design ideas and, where relevant,
+    hidden-curriculum phrases.
+  - Evidence ladder per target: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured. Plans do not count.
+  - Claim checks (unsupported claims, strong claims without measured evidence) and hidden-curriculum conflicts.
+  - `tooling/compass.py`: reads `.md`, `.txt`, `.html`, `.pdf`, `.docx` and in-product text (`.json`, `.yaml`,
+    `.po`, `.csv`, `.arb`); writes `compass.md`, `compass.html` (compass rose with a needle to the next step,
+    CSEF safety status at the centre via `--csef-findings`) and `compass.json`. Never a score or ranking.
+  - `framework/compass/crosswalk.yaml`: one dossier, many frameworks (EU guidelines on digital education
+    content, Swedish Edtech Kvalitetsportfolio v1.0, UNICEF EdTech for Good 2.0).
+  - Packs can amend Compass targets (`compass.amend`) or add their own; the Portugal pack maps targets to the
+    *Referencial de Educação para os Media* and Linha Internet Segura.
+  - `compass` section in the manifest template; example product `examples/compass/fact-quest` (fictional);
+    skill section and `references/compass-review.md`; generated `framework/compass/catalogue.md`; build
+    validation; tests.
+- 16 new sources: DIGCOMP3, AILIT, UNESCO-MIL, UNESCO-AIMIL, UNESCO-AICFS, UNESCO-AIAGE, EU-DEC, EU-EDUPKG,
+  ET4G2, SWE-KP, NL-3E, IEEE3527, IEEE2089, 5R-AICODE, UNICEF-AI, RPF-PRINC; PT-EPM in the Portugal pack.
+- Correction: AIA-OMNIBUS is now law (adopted June 2026, published 24 Jul 2026, in force 27 Jul 2026); AIA
+  status notes that Art. 4 now asks providers and deployers to take measures to support staff AI literacy.
+- Rules unchanged (106).
+
 ## v0.8.0 (2026-11-13)
 
 - CSEF brand kit in `brand/` (logo, icons, colour tokens, fonts, GitHub banner and social preview).

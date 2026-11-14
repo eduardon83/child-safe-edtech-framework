@@ -129,7 +129,7 @@ Profile B: game-based applications and software. Read together with the core rul
 
 **How to improve.** Open a risk management file now (templates/ai-risk-file.md) and record the classification decision.
 
-**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/)
+**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus)
 
 ### B-EVL-02: No camera-based or biometric proctoring of minors
 
