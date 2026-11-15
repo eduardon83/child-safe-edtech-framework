@@ -29,7 +29,7 @@ Last reviewed: YYYY-MM-DD, by: <role>. Reviewed with: <teacher, school psycholog
 - [ ] Teachers see totals for at least 5 children per figure; uniform or small figures are hidden.
 - [ ] If free text is allowed, the disclosure route agreed with the school is linked as `survey.safeguarding`.
 - [ ] If answers are used for evaluation or research, the approval is linked as `survey.research_approval`
-      (ethics, legal basis and, in Portugal, DGE approval through MIME for questionnaires in public schools).
+      (ethics, legal basis and, in Portugal, EduQA approval through MIME for questionnaires in public schools).
 - [ ] The question and its purpose are covered by the DPIA.
 
 ## Child-facing explanation

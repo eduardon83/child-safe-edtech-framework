@@ -19,7 +19,7 @@ Jurisdiction: PT. Version 0.1.0. Draft. Entries marked 'verify' need confirmatio
 - **PT-ANACOM** ANACOM, Portuguese Digital Services Coordinator under the DSA. Designated Digital Services Coordinator. https://www.anacom.pt
 - **PT-ISEGURA** Internet Segura (Portuguese Safer Internet Centre) and Linha Internet Segura. Operating. Helpline for children, guardians and educators. https://www.internetsegura.pt
 - **PT-EPM** Referencial de Educação para os Media para a Educação Pré-escolar, o Ensino Básico e o Ensino Secundário (DGE), versão revista e atualizada. First approved 29 Apr 2014; revised and updated version of Dec 2023 (verify the current edition). https://cidadania.dge.mec.pt/sites/default/files/pdfs/referencial-epm-versaoatualizada-12dez2023.pdf
-- **PT-MIME** Despacho n.º 15847/2007, de 19 de junho (DR 2.ª série, n.º 140, 23 jul 2007): inquéritos em meio escolar; sistema MIME (Monitorização de Inquéritos em Meio Escolar), apreciação pela DGE. In force. Questionnaires and surveys in public schools need prior authorisation (now DGE, through MIME); DGE says when guardian authorisation is needed. Sensitive questions may need a prior CNPD opinion. https://www.dge.mec.pt/sites/default/files/DSPE/mime/despacho_n_15_846_de_2007.pdf
+- **PT-MIME** Despacho n.º 15847/2007, de 19 de junho (DR 2.ª série, n.º 140, 23 jul 2007): inquéritos em meio escolar; sistema MIME (Monitorização de Inquéritos em Meio Escolar), apreciação pela DGE, hoje EduQA, I.P.. In force. Questionnaires and surveys in public schools need prior authorisation through MIME. The DGE was extinguished and its functions passed to EduQA, I.P. (Decreto-Lei 105/2025), which now appraises requests and says when guardian authorisation is needed. Sensitive questions may need a prior CNPD opinion. https://www.dge.mec.pt/sites/default/files/DSPE/mime/despacho_n_15_846_de_2007.pdf
 - **PT-LPCJP** Lei de Proteção de Crianças e Jovens em Perigo, Lei n.º 147/99, de 1 de setembro (versão atual). In force, as amended (latest by Lei 26/2018). Schools are entities with competence in childhood matters; danger situations are reported to the CPCJ. https://diariodarepublica.pt/dr/detalhe/lei/147-1999-581619
 
 ## Amendments to framework rules
@@ -30,9 +30,9 @@ Jurisdiction: PT. Version 0.1.0. Draft. Entries marked 'verify' need confirmatio
 - **CORE-ACC-01**: adds sources PT-DL83; sets level 1. Portugal: products delivered to public schools or other public bodies must meet DL 83/2018, including an accessibility statement.
 - **CORE-SAF-06**: adds sources PT-ISEGURA. Portugal: show Linha Internet Segura (800 21 90 90) in help and support screens.
 - **CORE-SEC-05**: adds sources PT-CNPD. Portugal: personal data breaches are notified to the CNPD by the controller within 72 hours.
-- **CORE-DAT-15**: adds sources PT-CNPD, PT-MIME. Portugal: questionnaires with sensitive questions applied in public schools may need a prior CNPD opinion within the DGE (MIME) procedure.
+- **CORE-DAT-15**: adds sources PT-CNPD, PT-MIME. Portugal: questionnaires with sensitive questions applied in public schools may need a prior CNPD opinion within the MIME procedure (EduQA, I.P.).
 - **CORE-SAF-11**: adds sources PT-LPCJP, PT-ISEGURA. Portugal: the school, as an entity with competence in childhood matters, acts on danger situations and reports them to the CPCJ (Lei 147/99). Show Linha Internet Segura (800 21 90 90) and SOS Criança (116 111) next to open questions.
-- **B-DAT-01**: adds sources PT-MIME. Portugal: research or evaluation questionnaires in public schools need prior DGE authorisation through MIME (Despacho 15847/2007).
+- **B-DAT-01**: adds sources PT-MIME. Portugal: research or evaluation questionnaires in public schools need prior authorisation from EduQA, I.P. (formerly DGE) through MIME (Despacho 15847/2007).
 - **CORE-COM-03**: adds 1 detection pattern(s). 
 
 ## Rules added
@@ -61,13 +61,13 @@ Jurisdiction: PT. Version 0.1.0. Draft. Entries marked 'verify' need confirmatio
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [PT-ISEGURA](https://www.internetsegura.pt)
 
-### PT-SUR-01: Questionnaires to pupils in public schools go through DGE approval (MIME)
+### PT-SUR-01: Questionnaires to pupils in public schools go through MIME approval (EduQA, I.P.)
 
 **MUST** · Level 1 (Legal baseline) · Age bands: all · Features: survey · Detection: manifest · Effort: medium
 
-**Requirement.** Questionnaires or surveys applied to pupils in Portuguese public schools for evaluation, research or product studies, on paper or inside the product, are submitted to the DGE through MIME (Monitorização de Inquéritos em Meio Escolar) before use, unless they are registered in the national statistical system. The school also authorises, and guardian authorisation is obtained where the DGE requires it. Questions that are part of the learning activity itself are agreed with the school and kept in the survey register.
+**Requirement.** Questionnaires or surveys applied to pupils in Portuguese public schools for evaluation, research or product studies, on paper or inside the product, are submitted to EduQA, I.P. (which took over the DGE's functions) through MIME (Monitorização de Inquéritos em Meio Escolar) before use, unless they are registered in the national statistical system. The school also authorises, and guardian authorisation is obtained where EduQA requires it. Questions that are part of the learning activity itself are agreed with the school and kept in the survey register.
 
-**Why.** Despacho 15847/2007 requires prior authorisation for questionnaires and surveys in public schools, proposed by internal or external entities, and lets the DGE decide when guardian authorisation is needed. Questionnaires with sensitive questions have been withdrawn from schools for lacking it.
+**Why.** Despacho 15847/2007 requires prior authorisation for questionnaires and surveys in public schools, proposed by internal or external entities, and lets the appraising body (the DGE, now EduQA, I.P.) decide when guardian authorisation is needed. Questionnaires with sensitive questions have been withdrawn from schools for lacking it.
 
 **How to improve.** Register evaluation and research questionnaires in MIME, keep the approval number in `survey.research_approval`, and plan the timeline around it.
 

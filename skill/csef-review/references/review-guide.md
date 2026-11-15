@@ -29,7 +29,7 @@ The scanner finds patterns. These are the places to read by hand. For each, the 
 | Storage, deletion, personalisation code | Answers stay in the class instance, are deleted on schedule, never feed ads, AI training or research without approval; child and guardian can see, change, delete | CORE-DAT-18, B-DAT-01 |
 | Open questions, voice answers, AI chats | Help shown next to open questions; disclosures go to the school's safeguarding lead, not to guardians or logs | CORE-SAF-11 |
 | Family-themed content and illustrations | Works with any family; "I don't have one" path; content note and calm exit for loss or separation | CORE-DES-08 |
-| Portugal | Evaluation and research questionnaires in public schools approved by the DGE through MIME | PT-SUR-01 |
+| Portugal | Evaluation and research questionnaires in public schools approved by EduQA, I.P. (formerly DGE) through MIME | PT-SUR-01 |
 
 ## AI features
 

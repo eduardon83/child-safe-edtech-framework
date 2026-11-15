@@ -442,7 +442,7 @@ sections:
               Surveys, "about me" profiles, mood check-ins and onboarding questions; quizzes about the learning content
               do not count. Data that reveal origin, religion or health, even indirectly, are special category data
               under GDPR Art. 9 (CJEU C-184/20). National rules may require approval for questionnaires in schools
-              (in Portugal, the DGE's MIME system).
+              (in Portugal, the MIME system run by EduQA).
             rules: [CORE-DAT-13, CORE-DAT-15, CORE-DAT-17]
             features: [survey]
             never: We never ask children or families about the child's life, family or feelings.

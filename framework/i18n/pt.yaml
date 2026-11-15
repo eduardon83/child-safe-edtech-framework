@@ -362,7 +362,7 @@ questions:
       Inquéritos, perfis "sobre mim", registos do estado de espírito e perguntas iniciais; os quizzes sobre a
       matéria não contam. Dados que revelem, mesmo indiretamente, a origem, a religião ou a saúde são
       categorias especiais no RGPD (art. 9.º; acórdão do TJUE C-184/20). Regras nacionais podem exigir
-      aprovação de questionários nas escolas (em Portugal, o sistema MIME da DGE).
+      aprovação de questionários nas escolas (em Portugal, o sistema MIME, gerido pelo EduQA).
   access_control:
     label: Dados de alunos legíveis sem regras de acesso (p. ex. tabelas de base de dados abertas)
 

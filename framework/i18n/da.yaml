@@ -371,7 +371,7 @@ questions:
       Spørgeskemaer, "om mig"-profiler, humørregistreringer og spørgsmål ved opstart; quizzer om fagstoffet
       tæller ikke med. Oplysninger, der selv indirekte afslører oprindelse, religion eller helbred, er særlige
       kategorier efter GDPR (art. 9; EU-Domstolens dom C-184/20). Nationale regler kan kræve godkendelse af
-      spørgeskemaer i skolen (i Portugal DGE's MIME-system).
+      spørgeskemaer i skolen (i Portugal MIME-systemet hos EduQA).
   access_control:
     label: "Elevdata, der kan læses uden adgangsregler (fx åbne databasetabeller)"
   forbid_sets:

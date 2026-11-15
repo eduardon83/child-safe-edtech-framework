@@ -382,8 +382,8 @@ questions:
       Enquêtes, profils « à propos de moi », relevés d'humeur et questions d'accueil ; les quiz sur la matière
       ne comptent pas. Les données qui révèlent, même indirectement, l'origine, la religion ou la santé sont
       des catégories particulières au sens du RGPD (art. 9 ; arrêt de la CJUE C-184/20). Des règles nationales
-      peuvent exiger une autorisation pour les questionnaires à l'école (au Portugal, le système MIME de la
-      DGE).
+      peuvent exiger une autorisation pour les questionnaires à l'école (au Portugal, le système MIME de
+      l'EduQA).
   access_control:
     label: "Données d'élèves lisibles sans règles d'accès (p. ex. tables de base de données ouvertes)"
   forbid_sets:

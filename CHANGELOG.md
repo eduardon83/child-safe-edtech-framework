@@ -41,8 +41,8 @@
   - `templates/survey-register.md`; review-guide section; code-of-conduct topics; questionnaire mechanism and
     boundary question in all six form languages.
   - B-OPS-01 (dashboards show learning, not surveillance) now applies to profile A as well.
-  - Portugal pack: PT-SUR-01 (questionnaires in public schools go through DGE approval, MIME, Despacho
-    15847/2007); sources PT-MIME and PT-LPCJP; notes on CORE-DAT-15, CORE-SAF-11 and B-DAT-01.
+  - Portugal pack: PT-SUR-01 (questionnaires in public schools go through MIME approval by EduQA, I.P.,
+    formerly DGE; Despacho 15847/2007); sources PT-MIME and PT-LPCJP; notes on CORE-DAT-15, CORE-SAF-11 and B-DAT-01.
   - New sources: CJEU-ART9, EDPB-DDP (Guidelines 03/2022 on deceptive design patterns), WP216 (anonymisation).
 - **Compass and personal questions joined**: Compass target TRN-08 (personal questions say why they are asked);
   `survey` makes SAF-02 and COM-05 natural opportunities; evidence collection in pilots and studies follows the

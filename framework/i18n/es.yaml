@@ -378,8 +378,8 @@ questions:
       Encuestas, perfiles "sobre mí", registros del estado de ánimo y preguntas iniciales; los cuestionarios
       sobre la materia no cuentan. Los datos que revelan, aunque sea indirectamente, el origen, la religión o
       la salud son categorías especiales según el RGPD (art. 9; sentencia del TJUE C-184/20). Las normas
-      nacionales pueden exigir aprobación para cuestionarios en las escuelas (en Portugal, el sistema MIME de
-      la DGE).
+      nacionales pueden exigir aprobación para cuestionarios en las escuelas (en Portugal, el sistema MIME del
+      EduQA).
   access_control:
     label: "Datos de alumnos legibles sin reglas de acceso (p. ej. tablas de base de datos abiertas)"
   forbid_sets:

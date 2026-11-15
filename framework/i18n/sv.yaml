@@ -372,7 +372,7 @@ questions:
       Enkäter, "om mig"-profiler, humörincheckningar och frågor vid start; quiz om ämnesinnehållet räknas
       inte. Uppgifter som även indirekt avslöjar ursprung, religion eller hälsa är särskilda kategorier enligt
       GDPR (art. 9; EU-domstolens dom C-184/20). Nationella regler kan kräva godkännande av enkäter i skolan
-      (i Portugal DGE:s MIME-system).
+      (i Portugal MIME-systemet hos EduQA).
   access_control:
     label: "Elevuppgifter som kan läsas utan åtkomstregler (t.ex. öppna databastabeller)"
   forbid_sets:

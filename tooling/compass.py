@@ -441,7 +441,7 @@ def next_step(level: int, t: dict) -> str:
                 "CSEF rules on personal questions (CORE-DAT-13 to 18): closed answers, no family questions, teachers see totals only.")
     if level == 3:
         return ("Measure learning for this target (for example a pre/post task or a comparison group), ideally with an independent "
-                "partner, with ethics and national approval recorded (B-DAT-01; in Portugal, DGE approval through MIME).")
+                "partner, with ethics and national approval recorded (B-DAT-01; in Portugal, EduQA approval through MIME).")
     return "Keep the evidence current and share it in your quality description."
 
 
