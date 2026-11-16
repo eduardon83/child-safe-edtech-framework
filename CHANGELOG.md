@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.10.0 (2026-11-16)
 
 - **Several countries and shared infrastructure** (`framework/05-several-countries.md`). Many products are
   built for several countries at once, and Member States have started shared education infrastructure.
@@ -15,6 +15,14 @@
   - New sources: EDU-EDIC (Commission Implementing Decision (EU) 2026/2413, context only), DATA-ACT (Regulation
     (EU) 2023/2854, Chapter VI), 1EDTECH (LTI 1.3 and OneRoster 1.2).
   - Rules: 114 to 118. Sources: 69 to 72.
+- **Legislation page** (`framework/legislation.md`) brought up to date: entries for the 22 legal, policy and
+  guidance sources added since v0.6 (including the Literacy Compass references and the personal-question
+  sources), a new *International guidance and frameworks* section, and type, status, verification date and
+  citing rules refreshed from `sources.yaml` for every entry. The at-a-glance table now also counts Compass
+  targets.
+- **Corrected:** EU KIDS Act feedback closes on 26 Nov 2026 (midnight Brussels time), per the Commission's
+  call for feedback; earlier versions said 3 Dec 2026.
+- **Portugal:** the remaining README mention of DGE (MIME) now names EduQA, I.P.
 
 ## v0.9.0 (2026-11-14)
 

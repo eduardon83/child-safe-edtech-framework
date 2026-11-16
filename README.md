@@ -11,7 +11,7 @@ An open framework and toolkit for building safe educational software for under-1
 It turns EU law, pending EU proposals (EU KIDS Act, Digital Fairness Act) and expert recommendations into
 rules a team can check in code, in CI and in review.
 
-> **Status:** v0.9.0, draft for public comment (November 2026).
+> **Status:** v0.10.0, draft for public comment (November 2026).
 > **Not legal advice and not a certification.** CSEF produces *pre-compliance* reports. Legal compliance
 > depends on facts code cannot show; involve your DPO and legal counsel. See [Limitations](#limitations).
 >
@@ -47,6 +47,7 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 |---|---|
 | **v0.3** | Interactive dashboard, PDF and Word exports (`--export html,pdf,docx`). |
 | **v0.4** | EU KIDS Act commercial practices (Recital 31, Art. 13): real-time purchase labels, no design for impulsive spending, no disguised advertising, no commercial content in learning. AI companions and chatbots (Recitals 32 to 34, Art. 14): memory off by default, regular re-testing and monitoring, opt-in assistants inside games, no AI nudging to spend. |
+| **v0.10** | **Several countries and shared infrastructure** ([05-several-countries.md](framework/05-several-countries.md)): 4 SHOULD rules (CORE-INT-01 to 04) on country rules as configuration, school data export and exit (Data Act), school sign-in with minimal rosters, and declared, replaceable critical dependencies; 3 manifest checks and a pattern for hard-coded consent ages. New sources EDU-EDIC, Data Act Chapter VI, LTI and OneRoster. The legislation page now lists every legal, policy and guidance source with its rules and Compass targets. KIDS Act feedback date corrected to 26 Nov 2026. |
 | **v0.9** | **Literacy Compass** (`tooling/compass.py`, `framework/compass/`, [04-literacy-compass.md](framework/04-literacy-compass.md)): a second lens on what a product teaches, with a compass-rose HTML report and a reusable JSON dossier. 16 new sources (DigComp 3.0, AILit, UNESCO MIL and AI, EU guidelines on digital education content, Education Package 2026, EdTech for Good 2.0, Swedish Kvalitetsportfolio, IEEE 3527.1 and 2089 and more). AI Omnibus entry corrected: published and in force, Art. 4 recast. **Personal questions**: new `survey` feature, 8 rules (purpose and skip, no data about other people, no special category or family vulnerability questions, who answers by age, teacher totals only, purpose and control, disclosures, diverse families), 6 manifest checks, a register template, and EduQA (MIME) approval in the Portugal pack. |
 | **v0.8** | **CSEF brand** on everything: logo, colours and fonts in the questionnaire, staff policy, boundaries report, dashboard, code-of-conduct report, Pack Builder, Word exports and a new landing page for non-developers. Brand kit in `brand/`. |
 | **v0.7** | **Policy questionnaire**: boundaries in, guardrails file, boundaries report, staff policy, agent instructions and CI workflow out. Versioned, with a list of changes on every run. |
