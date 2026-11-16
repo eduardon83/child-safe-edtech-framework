@@ -569,3 +569,30 @@ sources:
     status: "Published Jul 2026 for feedback. Eight principles drawing on RITEC, UN General Comment 25, Child Rights by Design and EdTech for Good"
     url: "https://www.raspberrypi.org/blog/draft-principles-for-safe-responsible-edtech/"
     verified: 2026-11-14
+
+  # ------------------------------------------------------------------ Several countries and shared infrastructure
+  # Context for products sold in more than one country and for shared European education infrastructure.
+
+  - id: EDU-EDIC
+    title: "Commission Implementing Decision (EU) 2026/2413 of 3 November 2026 on setting up the European Digital Infrastructure Consortium on Education (EDU-EDIC)"
+    type: policy
+    jurisdiction: EU
+    status: "In force 4 Nov 2026. Applicants: Netherlands, France, Spain and Greece, then Croatia, Slovenia, Finland and Belgium; seat The Hague. Aims: sovereign and interoperable digital infrastructure for education, fewer dependencies on third-country providers, a European EdTech offer for schools including AI tools, education data governance and interoperability. Sets no obligations on EdTech providers; cited as context"
+    url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202602413"
+    verified: 2026-11-16
+
+  - id: DATA-ACT
+    title: "Regulation (EU) 2023/2854 (Data Act), Chapter VI: switching between data processing services"
+    type: law
+    jurisdiction: EU
+    status: "In force 11 Jan 2024; applies from 12 Sep 2025. Chapter VI covers IaaS, PaaS and SaaS offered to customers in the EU, wherever the provider is established. Switching charges are prohibited from 12 Jan 2027 (Art. 29). Whether a given EdTech service is a data processing service needs case-by-case assessment"
+    url: "https://eur-lex.europa.eu/eli/reg/2023/2854/oj"
+    verified: 2026-11-16
+
+  - id: 1EDTECH
+    title: "1EdTech Learning Tools Interoperability (LTI) 1.3 and OneRoster 1.2"
+    type: standard
+    jurisdiction: international
+    status: "Current versions (OneRoster 1.2 published Sep 2022). LTI 1.3 launches a tool from a learning platform with OpenID Connect based security; OneRoster 1.2 exchanges rosters, resources and gradebook data in CSV or REST"
+    url: "https://www.1edtech.org/standards/oneroster"
+    verified: 2026-11-16

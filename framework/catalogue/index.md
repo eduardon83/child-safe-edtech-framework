@@ -2,13 +2,13 @@
 
 # Rule catalogue
 
-CSEF v0.9.0: 114 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
+CSEF v0.9.0: 118 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
 
 | Level | MUST | SHOULD |
 |---|---|---|
 | 1 Legal baseline | 39 | 2 |
-| 2 Forward-compliant | 41 | 4 |
-| 3 Best practice | 0 | 28 |
+| 2 Forward-compliant | 41 | 5 |
+| 3 Best practice | 0 | 31 |
 
 | ID | Title | Profiles | Strength | Level | Age bands |
 |---|---|---|---|---|---|
@@ -109,6 +109,10 @@ CSEF v0.9.0: 114 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Bes
 | CORE-GOV-01 | Product declares its CSEF manifest | core | MUST | 1 | all |
 | CORE-GOV-02 | Legal scope of the EU KIDS Act is assessed and recorded | core | SHOULD | 2 | all |
 | CORE-GOV-03 | Child rights impact assessment | core | SHOULD | 3 | all |
+| CORE-INT-01 | Country rules are configuration, not code | core | SHOULD | 3 | all |
+| CORE-INT-02 | Schools can take their data and leave | core | SHOULD | 2 | all |
+| CORE-INT-03 | Sign-in and rosters come from the school, with the minimum data | core | SHOULD | 3 | all |
+| CORE-INT-04 | Critical dependencies are declared and replaceable | core | SHOULD | 3 | all |
 | CORE-SAF-01 | Most protective settings by default | core | MUST | 2 | all |
 | CORE-SAF-02 | Notifications only about the child's own activity, off by default, quiet hours | core | MUST | 2 | all |
 | CORE-SAF-03 | Natural stopping points, no autoplay or endless feeds | core | MUST | 2 | all |

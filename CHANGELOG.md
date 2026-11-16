@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+- **Several countries and shared infrastructure** (`framework/05-several-countries.md`). Many products are
+  built for several countries at once, and Member States have started shared education infrastructure.
+  - 4 new SHOULD rules: CORE-INT-01 country rules are configuration, not code (tier 3); CORE-INT-02 schools can
+    take their data and leave (tier 2, Data Act Chapter VI); CORE-INT-03 sign-in and rosters come from the
+    school, with the minimum data (tier 3, feature `accounts`); CORE-INT-04 critical dependencies are declared
+    and replaceable (tier 3).
+  - 3 manifest checks: `country_config_missing` (two or more countries without a `country_config` file),
+    `third_party_jurisdiction_missing`, `critical_dependency_without_fallback`. A static pattern flags
+    hard-coded consent ages.
+  - Manifest fields: `country_config`; `jurisdiction`, `critical` and `fallback` on third parties.
+  - New sources: EDU-EDIC (Commission Implementing Decision (EU) 2026/2413, context only), DATA-ACT (Regulation
+    (EU) 2023/2854, Chapter VI), 1EDTECH (LTI 1.3 and OneRoster 1.2).
+  - Rules: 114 to 118. Sources: 69 to 72.
+
 ## v0.9.0 (2026-11-14)
 
 - **Literacy Compass**, a second lens next to the rules: what does the product teach about digital, media and

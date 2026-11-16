@@ -24,6 +24,7 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 | **UCPD** Directive 2005/29/EC, Unfair Commercial Practices Directive | law | In force (transposed nationally). Annex I point 28 bans direct exhortations to children to buy | 8 |
 | **EAA** Directive (EU) 2019/882, European Accessibility Act | law | Applies since 28 Jun 2025 | 4 |
 | **CRA** Regulation (EU) 2024/2847, Cyber Resilience Act | law | Reporting obligations from 11 Sep 2026. Main obligations from 11 Dec 2027 | 1 |
+| **DATA-ACT** Regulation (EU) 2023/2854 (Data Act), Chapter VI: switching between data processing services | law | Applies since 12 Sep 2025. Switching charges prohibited from 12 Jan 2027 | 1 |
 | **AIA-OMNIBUS** Digital Omnibus on AI (amendments to the AI Act) | law-pending | Adopted June 2026. Annex III high-risk obligations (incl. education) apply from 2 Dec 2027 | 3 |
 | **KIDS** EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681 | proposal | Commission proposal of 17 Sep 2026 (2026/0286 COD). In legislative procedure. Would apply 6 months after entry into force | 53 |
 | **DFA** Digital Fairness Act (proposal) | proposal | Proposal due 11 Nov 2026. Content known from a leaked draft only. Re-verify against the official text | 14 |
@@ -34,10 +35,12 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 | **EDPB-CONSENT** EDPB Guidelines 05/2020 on consent (section on children) | guidance | Adopted 4 May 2020 | 2 |
 | **BIK** European strategy for a better internet for kids (BIK+), May 2022 | guidance | Adopted May 2022 | 0 |
 | **UNCRC-GC25** UN Committee on the Rights of the Child, General Comment No. 25 (2021) | guidance | Adopted 2021 | 12 |
+| **EDU-EDIC** Commission Implementing Decision (EU) 2026/2413 setting up the European Digital Infrastructure Consortium on Education | policy | In force 4 Nov 2026. Context only: no obligations on providers | 4 |
 | **WCAG22** W3C Web Content Accessibility Guidelines 2.2 | standard | W3C Recommendation | 6 |
 | **W3C-233** WCAG 2.3.3 Animation from Interactions (Level AAA) | standard | W3C guidance. Motion triggered by interaction can be disabled | 2 |
 | **EN301549** EN 301 549, Accessibility requirements for ICT products and services | standard | Harmonised European standard | 3 |
 | **PEGI** PEGI age rating system | standard | Industry self-regulation | 1 |
+| **1EDTECH** 1EdTech LTI 1.3 and OneRoster 1.2 | standard | Current versions | 2 |
 | **PT-LEI58** Lei n.º 58/2019 | law | In force since 9 Aug 2019. Art. 16: age of digital consent is 13 | 2 |
 | **PT-DL83** Decreto-Lei n.º 83/2018 | law | In force. Applies to public bodies, including public schools, and their apps | 1 |
 | **PT-CNPD** CNPD (Comissão Nacional de Proteção de Dados) | guidance | Check the current list on the CNPD website (verify) | 2 |
@@ -191,6 +194,28 @@ Cybersecurity for products with digital elements (software placed on the market,
 **Rules citing it.** `CORE-SEC-05`
 
 **Link.** [https://eur-lex.europa.eu/eli/reg/2024/2847/oj](https://eur-lex.europa.eu/eli/reg/2024/2847/oj)
+
+### Regulation (EU) 2023/2854, Data Act (Chapter VI)
+
+*Id `DATA-ACT` · law · EU · verified 2026-11-16*
+
+Rules on switching between data processing services: IaaS, PaaS and SaaS offered to customers in the EU,
+wherever the provider is established.
+
+**Status.** In force since 11 Jan 2024; applies since 12 Sep 2025. Switching charges are prohibited from
+12 Jan 2027 (Art. 29).
+
+**Provisions that matter for EdTech.**
+
+- Art. 23 to 26: customers can switch provider or move their exportable data; the contract sets out how.
+- Art. 29: switching charges limited to costs until 12 Jan 2027, then prohibited.
+- Whether an EdTech service sold to schools is a data processing service needs case-by-case assessment.
+
+**In CSEF.** Level 2 basis for schools being able to take their data and leave.
+
+**Rules citing it.** `CORE-INT-02`
+
+**Link.** [https://eur-lex.europa.eu/eli/reg/2023/2854/oj](https://eur-lex.europa.eu/eli/reg/2023/2854/oj)
 
 ## Adopted, applying later
 
@@ -376,6 +401,29 @@ How the UN Convention on the Rights of the Child applies to the digital environm
 
 **Link.** [https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
 
+## Policy context
+
+### European Digital Infrastructure Consortium on Education (EDU-EDIC)
+
+*Id `EDU-EDIC` · policy · EU · verified 2026-11-16*
+
+Commission Implementing Decision (EU) 2026/2413 of 3 November 2026 sets up a consortium of Member States for
+shared digital infrastructure in education. Applicants: Netherlands, France, Spain and Greece, then Croatia,
+Slovenia, Finland and Belgium. Seat: The Hague.
+
+**Status.** In force since 4 Nov 2026. It puts no obligations on EdTech providers.
+
+**Why it matters for EdTech.** Its aims are sovereign and interoperable infrastructure, fewer dependencies
+on providers from outside the EU, a European EdTech offer for schools (AI tools included), and education data
+governance and interoperability. Public buyers in member countries are likely to ask for the same. See
+[05-several-countries.md](05-several-countries.md).
+
+**In CSEF.** Context for the SHOULD rules on several countries and shared infrastructure.
+
+**Rules citing it.** `CORE-INT-01`, `CORE-INT-02`, `CORE-INT-03`, `CORE-INT-04`
+
+**Link.** [https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202602413](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202602413)
+
 ## Technical standards
 
 ### W3C Web Content Accessibility Guidelines 2.2
@@ -439,6 +487,21 @@ Industry self-regulation for game age ratings and content descriptors. Named by 
 **Rules citing it.** `CORE-CNT-02`
 
 **Link.** [https://pegi.info](https://pegi.info)
+
+### 1EdTech LTI 1.3 and OneRoster 1.2
+
+*Id `1EDTECH` · standard · international · verified 2026-11-16*
+
+Open interoperability standards for education. LTI 1.3 launches a tool from a learning platform with OpenID
+Connect based security. OneRoster 1.2 exchanges rosters, resources and gradebook data in CSV or REST.
+
+**Status.** Current versions. OneRoster 1.2 published Sep 2022.
+
+**In CSEF.** Recommended formats for school sign-in, launch and data export.
+
+**Rules citing it.** `CORE-INT-02`, `CORE-INT-03`
+
+**Link.** [https://www.1edtech.org/standards/oneroster](https://www.1edtech.org/standards/oneroster)
 
 ## National: Portugal (pack, draft)
 

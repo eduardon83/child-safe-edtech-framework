@@ -539,6 +539,19 @@ rules:
     csef_rule: CORE-DAT-15
     tier: 1
     sources: *id006
+- id: core-int-01-2
+  message: 'CORE-INT-01 (SHOULD, level 3): Country rules are configuration, not code. Move country-specific values into one versioned file per country, reference it as `country_config` in csef.yaml, and
+    default to the strictest value.'
+  severity: INFO
+  languages:
+  - generic
+  pattern-regex: (?i)(age_?of_?(digital_?)?consent|digital_?consent_?age|consent_?age|min(imum)?_?consent_?age)["']?\s*[:=]\s*1[3-6]\b
+  metadata:
+    csef_rule: CORE-INT-01
+    tier: 3
+    sources:
+    - GDPR
+    - EDU-EDIC
 - id: core-saf-01-1
   message: 'CORE-SAF-01 (MUST, level 2): Most protective settings by default. Flip the defaults in the settings model and add a test that asserts them.'
   severity: WARNING

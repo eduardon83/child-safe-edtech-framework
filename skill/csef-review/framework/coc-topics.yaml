@@ -202,6 +202,14 @@ rules:
     terms: [[pause, stop, mute], [animation, moving, motion, audio, sound, video]]
   CORE-ACC-05:
     terms: [[colour, color], [not only, not solely, alone, additional cue, icon, text]]
+  CORE-INT-01: {skip: true}
+  CORE-INT-02:
+    terms: [[export, portab, switch provider, take their data, leave the service], [school, customer, open format, standard format, machine readable]]
+    conflict: [proprietary format, exit fee, switching fee]
+  CORE-INT-03:
+    terms: [[single sign on, school login, identity provider, roster], [minimi, only the data, pseudonym]]
+  CORE-INT-04:
+    terms: [[third part, provider, supplier, subprocessor, sub processor], [jurisdiction, established, fallback, alternative, dependenc]]
   CORE-SEC-01: {skip: true}
   CORE-SEC-02:
     terms: [[access control, access to data, authoris, authoriz, least privilege], [security, protect, restrict]]

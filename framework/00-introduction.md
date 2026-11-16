@@ -115,3 +115,6 @@ curriculum alignment; physical hardware safety; and the full DSA obligations of 
 
 Since v0.9 the [Literacy Compass](04-literacy-compass.md) adds a second lens: what a product teaches about
 digital, media and AI literacy, and how strong the evidence is. It is a profile, not a score.
+
+[Several countries](05-several-countries.md) explains how to prepare a product's architecture for several
+countries at once and for shared European education infrastructure such as the EDU-EDIC (rules CORE-INT-01 to 04).

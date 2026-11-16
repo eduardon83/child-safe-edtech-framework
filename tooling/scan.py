@@ -81,7 +81,11 @@ MANIFEST_CHECKS = [
     "decision_records", "review_stale",
     "survey_register_missing", "survey_teacher_view_individual", "survey_answered_by_child", "survey_min_group_low",
     "survey_free_text_without_route", "survey_research_without_approval",
+    "country_config_missing", "third_party_jurisdiction_missing", "critical_dependency_without_fallback",
 ]
+# EU and EEA jurisdictions (ISO 3166-1 alpha-2), for CORE-INT-04.
+EEA_CODES = {"EU", "EEA", "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "EL", "HU", "IE",
+             "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO"}
 SURVEY_MIN_GROUP = 5
 
 
@@ -527,6 +531,23 @@ def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set, pat
         except ValueError:
             return [f"`last_review` is not a date: {lr}"]
         return [f"`last_review` is {age} days old (limit {days})."] if age > days else []
+    if name == "country_config_missing":
+        countries = [str(j).upper() for j in (m.get("jurisdictions") or []) if str(j).upper() != "EU"]
+        if len(countries) < 2:
+            return []
+        return [] if path_exists(repo, m.get("country_config")) else [
+            f"The product declares {len(countries)} countries ({', '.join(countries)}) but no `country_config` file "
+            "with the values that differ between them (CORE-INT-01)."]
+    if name == "third_party_jurisdiction_missing":
+        return [f"Third party '{t.get('name', '?')}' has no `jurisdiction` (where the provider is established)."
+                for t in (m.get("third_parties") or []) if not t.get("jurisdiction")]
+    if name == "critical_dependency_without_fallback":
+        msgs = []
+        for t in m.get("third_parties") or []:
+            j = str(t.get("jurisdiction") or "").upper()
+            if t.get("critical") is True and j and j not in EEA_CODES and not t.get("fallback"):
+                msgs.append(f"Critical third party '{t.get('name', '?')}' is established in {j} and has no `fallback`.")
+        return msgs
     if name.startswith("survey_"):
         if "survey" not in features:
             return []

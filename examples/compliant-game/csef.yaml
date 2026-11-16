@@ -19,6 +19,8 @@ third_parties:
   - name: Hosting provider
     purpose: hosting and database
     region: eu-central-1
+    jurisdiction: DE
+    critical: true
     dpa_signed: true
 retention:
   - category: gameplay events

@@ -21,6 +21,10 @@ compliance_level: 2
 # Loads packs/<code>.yaml for each country (EU is the base and needs no pack).
 jurisdictions: [EU, PT]
 
+# Required when `jurisdictions` lists two or more countries (CORE-INT-01): one versioned file with the values
+# that differ by country (age of digital consent, retention, approvals, helplines, languages, calendars).
+# country_config: config/countries.yaml
+
 # Extra packs: national guidance, procurement rules, literature, your own company red lines.
 packs: []
 #  - .cses/packs/my-company.yaml
@@ -66,6 +70,9 @@ third_parties:
   - name: "Hosting provider"
     purpose: "hosting and database"
     region: "eu-central-1"
+    jurisdiction: "DE"                 # where the provider is established (CORE-INT-04)
+    critical: true                     # the product stops working without it
+    # fallback: "second EU provider, restore from backup within 24 h"   # required if critical and established outside the EU/EEA
     dpa_signed: true
     # transfer_mechanism: "SCCs + TIA"   # required if region is outside the EEA
 

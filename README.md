@@ -27,9 +27,9 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 
 | | |
 |---|---|
-| **The framework** | 114 rules: a core set plus three profiles, **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Rules on data, safety by design, commercial practices, AI companions and chatbots, communications, accessibility, security, and design for learning (visuals, sound, motion, motivation). |
+| **The framework** | 118 rules: a core set plus three profiles, **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Rules on data, safety by design, commercial practices, AI companions and chatbots, communications, accessibility, security, and design for learning (visuals, sound, motion, motivation). |
 | **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). You decide which level of compliance you want in your software. |
-| **Sources on every rule** | 50 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
+| **Sources on every rule** | 72 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
 | **Policy questionnaire** | `tooling/policy.py`: answer questions about your boundaries (terminal or local web form). Get your guardrails file, a report that matches each answer with the law and recommendations, a plain-language staff policy, AI agent instructions and a ready CI workflow. Run it again anytime. |
 | **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included (draft, not legally reviewed). |
 | **Company packs and Pack Builder** | Each organisation sets its minimum level, no-gos, forbidden SDKs and phrases and its own rules, in a web form, then publishes the pack to GitHub. |
@@ -47,7 +47,7 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 |---|---|
 | **v0.3** | Interactive dashboard, PDF and Word exports (`--export html,pdf,docx`). |
 | **v0.4** | EU KIDS Act commercial practices (Recital 31, Art. 13): real-time purchase labels, no design for impulsive spending, no disguised advertising, no commercial content in learning. AI companions and chatbots (Recitals 32 to 34, Art. 14): memory off by default, regular re-testing and monitoring, opt-in assistants inside games, no AI nudging to spend. |
-| **v0.9** | **Literacy Compass** (`tooling/compass.py`, `framework/compass/`, [04-literacy-compass.md](framework/04-literacy-compass.md)): a second lens on what a product teaches, with a compass-rose HTML report and a reusable JSON dossier. 16 new sources (DigComp 3.0, AILit, UNESCO MIL and AI, EU guidelines on digital education content, Education Package 2026, EdTech for Good 2.0, Swedish Kvalitetsportfolio, IEEE 3527.1 and 2089 and more). AI Omnibus entry corrected: published and in force, Art. 4 recast. **Personal questions**: new `survey` feature, 8 rules (purpose and skip, no data about other people, no special category or family vulnerability questions, who answers by age, teacher totals only, purpose and control, disclosures, diverse families), 6 manifest checks, a register template, and DGE (MIME) approval in the Portugal pack. |
+| **v0.9** | **Literacy Compass** (`tooling/compass.py`, `framework/compass/`, [04-literacy-compass.md](framework/04-literacy-compass.md)): a second lens on what a product teaches, with a compass-rose HTML report and a reusable JSON dossier. 16 new sources (DigComp 3.0, AILit, UNESCO MIL and AI, EU guidelines on digital education content, Education Package 2026, EdTech for Good 2.0, Swedish Kvalitetsportfolio, IEEE 3527.1 and 2089 and more). AI Omnibus entry corrected: published and in force, Art. 4 recast. **Personal questions**: new `survey` feature, 8 rules (purpose and skip, no data about other people, no special category or family vulnerability questions, who answers by age, teacher totals only, purpose and control, disclosures, diverse families), 6 manifest checks, a register template, and EduQA (MIME) approval in the Portugal pack. |
 | **v0.8** | **CSEF brand** on everything: logo, colours and fonts in the questionnaire, staff policy, boundaries report, dashboard, code-of-conduct report, Pack Builder, Word exports and a new landing page for non-developers. Brand kit in `brand/`. |
 | **v0.7** | **Policy questionnaire**: boundaries in, guardrails file, boundaries report, staff policy, agent instructions and CI workflow out. Versioned, with a list of changes on every run. |
 | **v0.6** | Renamed to **Child-Safe EdTech Framework (CSEF)**: `framework/` folder, `csef.yaml` manifest, `csef-review` skill, `csef-scan` and `csef-coc` tools, repository `child-safe-edtech-framework`. Old names (`cses.yaml`, `cses-ignore`, `--standard-root`) still work. |
@@ -238,8 +238,9 @@ compares meaning and reads any language.
 5. [Packs](framework/02-packs.md): extending with national rules, literature and company policies
 6. [Design for learning](framework/03-design-and-motivation.md): what research says about visuals, motion and rewards
 7. [Literacy Compass](framework/04-literacy-compass.md): what a product teaches about digital, media and AI literacy; [target catalogue](framework/compass/catalogue.md)
-8. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
-9. [Self-assessment checklists](self-assessment/)
+8. [Several countries](framework/05-several-countries.md): preparing the architecture for multi-country products and shared infrastructure (EDU-EDIC)
+9. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
+10. [Self-assessment checklists](self-assessment/)
 
 ## Repository layout
 

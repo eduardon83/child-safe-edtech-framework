@@ -31,6 +31,15 @@ The scanner finds patterns. These are the places to read by hand. For each, the 
 | Family-themed content and illustrations | Works with any family; "I don't have one" path; content note and calm exit for loss or separation | CORE-DES-08 |
 | Portugal | Evaluation and research questionnaires in public schools approved by EduQA, I.P. (formerly DGE) through MIME | PT-SUR-01 |
 
+## Several countries and shared infrastructure
+
+| Look at | What to check | Rules |
+|---|---|---|
+| Consent, retention, approvals, helplines, languages | Values that differ by country live in a per-country config file, not in code; unknown country gets the strictest value | CORE-INT-01 |
+| Export and offboarding | School-level export in open formats with a published schema; exit process in the contract; no switching fee | CORE-INT-02 |
+| Sign-in and roster import | School identity provider or LTI 1.3 launch; roster fields kept to the minimum; pseudonymous learner IDs | CORE-INT-03 |
+| Third parties, AI model calls | `jurisdiction`, `critical`, `fallback` declared; AI behind one internal interface; fallback for critical non-EU providers | CORE-INT-04 |
+
 ## AI features
 
 | Look at | What to check | Rules |

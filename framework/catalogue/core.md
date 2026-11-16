@@ -70,6 +70,10 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-GOV-01](#core-gov-01-product-declares-its-csef-manifest) | Product declares its CSEF manifest | MUST | 1 | manifest |
 | [CORE-GOV-02](#core-gov-02-legal-scope-of-the-eu-kids-act-is-assessed-and-recorded) | Legal scope of the EU KIDS Act is assessed and recorded | SHOULD | 2 | manifest |
 | [CORE-GOV-03](#core-gov-03-child-rights-impact-assessment) | Child rights impact assessment | SHOULD | 3 | manual |
+| [CORE-INT-01](#core-int-01-country-rules-are-configuration-not-code) | Country rules are configuration, not code | SHOULD | 3 | mixed |
+| [CORE-INT-02](#core-int-02-schools-can-take-their-data-and-leave) | Schools can take their data and leave | SHOULD | 2 | manual |
+| [CORE-INT-03](#core-int-03-sign-in-and-rosters-come-from-the-school-with-the-minimum-data) | Sign-in and rosters come from the school, with the minimum data | SHOULD | 3 | manual |
+| [CORE-INT-04](#core-int-04-critical-dependencies-are-declared-and-replaceable) | Critical dependencies are declared and replaceable | SHOULD | 3 | manifest |
 | [CORE-SAF-01](#core-saf-01-most-protective-settings-by-default) | Most protective settings by default | MUST | 2 | static |
 | [CORE-SAF-02](#core-saf-02-notifications-only-about-the-childs-own-activity-off-by-default-quiet-hours) | Notifications only about the child's own activity, off by default, quiet hours | MUST | 2 | static |
 | [CORE-SAF-03](#core-saf-03-natural-stopping-points-no-autoplay-or-endless-feeds) | Natural stopping points, no autoplay or endless feeds | MUST | 2 | static |
@@ -855,6 +859,54 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Extend the DPIA with a child rights section (templates/dpia-starter.md, part C).
 
 **Sources.** [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [EUKO](https://www.lse.ac.uk/media-and-communications/research/research-projects/eu-kids-online)
+
+### CORE-INT-01: Country rules are configuration, not code
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: mixed · Effort: medium
+
+**Requirement.** Rules that differ between countries live in per-country configuration, not in code: the age of digital consent and guardian consent steps, retention periods, national approvals (for example MIME in Portugal), safeguarding contacts and helplines, languages, school calendars and curriculum mappings. Each value has an owner and a source. An unknown country falls back to the most protective value. Adding a country is a configuration change and a review, not a code change.
+
+**Why.** GDPR Art. 8 lets each Member State set the age of digital consent between 13 and 16, and national rules on school surveys, safeguarding and retention differ. A product sold in several countries, or offered through shared infrastructure such as the EDU-EDIC, needs these differences to be explicit, reviewable and testable. Hard-coded values silently apply one country's rules everywhere.
+
+**How to improve.** Move country-specific values into one versioned file per country, reference it as `country_config` in csef.yaml, and default to the strictest value.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [EDU-EDIC](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202602413)
+
+### CORE-INT-02: Schools can take their data and leave
+
+**SHOULD** · Level 2 (Forward-compliant) · Age bands: all · Detection: manual · Effort: medium
+
+**Requirement.** The school, or whoever buys the product, can export all of its data at class and school level in documented, machine-readable open formats: rosters, results, learner-created work and settings, with the schema published. Where the product exchanges data with school systems it uses open standards (OneRoster for rosters and results, LTI 1.3 for launching from a learning platform). The exit process is documented with timelines, and switching costs nothing beyond the subscription.
+
+**Why.** Data Act Chapter VI gives customers of data processing services, SaaS included, a right to switch and prohibits switching charges from 12 January 2027 (Art. 29). GDPR Art. 20 covers portability for each learner (CORE-DAT-06). Interoperable infrastructure and less lock-in are aims of the EDU-EDIC.
+
+**How to improve.** Add a school-level export in CSV or JSON with a published schema (OneRoster where it fits), describe the exit process in the contract, and test a full export each release.
+
+**Sources.** [DATA-ACT](https://eur-lex.europa.eu/eli/reg/2023/2854/oj), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [1EDTECH](https://www.1edtech.org/standards/oneroster), [EDU-EDIC](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202602413)
+
+### CORE-INT-03: Sign-in and rosters come from the school, with the minimum data
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Features: accounts · Detection: manual · Effort: medium
+
+**Requirement.** In schools, learners and teachers sign in through the school's identity provider (OpenID Connect or SAML) or are launched from the school's learning platform (LTI 1.3), instead of creating separate product accounts. Roster imports carry only the fields the product needs (no birth dates, addresses or national identity numbers unless a rule requires them), and learner records use pseudonymous identifiers.
+
+**Why.** Fewer separate accounts mean fewer stored passwords and less personal data (GDPR Art. 5(1)(c) and 25). Standard sign-in and launch let the same product run in several countries and on shared infrastructure such as the EDU-EDIC without rebuilding each integration.
+
+**How to improve.** Support OpenID Connect sign-in and LTI 1.3 launch, trim roster imports to the minimum fields, and key learner records on pseudonymous IDs.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [1EDTECH](https://www.1edtech.org/standards/oneroster), [EDU-EDIC](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202602413)
+
+### CORE-INT-04: Critical dependencies are declared and replaceable
+
+**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manifest · Effort: medium
+
+**Requirement.** Every third party records where it is established (`jurisdiction`) as well as where it hosts data (`region`), and whether the product stops working without it (`critical`). A critical provider established outside the EU or EEA, AI model providers included, has a documented `fallback`: an alternative established in the EU behind the same internal interface, or a reduced mode that keeps learning available. Features call AI models through one internal interface, so a school or a country can require a different model.
+
+**Why.** Data hosted in the EU may still be reachable under the laws of the provider's home country, and one provider changing its terms or leaving can stop a product used by thousands of schools. Reducing structural dependencies on third-country providers is an aim of the EDU-EDIC. Builds on CORE-DAT-02 (processor agreements) and CORE-DAT-03 (transfers).
+
+**How to improve.** Add `jurisdiction`, `critical` and `fallback` to each third party in csef.yaml, put AI calls behind one internal interface, and test the fallback once a year.
+
+**Sources.** [EDU-EDIC](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202602413), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
 
 ### CORE-SAF-01: Most protective settings by default
 
