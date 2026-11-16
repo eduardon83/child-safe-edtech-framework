@@ -21,6 +21,7 @@ Jurisdiction: PT. Version 0.1.0. Draft. Entries marked 'verify' need confirmatio
 - **PT-EPM** Referencial de Educação para os Media para a Educação Pré-escolar, o Ensino Básico e o Ensino Secundário (DGE), versão revista e atualizada. First approved 29 Apr 2014; revised and updated version of Dec 2023 (verify the current edition). https://cidadania.dge.mec.pt/sites/default/files/pdfs/referencial-epm-versaoatualizada-12dez2023.pdf
 - **PT-MIME** Despacho n.º 15847/2007, de 19 de junho (DR 2.ª série, n.º 140, 23 jul 2007): inquéritos em meio escolar; sistema MIME (Monitorização de Inquéritos em Meio Escolar), apreciação pela DGE, hoje EduQA, I.P.. In force. Questionnaires and surveys in public schools need prior authorisation through MIME. The DGE was extinguished and its functions passed to EduQA, I.P. (Decreto-Lei 105/2025), which now appraises requests and says when guardian authorisation is needed. Sensitive questions may need a prior CNPD opinion. https://www.dge.mec.pt/sites/default/files/DSPE/mime/despacho_n_15_846_de_2007.pdf
 - **PT-LPCJP** Lei de Proteção de Crianças e Jovens em Perigo, Lei n.º 147/99, de 1 de setembro (versão atual). In force, as amended (latest by Lei 26/2018). Schools are entities with competence in childhood matters; danger situations are reported to the CPCJ. https://diariodarepublica.pt/dr/detalhe/lei/147-1999-581619
+- **PT-ESBEV** Plano de Prevenção e Combate ao Bullying e ao Ciberbullying: Escola Sem Bullying. Escola Sem Violência (DGE, 2019). Launched in the 2019-2020 school year. Schools set up their own plan and plan team; annual certification of schools; resources at sembullyingsemviolencia.edu.gov.pt. The DGE's functions are now with EduQA, I.P.. https://www.dge.mec.pt/sites/default/files/informacoes_escolas/plano_de_prevencao_e_combate_ao_bullying_e_ao_ciberbullying_escola_sem_bullying._escola_sem_violencia.pdf
 
 ## Amendments to framework rules
 
@@ -31,7 +32,9 @@ Jurisdiction: PT. Version 0.1.0. Draft. Entries marked 'verify' need confirmatio
 - **CORE-SAF-06**: adds sources PT-ISEGURA. Portugal: show Linha Internet Segura (800 21 90 90) in help and support screens.
 - **CORE-SEC-05**: adds sources PT-CNPD. Portugal: personal data breaches are notified to the CNPD by the controller within 72 hours.
 - **CORE-DAT-15**: adds sources PT-CNPD, PT-MIME. Portugal: questionnaires with sensitive questions applied in public schools may need a prior CNPD opinion within the MIME procedure (EduQA, I.P.).
-- **CORE-SAF-11**: adds sources PT-LPCJP, PT-ISEGURA. Portugal: the school, as an entity with competence in childhood matters, acts on danger situations and reports them to the CPCJ (Lei 147/99). Show Linha Internet Segura (800 21 90 90) and SOS Criança (116 111) next to open questions.
+- **CORE-CHT-08**: adds sources PT-LPCJP, PT-ISEGURA. Portugal: the school, as an entity with competence in childhood matters, acts on danger situations and reports them to the CPCJ (Lei 147/99). Show Linha Internet Segura (800 21 90 90) and SOS Criança (116 111) next to open questions.
+- **CORE-CHT-15**: adds sources PT-ESBEV. Portugal: many schools run an "Escola Sem Bullying. Escola Sem Violência" plan with a plan team. Route bullying reports to that team; where the school has none, use the default procedure and tell the school the national plan exists.
+- **CORE-CHT-13**: adds sources PT-ISEGURA. Portugal: link Linha Internet Segura (800 21 90 90) and SOS Criança (116 111).
 - **B-DAT-01**: adds sources PT-MIME. Portugal: research or evaluation questionnaires in public schools need prior authorisation from EduQA, I.P. (formerly DGE) through MIME (Despacho 15847/2007).
 - **CORE-COM-03**: adds 1 detection pattern(s). 
 

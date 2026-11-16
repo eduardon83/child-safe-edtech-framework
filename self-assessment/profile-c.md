@@ -18,7 +18,7 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **A-ECO-02** (MUST) No pay-to-win. Nothing bought with money gives a gameplay or learning advantage.  
       Evidence: 
-- [ ] **A-ECO-03** (MUST) Virtual currency is not sold to children and shows its real value. In-game currency cannot be bought by a minor. If it can be bought by an adult, its value in euro is shown wherever it is spent, and it is off by default for children unless a guardian approves.  
+- [ ] **A-ECO-03** (MUST) Virtual currency shows its real value. Where adults can buy in-game currency (children never can, CORE-COM-04), its value in euro is shown wherever it is spent, and spending it is off for children unless a guardian approves.  
       Evidence: 
 - [ ] **A-PLY-01** (MUST) No penalties for not playing. No energy systems that only refill by waiting or paying, no pets or worlds that decay or die when the child is away, no loss of benefits for missing days.  
       Evidence: 
@@ -35,9 +35,7 @@ Product: ____________________  Date: __________  Assessor: ____________________
 
 ## Level 3: Best practice
 
-- [ ] **A-ECO-04** (SHOULD) Rewards follow learning, not time or return visits. Points, stars and unlocks are tied to learning progress or effort, not to time spent, number of sessions or returning at specific times.  
-      Evidence: 
-- [ ] **A-MOT-01** (SHOULD) No reward pile-up. The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards, unlockables, celebrations) and records for each one whether it is given for learning or for showing up. No more than two layers are given for playing time, logging in or simply finishing.  
+- [ ] **A-MOT-01** (SHOULD) Rewards are for learning, and the inventory shows it. Points, stars and unlocks are tied to learning progress or effort, not to time spent, number of sessions or returning at set times. The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards, unlockables, celebrations) and records for each one whether it is given for learning or for showing up. No more than two layers are given for playing time, logging in or simply finishing.  
       Evidence: 
 - [ ] **A-MOT-02** (SHOULD) Feedback informs, it does not control. Feedback says what the learner did well and why, and what to try next. Copy avoids controlling language ("you must", "you have to") and external goal framing ("do this to win coins").  
       Evidence: 

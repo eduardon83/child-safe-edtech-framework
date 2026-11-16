@@ -10,7 +10,7 @@ sys.path.insert(0, str(ROOT / "tooling"))
 import scan  # noqa: E402
 
 GOOD = ROOT / "examples" / "compliant-game"
-SURVEY_RULES = {"CORE-DAT-13", "CORE-DAT-14", "CORE-DAT-15", "CORE-DAT-16", "CORE-DAT-17", "CORE-DAT-18", "CORE-SAF-11"}
+SURVEY_RULES = {"CORE-DAT-13", "CORE-DAT-14", "CORE-DAT-15", "CORE-DAT-16", "CORE-DAT-17", "CORE-DAT-18", "CORE-CHT-08"}
 
 
 def make_repo(tmp_path, survey: dict | None, bands=("B2",), files=None, jurisdictions=("EU",)):
@@ -53,7 +53,7 @@ def test_risky_survey_manifest_trips_every_check(tmp_path):
               "uses": ["personalisation", "research"]}
     _, res = run(make_repo(tmp_path, survey, bands=("B2", "B3")))
     found = ids(res)
-    for rid in ("CORE-DAT-13", "CORE-DAT-16", "CORE-DAT-17", "CORE-DAT-18", "CORE-SAF-11"):
+    for rid in ("CORE-DAT-13", "CORE-DAT-16", "CORE-DAT-17", "CORE-DAT-18", "CORE-CHT-08"):
         assert rid in found, f"{rid} missing: {sorted(found)}"
     msgs = " ".join(f.evidence for f in res["findings"] if f.rule_id == "CORE-DAT-17")
     assert "individual" in msgs                                    # teacher_view: individual
@@ -112,7 +112,7 @@ def test_portugal_pack_adds_mime_rule(tmp_path):
     std, res = run(repo)
     assert "PT-SUR-01" in std.rules and "PT-MIME" in std.sources
     assert {"PT-SUR-01", "CORE-DAT-18"} <= ids(res)                 # evaluation use without an approval record
-    assert "PT-LPCJP" in std.rules["CORE-SAF-11"]["sources"]
+    assert "PT-LPCJP" in std.rules["CORE-CHT-08"]["sources"]
 
 
 def test_compass_trn08_follows_the_survey_feature(tmp_path):

@@ -118,3 +118,6 @@ digital, media and AI literacy, and how strong the evidence is. It is a profile,
 
 [Several countries](05-several-countries.md) explains how to prepare a product's architecture for several
 countries at once and for shared European education infrastructure such as the EDU-EDIC (rules CORE-INT-01 to 04).
+
+[Bullying](06-bullying.md) separates what the product can do from who can respond, with the rules on
+reporting, exclusion, evidence and school procedures (CORE-CHT-10 to 15) and a default procedure for schools.

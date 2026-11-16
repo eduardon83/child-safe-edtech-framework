@@ -596,3 +596,46 @@ sources:
     status: "Current versions (OneRoster 1.2 published Sep 2022). LTI 1.3 launches a tool from a learning platform with OpenID Connect based security; OneRoster 1.2 exchanges rosters, resources and gradebook data in CSV or REST"
     url: "https://www.1edtech.org/standards/oneroster"
     verified: 2026-11-16
+
+  # ------------------------------------------------------------------ Bullying and peer safety
+
+  - id: CB-AP
+    title: "Communication COM(2026) 71: Action plan against cyberbullying, \"Safer online, stronger together\" (10 February 2026)"
+    type: policy
+    jurisdiction: EU
+    status: "Adopted 10 Feb 2026. Common EU definition: behaviour through digital technologies with the primary intention or effect of repeatedly or continuously humiliating, socially excluding, abusing, harassing or harming. Review of the DSA guidelines on minors with more focus on cyberbullying; EU online safety app (report to a national helpline, store and pass on evidence, get help) rolled out from Q3 2026, open to platforms through APIs; prevention and support should reach bystanders; common data collection framework"
+    url: "https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying"
+    verified: 2026-11-16
+
+  - id: EDPB-DSAGDPR
+    title: "EDPB Guidelines 3/2025 on the interplay between the DSA and the GDPR"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 11 Sep 2025 for public consultation (closed 31 Oct 2025). Notice mechanisms should allow, but not require, identifying the notifier; the identity is revealed to the affected user only where strictly necessary, and the notifier is told"
+    url: "https://www.edpb.europa.eu/system/files/2025-09/edpb_guidelines_202503_interplay-dsa-gdpr_v1_en.pdf"
+    verified: 2026-11-16
+
+  - id: VAW-DIR
+    title: "Directive (EU) 2024/1385 on combating violence against women and domestic violence"
+    type: law
+    jurisdiction: EU
+    status: "In force 13 Jun 2024; transposition by 14 Jun 2027. Art. 5(1)(b) requires Member States to make producing or manipulating and sharing sexual deepfakes of a person without consent a crime"
+    url: "https://eur-lex.europa.eu/eli/dir/2024/1385/oj"
+    verified: 2026-11-16
+
+  - id: R-JUVONEN2008
+    title: "Juvonen, J. and Gross, E. F. (2008). Extending the school grounds? Bullying experiences in cyberspace. Journal of School Health 78(9)"
+    type: literature
+    jurisdiction: international
+    status: "Online survey of young people aged 12 to 17. About two thirds of cyberbullying victims knew the perpetrator, half of them from school; most were also bullied at school"
+    url: "https://www.cdmc.ucla.edu/wp-content/uploads/sites/170/2018/05/sheva-3.pdf"
+    verified: 2026-11-16
+
+  - id: R-WOLKE2017
+    title: "Wolke, D., Lee, K. and Guy, A. (2017). Cyberbullying: a storm in a teacup? European Child and Adolescent Psychiatry 26"
+    type: literature
+    jurisdiction: international
+    status: "UK secondary school survey. Cyberbullying creates few new victims; it is mainly a new tool to harm children already bullied by traditional means"
+    url: "https://link.springer.com/10.1007/s00787-017-0954-6"
+    verified: 2026-11-16
+

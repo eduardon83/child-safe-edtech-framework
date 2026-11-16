@@ -150,10 +150,10 @@ rules:
   CORE-SAF-04:
     terms: [[time limit, playtime, screen time, break reminder, session length, time management], [tool, setting, parent, guardian, reminder]]
   CORE-SAF-05:
-    terms: [[stranger, unknown user, unknown adult, contact, communicat], [approved, closed group, friends only, restrict, limit, prevent]]
-    conflict: [open chat, public chat, random matchmaking, contact any player, global chat]
+    terms: [[stranger, unknown user, unknown adult, contact, communicat, multiplayer, online play, play together], [approved, closed group, friends only, restrict, limit, prevent, class, teacher, guardian]]
+    conflict: [open chat, public chat, random matchmaking, contact any player, global chat, open multiplayer, public matchmaking, play with anyone]
   CORE-SAF-06:
-    terms: [[report, reporting, flag, complaint], [easy, one click, child friendly, accessible, respond, support, helpline]]
+    terms: [[report, reporting, flag, complaint], [easy, one click, child friendly, accessible, respond, support, helpline, outcome, feedback to the reporter, follow up]]
   CORE-SAF-07:
     terms: [[parental control, parental tool, guardian tool, family settings, parent dashboard], [manage, control, settings, time, contact, spending]]
   CORE-SAF-08:
@@ -192,6 +192,9 @@ rules:
     conflict_regex: ['(chatbot|assistant|companion)[^.]{0,40}(on|enabled|activated) (by default|automatically)']
   CORE-AI-11:
     terms: [[ai , chatbot, assistant, algorithm, recommendation], [purchase, spend, upsell, advertis, commercial, nudg]]
+  CORE-AI-12:
+    terms: [[deepfake, face swap, voice clon, image of a real person, likeness, real people], ["no", not, prohibit, block, prevent, never, refuse]]
+    conflict: [face swap, voice cloning, upload a photo of your friend]
   CORE-ACC-01:
     terms: [[accessib, wcag, en 301 549, disabilit], [standard, guideline, requirement, conform]]
   CORE-ACC-02:
@@ -233,8 +236,6 @@ rules:
   A-ECO-03:
     terms: [[virtual currency, in game currency, coins, gems, tokens], [real money, real value, price, euro, national currency, show, display]]
     conflict: [sell virtual currency, purchase virtual currency]
-  A-ECO-04:
-    terms: [[reward, points, badge], [learning, progress, effort, mastery]]
   A-PLY-01:
     terms: [[penalt, punish, lose, decay, energy], [not playing, absence, missing, return, daily]]
     conflict: [daily login reward, energy system, decay]
@@ -242,9 +243,6 @@ rules:
     terms: [[failure, mistake, error, wrong answer], [encourag, constructive, supportive, not shame, without shaming]]
   A-ASM-01:
     terms: [[assessment, evaluation, stealth assessment, grading], [transparen, inform, disclos, purpose]]
-  A-SOC-01:
-    terms: [[multiplayer, online play, play together], [closed group, class, approved, teacher, guardian, friends only]]
-    conflict: [open multiplayer, public matchmaking, play with anyone]
   B-EVL-01:
     terms: [[assess, evaluat, placement, grading, scoring], [high risk, risk management, ai act, oversight, documentation]]
   B-EVL-02:
@@ -310,7 +308,7 @@ rules:
   CORE-DES-08:
     terms: [[family, families, home life, daily life], [diverse, diversity, inclusive, all kinds, different shapes, not assume, stereotyp]]
   A-MOT-01:
-    terms: [[reward, points, badges, coins, streaks, leaderboards], [stack, layers, too many, excessive, pile, number of rewards]]
+    terms: [[reward, points, badges, coins, streaks, leaderboards], [stack, layers, too many, excessive, pile, number of rewards, learning, progress, effort, mastery]]
   A-MOT-02:
     terms: [[feedback], [informative, informational, specific, explain, not controlling, autonomy]]
   A-MOT-03:
@@ -339,8 +337,20 @@ rules:
   CORE-CHT-07:
     terms: [[images, photos, media, files, screenshots], [protect, not download, not share, moderat, review, private]]
   CORE-CHT-08:
-    terms: [[grooming, exploitation, extortion, radicali, safeguarding, child protection], [procedure, escalat, train, report to authorities, law enforcement, hotline, policy]]
-  CORE-SAF-11:
-    terms: [[disclos, free text, open answers, concerns about a child, child at risk], [safeguarding, designated lead, trusted adult, helpline, escalat, child protection]]
+    terms: [[grooming, exploitation, extortion, radicali, safeguarding, child protection, disclos, concerns about a child, child at risk], [procedure, escalat, train, report to authorities, law enforcement, hotline, policy, designated lead, trusted adult]]
   CORE-CHT-09:
     terms: [[messages, chat logs, conversations], [retention, delete, deletion, kept for, no longer than]]
+  CORE-CHT-10:
+    terms: [[report, reporter, whistleblow, notifier], [confidential, anonymous, not disclosed, identity protected, not told who]]
+  CORE-CHT-11:
+    terms: [[bystander, report for a friend, on behalf of, witness], [report, support, help, encourag]]
+    conflict: [penalty for false reports, punish false reports]
+  CORE-CHT-12:
+    terms: [[exclu, vote, kick, rating, rank, popularity, team picking], [prevent, "no", not, teacher, avoid, prohibit]]
+    conflict: [vote kick, rate other players, popularity contest]
+  CORE-CHT-13:
+    terms: [[evidence, record, screenshot, report history], [helpline, 116 111, safer internet, trusted adult, keep, store]]
+  CORE-CHT-14:
+    terms: [[moderat, response time, respond, opening hours, out of hours, coverage], [hours, within, time, available, staffed]]
+  CORE-CHT-15:
+    terms: [[bullying, cyberbullying, harassment between], [school, anti bullying, procedure, plan, policy, escalat]]

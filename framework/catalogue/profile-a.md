@@ -9,16 +9,14 @@ Profile A: educational games. Read together with the core rules.
 | [A-ASM-01](#a-asm-01-in-game-assessment-is-transparent-and-separated) | In-game assessment is transparent and separated | MUST | 2 | manual |
 | [A-ECO-01](#a-eco-01-no-paid-randomised-rewards-loot-boxes) | No paid randomised rewards (loot boxes) | MUST | 2 | static |
 | [A-ECO-02](#a-eco-02-no-pay-to-win) | No pay-to-win | MUST | 2 | mixed |
-| [A-ECO-03](#a-eco-03-virtual-currency-is-not-sold-to-children-and-shows-its-real-value) | Virtual currency is not sold to children and shows its real value | MUST | 2 | static |
-| [A-ECO-04](#a-eco-04-rewards-follow-learning-not-time-or-return-visits) | Rewards follow learning, not time or return visits | SHOULD | 3 | manual |
-| [A-MOT-01](#a-mot-01-no-reward-pile-up) | No reward pile-up | SHOULD | 3 | mixed |
+| [A-ECO-03](#a-eco-03-virtual-currency-shows-its-real-value) | Virtual currency shows its real value | MUST | 2 | static |
+| [A-MOT-01](#a-mot-01-rewards-are-for-learning-and-the-inventory-shows-it) | Rewards are for learning, and the inventory shows it | SHOULD | 3 | mixed |
 | [A-MOT-02](#a-mot-02-feedback-informs-it-does-not-control) | Feedback informs, it does not control | SHOULD | 3 | mixed |
 | [A-MOT-03](#a-mot-03-the-product-works-with-rewards-switched-off) | The product works with rewards switched off | SHOULD | 3 | manual |
 | [A-MOT-04](#a-mot-04-room-for-curiosity) | Room for curiosity | SHOULD | 3 | manual |
 | [A-MOT-05](#a-mot-05-helping-and-creativity-are-recognised-not-paid) | Helping and creativity are recognised, not paid | SHOULD | 3 | manual |
 | [A-PLY-01](#a-ply-01-no-penalties-for-not-playing) | No penalties for not playing | MUST | 2 | static |
 | [A-PLY-02](#a-ply-02-non-shaming-failure-and-feedback) | Non-shaming failure and feedback | SHOULD | 3 | manual |
-| [A-SOC-01](#a-soc-01-multiplayer-limited-to-closed-groups) | Multiplayer limited to closed groups | MUST | 2 | manual |
 | [B-DAT-01](#b-dat-01-research-use-of-learning-data-is-separated) | Research use of learning data is separated | MUST | 1 | manual |
 | [B-OPS-01](#b-ops-01-dashboards-show-learning-not-surveillance) | Dashboards show learning, not surveillance | SHOULD | 3 | manual |
 | [B-UGC-01](#b-ugc-01-user-generated-content-is-moderated-and-visible-to-the-teacher) | User-generated content is moderated and visible to the teacher | MUST | 2 | mixed |
@@ -65,41 +63,29 @@ Profile A: educational games. Read together with the core rules.
 
 **Sources.** [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
 
-### A-ECO-03: Virtual currency is not sold to children and shows its real value
+### A-ECO-03: Virtual currency shows its real value
 
 **MUST** · Level 2 (Forward-compliant) · Age bands: all · Detection: static · Effort: medium
 
-**Requirement.** In-game currency cannot be bought by a minor. If it can be bought by an adult, its value in euro is shown wherever it is spent, and it is off by default for children unless a guardian approves.
+**Requirement.** Where adults can buy in-game currency (children never can, CORE-COM-04), its value in euro is shown wherever it is spent, and spending it is off for children unless a guardian approves.
 
 **Why.** KIDS Act Art. 13(1) (applied to chatbots via Art. 14(1)(c)). DFA proposal.
 
-**How to improve.** Remove currency purchase from child screens; show euro equivalents; add guardian approval.
+**How to improve.** Show euro equivalents wherever currency is spent; add guardian approval; keep currency purchases out of child screens.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
 
-### A-ECO-04: Rewards follow learning, not time or return visits
-
-**SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: manual · Effort: medium
-
-**Requirement.** Points, stars and unlocks are tied to learning progress or effort, not to time spent, number of sessions or returning at specific times.
-
-**Why.** Aligning game mechanics with learning mechanics (LM-GM model) improves learning and avoids engagement-for-its-own-sake.
-
-**How to improve.** Map each reward to a learning mechanic (Arnab et al. LM-GM) and remove rewards that only count time or logins.
-
-**Sources.** [ARNAB2014](https://doi.org/10.1111/bjet.12113), [KIDS-COM](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680), [R-DECI1999](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf), [R-SAILER2020](https://link.springer.com/article/10.1007/s10648-019-09498-w), [R-HIRSHPASEK2015](https://www.psychologicalscience.org/publications/educational-apps.html)
-
-### A-MOT-01: No reward pile-up
+### A-MOT-01: Rewards are for learning, and the inventory shows it
 
 **SHOULD** · Level 3 (Best practice) · Age bands: all · Detection: mixed · Effort: low
 
-**Requirement.** The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards, unlockables, celebrations) and records for each one whether it is given for learning or for showing up. No more than two layers are given for playing time, logging in or simply finishing.
+**Requirement.** Points, stars and unlocks are tied to learning progress or effort, not to time spent, number of sessions or returning at set times. The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards, unlockables, celebrations) and records for each one whether it is given for learning or for showing up. No more than two layers are given for playing time, logging in or simply finishing.
 
-**Why.** Expected rewards for doing a task lower later intrinsic motivation (d = -0.36), more in children. Badges plus leaderboards lowered motivation and exam scores over a semester. Each extra layer makes rewards more expected and more controlling. Stacking is an inference from single-element studies.
+**Why.** Expected rewards for doing a task lower later intrinsic motivation (d = -0.36), more in children. Badges plus leaderboards lowered motivation and exam scores over a semester. Each extra layer makes rewards more expected and more controlling. Aligning game mechanics with learning mechanics (LM-GM) avoids engagement for its own sake. Merges A-ECO-04 (retired in 0.11.0). Related: C-ENG-01 (streaks), C-ENG-04 (variable rewards), A-MOT-03 (rewards off), CORE-DES-06 (celebrations).
 
-**How to improve.** Write the reward inventory (one line per layer, 'for learning' or 'for showing up'); remove or convert layers given for showing up.
+**How to improve.** Write the reward inventory (one line per layer, 'for learning' or 'for showing up'); map each reward to a learning mechanic (LM-GM); remove or convert layers given for time, logins or showing up.
 
-**Sources.** [R-DECI1999](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf), [R-HANUS2015](https://www.smhp.psych.ucla.edu/pdfdocs/gamil.pdf), [R-MEKLER2017](https://glassmanlab.seas.harvard.edu/annotated_works/mekler17.pdf), [R-SAILER2020](https://link.springer.com/article/10.1007/s10648-019-09498-w), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
+**Sources.** [R-DECI1999](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf), [R-HANUS2015](https://www.smhp.psych.ucla.edu/pdfdocs/gamil.pdf), [R-MEKLER2017](https://glassmanlab.seas.harvard.edu/annotated_works/mekler17.pdf), [R-SAILER2020](https://link.springer.com/article/10.1007/s10648-019-09498-w), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use), [ARNAB2014](https://doi.org/10.1111/bjet.12113), [KIDS-COM](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680), [R-HIRSHPASEK2015](https://www.psychologicalscience.org/publications/educational-apps.html)
 
 ### A-MOT-02: Feedback informs, it does not control
 
@@ -172,18 +158,6 @@ Profile A: educational games. Read together with the core rules.
 **How to improve.** Review all failure states with an instructional designer; use encouraging, specific feedback.
 
 **Sources.** [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [ARNAB2014](https://doi.org/10.1111/bjet.12113)
-
-### A-SOC-01: Multiplayer limited to closed groups
-
-**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: multiplayer · Detection: manual · Effort: high
-
-**Requirement.** Multiplayer happens within teacher- or guardian-defined groups. Cross-group play only through adult-mediated pairing. The game cannot be used to lure children to other services.
-
-**Why.** KIDS Act Art. 15(1)(c) and 15(2).
-
-**How to improve.** Use class rooms with join codes controlled by the teacher; block sharing of external links and handles.
-
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
 
 ### B-DAT-01: Research use of learning data is separated
 

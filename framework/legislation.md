@@ -17,32 +17,35 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 
 | Source | Type | Status | CSEF rules | Compass targets |
 |---|---|---|---|---|
-| **GDPR** Regulation (EU) 2016/679, General Data Protection Regulation | law | In force since 25 May 2018 | 45 | 3 |
+| **GDPR** Regulation (EU) 2016/679, General Data Protection Regulation | law | In force since 25 May 2018 | 47 | 3 |
 | **EPRIV** Directive 2002/58/EC, ePrivacy Directive (cookies and terminal equipment) | law | In force (transposed nationally) | 1 | 0 |
-| **DSA** Regulation (EU) 2022/2065, Digital Services Act | law | Fully applicable since 17 Feb 2024 | 7 | 2 |
-| **AIA** Regulation (EU) 2024/1689, Artificial Intelligence Act | law | Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025 | 15 | 3 |
+| **DSA** Regulation (EU) 2022/2065, Digital Services Act | law | Fully applicable since 17 Feb 2024 | 8 | 2 |
+| **AIA** Regulation (EU) 2024/1689, Artificial Intelligence Act | law | Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025 | 16 | 3 |
 | **UCPD** Directive 2005/29/EC, Unfair Commercial Practices Directive | law | In force (transposed nationally) | 8 | 3 |
 | **EAA** Directive (EU) 2019/882, European Accessibility Act | law | Applies since 28 Jun 2025 | 4 | 1 |
 | **CRA** Regulation (EU) 2024/2847, Cyber Resilience Act | law | Reporting obligations from 11 Sep 2026 | 1 | 0 |
 | **DATA-ACT** Regulation (EU) 2023/2854 (Data Act), Chapter VI: switching between data processing services | law | In force 11 Jan 2024; applies from 12 Sep 2025 | 1 | 0 |
 | **CJEU-ART9** CJEU (Grand Chamber), C-184/20, OT v Vyriausioji tarnybinės etikos komisija, 1 Aug 2022 (EU:C:2022:601); see also C-252/21, Meta Platforms v Bundeskartellamt, 4 Jul 2023 | law | Case law | 1 | 0 |
-| **AIA-OMNIBUS** Digital Omnibus on AI: Regulation amending the AI Act (reported as Regulation (EU) 2026/1744) | law | Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026 | 3 | 1 |
-| **KIDS** Proposal for a Regulation: EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681 | proposal | Commission proposal of 17 Sep 2026 (2026/0286 COD) | 56 | 9 |
+| **VAW-DIR** Directive (EU) 2024/1385 on combating violence against women and domestic violence | law | In force 13 Jun 2024; transposition by 14 Jun 2027 | 1 | 0 |
+| **AIA-OMNIBUS** Digital Omnibus on AI: Regulation amending the AI Act (reported as Regulation (EU) 2026/1744) | law | Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026 | 4 | 1 |
+| **KIDS** Proposal for a Regulation: EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681 | proposal | Commission proposal of 17 Sep 2026 (2026/0286 COD) | 57 | 9 |
 | **DFA** Digital Fairness Act (proposal replacing the Unfair Commercial Practices Directive) | proposal | Proposal due 11 Nov 2026 | 14 | 3 |
 | **DSA-G28** Commission Guidelines on the protection of minors under Article 28 DSA | guidance | Adopted 14 Jul 2025 | 23 | 2 |
 | **KIDS-COM** Communication: An EU approach to online child safety, COM(2026) 680 | guidance | Published 17 Sep 2026 | 5 | 0 |
 | **KIDS-FAQ** The KIDS Act explained (Commission Q&A) | guidance | Published Sep 2026 | 1 | 0 |
 | **AVREC** Commission Recommendation on an EU-wide framework for age verification (EU age verification app) | guidance | Adopted 29 Apr 2026 | 1 | 0 |
 | **EDPB-CONSENT** EDPB Guidelines 05/2020 on consent under Regulation 2016/679 (section on children) | guidance | Adopted 4 May 2020 | 2 | 0 |
-| **BIK** European strategy for a better internet for kids (BIK+) | guidance | Adopted May 2022 | 1 | 4 |
-| **UNCRC-GC25** UN Committee on the Rights of the Child, General Comment No. 25 (2021) on children's rights in relation to the digital environment | guidance | Adopted 2021 | 19 | 3 |
+| **BIK** European strategy for a better internet for kids (BIK+) | guidance | Adopted May 2022 | 2 | 4 |
+| **UNCRC-GC25** UN Committee on the Rights of the Child, General Comment No. 25 (2021) on children's rights in relation to the digital environment | guidance | Adopted 2021 | 21 | 3 |
 | **EDPB-DDP** EDPB Guidelines 03/2022 on deceptive design patterns in social media platform interfaces: how to recognise and avoid them, version 2.0 | guidance | Adopted 14 Feb 2023 | 1 | 0 |
 | **WP216** Article 29 Working Party, Opinion 05/2014 on Anonymisation Techniques (WP216) | guidance | Adopted 10 Apr 2014; endorsed by the EDPB. Aggregation and k-anonymity fail when groups are small or every member shares the same value | 1 | 0 |
 | **DIGCOMP3** DigComp 3.0: European Digital Competence Framework, fifth edition (JRC144121). Cosgrove, J. and Cachia, R., Joint Research Centre | guidance | Published 27 Nov 2025. 5 areas, 21 competences, 4 proficiency levels, AI integrated across all competences | 0 | 24 |
 | **AILIT** Empowering Learners for the Age of AI: an AI Literacy Framework for Primary and Secondary Education (AILit), European Commission and OECD | guidance | Final version presented 18 Jun 2026. 4 domains (Engage, Create, Manage, Shape AI), 19 competences, learner expectations at basic, intermediate and advanced levels | 0 | 20 |
 | **EU-DEC** European Commission (2025). Making informed choices on digital education content: EU guidelines for teachers and educators | guidance | Manuscript completed Oct 2025; launched 5 Mar 2026 | 1 | 4 |
+| **EDPB-DSAGDPR** EDPB Guidelines 3/2025 on the interplay between the DSA and the GDPR | guidance | Adopted 11 Sep 2025 for public consultation (closed 31 Oct 2025) | 1 | 0 |
 | **EDU-EDIC** Commission Implementing Decision (EU) 2026/2413 of 3 November 2026 on setting up the European Digital Infrastructure Consortium on Education (EDU-EDIC) | policy | In force 4 Nov 2026 | 4 | 0 |
 | **EU-EDUPKG** European Commission (2026). Education and Skills Package (factsheet), with the Communication on stronger education foundations in the age of AI | policy | Presented 2026 | 0 | 3 |
+| **CB-AP** Communication COM(2026) 71: Action plan against cyberbullying, "Safer online, stronger together" (10 February 2026) | policy | Adopted 10 Feb 2026 | 8 | 1 |
 | **WCAG22** W3C Web Content Accessibility Guidelines (WCAG) 2.2 | standard | W3C Recommendation | 6 | 0 |
 | **W3C-233** W3C, Understanding WCAG Success Criterion 2.3.3 Animation from Interactions (Level AAA) | standard | W3C guidance | 2 | 0 |
 | **EN301549** EN 301 549, Accessibility requirements for ICT products and services | standard | Harmonised European standard | 3 | 0 |
@@ -64,10 +67,11 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 | **PT-DL83** Decreto-Lei n.º 83/2018, acessibilidade dos sítios web e aplicações móveis de organismos públicos | law | In force | 1 | 0 |
 | **PT-CNPD** CNPD, guidance and list of processing operations requiring a DPIA | guidance | Check the current list on the CNPD website (verify) | 3 | 0 |
 | **PT-ANACOM** ANACOM, Portuguese Digital Services Coordinator under the DSA | guidance | Designated Digital Services Coordinator | 0 | 0 |
-| **PT-ISEGURA** Internet Segura (Portuguese Safer Internet Centre) and Linha Internet Segura | guidance | Operating | 3 | 1 |
+| **PT-ISEGURA** Internet Segura (Portuguese Safer Internet Centre) and Linha Internet Segura | guidance | Operating | 4 | 1 |
 | **PT-EPM** Referencial de Educação para os Media para a Educação Pré-escolar, o Ensino Básico e o Ensino Secundário (DGE), versão revista e atualizada | guidance | First approved 29 Apr 2014; revised and updated version of Dec 2023 (verify the current edition) | 0 | 5 |
 | **PT-MIME** Despacho n.º 15847/2007, de 19 de junho (DR 2.ª série, n.º 140, 23 jul 2007): inquéritos em meio escolar; sistema MIME (Monitorização de Inquéritos em Meio Escolar), apreciação pela DGE, hoje EduQA, I.P. | law | In force | 3 | 1 |
 | **PT-LPCJP** Lei de Proteção de Crianças e Jovens em Perigo, Lei n.º 147/99, de 1 de setembro (versão atual) | law | In force, as amended (latest by Lei 26/2018) | 1 | 0 |
+| **PT-ESBEV** Plano de Prevenção e Combate ao Bullying e ao Ciberbullying: Escola Sem Bullying. Escola Sem Violência (DGE, 2019) | guidance | Launched in the 2019-2020 school year | 1 | 0 |
 
 ## Law in force
 
@@ -93,7 +97,9 @@ The base layer for any product that processes children's personal data.
 
 **In CSEF.** Level 1 rules on data, security, roles, transfers and automated decisions.
 
-**Rules citing it.** `CORE-GOV-01`, `CORE-DAT-01`, `CORE-DAT-02`, `CORE-DAT-03`, `CORE-DAT-04`, `CORE-DAT-05`, `CORE-DAT-06`, `CORE-DAT-07`, `CORE-DAT-08`, `CORE-DAT-09`, `CORE-DAT-10`, `CORE-DAT-11`, `CORE-DAT-12`, `CORE-DAT-13`, `CORE-DAT-14`, `CORE-DAT-15`, `CORE-DAT-16`, `CORE-DAT-17`, `CORE-DAT-18`, `CORE-COM-01`, `CORE-COM-02`, `CORE-AI-04`, `CORE-AI-07`, `CORE-SEC-01`, `CORE-SEC-02`, `CORE-SEC-03`, `CORE-SEC-04`, `CORE-SEC-05`, `CORE-SEC-06`, `CORE-INT-01`, `CORE-INT-02`, `CORE-INT-03`, `CORE-INT-04`, `A-ASM-01`, `B-EVL-02`, `B-EVL-03`, `B-UGC-01`, `B-UGC-02`, `B-DAT-01`, `C-ENG-02`, `AGE-B4-01`, `CORE-AI-08`, `CORE-CHT-01`, `CORE-CHT-07`, `CORE-CHT-09`
+**Rules citing it.** `CORE-GOV-01`, `CORE-DAT-01`, `CORE-DAT-02`, `CORE-DAT-03`, `CORE-DAT-04`, `CORE-DAT-05`, `CORE-DAT-06`, `CORE-DAT-07`, `CORE-DAT-08`, `CORE-DAT-09`, `CORE-DAT-10`, `CORE-DAT-11`, `CORE-DAT-12`, `CORE-DAT-13`, `CORE-DAT-14`, `CORE-DAT-15`, `CORE-DAT-16`, `CORE-DAT-17`, `CORE-DAT-18`, `CORE-COM-01`, `CORE-COM-02`, `CORE-AI-04`, `CORE-AI-07`, `CORE-SEC-01`, `CORE-SEC-02`, `CORE-SEC-03`, `CORE-SEC-04`, `CORE-SEC-05`, `CORE-SEC-06`, `CORE-INT-01`, `CORE-INT-02`, `CORE-INT-03`, `CORE-INT-04`, `A-ASM-01`, `B-EVL-02`, `B-EVL-03`, `B-UGC-01`, `B-UGC-02`, `B-DAT-01`, `C-ENG-02`, `AGE-B4-01`, `CORE-AI-08`, `CORE-AI-12`, `CORE-CHT-01`, `CORE-CHT-07`, `CORE-CHT-09`, `CORE-CHT-10`
+
+**Compass targets citing it.** `SAF-02`, `TRN-01`, `TRN-08`
 
 **Link.** [https://eur-lex.europa.eu/eli/reg/2016/679/oj](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
 
@@ -134,7 +140,9 @@ Applies to intermediary services; the strongest duties fall on online platforms 
 
 **In CSEF.** Level 1 rules on advertising, dark patterns and contact; the Art. 28 guidelines drive many Level 2 rules.
 
-**Rules citing it.** `CORE-COM-01`, `CORE-COM-03`, `CORE-SAF-05`, `CORE-SAF-06`, `CORE-COM-07`, `CORE-CHT-02`, `CORE-CHT-03`
+**Rules citing it.** `CORE-COM-01`, `CORE-COM-03`, `CORE-SAF-05`, `CORE-SAF-06`, `CORE-COM-07`, `CORE-CHT-02`, `CORE-CHT-03`, `CORE-CHT-11`
+
+**Compass targets citing it.** `TRN-03`, `TRN-06`
 
 **Link.** [https://eur-lex.europa.eu/eli/reg/2022/2065/oj](https://eur-lex.europa.eu/eli/reg/2022/2065/oj)
 
@@ -156,7 +164,9 @@ The AI rulebook. Education is named both in the prohibitions and in the high-ris
 
 **In CSEF.** Level 1 AI rules, the high-risk path for assessment products (Profile B), and AI disclosure.
 
-**Rules citing it.** `CORE-AI-01`, `CORE-AI-02`, `CORE-AI-03`, `CORE-AI-04`, `CORE-AI-05`, `CORE-AI-06`, `CORE-AI-07`, `CORE-CNT-01`, `A-ASM-01`, `B-EVL-01`, `B-EVL-02`, `B-EVL-03`, `B-EVL-04`, `CORE-AI-09`, `CORE-AI-11`
+**Rules citing it.** `CORE-AI-01`, `CORE-AI-02`, `CORE-AI-03`, `CORE-AI-04`, `CORE-AI-05`, `CORE-AI-06`, `CORE-AI-07`, `CORE-CNT-01`, `A-ASM-01`, `B-EVL-01`, `B-EVL-02`, `B-EVL-03`, `B-EVL-04`, `CORE-AI-09`, `CORE-AI-11`, `CORE-AI-12`
+
+**Compass targets citing it.** `TRN-02`, `TRN-05`, `EDU-06`
 
 **Link.** [https://eur-lex.europa.eu/eli/reg/2024/1689/oj](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
 
@@ -178,6 +188,8 @@ Consumer protection against misleading and aggressive practices.
 
 **Rules citing it.** `CORE-COM-03`, `CORE-COM-04`, `A-ECO-02`, `A-ECO-03`, `CORE-COM-05`, `CORE-COM-06`, `CORE-COM-07`, `CORE-AI-11`
 
+**Compass targets citing it.** `INF-03`, `SAF-05`, `TRN-04`
+
 **Link.** [https://eur-lex.europa.eu/eli/dir/2005/29/oj](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
 
 ### Directive (EU) 2019/882, European Accessibility Act
@@ -195,6 +207,8 @@ Accessibility requirements for a list of products and services, applying since 2
 **In CSEF.** Level 1 accessibility rules (WCAG 2.2 AA target, pausing motion, colour not the only cue).
 
 **Rules citing it.** `CORE-ACC-01`, `CORE-ACC-02`, `CORE-ACC-04`, `CORE-ACC-05`
+
+**Compass targets citing it.** `EDU-05`
 
 **Link.** [https://eur-lex.europa.eu/eli/dir/2019/882/oj](https://eur-lex.europa.eu/eli/dir/2019/882/oj)
 
@@ -253,6 +267,20 @@ Data that can indirectly reveal special-category information (origin, religion, 
 
 **Link.** [https://curia.europa.eu/juris/liste.jsf?num=C-184/20](https://curia.europa.eu/juris/liste.jsf?num=C-184/20)
 
+### Directive (EU) 2024/1385 on combating violence against women and domestic violence
+
+*Id `VAW-DIR` · law · EU · verified 2026-11-16*
+
+EU minimum rules on violence against women, including cyber violence.
+
+**Status.** In force 13 Jun 2024; transposition by 14 Jun 2027. Art. 5(1)(b) requires Member States to make producing or manipulating and sharing sexual deepfakes of a person without consent a crime.
+
+**In CSEF.** Basis, with the AI Omnibus ban on nudifier systems, for blocking generation of real people (CORE-AI-12).
+
+**Rules citing it.** `CORE-AI-12`
+
+**Link.** [https://eur-lex.europa.eu/eli/dir/2024/1385/oj](https://eur-lex.europa.eu/eli/dir/2024/1385/oj)
+
 ## Adopted, applying later
 
 ### Digital Omnibus on AI (amendments to the AI Act)
@@ -271,7 +299,9 @@ Moves the start of Annex III high-risk obligations, including education, to 2 De
 
 **In CSEF.** Dates on the high-risk path. The registry cites a law firm summary until the Official Journal reference is added.
 
-**Rules citing it.** `CORE-AI-07`, `A-ASM-01`, `B-EVL-01`
+**Rules citing it.** `CORE-AI-07`, `A-ASM-01`, `B-EVL-01`, `CORE-AI-12`
+
+**Compass targets citing it.** `EDU-06`
 
 **Link.** [https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/)
 
@@ -305,7 +335,9 @@ Commission proposal of 17 September 2026 (procedure 2026/0286 COD). The single m
 
 **In CSEF.** Most Level 2 rules: safe defaults, addictive design, contact and communications (CORE-SAF-05, CORE-CHT-*), rewards, purchases (CORE-COM-05 to 08), AI companions and chatbots (CORE-AI-06, 08 to 11), guardians, reporting, age assurance; and the code-of-conduct structure checks (COC-S01 to S11).
 
-**Rules citing it.** `CORE-GOV-02`, `CORE-DAT-09`, `CORE-DAT-10`, `CORE-DAT-12`, `CORE-DAT-16`, `CORE-DAT-18`, `CORE-COM-04`, `CORE-SAF-01`, `CORE-SAF-02`, `CORE-SAF-03`, `CORE-SAF-04`, `CORE-SAF-05`, `CORE-SAF-06`, `CORE-SAF-07`, `CORE-SAF-08`, `CORE-SAF-09`, `CORE-SAF-10`, `CORE-SAF-11`, `CORE-AI-05`, `CORE-AI-06`, `CORE-CNT-02`, `A-ECO-01`, `A-ECO-03`, `A-PLY-01`, `A-SOC-01`, `B-UGC-01`, `B-UGC-02`, `B-OPS-01`, `C-ENG-01`, `C-ENG-02`, `C-ENG-03`, `C-ENG-04`, `C-ENG-05`, `AGE-B1-01`, `AGE-B2-01`, `AGE-B3-01`, `AGE-B4-01`, `AGE-B5-01`, `CORE-COM-05`, `CORE-COM-06`, `CORE-COM-07`, `CORE-COM-08`, `CORE-AI-08`, `CORE-AI-09`, `CORE-AI-10`, `CORE-AI-11`, `CORE-CHT-01`, `CORE-CHT-02`, `CORE-CHT-03`, `CORE-CHT-04`, `CORE-CHT-05`, `CORE-CHT-06`, `CORE-CHT-07`, `CORE-CHT-08`, `PT-LNG-01`, `PT-SUP-01`
+**Rules citing it.** `CORE-GOV-02`, `CORE-DAT-09`, `CORE-DAT-10`, `CORE-DAT-12`, `CORE-DAT-16`, `CORE-DAT-18`, `CORE-COM-04`, `CORE-SAF-01`, `CORE-SAF-02`, `CORE-SAF-03`, `CORE-SAF-04`, `CORE-SAF-05`, `CORE-SAF-06`, `CORE-SAF-07`, `CORE-SAF-08`, `CORE-SAF-09`, `CORE-SAF-10`, `CORE-AI-05`, `CORE-AI-06`, `CORE-CNT-02`, `A-ECO-01`, `A-ECO-03`, `A-PLY-01`, `B-UGC-01`, `B-UGC-02`, `B-OPS-01`, `C-ENG-01`, `C-ENG-02`, `C-ENG-03`, `C-ENG-04`, `C-ENG-05`, `AGE-B1-01`, `AGE-B2-01`, `AGE-B3-01`, `AGE-B4-01`, `AGE-B5-01`, `CORE-COM-05`, `CORE-COM-06`, `CORE-COM-07`, `CORE-COM-08`, `CORE-AI-08`, `CORE-AI-09`, `CORE-AI-10`, `CORE-AI-11`, `CORE-CHT-01`, `CORE-CHT-02`, `CORE-CHT-03`, `CORE-CHT-04`, `CORE-CHT-05`, `CORE-CHT-06`, `CORE-CHT-07`, `CORE-CHT-08`, `CORE-CHT-10`, `CORE-CHT-13`, `CORE-CHT-14`, `PT-LNG-01`, `PT-SUP-01`
+
+**Compass targets citing it.** `INF-03`, `SAF-03`, `SAF-04`, `SAF-05`, `TRN-02`, `TRN-04`, `TRN-06`, `TRN-07`, `EDU-07`
 
 **Link.** [https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
 
@@ -331,6 +363,8 @@ Expected to revise consumer law for the digital environment. Content in CSEF is 
 
 **Rules citing it.** `CORE-COM-01`, `CORE-COM-03`, `CORE-COM-04`, `CORE-SAF-02`, `CORE-SAF-03`, `CORE-AI-06`, `A-ECO-01`, `A-ECO-02`, `A-ECO-03`, `A-PLY-01`, `C-ENG-01`, `C-ENG-03`, `CORE-COM-05`, `CORE-COM-06`
 
+**Compass targets citing it.** `SAF-05`, `TRN-04`, `TRN-07`
+
 **Link.** [https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
 
 ## EU guidance and recommendations
@@ -349,7 +383,9 @@ Not binding, but the benchmark the Commission uses to assess Art. 28 compliance.
 
 **In CSEF.** Level 2 safety-by-design and communications rules.
 
-**Rules citing it.** `CORE-GOV-03`, `CORE-DAT-09`, `CORE-COM-02`, `CORE-SAF-01`, `CORE-SAF-02`, `CORE-SAF-03`, `CORE-SAF-05`, `CORE-SAF-06`, `CORE-SAF-08`, `CORE-SEC-06`, `A-SOC-01`, `B-UGC-01`, `B-SIM-01`, `C-ENG-02`, `AGE-B2-01`, `AGE-B5-01`, `CORE-CHT-01`, `CORE-CHT-02`, `CORE-CHT-03`, `CORE-CHT-04`, `CORE-CHT-06`, `CORE-CHT-07`, `CORE-CHT-08`
+**Rules citing it.** `CORE-GOV-03`, `CORE-DAT-09`, `CORE-COM-02`, `CORE-SAF-01`, `CORE-SAF-02`, `CORE-SAF-03`, `CORE-SAF-05`, `CORE-SAF-06`, `CORE-SAF-08`, `CORE-SEC-06`, `B-UGC-01`, `B-SIM-01`, `C-ENG-02`, `AGE-B2-01`, `AGE-B5-01`, `CORE-CHT-01`, `CORE-CHT-02`, `CORE-CHT-03`, `CORE-CHT-04`, `CORE-CHT-06`, `CORE-CHT-07`, `CORE-CHT-08`, `CORE-CHT-14`
+
+**Compass targets citing it.** `TRN-01`, `TRN-03`
 
 **Link.** [https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
 
@@ -363,7 +399,7 @@ The policy frame around the KIDS Act.
 
 **In CSEF.** Context for wellbeing and engagement rules.
 
-**Rules citing it.** `CORE-SAF-04`, `A-ECO-04`, `C-ENG-04`, `C-ENG-05`, `C-ENG-06`
+**Rules citing it.** `CORE-SAF-04`, `C-ENG-04`, `C-ENG-05`, `C-ENG-06`, `A-MOT-01`
 
 **Link.** [https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680)
 
@@ -419,7 +455,9 @@ EU strategy on safe digital experiences, empowerment and participation of childr
 
 **In CSEF.** Currently in the registry without a rule citing it. Proposed: cite on reporting and support (CORE-SAF-06).
 
-**Rules citing it.** `CORE-SAF-11`
+**Rules citing it.** `CORE-CHT-08`, `CORE-CHT-13`
+
+**Compass targets citing it.** `COM-04`, `SAF-03`, `TRN-06`, `EDU-07`
 
 **Link.** [https://digital-strategy.ec.europa.eu/en/policies/strategy-better-internet-kids](https://digital-strategy.ec.europa.eu/en/policies/strategy-better-internet-kids)
 
@@ -433,7 +471,9 @@ How the UN Convention on the Rights of the Child applies to the digital environm
 
 **In CSEF.** Child rights impact assessment and several Level 3 rules.
 
-**Rules citing it.** `CORE-GOV-03`, `CORE-DAT-13`, `CORE-DAT-14`, `CORE-DAT-15`, `CORE-DAT-16`, `CORE-DAT-17`, `CORE-SAF-07`, `CORE-SAF-09`, `CORE-SAF-11`, `CORE-ACC-03`, `A-PLY-02`, `B-EVL-04`, `B-SIM-01`, `B-OPS-01`, `C-ENG-06`, `AGE-B1-01`, `CORE-DES-08`, `CORE-COM-08`, `CORE-CHT-08`
+**Rules citing it.** `CORE-GOV-03`, `CORE-DAT-13`, `CORE-DAT-14`, `CORE-DAT-15`, `CORE-DAT-16`, `CORE-DAT-17`, `CORE-SAF-07`, `CORE-SAF-09`, `CORE-ACC-03`, `A-PLY-02`, `B-EVL-04`, `B-SIM-01`, `B-OPS-01`, `C-ENG-06`, `AGE-B1-01`, `CORE-DES-08`, `CORE-COM-08`, `CORE-CHT-08`, `CORE-CHT-11`, `CORE-CHT-12`, `CORE-CHT-15`
+
+**Compass targets citing it.** `COM-03`, `TRN-01`, `TRN-08`
 
 **Link.** [https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
 
@@ -475,6 +515,8 @@ The European reference for digital competence: 5 areas, 21 competences, AI acros
 
 **In CSEF.** Main reference for the Literacy Compass learner lens.
 
+**Rules citing it.** none (context)
+
 **Compass targets citing it.** `INF-01`, `INF-02`, `INF-03`, `INF-04`, `INF-05`, `COM-01`, `COM-02`, `COM-03`, `COM-04`, `COM-05`, `CRE-01`, `CRE-02`, `CRE-03`, `SAF-01`, `SAF-02`, `SAF-03`, `SAF-04`, `SAF-05`, `SAF-06`, `PRB-01`, `PRB-02`, `PRB-03`, `EDU-01`, `EDU-04`
 
 **Link.** [https://data.europa.eu/doi/10.2760/0001149](https://data.europa.eu/doi/10.2760/0001149)
@@ -488,6 +530,8 @@ European Commission and OECD framework for AI literacy in primary and secondary 
 **Status.** Final version presented 18 Jun 2026. 4 domains (Engage, Create, Manage, Shape AI), 19 competences, learner expectations at basic, intermediate and advanced levels. Informs the PISA 2029 Media and AI Literacy assessment.
 
 **In CSEF.** Reference for the Compass AI axis.
+
+**Rules citing it.** none (context)
 
 **Compass targets citing it.** `INF-04`, `CRE-02`, `CRE-03`, `SAF-06`, `PRB-02`, `PRB-03`, `AI-01`, `AI-02`, `AI-03`, `AI-04`, `AI-05`, `AI-06`, `AI-07`, `AI-08`, `TRN-02`, `TRN-03`, `TRN-05`, `TRN-07`, `EDU-01`, `EDU-04`
 
@@ -508,6 +552,20 @@ Commission guidelines that help teachers judge digital education content against
 **Compass targets citing it.** `EDU-01`, `EDU-02`, `EDU-03`, `EDU-05`
 
 **Link.** [https://op.europa.eu/en/publication-detail/-/publication/1fa0183b-dbbe-11f0-8da2-01aa75ed71a1/language-en](https://op.europa.eu/en/publication-detail/-/publication/1fa0183b-dbbe-11f0-8da2-01aa75ed71a1/language-en)
+
+### EDPB Guidelines 3/2025 on the interplay between the DSA and the GDPR
+
+*Id `EDPB-DSAGDPR` · guidance · EU · verified 2026-11-16*
+
+How the GDPR applies when providers meet DSA duties, including notice and action.
+
+**Status.** Adopted 11 Sep 2025 for public consultation (closed 31 Oct 2025). Notice mechanisms should allow, but not require, identifying the notifier; the identity is revealed to the affected user only where strictly necessary, and the notifier is told.
+
+**In CSEF.** Basis for keeping the reporter's identity from the reported child (CORE-CHT-10). Final text awaited.
+
+**Rules citing it.** `CORE-CHT-10`
+
+**Link.** [https://www.edpb.europa.eu/system/files/2025-09/edpb_guidelines_202503_interplay-dsa-gdpr_v1_en.pdf](https://www.edpb.europa.eu/system/files/2025-09/edpb_guidelines_202503_interplay-dsa-gdpr_v1_en.pdf)
 
 ## Policy context
 
@@ -542,9 +600,27 @@ Commission package with AI literacy, healthy screens and digital competence targ
 
 **In CSEF.** Context for the Literacy Compass.
 
+**Rules citing it.** none (context)
+
 **Compass targets citing it.** `SAF-04`, `EDU-06`, `EDU-07`
 
 **Link.** [https://doi.org/10.2766/6358386](https://doi.org/10.2766/6358386)
+
+### Communication COM(2026) 71: Action plan against cyberbullying, "Safer online, stronger together" (10 February 2026)
+
+*Id `CB-AP` · policy · EU · verified 2026-11-16*
+
+The Commission's plan against cyberbullying, with a common EU definition and an online safety app for children.
+
+**Status.** Adopted 10 Feb 2026. Common EU definition: behaviour through digital technologies with the primary intention or effect of repeatedly or continuously humiliating, socially excluding, abusing, harassing or harming. Review of the DSA guidelines on minors with more focus on cyberbullying; EU online safety app (report to a national helpline, store and pass on evidence, get help) rolled out from Q3 2026, open to platforms through APIs; prevention and support should reach bystanders; common data collection framework.
+
+**In CSEF.** Context and definitions for the rules on reporting, bystanders, exclusion, evidence and school procedures (CORE-CHT-10 to 15).
+
+**Rules citing it.** `CORE-SAF-06`, `CORE-AI-12`, `CORE-CHT-10`, `CORE-CHT-11`, `CORE-CHT-12`, `CORE-CHT-13`, `CORE-CHT-14`, `CORE-CHT-15`
+
+**Compass targets citing it.** `TRN-06`
+
+**Link.** [https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying)
 
 ## Technical standards
 
@@ -635,6 +711,8 @@ IEEE standard for digital intelligence (DQ): literacy, skills and readiness.
 
 **In CSEF.** Reference for Compass targets.
 
+**Rules citing it.** none (context)
+
 **Compass targets citing it.** `COM-01`, `COM-05`, `SAF-01`, `SAF-02`
 
 **Link.** [https://standards.ieee.org/ieee/3527.1/7589/](https://standards.ieee.org/ieee/3527.1/7589/)
@@ -648,6 +726,8 @@ IEEE standard for age-appropriate design of digital services for children.
 **Status.** Active standard (2021).
 
 **In CSEF.** Reference for design-lens targets and rules.
+
+**Rules citing it.** none (context)
 
 **Compass targets citing it.** `TRN-01`
 
@@ -667,6 +747,8 @@ UNESCO curriculum for media and information literacy.
 
 **In CSEF.** Reference for the Compass information and communication axes.
 
+**Rules citing it.** none (context)
+
 **Compass targets citing it.** `INF-01`, `INF-02`, `INF-03`, `INF-04`, `COM-03`, `COM-04`
 
 **Link.** [https://www.unesco.org/en/media-information-literacy](https://www.unesco.org/en/media-information-literacy)
@@ -680,6 +762,8 @@ UNESCO companion guide on AI and media and information literacy.
 **Status.** Published 2026. Extends MIL to AI: sources, accountability, filtering, lateral reading, rights. Recalls UNESCO's minimum age of 13 for independent use of generative AI in class.
 
 **In CSEF.** Reference for the Compass AI and information axes.
+
+**Rules citing it.** none (context)
 
 **Compass targets citing it.** `INF-02`, `INF-04`, `AI-02`, `AI-03`, `AI-05`, `AI-06`
 
@@ -695,6 +779,8 @@ UNESCO AI competency framework for students.
 
 **In CSEF.** Reference for the Compass AI axis.
 
+**Rules citing it.** none (context)
+
 **Compass targets citing it.** `AI-01`, `AI-04`, `AI-05`, `AI-08`
 
 **Link.** [https://www.unesco.org/en/articles/ai-competency-framework-students](https://www.unesco.org/en/articles/ai-competency-framework-students)
@@ -708,6 +794,8 @@ UNESCO guidance on deciding at what age and how AI should be used in education.
 **Status.** Published 2026. Calls for shared, evidence-based criteria for age-appropriate AI and for independent evaluation schemes.
 
 **In CSEF.** Reference for AI targets by age band.
+
+**Rules citing it.** none (context)
 
 **Compass targets citing it.** `AI-02`, `AI-04`, `TRN-07`, `EDU-04`
 
@@ -739,6 +827,8 @@ UNICEF framework for EdTech that is safe, inclusive and effective.
 
 **In CSEF.** Reference for AI transparency targets.
 
+**Rules citing it.** none (context)
+
 **Compass targets citing it.** `TRN-02`
 
 **Link.** [https://5rightsfoundation.com/resource/children-ai-design-code/](https://5rightsfoundation.com/resource/children-ai-design-code/)
@@ -752,6 +842,8 @@ UNICEF Innocenti guidance on AI and children's rights.
 **Status.** Published 2025.
 
 **In CSEF.** Reference for AI targets and rules.
+
+**Rules citing it.** none (context)
 
 **Compass targets citing it.** `TRN-02`
 
@@ -767,6 +859,8 @@ Raspberry Pi Foundation design principles for AI in education.
 
 **In CSEF.** Reference for AI literacy targets.
 
+**Rules citing it.** none (context)
+
 **Link.** [https://www.raspberrypi.org/blog/draft-principles-for-safe-responsible-edtech/](https://www.raspberrypi.org/blog/draft-principles-for-safe-responsible-edtech/)
 
 ### Swedish Edtech Industry (2026). Kvalitetsportfolio för edtech, version 1.0 (published on Edtechkartan)
@@ -779,6 +873,8 @@ Swedish Edtech Industry self-declaration portfolio for EdTech quality.
 
 **In CSEF.** Crosswalk target for the Compass dossier.
 
+**Rules citing it.** none (context)
+
 **Link.** [https://edtechkartan.se/kvalitetsportfolio/](https://edtechkartan.se/kvalitetsportfolio/)
 
 ### Garg, M. and Bakker, T. (2025). Dutch 3E Framework: Evidence-informed Evaluation of EdTech (The Hague University of Applied Sciences, Npuls)
@@ -790,6 +886,8 @@ Dutch framework for evidence-informed evaluation of EdTech.
 **Status.** Launched 10 Apr 2025. Bronze, Silver and Gold tiers for the strength of evidence.
 
 **In CSEF.** Reference for the Compass evidence ladder.
+
+**Rules citing it.** none (context)
 
 **Compass targets citing it.** `EDU-03`
 
@@ -811,7 +909,7 @@ Portuguese GDPR implementation law.
 
 **In CSEF.** Consent rules for minors in Portugal.
 
-**Rules citing it.** `AGE-B4-01 (PT amendment)`, `CORE-DAT-11 (PT amendment)`
+**Rules citing it.** `CORE-DAT-11 (PT amendment)`, `AGE-B4-01 (PT amendment)`
 
 **Link.** [https://diariodarepublica.pt/dr/detalhe/lei/58-2019-123815982](https://diariodarepublica.pt/dr/detalhe/lei/58-2019-123815982)
 
@@ -839,7 +937,7 @@ Portuguese supervisory authority; list of processing requiring a DPIA (to verify
 
 **In CSEF.** DPIA and breach notes.
 
-**Rules citing it.** `CORE-DAT-01 (PT amendment)`, `CORE-SEC-05 (PT amendment)`, `CORE-DAT-15 (PT amendment)`
+**Rules citing it.** `CORE-DAT-01 (PT amendment)`, `CORE-DAT-15 (PT amendment)`, `CORE-SEC-05 (PT amendment)`
 
 **Link.** [https://www.cnpd.pt](https://www.cnpd.pt)
 
@@ -867,7 +965,9 @@ Portuguese Safer Internet Centre and helpline.
 
 **In CSEF.** Help screens and support.
 
-**Rules citing it.** `PT-SUP-01`, `CORE-SAF-06 (PT amendment)`, `CORE-SAF-11 (PT amendment)`
+**Rules citing it.** `CORE-SAF-06 (PT amendment)`, `CORE-CHT-08 (PT amendment)`, `CORE-CHT-13 (PT amendment)`, `PT-SUP-01`
+
+**Compass targets citing it.** `SAF-03 (pack)`
 
 **Link.** [https://www.internetsegura.pt](https://www.internetsegura.pt)
 
@@ -881,7 +981,9 @@ Portuguese reference framework for media education, from pre-school to secondary
 
 **In CSEF.** Portugal pack: mapped to Compass information and communication targets.
 
-**Compass targets citing it.** `INF-02 (PT)`, `INF-03 (PT)`, `INF-04 (PT)`, `COM-03 (PT)`, `EDU-01 (PT)`
+**Rules citing it.** none (context)
+
+**Compass targets citing it.** `INF-02 (pack)`, `INF-03 (pack)`, `INF-04 (pack)`, `COM-03 (pack)`, `EDU-01 (pack)`
 
 **Link.** [https://cidadania.dge.mec.pt/sites/default/files/pdfs/referencial-epm-versaoatualizada-12dez2023.pdf](https://cidadania.dge.mec.pt/sites/default/files/pdfs/referencial-epm-versaoatualizada-12dez2023.pdf)
 
@@ -895,9 +997,9 @@ Despacho requiring prior approval of questionnaires and surveys in schools, now 
 
 **In CSEF.** Portugal pack: rule PT-SUR-01.
 
-**Rules citing it.** `PT-SUR-01`, `CORE-DAT-15 (PT amendment)`, `B-DAT-01 (PT amendment)`
+**Rules citing it.** `CORE-DAT-15 (PT amendment)`, `B-DAT-01 (PT amendment)`, `PT-SUR-01`
 
-**Compass targets citing it.** `EDU-03 (PT)`
+**Compass targets citing it.** `EDU-03 (pack)`
 
 **Link.** [https://www.dge.mec.pt/sites/default/files/DSPE/mime/despacho_n_15_846_de_2007.pdf](https://www.dge.mec.pt/sites/default/files/DSPE/mime/despacho_n_15_846_de_2007.pdf)
 
@@ -911,9 +1013,23 @@ Portuguese law on the protection of children and young people in danger.
 
 **In CSEF.** Portugal pack: safeguarding route for disclosures.
 
-**Rules citing it.** `CORE-SAF-11 (PT amendment)`
+**Rules citing it.** `CORE-CHT-08 (PT amendment)`
 
 **Link.** [https://diariodarepublica.pt/dr/detalhe/lei/147-1999-581619](https://diariodarepublica.pt/dr/detalhe/lei/147-1999-581619)
+
+### Plano de Prevenção e Combate ao Bullying e ao Ciberbullying: Escola Sem Bullying. Escola Sem Violência (DGE, 2019)
+
+*Id `PT-ESBEV` · guidance · PT · verified 2026-11-16*
+
+Portugal's national plan against bullying and cyberbullying in schools.
+
+**Status.** Launched in the 2019-2020 school year. Schools set up their own plan and plan team; annual certification of schools; resources at sembullyingsemviolencia.edu.gov.pt. The DGE's functions are now with EduQA, I.P.
+
+**In CSEF.** Portugal pack: route bullying reports to the school's plan team (CORE-CHT-15).
+
+**Rules citing it.** `CORE-CHT-15 (PT amendment)`
+
+**Link.** [https://www.dge.mec.pt/sites/default/files/informacoes_escolas/plano_de_prevencao_e_combate_ao_bullying_e_ao_ciberbullying_escola_sem_bullying._escola_sem_violencia.pdf](https://www.dge.mec.pt/sites/default/files/informacoes_escolas/plano_de_prevencao_e_combate_ao_bullying_e_ao_ciberbullying_escola_sem_bullying._escola_sem_violencia.pdf)
 
 ## Open discussions and watch list
 
@@ -923,6 +1039,9 @@ Portuguese law on the protection of children and young people in danger.
 | Digital Fairness Act | Publication of the official proposal | Replace leaked-draft source; confirm A-ECO-01/02/03, C-ENG-01, CORE-AI-06, CORE-SAF-03 |
 | Digital Omnibus on AI | Commission guidance on the recast Art. 4 | Check AI literacy wording and high-risk dates |
 | EDU-EDIC | Work programme and the technical standards it chooses | CORE-INT rules may become more specific |
+| DSA Art. 28 guidelines on minors | Review in 2026 with more focus on cyberbullying (EU action plan) | CORE-CHT-10 to 15 may become MUST where the guidelines ask for them |
+| EU online safety app | National roll-out from Q3 2026 and its interface for platforms | Concrete integration steps for CORE-CHT-13 |
+| EDPB Guidelines 3/2025 | Final text after the 2025 consultation | Confirm the wording of CORE-CHT-10 |
 | AI Office guidance | Art. 50 code of practice; guidelines on Annex III classification | Detail on AI disclosure and assessment products |
 | EDPB | Guidance on age assurance and children's data | Possible updates to CORE-SAF-08 and consent rules |
 | National packs | Contributions for other Member States; Portugal review by a lawyer | National consent ages, authorities, helplines |

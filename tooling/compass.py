@@ -83,6 +83,8 @@ def load_compass(root: Path, pack_paths: list[Path], std: scan.Standard) -> dict
             if a.get("note"):
                 t["notes"] = list(t["notes"]) + [f"[{pid.upper()}] {a['note']}"]
     for t in targets.values():
+        if t.get("features"):
+            t["features"] = scan.expand_features(t["features"])
         for sid in t.get("sources", []):
             if sid not in std.sources:
                 raise ValueError(f"Compass target {t['id']}: unknown source {sid}")
@@ -340,6 +342,15 @@ def run(inputs: list[Path], compass: dict, std, scope: dict, csef_findings: dict
 
     results, conflicts = [], []
     urefs = unique_refs(compass["targets"], axes_by_id)
+    from collections import Counter as _C
+    open_by_rule = _C(f.get("rule_id") for f in (csef_findings or {}).get("findings", [])
+                      if f.get("severity") in ("BLOCK", "REVIEW", "WARN"))
+
+    def rule_status(rid):
+        if csef_findings is None:
+            return "not checked"
+        n = open_by_rule.get(rid, 0)
+        return f"{n} open finding{'s' if n != 1 else ''}" if n else "no open findings"
     for tid, t in compass["targets"].items():
         level, anchors, nmatch = assess_target(t, passages, sig, urefs.get(tid, []))
         cf = find_conflicts(t, passages)
@@ -370,7 +381,8 @@ def run(inputs: list[Path], compass: dict, std, scope: dict, csef_findings: dict
                         "level": level, "level_name": LEVELS[level], "matches": nmatch, "anchors": anchors,
                         "conflicts": cf, "target": t["target"], "why": t["why"], "look_for": t.get("look_for", ""),
                         "improvement": t["improvement"], "next": next_step(level, t), "ideas": t.get("ideas", []), "refs": t.get("refs") or {},
-                        "sources": t.get("sources", []), "origin": t.get("origin", "CSEF"), "notes": t.get("notes", [])})
+                        "sources": t.get("sources", []), "origin": t.get("origin", "CSEF"), "notes": t.get("notes", []),
+                        "builds_on": [{"rule": rid, "status": rule_status(rid)} for rid in t.get("builds_on") or []]})
 
     # TRN-07 summarises every conflict found
     for r in results:
@@ -555,7 +567,11 @@ def render_md(res: dict) -> str:
             L.append(f"- {LEVELS[an['level']]}: `{an['file']}:{an['line']}`{(' (' + an['heading'] + ')') if an['heading'] else ''} \"{an['excerpt'][:200]}\"")
         L.append(f"- Next: {r['next']}" + (f" Ideas: {'; '.join(r['ideas'][:2])}." if r["ideas"] and r["level"] <= 1 else ""))
         refs = "; ".join(f"{k} {', '.join(map(str, v))}" for k, v in r["refs"].items() if v)
-        L += [f"- Framework references: {refs or '-'}. Sources: {', '.join(r['sources'])}", ""]
+        L += [f"- Framework references: {refs or '-'}. Sources: {', '.join(r['sources'])}"]
+        if r.get("builds_on"):
+            L += ["- Builds on rules: " + ", ".join(f"{b['rule']} ({b['status']})" for b in r["builds_on"])
+                  + ". The rule requires the feature; this target scores only whether it also teaches."]
+        L += [""]
     opp = [x for x in res["targets"] if x["status"] == "opportunity"]
     if opp:
         L += ["## Opportunities", "", "Not claimed, but a natural fit for the product's features.", ""]
@@ -739,7 +755,8 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);backg
         if r["ideas"] and k <= 1:
             a(f'<p class="small"><strong>Ideas.</strong> {e("; ".join(r["ideas"]))}</p>')
         refs = "; ".join(f"{kk} {', '.join(map(str, v))}" for kk, v in r["refs"].items() if v)
-        a(f'<p class="small muted">Look for: {e(r["look_for"])}<br>Framework references: {e(refs or "-")} · Sources: {e(", ".join(r["sources"]))}</p>')
+        bo = ("<br>Builds on rules: " + e(", ".join(f"{b['rule']} ({b['status']})" for b in r["builds_on"]))) if r.get("builds_on") else ""
+        a(f'<p class="small muted">Look for: {e(r["look_for"])}<br>Framework references: {e(refs or "-")} · Sources: {e(", ".join(r["sources"]))}{bo}</p>')
         for nt in r["notes"]:
             a(f'<p class="small">{e(nt)}</p>')
         a('</div></details>')

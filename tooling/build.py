@@ -23,6 +23,7 @@ Licence: Apache-2.0
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import json
 import re
 import sys
@@ -47,6 +48,7 @@ REQUIRED = ["id", "title", "level", "tier", "profiles", "age_bands", "requiremen
 FEATURES = {"accounts", "multiplayer", "chat", "ugc", "social", "notifications", "streaks",
             "leaderboards", "purchases", "assessment", "ai_generative", "ai_assessment",
             "ai_adaptive", "recommender", "survey"}
+FEATURE_NAMES = FEATURES | set(scan.FEATURE_GROUPS)
 ID_RE = re.compile(r"^(CORE|A|B|C|AGE|[A-Z]{2,8})-[A-Z0-9]{2,4}-\d{2}$")
 
 errors: list[str] = []
@@ -210,8 +212,11 @@ def validate_compass(std, pack_files):
             err(f"compass {tid}: scope must be one of {sorted(COMPASS_SCOPES)}")
         if t.get("scope") == "feature" and not t.get("features"):
             err(f"compass {tid}: feature scope needs features")
-        if not set(t.get("features") or []) <= FEATURES:
+        if not set(t.get("features") or []) <= FEATURE_NAMES:
             err(f"compass {tid}: unknown feature in {t.get('features')}")
+        for rid in t.get("builds_on") or []:
+            if rid not in std.rules:
+                err(f"compass {tid}: builds_on unknown rule {rid}")
         bands = t.get("age_bands", [])
         if bands != ["all"] and not set(bands) <= set(scan.BANDS):
             err(f"compass {tid}: unknown age band in {bands}")
@@ -234,6 +239,114 @@ def validate_compass(std, pack_files):
         if fw not in std.sources:
             err(f"compass crosswalk: framework {fw} is not in sources.yaml")
     return c
+
+
+# --------------------------------------------------------------------------- legislation.md and research.md
+# Hand-written text stays; the build refreshes each entry's id line, status and citing rules from
+# sources.yaml, rebuilds the at-a-glance table and adds a stub entry for any new source.
+LEG_SECTION = {"law": "## Law in force", "law-pending": "## Adopted, applying later",
+               "proposal": "## EU proposals (in negotiation)", "policy": "## Policy context",
+               "standard": "## Technical standards"}
+LEG_LAST = "## Open discussions and watch list"
+RES_LAST = "## Gaps and research wanted"
+
+
+def _citations(std, s2, compass, pack_files):
+    rules, targets = {}, {}
+    for rid, r in s2.rules.items():
+        base = set(std.rules[rid]["sources"]) if rid in std.rules else None
+        for sid in r.get("sources", []):
+            amended = base is not None and sid not in base
+            rules.setdefault(sid, []).append(f"{rid} (PT amendment)" if amended and sid.startswith("PT-") else
+                                             f"{rid} (pack amendment)" if amended else rid)
+    base_targets = scan.load_yaml(ROOT / "framework" / "compass" / "targets.yaml")["targets"]
+    base_src = {t["id"]: set(t.get("sources", [])) for t in base_targets}
+    for tid, t in compass["targets"].items():
+        for sid in t.get("sources", []):
+            extra = tid in base_src and sid not in base_src[tid]
+            targets.setdefault(sid, []).append(f"{tid} (pack)" if extra else tid)
+    return rules, targets
+
+
+def _leg_section(sid, s):
+    origin = s.get("origin", "CSEF")
+    if origin.startswith("pack:"):
+        return "## National: Portugal (pack, draft)" if origin == "pack:pt" else f"## National: {s.get('jurisdiction')} (pack)"
+    if s["type"] == "guidance":
+        return "## EU guidance and recommendations" if s.get("jurisdiction") == "EU" else "## International guidance and frameworks"
+    return LEG_SECTION.get(s["type"], "## Policy context")
+
+
+def _insert_in_section(text, heading, entry, last):
+    if heading + "\n" not in text:
+        text = text.replace(last + "\n", heading + "\n\n" + last + "\n", 1)
+    start = text.index(heading + "\n") + len(heading) + 1
+    nxt = text.find("\n## ", start)
+    nxt = len(text) if nxt < 0 else nxt + 1
+    return text[:nxt] + entry + text[nxt:]
+
+
+def _refresh_entries(text, sources, rules_c, targets_c, bullet):
+    def fmt(xs):
+        return ", ".join(f"`{x}`" for x in xs)
+    pre = "- " if bullet else ""
+    blocks = re.split(r"(?=^### )", text, flags=re.M)
+    for i, b in enumerate(blocks):
+        m = re.search(r"^\*Id `([^`]+)` · .*\*$", b, re.M)
+        if not m or m.group(1) not in sources:
+            continue
+        sid, s = m.group(1), sources[m.group(1)]
+        idline = (f"*Id `{sid}` · verified {s.get('verified')}*" if bullet else
+                  f"*Id `{sid}` · {s['type']} · {s.get('jurisdiction')} · verified {s.get('verified')}*")
+        b = b.replace(m.group(0), idline)
+        if not bullet:
+            b = re.sub(r"^\*\*Status\.\*\* .*$", lambda _: f"**Status.** {s['status'].rstrip('.')}.", b, count=1, flags=re.M)
+        b = re.sub(r"^%s\*\*(Rules|Compass targets) citing it\.\*\* .*\n(\n)?" % re.escape(pre), "", b, flags=re.M)
+        lines = [f"{pre}**Rules citing it.** {fmt(rules_c[sid]) if rules_c.get(sid) else 'none (context)'}"]
+        if targets_c.get(sid):
+            lines.append(f"{pre}**Compass targets citing it.** {fmt(targets_c[sid])}")
+        link = re.search(r"^%s\*\*Link\.\*\*" % re.escape(pre), b, re.M)
+        sep = "\n" if bullet else "\n\n"
+        ins = sep.join(lines) + sep
+        b = b[:link.start()] + ins + b[link.start():] if link else b.rstrip("\n") + sep + ins
+        blocks[i] = b
+    return "".join(blocks)
+
+
+def source_pages(std, s2, compass, pack_files):
+    rules_c, targets_c = _citations(std, s2, compass, pack_files)
+    srcs = s2.sources
+    leg = (ROOT / "framework" / "legislation.md").read_text(encoding="utf-8")
+    res = (ROOT / "framework" / "research.md").read_text(encoding="utf-8")
+    have = set(re.findall(r"^\*Id `([^`]+)`", leg, re.M)) | set(re.findall(r"^\*Id `([^`]+)`", res, re.M))
+    for sid, s in srcs.items():
+        if sid in have:
+            continue
+        link = f"[{s.get('url')}]({s.get('url')})" if s.get("url") else "-"
+        if s["type"] == "literature":
+            entry = (f"### {s['title']}\n\n*Id `{sid}` · verified {s.get('verified')}*\n\n- **Key finding.** {s['status']}\n"
+                     f"- **Link.** {link}\n\n")
+            res = res.replace(RES_LAST + "\n", entry + RES_LAST + "\n", 1)
+        else:
+            summary = (" ".join(s["summary"].split()) + "\n\n") if s.get("summary") else ""
+            entry = (f"### {s['title']}\n\n*Id `{sid}` · {s['type']} · {s.get('jurisdiction')} · verified {s.get('verified')}*\n\n"
+                     f"{summary}**Status.** {s['status'].rstrip('.')}.\n\n**Link.** {link}\n\n")
+            leg = _insert_in_section(leg, _leg_section(sid, s), entry, LEG_LAST)
+    leg = re.sub(r"\n{3,}", "\n\n", _refresh_entries(leg, srcs, rules_c, targets_c, bullet=False))
+    res = re.sub(r"\n{3,}", "\n\n", _refresh_entries(res, srcs, rules_c, {}, bullet=True))
+
+    order = re.findall(r"^\*Id `([^`]+)`", leg, re.M)
+    rows = ["| Source | Type | Status | CSEF rules | Compass targets |", "|---|---|---|---|---|"]
+    for sid in order:
+        s = srcs[sid]
+        first = re.split(r"(?<=[a-z0-9)])[.;]\s(?=[A-Z])", s["status"])[0].rstrip(".;")
+        rows.append(f"| **{sid}** {s['title']} | {s['type']} | {first} | {len(rules_c.get(sid, []))} | {len(targets_c.get(sid, []))} |")
+    leg = re.sub(r"(## At a glance\n\n)\| Source \| Type \|.*?\n(?=\n)", lambda m: m.group(1) + "\n".join(rows) + "\n",
+                 leg, count=1, flags=re.S)
+    latest = max(str(s.get("verified")) for s in srcs.values() if s["type"] != "literature")
+    d = dt.date.fromisoformat(latest)
+    leg = re.sub(r"> Status as of \*\*[^*]+\*\*\.", f"> Status as of **{d.day} {d.strftime('%B')} {d.year}**.", leg, count=1)
+    return leg, res
 
 
 def compass_catalogue(std, c) -> str:
@@ -259,6 +372,8 @@ def compass_catalogue(std, c) -> str:
                   f"- **Improvement:** {' '.join(t['improvement'].split())}",
                   f"- **Ideas:** {'; '.join(t.get('ideas') or []) or '-'}",
                   f"- **Framework references:** {refs}",
+                  *([f"- **Builds on rules:** {', '.join(t['builds_on'])}. The rule requires the feature; this target asks whether it also teaches."]
+                    if t.get("builds_on") else []),
                   "- **Sources:** " + ", ".join(f"[{sid}]({std.sources[sid].get('url', '')})" if std.sources.get(sid, {}).get('url') else sid
                                                 for sid in t["sources"])]
             if t.get("conflict"):
@@ -273,6 +388,11 @@ def load_and_validate():
     dupes = {i for i in ids if ids.count(i) > 1}
     if dupes:
         err(f"duplicate rule ids: {sorted(dupes)}")
+    for x in scan.load_yaml(ROOT / "framework" / "rules.yaml").get("retired", []) or []:
+        if x["id"] in std.rules:
+            err(f"retired rule {x['id']} is still defined")
+        if x.get("replaced_by") not in std.rules:
+            err(f"retired rule {x['id']}: replaced_by {x.get('replaced_by')} is not a rule")
     validate_sources(std.sources, "standard")
     for r in std.rules.values():
         validate_rule(r, std.sources, "standard")
@@ -295,6 +415,12 @@ def load_and_validate():
 
     validate_compass(std, packs_for_compass())
 
+    pack_rule_ids = {r["id"] for pf in (ROOT / "packs").glob("*.yaml") for r in scan.load_yaml(pf).get("rules", []) or []}
+    guide = (ROOT / "skill" / "csef-review" / "references" / "review-guide.md").read_text(encoding="utf-8")
+    for rid in sorted(set(re.findall(r"\b(?:CORE|A|B|C|AGE|PT)-[A-Z0-9]{2,4}-\d{2}\b", guide))):
+        if rid not in std.rules and rid not in pack_rule_ids:
+            err(f"review-guide.md: unknown or retired rule {rid}")
+
     qdoc = scan.load_yaml(ROOT / "framework" / "questionnaire.yaml")
     seen = set()
     for s in qdoc.get("sections", []):
@@ -307,7 +433,7 @@ def load_and_validate():
                     err(f"questionnaire.yaml: {qq['id']} refers to unknown rule {rid}")
             if "rules" in qq and not (qq.get("never") and qq.get("level")):
                 err(f"questionnaire.yaml: boundary {qq['id']} needs 'never' and 'level' text")
-            if not set(qq.get("features", []) or []) <= FEATURES:
+            if not set(qq.get("features", []) or []) <= FEATURE_NAMES:
                 err(f"questionnaire.yaml: {qq['id']} has an unknown feature")
     for x in qdoc.get("always", []):
         for rid in x["rules"]:
@@ -517,6 +643,12 @@ def generate(std, packs) -> dict[Path, str]:
     idx += ["", "| ID | Title | Profiles | Strength | Level | Age bands |", "|---|---|---|---|---|---|"]
     for r in rules:
         idx.append(f"| {r['id']} | {r['title']} | {', '.join(r['profiles'])} | {r['level']} | {r['tier']} | {bands_txt(r)} |")
+    retired = scan.load_yaml(ROOT / "framework" / "rules.yaml").get("retired", []) or []
+    if retired:
+        idx += ["", "## Retired rules", "",
+                "Merged into other rules. Packs, waivers and `csef-ignore` comments that use an old id keep working.", "",
+                "| Old ID | Replaced by | Since |", "|---|---|---|"]
+        idx += [f"| {x['id']} | {x['replaced_by']} | {x.get('since', '')} |" for x in retired]
     idx += ["", "Packs: " + (", ".join(f"[{pid}](pack-{pid}.md)" for pid in sorted(packs)) or "none"), ""]
     files[cat / "index.md"] = "\n".join(idx)
 
@@ -583,6 +715,9 @@ def generate(std, packs) -> dict[Path, str]:
     for pf in pfs:
         scan.apply_pack(s2, pf)
     files[ROOT / "framework" / "compass" / "catalogue.md"] = compass_catalogue(s2, cmp.load_compass(ROOT, [], s2))
+    leg, res = source_pages(std, s2, cmp.load_compass(ROOT, pfs, s2), pfs)
+    files[ROOT / "framework" / "legislation.md"] = leg
+    files[ROOT / "framework" / "research.md"] = res
 
     sk = ROOT / "skill" / "csef-review"
     for name in ("targets.yaml", "crosswalk.yaml"):
@@ -599,7 +734,7 @@ def generate(std, packs) -> dict[Path, str]:
         files[sk / "scripts" / t] = (ROOT / "tooling" / t).read_text(encoding="utf-8")
     for t in ("coc-topics.yaml", "questionnaire.yaml"):
         files[sk / "framework" / t] = (ROOT / "framework" / t).read_text(encoding="utf-8")
-    for t in ("csef.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md", "survey-register.md"):
+    for t in ("csef.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md", "survey-register.md", "bullying-procedure.md"):
         files[sk / "templates" / t] = (ROOT / "templates" / t).read_text(encoding="utf-8")
     return files
 

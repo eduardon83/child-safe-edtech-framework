@@ -37,10 +37,24 @@ except ImportError:  # pragma: no cover
     sys.exit("CSEF scanner needs PyYAML: pip install pyyaml")
 
 TOOL_NAME = "csef-scan"
-TOOL_VERSION = "0.10.0"
+TOOL_VERSION = "0.11.0"
 
 PROFILES = {"core", "A", "B", "C"}
 BANDS = ["B1", "B2", "B3", "B4", "B5"]
+# Feature groups usable in rules, Compass targets and manifests. A group stands for all its features.
+FEATURE_GROUPS = {"communication": ["chat", "multiplayer", "social", "ugc"]}
+COMM_FEATURES = set(FEATURE_GROUPS["communication"])
+# Retired rule id -> replacing rule id. Filled by load_standard from rules.yaml `retired`.
+ALIASES: dict = {}
+
+
+def expand_features(features) -> list:
+    out = []
+    for f in features or []:
+        for x in FEATURE_GROUPS.get(f, [f]):
+            if x not in out:
+                out.append(x)
+    return out
 BAND_AGES = {"B1": "3-5", "B2": "6-9", "B3": "10-12", "B4": "13-15", "B5": "16-17"}
 LEVEL_NAMES = {1: "Legal baseline", 2: "Forward-compliant", 3: "Best practice"}
 SEVERITY_ORDER = ["BLOCK", "REVIEW", "WARN", "HUMAN", "NEXT", "WAIVED"]
@@ -82,6 +96,7 @@ MANIFEST_CHECKS = [
     "survey_register_missing", "survey_teacher_view_individual", "survey_answered_by_child", "survey_min_group_low",
     "survey_free_text_without_route", "survey_research_without_approval",
     "country_config_missing", "third_party_jurisdiction_missing", "critical_dependency_without_fallback",
+    "moderation_coverage_missing", "bullying_route_missing",
 ]
 # EU and EEA jurisdictions (ISO 3166-1 alpha-2), for CORE-INT-04.
 EEA_CODES = {"EU", "EEA", "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "EL", "HU", "IE",
@@ -112,6 +127,10 @@ class Standard:
     parameters: dict = field(default_factory=dict)
     minimum_level: int = 1
     minimum_level_by: str = ""
+    aliases: dict = field(default_factory=dict)
+
+    def resolve(self, rid):
+        return self.aliases.get(rid, rid)
 
 
 # --------------------------------------------------------------------------- loading
@@ -132,9 +151,14 @@ def load_standard(root: Path) -> Standard:
         r = dict(r)
         r.setdefault("notes", [])
         r.setdefault("origin", "CSEF")
+        if r.get("features"):
+            r["features"] = expand_features(r["features"])
         rules[r["id"]] = r
     sources = {s["id"]: dict(s, origin="CSEF") for s in sources_doc.get("sources", [])}
-    return Standard(version=str(rules_doc.get("version", "?")), rules=rules, sources=sources)
+    aliases = {x["id"]: x["replaced_by"] for x in rules_doc.get("retired", []) or []}
+    ALIASES.clear()
+    ALIASES.update(aliases)
+    return Standard(version=str(rules_doc.get("version", "?")), rules=rules, sources=sources, aliases=aliases)
 
 
 def apply_pack(std: Standard, pack_path: Path) -> None:
@@ -151,9 +175,11 @@ def apply_pack(std: Standard, pack_path: Path) -> None:
         r = dict(r)
         r.setdefault("notes", [])
         r["origin"] = f"pack:{pid}"
+        if r.get("features"):
+            r["features"] = expand_features(r["features"])
         std.rules[r["id"]] = r
     for a in doc.get("amend", []) or []:
-        rid = a["rule"]
+        rid = std.resolve(a["rule"])
         if rid not in std.rules:
             raise ValueError(f"Pack {pid}: amend targets unknown rule {rid}")
         rule = std.rules[rid]
@@ -219,7 +245,7 @@ def apply_policy(std: Standard, doc: dict, pid: str, meta: dict) -> None:
             raise ValueError(f"Pack {pid}: minimum_level must be 1, 2 or 3")
         if ml > std.minimum_level:
             std.minimum_level, std.minimum_level_by = ml, title
-    for rid in policy.get("no_go", []) or []:
+    for rid in [std.resolve(x) for x in policy.get("no_go", []) or []]:
         if rid not in std.rules:
             raise ValueError(f"Pack {pid}: no_go targets unknown rule {rid}")
         r = std.rules[rid]
@@ -312,7 +338,7 @@ def features_declared(rule, manifest: dict | None) -> bool:
     req = rule.get("features")
     if not req or manifest is None:
         return True
-    declared = set(manifest.get("features") or [])
+    declared = set(expand_features(manifest.get("features") or []))
     return bool(declared & set(req))
 
 
@@ -348,7 +374,7 @@ def inline_ignored(lines, idx, rule_id) -> str | None:
     for j in (idx, idx - 1):
         if 0 <= j < len(lines):
             m = IGNORE_RE.search(lines[j])
-            if m and rule_id in [x.strip() for x in m.group(1).split(",")]:
+            if m and rule_id in [ALIASES.get(x.strip(), x.strip()) for x in m.group(1).split(",")]:
                 return (m.group(2) or "no reason given").strip()
     return None
 
@@ -476,7 +502,7 @@ def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set, pat
     if manifest is None:
         return []
     m = manifest
-    features = set(m.get("features") or [])
+    features = set(expand_features(m.get("features") or []))
     ai = m.get("ai") or {}
     if name == "kids_act_scope_missing":
         v = (m.get("legal_scope") or {}).get("kids_act")
@@ -531,6 +557,18 @@ def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set, pat
         except ValueError:
             return [f"`last_review` is not a date: {lr}"]
         return [f"`last_review` is {age} days old (limit {days})."] if age > days else []
+    if name in ("moderation_coverage_missing", "bullying_route_missing"):
+        comm = sorted(set(expand_features(m.get("features") or [])) & COMM_FEATURES)
+        if not comm:
+            return []
+        mod = m.get("moderation") or {}
+        if name == "bullying_route_missing":
+            return [] if mod.get("bullying_procedure") else [
+                f"Communication is declared ({', '.join(comm)}) but `moderation.bullying_procedure` does not say where "
+                "bullying reports go: the school's plan, or the default procedure (CORE-CHT-15)."]
+        missing = [k for k in ("by", "open_hours", "out_of_hours", "response_targets") if not mod.get(k)]
+        return [f"Communication is declared ({', '.join(comm)}) but `moderation` does not say {', '.join(missing)} "
+                "(who handles reports, when, and what happens outside those hours; CORE-CHT-14)."] if missing else []
     if name == "country_config_missing":
         countries = [str(j).upper() for j in (m.get("jurisdictions") or []) if str(j).upper() != "EU"]
         if len(countries) < 2:
@@ -679,7 +717,7 @@ def _with_raw(findings, std):
 def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
     profiles = set(manifest.get("profiles") or []) if manifest else {"A", "B", "C"}
     bands = set(manifest.get("age_bands") or []) if manifest else set(BANDS)
-    waivers = (manifest or {}).get("waivers") or []
+    waivers = [dict(w, rule=std.resolve(w.get("rule"))) for w in (manifest or {}).get("waivers") or []]
     today = dt.date.today().isoformat()
 
     in_scope = {rid: r for rid, r in std.rules.items() if rule_in_scope(r, profiles, bands)}

@@ -394,6 +394,7 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Improvement:** Write a child-facing explainer of the product and its data use, tested with the age band.
 - **Ideas:** How-this-game-works card at first launch; My-data page with icons
 - **Framework references:** DIGCOMP3 4.2
+- **Builds on rules:** CORE-DAT-12. The rule requires the feature; this target asks whether it also teaches.
 - **Sources:** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [IEEE2089](https://ieeexplore.ieee.org/document/9627644)
 
 ### TRN-02 AI disclosure that teaches its limits
@@ -405,6 +406,7 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Improvement:** Add an AI label with a short explanation of what the AI does and that it can make mistakes.
 - **Ideas:** I am an AI badge with a tap-to-learn explainer; Confidence hints on AI answers
 - **Framework references:** AILIT Engage 2, Engage 3
+- **Builds on rules:** CORE-AI-03. The rule requires the feature; this target asks whether it also teaches.
 - **Sources:** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AILIT](https://ailiteracyframework.org/), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [UNICEF-AI](https://www.unicef.org/innocenti/media/11996/file/UNICEF-Innocenti-Guidance-on-AI-and-Children-3-Checklist-2025.pdf), [5R-AICODE](https://5rightsfoundation.com/resource/children-ai-design-code/)
 
 ### TRN-03 Explain adaptivity and recommendations
@@ -427,6 +429,7 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Improvement:** Label prices in real money and mark commercial content, with a one-line explanation for children.
 - **Ideas:** Coins-to-euros label on every price; This is an ad tag with a tap-to-learn note
 - **Framework references:** DIGCOMP3 1.2
+- **Builds on rules:** CORE-COM-05, CORE-COM-07. The rule requires the feature; this target asks whether it also teaches.
 - **Sources:** [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
 
 ### TRN-05 Provenance labels for generated or manipulated media
@@ -438,18 +441,20 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Improvement:** Label generated media and explain the label to learners.
 - **Ideas:** Made with AI stamp that opens a short explainer; Provenance panel on shared creations
 - **Framework references:** AILIT Create 4
+- **Builds on rules:** CORE-AI-03, CORE-AI-12. The rule requires the feature; this target asks whether it also teaches.
 - **Sources:** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AILIT](https://ailiteracyframework.org/)
 
 ### TRN-06 Safety tools explained where they are used
 
 - **Scope:** feature (chat, multiplayer, social, ugc). **Age bands:** all.
-- **Target:** Block, report, mute and help options are explained to children in context, so using them is itself a lesson.
-- **Why:** The KIDS Act proposal (Art. 12) asks for contact safeguards and child-friendly reporting; DSA Art. 16 for notice mechanisms.
-- **Look for:** Child-facing explanations next to report and block, practice flows, links to helplines.
-- **Improvement:** Explain report and block in the moment, and show what happens after a report.
-- **Ideas:** First-time tooltip on the report button; Practice reporting in the tutorial
+- **Target:** Block, report, mute and help options are explained to children in context, so using them is itself a lesson. That includes how to help a friend, shown next to "report for a friend": do not join in, tell them you are on their side, report it for them, and tell a trusted adult. A child who is targeted is told it is not their fault, and what will happen next.
+- **Why:** The KIDS Act proposal (Art. 12) asks for contact safeguards and child-friendly reporting; DSA Art. 16 for notice mechanisms. The EU action plan against cyberbullying asks that prevention and support reach bystanders.
+- **Look for:** Child-facing explanations next to report and block, a "help a friend" card, practice flows, links to helplines.
+- **Improvement:** Explain report and block in the moment, add a help-a-friend card next to report for a friend, and show what happens after a report.
+- **Ideas:** First-time tooltip on the report button; Practice reporting in the tutorial; Four-step help-a-friend card: don't join in, stand with them, report for them, tell an adult; "It's not your fault" message after a report
 - **Framework references:** DIGCOMP3 4.1, 4.3
-- **Sources:** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [BIK](https://digital-strategy.ec.europa.eu/en/policies/strategy-better-internet-kids)
+- **Builds on rules:** CORE-CHT-02, CORE-CHT-11, CORE-SAF-06. The rule requires the feature; this target asks whether it also teaches.
+- **Sources:** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [BIK](https://digital-strategy.ec.europa.eu/en/policies/strategy-better-internet-kids), [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying)
 
 ### TRN-07 No hidden curriculum
 
@@ -471,6 +476,7 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Improvement:** Add one plain sentence per question set on why it is asked and who sees the answer, test it with the age band, and link it in the survey register.
 - **Ideas:** Why-we-ask card before the questions; My-answers page the child can open and change
 - **Framework references:** DIGCOMP3 4.2
+- **Builds on rules:** CORE-DAT-13. The rule requires the feature; this target asks whether it also teaches.
 - **Sources:** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
 
 
@@ -492,10 +498,10 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 ### EDU-02 Teacher guidance for before, during and after use
 
 - **Scope:** universal. **Age bands:** all.
-- **Target:** Teachers get a guide with set-up, facilitation tips and debrief questions that link play to the literacy goals.
+- **Target:** Teachers get a guide with set-up, facilitation tips and debrief questions that link play to the literacy goals. Where children communicate, the guide has a short part on bullying: how to set open hours, keep two children apart, read reports, and use the school's anti-bullying procedure or the product's default one.
 - **Why:** The EU-DEC guidelines and EdTech for Good stress educator judgement and professionalism; in game-based learning the debrief is where learning is made explicit.
 - **Look for:** Teacher guide, lesson plans, debrief or discussion questions.
-- **Improvement:** Add a teacher guide with a debrief for each literacy goal.
+- **Improvement:** Add a teacher guide with a debrief for each literacy goal and, for products with communication, a one-page bullying section.
 - **Ideas:** Three-step lesson card: frame, play, debrief; Printable discussion prompts
 - **Framework references:** -
 - **Sources:** [EU-DEC](https://op.europa.eu/en/publication-detail/-/publication/1fa0183b-dbbe-11f0-8da2-01aa75ed71a1/language-en), [ET4G2](https://www.unicef.org/digitaleducation/edtech-for-good), [ARNAB2014](https://doi.org/10.1111/bjet.12113)

@@ -11,7 +11,7 @@ An open framework and toolkit for building safe educational software for under-1
 It turns EU law, pending EU proposals (EU KIDS Act, Digital Fairness Act) and expert recommendations into
 rules a team can check in code, in CI and in review.
 
-> **Status:** v0.10.0, draft for public comment (November 2026).
+> **Status:** v0.11.0, draft for public comment (November 2026).
 > **Not legal advice and not a certification.** CSEF produces *pre-compliance* reports. Legal compliance
 > depends on facts code cannot show; involve your DPO and legal counsel. See [Limitations](#limitations).
 >
@@ -27,9 +27,9 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 
 | | |
 |---|---|
-| **The framework** | 118 rules: a core set plus three profiles, **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Rules on data, safety by design, commercial practices, AI companions and chatbots, communications, accessibility, security, and design for learning (visuals, sound, motion, motivation). |
+| **The framework** | 122 rules: a core set plus three profiles, **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Rules on data, safety by design, commercial practices, AI companions and chatbots, communications, accessibility, security, and design for learning (visuals, sound, motion, motivation). |
 | **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). You decide which level of compliance you want in your software. |
-| **Sources on every rule** | 72 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
+| **Sources on every rule** | 77 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
 | **Policy questionnaire** | `tooling/policy.py`: answer questions about your boundaries (terminal or local web form). Get your guardrails file, a report that matches each answer with the law and recommendations, a plain-language staff policy, AI agent instructions and a ready CI workflow. Run it again anytime. |
 | **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included (draft, not legally reviewed). |
 | **Company packs and Pack Builder** | Each organisation sets its minimum level, no-gos, forbidden SDKs and phrases and its own rules, in a web form, then publishes the pack to GitHub. |
@@ -41,20 +41,15 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 | **CI** | A GitHub Action, generated Semgrep rules, a PR template. |
 | **Templates** | Manifest, DPIA starter, AI risk file, waiver record, instructions for AI coding agents. |
 
-## New since v0.2
+## What's new in v0.11
 
-| Version | Added |
-|---|---|
-| **v0.3** | Interactive dashboard, PDF and Word exports (`--export html,pdf,docx`). |
-| **v0.4** | EU KIDS Act commercial practices (Recital 31, Art. 13): real-time purchase labels, no design for impulsive spending, no disguised advertising, no commercial content in learning. AI companions and chatbots (Recitals 32 to 34, Art. 14): memory off by default, regular re-testing and monitoring, opt-in assistants inside games, no AI nudging to spend. |
-| **v0.10** | **Several countries and shared infrastructure** ([05-several-countries.md](framework/05-several-countries.md)): 4 SHOULD rules (CORE-INT-01 to 04) on country rules as configuration, school data export and exit (Data Act), school sign-in with minimal rosters, and declared, replaceable critical dependencies; 3 manifest checks and a pattern for hard-coded consent ages. New sources EDU-EDIC, Data Act Chapter VI, LTI and OneRoster. The legislation page now lists every legal, policy and guidance source with its rules and Compass targets. KIDS Act feedback date corrected to 26 Nov 2026. |
-| **v0.9** | **Literacy Compass** (`tooling/compass.py`, `framework/compass/`, [04-literacy-compass.md](framework/04-literacy-compass.md)): a second lens on what a product teaches, with a compass-rose HTML report and a reusable JSON dossier. 16 new sources (DigComp 3.0, AILit, UNESCO MIL and AI, EU guidelines on digital education content, Education Package 2026, EdTech for Good 2.0, Swedish Kvalitetsportfolio, IEEE 3527.1 and 2089 and more). AI Omnibus entry corrected: published and in force, Art. 4 recast. **Personal questions**: new `survey` feature, 8 rules (purpose and skip, no data about other people, no special category or family vulnerability questions, who answers by age, teacher totals only, purpose and control, disclosures, diverse families), 6 manifest checks, a register template, and EduQA (MIME) approval in the Portugal pack. |
-| **v0.8** | **CSEF brand** on everything: logo, colours and fonts in the questionnaire, staff policy, boundaries report, dashboard, code-of-conduct report, Pack Builder, Word exports and a new landing page for non-developers. Brand kit in `brand/`. |
-| **v0.7** | **Policy questionnaire**: boundaries in, guardrails file, boundaries report, staff policy, agent instructions and CI workflow out. Versioned, with a list of changes on every run. |
-| **v0.6** | Renamed to **Child-Safe EdTech Framework (CSEF)**: `framework/` folder, `csef.yaml` manifest, `csef-review` skill, `csef-scan` and `csef-coc` tools, repository `child-safe-edtech-framework`. Old names (`cses.yaml`, `cses-ignore`, `--standard-root`) still work. |
-| **v0.5** | **Communications audit**: inventory of chat, direct messages, voice, video, comments and live streaming, and of the safeguards around them (report, block, moderation, filters, link filtering), with nine CORE-CHT rules from KIDS Act Art. 12, 15(2) and Recital 36. **Code-of-conduct comparison tool.** **Unity support** and more ecosystems (see below). `legislation.md` and `research.md`. Output folders now relative to the current directory. |
+**Bullying and peer safety.** Six SHOULD rules: reports stay confidential, children can report for a friend,
+no design that lets children exclude or rank each other, evidence and national help, communication open only
+when someone can respond, and bullying routed to the school's procedure or a default one. A MUST rule stops
+generative features from depicting real people. Guide: [06-bullying.md](framework/06-bullying.md).
 
-Full history: [CHANGELOG.md](CHANGELOG.md).
+Earlier versions: [CHANGELOG.md](CHANGELOG.md) (one short entry per version) and
+[release notes](docs/releases/) (the full story of each release).
 
 ## Quick start
 
@@ -240,8 +235,9 @@ compares meaning and reads any language.
 6. [Design for learning](framework/03-design-and-motivation.md): what research says about visuals, motion and rewards
 7. [Literacy Compass](framework/04-literacy-compass.md): what a product teaches about digital, media and AI literacy; [target catalogue](framework/compass/catalogue.md)
 8. [Several countries](framework/05-several-countries.md): preparing the architecture for multi-country products and shared infrastructure (EDU-EDIC)
-9. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
-10. [Self-assessment checklists](self-assessment/)
+9. [Bullying](framework/06-bullying.md): what the product can do, and who can respond; default procedure for schools without a plan
+10. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
+11. [Self-assessment checklists](self-assessment/)
 
 ## Repository layout
 

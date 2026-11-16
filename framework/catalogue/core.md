@@ -15,13 +15,14 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-AI-02](#core-ai-02-no-manipulative-ai-exploiting-age) | No manipulative AI exploiting age | MUST | 1 | manual |
 | [CORE-AI-03](#core-ai-03-ai-interaction-and-ai-generated-content-are-disclosed) | AI interaction and AI-generated content are disclosed | MUST | 1 | mixed |
 | [CORE-AI-04](#core-ai-04-ai-inventory-and-no-training-on-learners-data-by-default) | AI inventory and no training on learners' data by default | MUST | 1 | manifest |
-| [CORE-AI-05](#core-ai-05-age-appropriate-ai-output-tested-before-release) | Age-appropriate AI output, tested before release | MUST | 2 | manual |
+| [CORE-AI-05](#core-ai-05-age-appropriate-ai-input-and-output-filters) | Age-appropriate AI input and output filters | MUST | 2 | manual |
 | [CORE-AI-06](#core-ai-06-no-ai-persona-that-simulates-a-relationship) | No AI persona that simulates a relationship | MUST | 2 | static |
 | [CORE-AI-07](#core-ai-07-human-review-of-decisions-about-learners) | Human review of decisions about learners | MUST | 1 | manual |
 | [CORE-AI-08](#core-ai-08-conversation-memory-is-off-by-default) | Conversation memory is off by default | MUST | 2 | mixed |
-| [CORE-AI-09](#core-ai-09-ai-is-re-tested-regularly-and-monitored-after-release) | AI is re-tested regularly and monitored after release | MUST | 2 | manual |
+| [CORE-AI-09](#core-ai-09-ai-is-red-teamed-before-release-re-tested-regularly-and-monitored) | AI is red-teamed before release, re-tested regularly and monitored | MUST | 2 | manual |
 | [CORE-AI-10](#core-ai-10-an-ai-assistant-inside-a-game-or-app-is-opt-in-and-easy-to-leave) | An AI assistant inside a game or app is opt-in and easy to leave | MUST | 2 | mixed |
 | [CORE-AI-11](#core-ai-11-ai-never-nudges-children-to-spend-or-towards-ads) | AI never nudges children to spend or towards ads | MUST | 2 | mixed |
+| [CORE-AI-12](#core-ai-12-generative-features-cannot-depict-real-people) | Generative features cannot depict real people | MUST | 2 | mixed |
 | [CORE-CHT-01](#core-cht-01-every-communication-channel-is-declared) | Every communication channel is declared | MUST | 1 | static |
 | [CORE-CHT-02](#core-cht-02-report-and-block-in-every-channel) | Report and block in every channel | MUST | 1 | mixed |
 | [CORE-CHT-03](#core-cht-03-moderation-by-people-and-by-tools) | Moderation by people and by tools | MUST | 2 | mixed |
@@ -29,8 +30,14 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-CHT-05](#core-cht-05-no-links-handles-or-contact-details-in-childrens-messages) | No links, handles or contact details in children's messages | MUST | 2 | mixed |
 | [CORE-CHT-06](#core-cht-06-voice-video-and-live-streaming-off-by-default) | Voice, video and live streaming off by default | MUST | 2 | mixed |
 | [CORE-CHT-07](#core-cht-07-childrens-shared-media-is-protected) | Children's shared media is protected | MUST | 2 | mixed |
-| [CORE-CHT-08](#core-cht-08-safeguarding-procedure-for-communication-risks) | Safeguarding procedure for communication risks | MUST | 2 | manual |
+| [CORE-CHT-08](#core-cht-08-safeguarding-procedure-with-a-route-for-each-kind-of-harm) | Safeguarding procedure with a route for each kind of harm | MUST | 2 | mixed |
 | [CORE-CHT-09](#core-cht-09-messages-are-kept-only-as-long-as-needed) | Messages are kept only as long as needed | SHOULD | 1 | manual |
+| [CORE-CHT-10](#core-cht-10-reports-stay-confidential) | Reports stay confidential | SHOULD | 2 | manual |
+| [CORE-CHT-11](#core-cht-11-children-can-report-for-a-friend-misuse-is-handled-by-people) | Children can report for a friend; misuse is handled by people | SHOULD | 2 | manual |
+| [CORE-CHT-12](#core-cht-12-no-design-that-lets-children-exclude-rank-or-expose-each-other) | No design that lets children exclude, rank or expose each other | SHOULD | 2 | mixed |
+| [CORE-CHT-13](#core-cht-13-children-can-keep-evidence-and-reach-national-help) | Children can keep evidence and reach national help | SHOULD | 2 | manual |
+| [CORE-CHT-14](#core-cht-14-communication-is-open-only-when-someone-can-respond) | Communication is open only when someone can respond | SHOULD | 2 | mixed |
+| [CORE-CHT-15](#core-cht-15-bullying-between-children-follows-the-schools-procedure-or-a-default-one) | Bullying between children follows the school's procedure, or a default one | SHOULD | 2 | mixed |
 | [CORE-CNT-01](#core-cnt-01-asset-provenance-and-licences-recorded) | Asset provenance and licences recorded | SHOULD | 3 | manual |
 | [CORE-CNT-02](#core-cnt-02-age-rating-self-assessment) | Age rating self-assessment | SHOULD | 3 | manual |
 | [CORE-COM-01](#core-com-01-no-advertising-or-ad-tracking-sdks) | No advertising or ad tracking SDKs | MUST | 1 | static |
@@ -78,13 +85,12 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-SAF-02](#core-saf-02-notifications-only-about-the-childs-own-activity-off-by-default-quiet-hours) | Notifications only about the child's own activity, off by default, quiet hours | MUST | 2 | static |
 | [CORE-SAF-03](#core-saf-03-natural-stopping-points-no-autoplay-or-endless-feeds) | Natural stopping points, no autoplay or endless feeds | MUST | 2 | static |
 | [CORE-SAF-04](#core-saf-04-time-awareness-tools) | Time-awareness tools | SHOULD | 3 | manual |
-| [CORE-SAF-05](#core-saf-05-no-contact-from-strangers) | No contact from strangers | MUST | 1 | mixed |
-| [CORE-SAF-06](#core-saf-06-child-friendly-reporting-and-support) | Child-friendly reporting and support | MUST | 2 | manual |
+| [CORE-SAF-05](#core-saf-05-no-contact-from-strangers-play-stays-in-closed-groups) | No contact from strangers; play stays in closed groups | MUST | 1 | mixed |
+| [CORE-SAF-06](#core-saf-06-reports-are-acknowledged-answered-and-followed-by-help) | Reports are acknowledged, answered and followed by help | MUST | 2 | manual |
 | [CORE-SAF-07](#core-saf-07-tools-for-guardians-and-teachers-that-respect-the-child) | Tools for guardians and teachers that respect the child | MUST | 2 | manual |
 | [CORE-SAF-08](#core-saf-08-proportionate-privacy-preserving-age-assurance) | Proportionate, privacy-preserving age assurance | MUST | 2 | mixed |
 | [CORE-SAF-09](#core-saf-09-children-can-control-and-give-feedback-on-what-they-see) | Children can control and give feedback on what they see | SHOULD | 2 | manual |
 | [CORE-SAF-10](#core-saf-10-no-social-comparison-or-image-altering-features) | No social comparison or image-altering features | MUST | 2 | static |
-| [CORE-SAF-11](#core-saf-11-disclosures-in-answers-reach-a-trusted-adult-not-a-log) | Disclosures in answers reach a trusted adult, not a log | MUST | 2 | manifest |
 | [CORE-SEC-01](#core-sec-01-no-secrets-in-the-repository) | No secrets in the repository | MUST | 1 | static |
 | [CORE-SEC-02](#core-sec-02-access-control-on-every-store-of-learner-data) | Access control on every store of learner data | MUST | 1 | mixed |
 | [CORE-SEC-03](#core-sec-03-encryption-in-transit) | Encryption in transit | MUST | 1 | static |
@@ -200,15 +206,15 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
 
-### CORE-AI-05: Age-appropriate AI output, tested before release
+### CORE-AI-05: Age-appropriate AI input and output filters
 
 **MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: ai_generative · Detection: manual · Effort: medium
 
-**Requirement.** Input and output filters adapted to the target age, red-team tests in the product's languages before release, and post-release monitoring of incidents.
+**Requirement.** Input and output filters are set for the target age band and the product's languages, block content unsuitable for that age, and fail safe: no answer rather than an unfiltered one. Testing before and after release is in CORE-AI-09.
 
 **Why.** KIDS Act Art. 14(1)(e)(f) for chatbots and companions. Best practice for any child-facing generative AI.
 
-**How to improve.** Build a red-team prompt set per age band and language; run it in CI on prompt changes.
+**How to improve.** Set filters per age band and language; send filter failures to a safe fallback message.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
 
@@ -248,15 +254,15 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
 
-### CORE-AI-09: AI is re-tested regularly and monitored after release
+### CORE-AI-09: AI is red-teamed before release, re-tested regularly and monitored
 
 **MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: ai_generative · Detection: manual · Effort: medium
 
-**Requirement.** AI features are evaluated for risks to children before release and at regular intervals afterwards (and on every model or prompt change). After release, incidents involving children are detected, logged, assessed and acted on, with a named owner.
+**Requirement.** Before release, AI features are red-teamed with a prompt set per age band and language. They are re-tested at regular intervals and on every model or prompt change. After release, incidents involving children are detected, logged, assessed and acted on, with a named owner.
 
 **Why.** KIDS Act Art. 14(1)(e)(f) and Recitals 32 and 33. The legal duty of post-market monitoring does not apply to micro and small enterprises; CSEF applies it to every provider because the risk to a child does not depend on company size. Risk mitigations by the provider of the underlying general-purpose model (AI Act Art. 55) can be relied on in part, but are not sufficient on their own.
 
-**How to improve.** Schedule the age-appropriate red-team set (CORE-AI-05) to run at least each term and on model or prompt changes; add an incident channel for teachers and guardians and a monthly review.
+**How to improve.** Build a red-team prompt set per age band and language; run it in CI on prompt changes and at least each term; add an incident channel for teachers and guardians and a monthly review.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
 
@@ -284,15 +290,27 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
 
+### CORE-AI-12: Generative features cannot depict real people
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: ai_generative · Detection: mixed · Effort: medium
+
+**Requirement.** Generative features cannot make images, video or voices of real, identifiable people, other children above all. In practice: (1) no photo, video or voice recording of a person goes into generation, and there is no face swap, voice cloning or editing of photos of people; (2) prompts that name someone on the class list, or another real person, are refused, checked against the roster inside the product; (3) uploaded images are checked for faces and refused for generation, without identifying anyone; (4) generated media is labelled as made by AI and carries provenance data; and (5) a child can report "this is about me", and that report is handled first.
+
+**Why.** A classmate's face or voice is personal data, and nobody in the class can consent for them (GDPR Art. 5 and 6; CORE-DAT-14). The EU action plan against cyberbullying names deepfake abuse. Directive (EU) 2024/1385 requires Member States to make sexual deepfakes a crime, and the AI Omnibus adds a ban on AI systems that generate non-consensual intimate images. Labels follow AI Act Art. 50. Blocking real people at the input is far more reliable than filtering the output.
+
+**How to improve.** Remove image-to-image, face swap and voice cloning from child-facing features; check prompts against the class roster; refuse uploads with faces for generation; add provenance metadata (for example C2PA) and a priority "this is about me" report.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus), [VAW-DIR](https://eur-lex.europa.eu/eli/dir/2024/1385/oj), [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying)
+
 ### CORE-CHT-01: Every communication channel is declared
 
 **MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: static · Effort: low
 
-**Requirement.** Every way children can communicate (text chat, direct messages, comments, voice, video, live streaming, multiplayer messaging) is declared in csef.yaml features and listed in the DPIA, with the service used and where data is processed.
+**Requirement.** Every way children can communicate or act towards each other is declared in csef.yaml features and listed in the DPIA, with the service used and where data is processed. That includes text chat, direct messages, comments, voice, video and live streaming, and also channels without text: emotes and reactions, avatar names and looks, drawings and shared creations, and actions in shared worlds (building, destroying, following or trapping another child's avatar).
 
-**Why.** Accountability (GDPR Art. 5(2)) and the DPIA require knowing every channel. Contact risks are the main reason the KIDS Act regulates online games (Recital 36). Undeclared channels escape every other check.
+**Why.** Accountability (GDPR Art. 5(2)) and the DPIA require knowing every channel. Contact risks are the main reason the KIDS Act regulates online games (Recital 36). Bullying uses whatever channel exists, words or not. Undeclared channels escape every other check.
 
-**How to improve.** Add the channel to `features` (chat, multiplayer, social or ugc) and to `third_parties`; update the DPIA.
+**How to improve.** Add the channel to `features` (chat, multiplayer, social or ugc) and to `third_parties`; list non-text channels too; update the DPIA.
 
 **Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
 
@@ -300,11 +318,11 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **MUST** · Level 1 (Legal baseline) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: mixed · Effort: medium
 
-**Requirement.** In every channel, a child can report a message or user in one step and block any user without the blocked user being told who blocked them. Reports reach a person quickly, with the message kept as evidence.
+**Requirement.** In every channel, those without text included (CORE-CHT-01), a child can report a message, a creation or a user in one step, and block any user without the blocked user being told who blocked them. The reported content is kept as evidence for the person who handles it. What the child hears after a report is in CORE-SAF-06.
 
 **Why.** DSA Art. 16 (notice and action) applies to hosting services. KIDS Act Art. 12(1)(d) (block without identity disclosed) and Art. 19 (child-friendly reporting). DSA Art. 28 guidelines.
 
-**How to improve.** Add report and block actions to every message and profile; route reports to a moderation queue with priority for minors.
+**How to improve.** Add report and block actions to every message, creation and profile; route reports to a moderation queue with priority for minors.
 
 **Sources.** [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
 
@@ -368,17 +386,17 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
 
-### CORE-CHT-08: Safeguarding procedure for communication risks
+### CORE-CHT-08: Safeguarding procedure with a route for each kind of harm
 
-**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: manual · Effort: medium
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc, survey, ai_generative · Detection: mixed · Effort: medium
 
-**Requirement.** There is a written safeguarding procedure with a named lead: how moderators recognise and escalate grooming, sexual exploitation, extortion, threats, self-harm signals and radicalisation; how evidence is preserved; when guardians, schools, hotlines and authorities are contacted; and how moderators are trained and supported.
+**Requirement.** There is a written safeguarding procedure with a named lead. It sets a route for each kind of harm: grooming, sexual exploitation, extortion, threats, self-harm signals and radicalisation in communication; and disclosures of harm (abuse, self-harm, bullying, danger at home) in free-text or voice answers, drawings and AI conversations. It says how each is recognised and escalated, how evidence is kept, and when guardians, schools, hotlines and authorities are contacted. A disclosure goes to the safeguarding lead named by the school, never automatically to guardians (who may be the source of harm) or to peers, and the child sees in age-appropriate words where to get help now. No AI analysis scans answers for risk without a DPIA and human review. Moderators are trained and supported. Bullying between children follows CORE-CHT-15.
 
-**Why.** KIDS Act Recital 36 names these contact risks. Code cannot show this; it is the human side of every other communication rule. DSA Art. 28 guidelines expect effective moderation and support for minors.
+**Why.** KIDS Act Recital 36 names these contact risks. Children disclose in unexpected places, and a disclosure left in a log or sent to the wrong adult can put the child in danger (UN General Comment 25). National child-protection law decides who must act. Code cannot show this; it is the human side of every other communication rule. Merges CORE-SAF-11 (retired in 0.11.0).
 
-**How to improve.** Write the procedure with the DPO and a safeguarding lead; train moderators and teachers; test it with a tabletop exercise each year.
+**How to improve.** Write the procedure with the DPO and a safeguarding lead; agree a disclosure route with each school; prefer closed answers where free text is not needed; train moderators and teachers; test the procedure with a tabletop exercise each year.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [BIK](https://digital-strategy.ec.europa.eu/en/policies/strategy-better-internet-kids)
 
 ### CORE-CHT-09: Messages are kept only as long as needed
 
@@ -391,6 +409,78 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Add a retention job for messages and keep reported messages in a separate, access-controlled store.
 
 **Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+
+### CORE-CHT-10: Reports stay confidential
+
+**SHOULD** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: manual · Effort: low
+
+**Requirement.** Do not show who reported. The reported child, other children and their guardians are never told who made a report, and nothing in the product lets them work it out: no "reported by" label, no shared report count, no action timed to point at one child. Only the person handling the report, and the safeguarding lead where needed, can see the reporter. If the school's procedure later needs the reporter's name, the reporter and their guardian are told first.
+
+**Why.** Fear of being found out stops children from reporting. The EDPB says notice mechanisms should allow, but not require, identifying the notifier, and reveal the identity to the affected user only where strictly necessary. The KIDS Act proposal already protects the identity of whoever blocks (Art. 12(1)(d)), but no law says the same for every product's reports, so this is a SHOULD.
+
+**How to improve.** Remove reporter names from every view the reported child or peers can see; batch or delay visible moderation actions; limit reporter identity to the moderator role.
+
+**Sources.** [EDPB-DSAGDPR](https://www.edpb.europa.eu/system/files/2025-09/edpb_guidelines_202503_interplay-dsa-gdpr_v1_en.pdf), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
+
+### CORE-CHT-11: Children can report for a friend; misuse is handled by people
+
+**SHOULD** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: manual · Effort: medium
+
+**Requirement.** A child can report something that happens to someone else ("this is happening to a friend"), from the same place as any report, without the friend's permission and without proof. The friend is offered help privately, and the report follows CORE-SAF-06 and CORE-CHT-10. Good practice: (1) the flow asks what happened, nothing more; (2) a report made in good faith that turns out unfounded never counts against the child; (3) only repeated reports that a person finds manifestly unfounded are recorded, seen only by the moderator or teacher and never by other children; (4) the child first gets a kind warning that explains why, before any limit; (5) there are no automatic sanctions; and (6) many reports against the same child by a group are treated as a possible sign of bullying, not as proof against that child.
+
+**Why.** Bystanders often see what adults do not, and the EU action plan against cyberbullying asks that reporting and support reach bystanders. DSA Art. 23 lets online platforms, after a warning, stop handling notices from people who often send manifestly unfounded ones; for children the answer is a conversation with an adult, not a penalty. Reporting itself can be used to bully, so patterns matter more than counts.
+
+**How to improve.** Add "this is happening to someone else" to the report flow and a private help message for the friend; record manifestly unfounded reports for the moderator only, with a warning step and no automatic sanctions; flag group reports against one child for review.
+
+**Sources.** [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying), [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
+
+### CORE-CHT-12: No design that lets children exclude, rank or expose each other
+
+**SHOULD** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: mixed · Effort: medium
+
+**Requirement.** The design gives children no tools to exclude, rank or expose each other: (1) no voting a child out of a game, team or group, and no removal of players by other players; only the teacher or a moderator can remove; (2) no ratings of children by children (stars, scores or likes on a person, "best" or "worst" player votes); feedback on someone's work uses preset kind options or a rubric the teacher can see; (3) no polls or questions about classmates; (4) teams and pairs are made by the teacher or by the product (at random or balanced), never picked by children in front of others, and nobody sees the order of choice; (5) paid or premium items do not show status to classmates, and the school can turn their display off; (6) friend lists, friend counts and online status are not shown to other children; and (7) the teacher can keep two children apart in pairings and groups without anyone seeing why.
+
+**Why.** The EU common definition of cyberbullying includes social exclusion. Most cyberbullying comes from peers the child knows from school, so closed class groups keep strangers out but not the bully. Design that lets children vote others out, rate each other or show status hands them that power. Not law as such, so a SHOULD. Related: CORE-SAF-10 (no follower counts or likes on appearance), C-ENG-02 (leaderboards).
+
+**How to improve.** Replace vote-kick with removal by the teacher or a moderator; remove ratings of people and polls about classmates; make teams by teacher choice or at random; hide paid status and friend counts in school use; add a "keep apart" setting for teachers.
+
+**Sources.** [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [R-JUVONEN2008](https://www.cdmc.ucla.edu/wp-content/uploads/sites/170/2018/05/sheva-3.pdf), [R-WOLKE2017](https://link.springer.com/10.1007/s00787-017-0954-6)
+
+### CORE-CHT-13: Children can keep evidence and reach national help
+
+**SHOULD** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: manual · Effort: medium
+
+**Requirement.** A child who reports can keep a record of what happened inside the product (what was said or done, when, by which account), see it later and share it with a trusted adult, the school or a helpline, without downloading or forwarding other children's media (CORE-CHT-07). The product links to the national child helpline (116 111) and Safer Internet Centre, and connects its reporting and support to the EU online safety app through the app's interface where the country offers it. The record follows the retention rules (CORE-CHT-09).
+
+**Why.** The EU action plan against cyberbullying plans an app where children report to a national helpline, store and pass on evidence and get help, and which platforms can connect to their reporting and support tools through APIs. The KIDS Act proposal asks Member States for free, confidential national channels that complement providers' reporting tools. Not yet an obligation for providers, so a SHOULD.
+
+**How to improve.** Add a "my reports" view with the evidence record and a share option to a trusted adult or helpline; add national helpline links; plan the connection to the national app.
+
+**Sources.** [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [BIK](https://digital-strategy.ec.europa.eu/en/policies/strategy-better-internet-kids)
+
+### CORE-CHT-14: Communication is open only when someone can respond
+
+**SHOULD** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: mixed · Effort: medium
+
+**Requirement.** The product says who handles reports (the teacher, the provider's moderators or both), in which hours and languages, and how fast: for example urgent safety reports within one hour and other reports within one school day while communication is open. Outside those hours communication is closed, limited to preset messages, or covered by the provider's moderators. Teachers can set open hours for their class. A child who reports is told when to expect an answer. The cover is declared in csef.yaml (`moderation`) and checked against real response times.
+
+**Why.** A report nobody reads protects nobody. When the teacher is the moderator, chat that stays open in the evening has no one behind it. KIDS Act Art. 19 and the DSA Art. 28 guidelines expect reports to be handled promptly. CORE-CHT-03 names the people; this rule makes sure their time covers the hours the channel is open. What the product can safely offer depends on who can respond.
+
+**How to improve.** Add open hours set by the teacher; close or limit communication outside covered hours; declare `moderation` in csef.yaml and measure response times.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying)
+
+### CORE-CHT-15: Bullying between children follows the school's procedure, or a default one
+
+**SHOULD** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: mixed · Effort: medium
+
+**Requirement.** Strongly recommended. A report about bullying between children goes to the person named in the school's anti-bullying plan or procedure, not to the authorities and not straight to guardians. If the school has no plan, the product offers a default procedure that the school accepts at set-up (templates/bullying-procedure.md): who is told, how to listen to both children, how to keep them apart in the product (CORE-CHT-12), how guardians are informed through the school, when to check again, and when it becomes a safeguarding matter (CORE-CHT-08). Report categories follow the EU common definition of cyberbullying (humiliating, excluding, abusing, harassing or harming, once or repeated) in words for children, and the school sees totals per category for its classes, never figures that point to one child (at least 5 per figure, as in CORE-DAT-17).
+
+**Why.** Most online bullying is between children who know each other from school, so the school is usually the right place to act. Many schools have an anti-bullying plan (in Portugal, "Escola Sem Bullying. Escola Sem Violência"), but not all, so the product must work without one. Shared categories let schools and Member States compare data, as the EU action plan asks. Not law, so a SHOULD, but strongly recommended for any product with communication.
+
+**How to improve.** Ask at set-up for the school's anti-bullying contact, or for acceptance of the default procedure; route bullying reports there; use the EU-definition categories; give schools totals by class and school.
+
+**Sources.** [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [R-JUVONEN2008](https://www.cdmc.ucla.edu/wp-content/uploads/sites/170/2018/05/sheva-3.pdf)
 
 ### CORE-CNT-01: Asset provenance and licences recorded
 
@@ -636,9 +726,9 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: manual · Effort: medium
 
-**Requirement.** Non-essential cookies and local storage are only set after valid consent, and where consent is the legal basis for minors under the national age of digital consent (13 to 16), a guardian gives it.
+**Requirement.** Non-essential cookies and local storage are only set after valid consent. Where consent is the legal basis for a child below the national age of digital consent, the guardian gives it (see AGE-B4-01).
 
-**Why.** ePrivacy Art. 5(3) and GDPR Art. 8.
+**Why.** ePrivacy Art. 5(3). The national consent age (GDPR Art. 8) is set out in AGE-B4-01.
 
 **How to improve.** Keep only strictly necessary storage, or add a guardian-facing consent flow.
 
@@ -696,7 +786,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: survey · Detection: manifest · Effort: medium
 
-**Requirement.** For ages 3 to 9 (B1, B2), questions about the child's life are answered by a guardian with the child, not by the child alone. From 10, the child answers for themselves and guardians are told what is asked. From 13 (B4, B5), the child's answers about their opinions and feelings are not shown to guardians or teachers by default, unless the child chooses to share them or there is a safeguarding concern (CORE-SAF-11).
+**Requirement.** For ages 3 to 9 (B1, B2), questions about the child's life are answered by a guardian with the child, not by the child alone. From 10, the child answers for themselves and guardians are told what is asked. From 13 (B4, B5), the child's answers about their opinions and feelings are not shown to guardians or teachers by default, unless the child chooses to share them or there is a safeguarding concern (CORE-CHT-08).
 
 **Why.** Children's evolving capacities and their right to privacy, including towards parents (UN General Comment 25). Guardian tools in the EU KIDS Act proposal (Art. 20) must respect the child's privacy. Young children cannot yet weigh what they share; teenagers need a private space.
 
@@ -912,7 +1002,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **MUST** · Level 2 (Forward-compliant) · Age bands: all · Detection: static · Effort: low
 
-**Requirement.** Profiles private, sharing off, contact off, notifications off, recommendations of other users off by default. Defaults are only relaxed after age assurance shows the user is an adult.
+**Requirement.** Profiles private, sharing off, contact off, notifications off, recommendations of other users off by default. The product never relaxes these defaults on its own. Only an adult, or a 16 or 17 year old after clear information and an explicit choice (AGE-B5-01), can change them.
 
 **Why.** KIDS Act Art. 8(1) and 11(1). DSA Art. 28 guidelines.
 
@@ -956,29 +1046,29 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [KIDS-COM](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026DC0680)
 
-### CORE-SAF-05: No contact from strangers
+### CORE-SAF-05: No contact from strangers; play stays in closed groups
 
-**MUST** · Level 1 (Legal baseline) · Age bands: all · Features: multiplayer, chat, ugc, social · Detection: mixed · Effort: high
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Features: chat, multiplayer, social, ugc · Detection: mixed · Effort: high
 
-**Requirement.** Nobody outside the child's approved group (class, guardian-approved contacts) can initiate contact, see the child's profile or content, or add the child to a group.
+**Requirement.** Nobody outside the child's approved group (class, guardian-approved contacts) can initiate contact, see the child's profile or content, or add the child to a group. Multiplayer happens in groups set up by a teacher or guardian; play across groups only through pairing arranged by adults. The product cannot be used to lure children to other services.
 
-**Why.** DSA Art. 28 and guidelines. KIDS Act Art. 12(1), applied to games via Art. 15(1)(c).
+**Why.** DSA Art. 28 and guidelines. KIDS Act Art. 12(1), applied to games via Art. 15(1)(c) and 15(2). Merges A-SOC-01 (retired in 0.11.0).
 
-**How to improve.** Scope all interaction to closed groups managed by a teacher or guardian; remove user search and contact suggestions.
+**How to improve.** Scope all interaction to closed groups managed by a teacher or guardian (class rooms with join codes); remove user search and contact suggestions; block external links and handles (CORE-CHT-05).
 
 **Sources.** [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
 
-### CORE-SAF-06: Child-friendly reporting and support
+### CORE-SAF-06: Reports are acknowledged, answered and followed by help
 
-**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: multiplayer, chat, ugc, social, ai_generative · Detection: manual · Effort: medium
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: chat, multiplayer, social, ugc, ai_generative · Detection: manual · Effort: medium
 
-**Requirement.** Wherever children interact with others or with generated content, a report option is one step away, understandable by the target age, processed with priority, and followed by information on help resources.
+**Requirement.** Wherever children interact with others or with generated content, they can report it, AI output included. After a report the child (1) sees at once, in words for their age, that it arrived, what happens next and when; (2) gets help information straight away (a trusted adult, the national helpline); (3) is told the outcome when it is handled, without details about other children ("we took action", or "we looked and did not find a problem, and this is why"); and (4) can say "it is still happening", which reopens the report. Reports from minors are handled first.
 
-**Why.** KIDS Act Art. 19. DSA Art. 16 and Art. 28 guidelines.
+**Why.** DSA Art. 16(5) requires telling the person who reported about the decision without undue delay. KIDS Act Art. 19 asks for child-friendly reporting and support. Children stop reporting when nothing seems to happen. The report and block tools themselves are in CORE-CHT-02.
 
-**How to improve.** Add a visible report button, a priority moderation queue and a help screen with national helplines.
+**How to improve.** Add an acknowledgement screen and an outcome message in child language, a "still happening" button that reopens the case, and a measure of time from report to outcome.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying)
 
 ### CORE-SAF-07: Tools for guardians and teachers that respect the child
 
@@ -1027,18 +1117,6 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Remove public counters and appearance filters; use avatars instead of photos.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
-
-### CORE-SAF-11: Disclosures in answers reach a trusted adult, not a log
-
-**MUST** · Level 2 (Forward-compliant) · Age bands: all · Features: survey, ai_generative · Detection: manifest · Effort: medium
-
-**Requirement.** Where children can answer in their own words (free text, voice, drawings) or talk with an AI, a disclosure of harm (abuse, self-harm, bullying, danger at home) is a safeguarding matter. The child sees, in age-appropriate words, where to get help now (a trusted adult, a national helpline). The answer goes to the safeguarding lead named by the school, never automatically to guardians (who may be the source of harm) or to peers. No AI analysis scans answers for risk without a DPIA and human review, and records are kept only as the safeguarding procedure requires. Closed answers are preferred where free text is not needed.
-
-**Why.** Children disclose in unexpected places. A disclosure left in a log, or sent to the wrong adult, can put the child in danger. UN General Comment 25 asks for child-friendly reporting and remedies; the EU KIDS Act proposal requires information on support services. National child-protection law decides who must act. Same aim as CORE-CHT-08, for answers and AI conversations.
-
-**How to improve.** Replace free text with closed answers where possible, agree a disclosure route with each school, and add help information next to every open question.
-
-**Sources.** [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [BIK](https://digital-strategy.ec.europa.eu/en/policies/strategy-better-internet-kids)
 
 ### CORE-SEC-01: No secrets in the repository
 

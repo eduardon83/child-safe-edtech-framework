@@ -31,7 +31,7 @@ Product: ____________________  Date: __________  Assessor: ____________________
 
 ## Level 3: Best practice
 
-- [ ] **A-MOT-01** (SHOULD) No reward pile-up. The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards, unlockables, celebrations) and records for each one whether it is given for learning or for showing up. No more than two layers are given for playing time, logging in or simply finishing.  
+- [ ] **A-MOT-01** (SHOULD) Rewards are for learning, and the inventory shows it. Points, stars and unlocks are tied to learning progress or effort, not to time spent, number of sessions or returning at set times. The team keeps a reward inventory (points, coins, badges, streaks, levels, leaderboards, unlockables, celebrations) and records for each one whether it is given for learning or for showing up. No more than two layers are given for playing time, logging in or simply finishing.  
       Evidence: 
 - [ ] **A-MOT-02** (SHOULD) Feedback informs, it does not control. Feedback says what the learner did well and why, and what to try next. Copy avoids controlling language ("you must", "you have to") and external goal framing ("do this to win coins").  
       Evidence: 

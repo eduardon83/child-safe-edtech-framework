@@ -6,7 +6,7 @@ link it as `survey.register`.
 
 Rules this register supports: CORE-DAT-13 (purpose, skip), CORE-DAT-14 (no data about other people),
 CORE-DAT-15 (no special category or vulnerability questions), CORE-DAT-16 (who answers), CORE-DAT-17
-(teachers see totals), CORE-DAT-18 (purpose and control), CORE-SAF-11 (disclosures).
+(teachers see totals), CORE-DAT-18 (purpose and control), CORE-CHT-08 (disclosures).
 
 Last reviewed: YYYY-MM-DD, by: <role>. Reviewed with: <teacher, school psychologist, DPO>.
 

@@ -46,7 +46,7 @@ CSEF Level 3 (Best practice) rules come from research on how children learn, att
 - **Design.** Conceptual framework with case analyses.
 - **Key finding.** Game mechanics should map to learning mechanics.
 - **Limits.** Analytic tool, not an effect size.
-- **Rules citing it.** `A-ECO-04`, `A-PLY-02`
+- **Rules citing it.** `A-PLY-02`, `A-MOT-01`
 - **Link.** [https://doi.org/10.1111/bjet.12113](https://doi.org/10.1111/bjet.12113)
 
 ### Hirsh-Pasek, K. et al. (2015). Putting education in 'educational' apps: lessons from the science of learning. Psychological Science in the Public Interest 16(1)
@@ -57,7 +57,7 @@ CSEF Level 3 (Best practice) rules come from research on how children learn, att
 - **Design.** Narrative review of learning science.
 - **Key finding.** Good learning apps are active, engaged on the learning goal, meaningful and socially interactive.
 - **Limits.** Review; criteria, not thresholds.
-- **Rules citing it.** `A-ECO-04`, `CORE-DES-03`, `A-MOT-03`
+- **Rules citing it.** `CORE-DES-03`, `A-MOT-01`, `A-MOT-03`
 - **Link.** [https://www.psychologicalscience.org/publications/educational-apps.html](https://www.psychologicalscience.org/publications/educational-apps.html)
 
 ## Visual design, motion and sound
@@ -215,7 +215,7 @@ CSEF Level 3 (Best practice) rules come from research on how children learn, att
 - **Design.** Meta-analysis, 128 experiments.
 - **Key finding.** Expected tangible rewards lowered intrinsic motivation (d = -0.36), more in children; informational feedback raised it (+0.33).
 - **Limits.** Lab tasks; effects depend on how rewards are given.
-- **Rules citing it.** `A-ECO-04`, `C-ENG-04`, `A-MOT-01`, `A-MOT-02`
+- **Rules citing it.** `C-ENG-04`, `A-MOT-01`, `A-MOT-02`
 - **Link.** [https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf)
 
 ### Hanus, M. D. and Fox, J. (2015). Assessing the effects of gamification in the classroom. Computers & Education 80
@@ -248,7 +248,7 @@ CSEF Level 3 (Best practice) rules come from research on how children learn, att
 - **Design.** Meta-analysis.
 - **Key finding.** Cognitive gains robust (g = 0.49); motivational and behavioural gains vanish in rigorous studies; competition plus collaboration beats competition alone.
 - **Limits.** Heterogeneous designs.
-- **Rules citing it.** `A-ECO-04`, `C-ENG-02`, `A-MOT-01`, `A-MOT-03`
+- **Rules citing it.** `C-ENG-02`, `A-MOT-01`, `A-MOT-03`
 - **Link.** [https://link.springer.com/article/10.1007/s10648-019-09498-w](https://link.springer.com/article/10.1007/s10648-019-09498-w)
 
 ### Radesky, J. et al. (2022). Prevalence and characteristics of manipulative design in mobile applications used by children. JAMA Network Open
@@ -349,6 +349,30 @@ CSEF Level 3 (Best practice) rules come from research on how children learn, att
 - **Limits.** Depends on reward contingency.
 - **Rules citing it.** `A-MOT-05`
 - **Link.** [https://www.frontiersin.org/article/10.3389/fpsyg.2020.00974](https://www.frontiersin.org/article/10.3389/fpsyg.2020.00974)
+
+## Bullying and peer relations
+
+### Juvonen, J. and Gross, E. F. (2008). Extending the school grounds? Bullying experiences in cyberspace. Journal of School Health 78(9)
+
+*Id `R-JUVONEN2008` · verified 2026-11-16*
+
+- **Topic.** Where online bullying comes from.
+- **Design.** Online survey of young people aged 12 to 17.
+- **Key finding.** About two thirds of cyberbullying victims knew the perpetrator, half of them from school; most were also bullied at school.
+- **Limits.** Self-selected online sample, United States.
+- **Rules citing it.** `CORE-CHT-12`, `CORE-CHT-15`
+- **Link.** [https://www.cdmc.ucla.edu/wp-content/uploads/sites/170/2018/05/sheva-3.pdf](https://www.cdmc.ucla.edu/wp-content/uploads/sites/170/2018/05/sheva-3.pdf)
+
+### Wolke, D., Lee, K. and Guy, A. (2017). Cyberbullying: a storm in a teacup? European Child and Adolescent Psychiatry 26
+
+*Id `R-WOLKE2017` · verified 2026-11-16*
+
+- **Topic.** Overlap between bullying at school and online.
+- **Design.** School survey of secondary pupils in the United Kingdom.
+- **Key finding.** Cyberbullying creates few new victims; it is mainly a new tool to harm children already bullied by traditional means. Prevention has to address bullying at school too.
+- **Limits.** Cross-sectional; one country.
+- **Rules citing it.** `CORE-CHT-12`
+- **Link.** [https://link.springer.com/10.1007/s00787-017-0954-6](https://link.springer.com/10.1007/s00787-017-0954-6)
 
 ## Gaps and research wanted
 

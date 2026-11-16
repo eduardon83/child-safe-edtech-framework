@@ -329,9 +329,8 @@ sections:
             level: Shared content follows the framework rules. Moderated, visible to the teacher, no faces kept.
           - id: multiplayer
             label: Playing with children from other classes or schools
-            rules: [A-SOC-01]
+            rules: [CORE-SAF-05]
             features: [multiplayer]
-            profiles: [A]
             never: Multiplayer stays inside closed groups set up by a teacher or parent.
             approval: Open multiplayer needs written approval from {approvers}.
             level: Multiplayer follows the framework rules. Closed groups only.

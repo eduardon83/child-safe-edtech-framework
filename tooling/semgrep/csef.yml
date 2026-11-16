@@ -25,7 +25,7 @@ rules:
     - DFA
     - UCPD
 - id: a-eco-03-1
-  message: 'A-ECO-03 (MUST, level 2): Virtual currency is not sold to children and shows its real value. Remove currency purchase from child screens; show euro equivalents; add guardian approval.'
+  message: 'A-ECO-03 (MUST, level 2): Virtual currency shows its real value. Show euro equivalents wherever currency is spent; add guardian approval; keep currency purchases out of child screens.'
   severity: WARNING
   languages:
   - generic
@@ -277,6 +277,37 @@ rules:
     - KIDS
     - AIA
     - UCPD
+- id: core-ai-12-2
+  message: 'CORE-AI-12 (MUST, level 2): Generative features cannot depict real people. Remove image-to-image, face swap and voice cloning from child-facing features; check prompts against the class roster;
+    refuse uploads with faces for generation; add provenance metadata (for example C2PA) and a priority "this is about me" report.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)(face_?swap|swap_?face|voice_?clon|clone_?voice|img2img|image_?to_?image)
+  metadata:
+    csef_rule: CORE-AI-12
+    tier: 2
+    sources:
+    - GDPR
+    - AIA
+    - AIA-OMNIBUS
+    - VAW-DIR
+    - CB-AP
+- id: core-cht-12-1
+  message: 'CORE-CHT-12 (SHOULD, level 2): No design that lets children exclude, rank or expose each other. Replace vote-kick with removal by the teacher or a moderator; remove ratings of people and polls
+    about classmates; make teams by teacher choice or at random; hide paid status and friend counts in school use; add a "keep apart" setting for teachers.'
+  severity: INFO
+  languages:
+  - generic
+  pattern-regex: (?i)(vote_?kick|kick_?vote|vote_?to_?kick|rate_?(player|classmate|student)|player_?rating|popularity_?(poll|vote|rank)|hot_?or_?not)
+  metadata:
+    csef_rule: CORE-CHT-12
+    tier: 2
+    sources:
+    - CB-AP
+    - UNCRC-GC25
+    - R-JUVONEN2008
+    - R-WOLKE2017
 - id: core-com-01-1
   message: 'CORE-COM-01 (MUST, level 1): No advertising or ad tracking SDKs. Remove the SDK. If marketing attribution is needed, measure it on the adult-facing website only.'
   severity: ERROR
@@ -604,7 +635,8 @@ rules:
     - DSA-G28
     - R-RADESKY2022
 - id: core-saf-05-1
-  message: 'CORE-SAF-05 (MUST, level 1): No contact from strangers. Scope all interaction to closed groups managed by a teacher or guardian; remove user search and contact suggestions.'
+  message: 'CORE-SAF-05 (MUST, level 1): No contact from strangers; play stays in closed groups. Scope all interaction to closed groups managed by a teacher or guardian (class rooms with join codes); remove
+    user search and contact suggestions; block external links and handles (CORE-CHT-05).'
   severity: WARNING
   languages:
   - generic

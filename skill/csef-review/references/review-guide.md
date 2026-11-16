@@ -1,94 +1,113 @@
 # Manual review guide
 
-The scanner finds patterns. These are the places to read by hand. For each, the rules it informs.
+The scanner finds patterns. These are the places to read by hand, and the rules each one informs.
+What to check is in each rule's requirement: see the [rule catalogue](../../../framework/catalogue/index.md)
+(in the skill, `framework/rules.yaml`). This guide only says where to look, so it cannot drift from the rules.
 
 ## All products (core)
 
-| Look at | What to check | Rules |
-|---|---|---|
-| Settings model, user defaults, migrations that create users | Private, sharing off, notifications off, location/mic/camera off by default | CORE-SAF-01, CORE-SAF-02, CORE-DAT-09, CORE-DAT-10 |
-| Notification scheduler, email and push campaigns | Only own activity or teacher assignments; no re-engagement; quiet hours | CORE-SAF-02 |
-| Analytics wrapper and event definitions | No identifiers or free text; pseudonymous IDs; vendor and region | CORE-DAT-04, CORE-COM-02 |
-| Data models (DB schema, ORM models) | Data categories match the manifest; nothing collected "just in case" | CORE-DAT-01, CORE-DAT-05 |
-| Access policies (RLS, security rules, API middleware) | Every learner table protected at the data layer; class and role scoping | CORE-SEC-02 |
-| Deletion and export jobs, admin tools | Retention enforced; per-learner export and erasure exist | CORE-DAT-05, CORE-DAT-06 |
-| Seeds, fixtures, test data, staging config | Synthetic only | CORE-DAT-07 |
-| Login and onboarding | No email or phone for children; age gate proportionate; guardian or school activation under 13 | CORE-SEC-06, CORE-SAF-08, AGE-B3-01 |
-| Child-facing copy (i18n files) | No pressure, guilt or scarcity; understandable for the band | CORE-COM-03, CORE-DAT-12 |
-| Help and report screens | One step away; priority handling; national helplines | CORE-SAF-06, PT-SUP-01 |
-| UI components | Alt text, labels, contrast, keyboard, reduced motion | CORE-ACC-01, CORE-ACC-02 |
+| Where to look | Rules |
+|---|---|
+| Settings model, user defaults, migrations that create users | CORE-SAF-01, CORE-SAF-02, CORE-DAT-09, CORE-DAT-10 |
+| Notification scheduler, email and push campaigns | CORE-SAF-02 |
+| Analytics wrapper and event definitions | CORE-DAT-04, CORE-COM-02 |
+| Data models (DB schema, ORM models) | CORE-DAT-01, CORE-DAT-05 |
+| Access policies (RLS, security rules, API middleware) | CORE-SEC-02 |
+| Deletion and export jobs, admin tools | CORE-DAT-05, CORE-DAT-06 |
+| Seeds, fixtures, test data, staging config | CORE-DAT-07 |
+| Login and onboarding | CORE-SEC-06, CORE-SAF-08, AGE-B3-01 |
+| Child-facing copy (i18n files) | CORE-COM-03, CORE-DAT-12 |
+| Help and report screens, report outcome messages | CORE-SAF-06, PT-SUP-01 |
+| UI components | CORE-ACC-01, CORE-ACC-02 |
 
 ## Personal questions (feature `survey`)
 
-| Look at | What to check | Rules |
-|---|---|---|
-| Question sets, onboarding, "about me" screens, mood check-ins, i18n files | Each question is in the survey register with a purpose; "prefer not to say" has equal weight; no rewards for answering | CORE-DAT-13 |
-| Question wording, AI system prompts | Nothing about relatives or friends by name, photo or detail; nothing that reveals origin, religion, health, separation, care, income or parents' jobs, even indirectly; needs asked as settings | CORE-DAT-14, CORE-DAT-15 |
-| Who answers (guardian page, child flow) | Guardian with child below 10; teenagers' opinions private by default | CORE-DAT-16 |
-| Teacher dashboards and exports | Totals only, at least 5 per figure, uniform or small cells hidden, no per-child export, nothing on projected screens | CORE-DAT-17, B-OPS-01 |
-| Storage, deletion, personalisation code | Answers stay in the class instance, are deleted on schedule, never feed ads, AI training or research without approval; child and guardian can see, change, delete | CORE-DAT-18, B-DAT-01 |
-| Open questions, voice answers, AI chats | Help shown next to open questions; disclosures go to the school's safeguarding lead, not to guardians or logs | CORE-SAF-11 |
-| Family-themed content and illustrations | Works with any family; "I don't have one" path; content note and calm exit for loss or separation | CORE-DES-08 |
-| Portugal | Evaluation and research questionnaires in public schools approved by EduQA, I.P. (formerly DGE) through MIME | PT-SUR-01 |
+| Where to look | Rules |
+|---|---|
+| Question sets, onboarding, "about me" screens, mood check-ins, i18n files | CORE-DAT-13 |
+| Question wording, AI system prompts | CORE-DAT-14, CORE-DAT-15 |
+| Who answers (guardian page, child flow) | CORE-DAT-16 |
+| Teacher dashboards and exports | CORE-DAT-17, B-OPS-01 |
+| Storage, deletion, personalisation code | CORE-DAT-18, B-DAT-01 |
+| Open questions, voice answers, AI chats | CORE-CHT-08 |
+| Family-themed content and illustrations | CORE-DES-08 |
+| Portugal | PT-SUR-01 |
 
 ## Several countries and shared infrastructure
 
-| Look at | What to check | Rules |
-|---|---|---|
-| Consent, retention, approvals, helplines, languages | Values that differ by country live in a per-country config file, not in code; unknown country gets the strictest value | CORE-INT-01 |
-| Export and offboarding | School-level export in open formats with a published schema; exit process in the contract; no switching fee | CORE-INT-02 |
-| Sign-in and roster import | School identity provider or LTI 1.3 launch; roster fields kept to the minimum; pseudonymous learner IDs | CORE-INT-03 |
-| Third parties, AI model calls | `jurisdiction`, `critical`, `fallback` declared; AI behind one internal interface; fallback for critical non-EU providers | CORE-INT-04 |
+| Where to look | Rules |
+|---|---|
+| Consent, retention, approvals, helplines, languages | CORE-INT-01 |
+| Export and offboarding | CORE-INT-02 |
+| Sign-in and roster import | CORE-INT-03 |
+| Third parties, AI model calls | CORE-INT-04 |
+
+## Communication and bullying (features `chat`, `multiplayer`, `social`, `ugc`)
+
+| Where to look | Rules |
+|---|---|
+| Every way children interact: chat, emotes, reactions, avatar names, drawings, shared worlds | CORE-CHT-01 |
+| Report and block actions on messages, creations and profiles | CORE-CHT-02 |
+| Report acknowledgement, outcome and "still happening" screens | CORE-SAF-06 |
+| Moderator and teacher views of reports; anything other children can see after a report | CORE-CHT-10 |
+| Report flow for "this is happening to someone else"; handling of unfounded reports | CORE-CHT-11 |
+| Team and pair forming, votes, ratings, polls, friend lists, online status, cosmetic shop items | CORE-CHT-12 |
+| "My reports" view, evidence records, helpline links, national app integration | CORE-CHT-13 |
+| `moderation` in csef.yaml, open hours, out-of-hours behaviour, response times | CORE-CHT-14 |
+| School set-up: anti-bullying contact or default procedure; report categories; school totals | CORE-CHT-15 |
+| Safeguarding procedure document | CORE-CHT-08 |
 
 ## AI features
 
-| Look at | What to check | Rules |
-|---|---|---|
-| System prompts, persona definitions | No feelings, friendship, missing the child, exclusivity | CORE-AI-06 |
-| Conversation memory and user profiles | Memory off by default; no use of past chats except for safety | CORE-AI-06 |
-| Provider configuration | No-training / zero-retention settings; region; processor agreement | CORE-AI-04, CORE-DAT-02 |
-| Input and output filters, eval sets | Age-appropriate filters; red-team set per language | CORE-AI-05 |
-| UI around AI output | Visible AI label; generated media marked | CORE-AI-03 |
-| Any use of camera, microphone or typing dynamics | No emotion inference, no proctoring | CORE-AI-01, B-EVL-02 |
+| Where to look | Rules |
+|---|---|
+| System prompts, persona definitions | CORE-AI-06 |
+| Conversation memory and user profiles | CORE-AI-06 |
+| Provider configuration | CORE-AI-04, CORE-DAT-02 |
+| Input and output filters | CORE-AI-05 |
+| Red-team sets, eval schedule, incident log | CORE-AI-09 |
+| Image, video and voice generation; prompt handling; uploads | CORE-AI-12 |
+| UI around AI output | CORE-AI-03 |
+| Any use of camera, microphone or typing dynamics | CORE-AI-01, B-EVL-02 |
 
 ## Look, sound, motion and rewards (all profiles)
 
-| Look at | What to check | Rules |
-|---|---|---|
-| Animations, transitions, celebration effects | Pause controls; reduced-motion respected; motion teaches something; celebrations short | CORE-ACC-04, CORE-DES-01, CORE-DES-02, CORE-DES-06 |
-| Screens for under-8s | Element count, spoken help, fantasy vs facts | CORE-DES-03, CORE-DES-04 |
-| Feedback states (right/wrong) | Not colour-only; informational wording | CORE-ACC-05, A-MOT-02 |
-| Maths graphics and diagrams | No decorative pictures inside graphs; concrete-to-abstract fading | CORE-DES-05 |
-| Every reward layer | Build the reward inventory: for learning or for showing up? Teacher can switch off? | A-MOT-01, A-MOT-03 |
-| Helping, collaboration, creative tasks | Not paid with points; creative quality gets qualitative feedback | A-MOT-05 |
+| Where to look | Rules |
+|---|---|
+| Animations, transitions, celebration effects | CORE-ACC-04, CORE-DES-01, CORE-DES-02, CORE-DES-06 |
+| Screens for under-8s | CORE-DES-03, CORE-DES-04 |
+| Feedback states (right/wrong) | CORE-ACC-05, A-MOT-02 |
+| Maths graphics and diagrams | CORE-DES-05 |
+| Every reward layer | A-MOT-01, A-MOT-03 |
+| Helping, collaboration, creative tasks | A-MOT-05 |
 
 ## Profile A, educational games
 
-| Look at | What to check | Rules |
-|---|---|---|
-| Economy: shop, currency, rewards tables | No paid randomness, no pay-to-win, currency not sold to children, euro value shown | A-ECO-01, A-ECO-02, A-ECO-03 |
-| Progression and timers | No energy refill timers, decay, punishment for absence | A-PLY-01 |
-| Reward mapping | Rewards tied to learning mechanics, not to time or logins | A-ECO-04 |
-| Multiplayer rooms and matchmaking | Closed groups, teacher-controlled; no external handles or links | A-SOC-01, CORE-SAF-05 |
-| Assessment hooks inside gameplay | Disclosed; stored separately; purpose-bound | A-ASM-01 |
+| Where to look | Rules |
+|---|---|
+| Economy: shop, currency, rewards tables | A-ECO-01, A-ECO-02, A-ECO-03 |
+| Progression and timers | A-PLY-01 |
+| Reward mapping | A-MOT-01 |
+| Multiplayer rooms and matchmaking | CORE-SAF-05 |
+| Assessment hooks inside gameplay | A-ASM-01 |
 
 ## Profile B, game-based applications
 
-| Look at | What to check | Rules |
-|---|---|---|
-| Scoring, levelling, placement logic | Human confirmation; explanation; contest route; risk file if AI | B-EVL-01, B-EVL-03, CORE-AI-07 |
-| Test delivery | No webcam/biometric proctoring; accommodations | B-EVL-02, B-EVL-04 |
-| User-generated content | Moderation, teacher visibility, EXIF stripping, no public galleries | B-UGC-01, B-UGC-02 |
-| Research exports | Agreement, pseudonymisation, logging | B-DAT-01 |
-| Dashboards | Learning view, not surveillance | B-OPS-01 |
+| Where to look | Rules |
+|---|---|
+| Scoring, levelling, placement logic | B-EVL-01, B-EVL-03, CORE-AI-07 |
+| Test delivery | B-EVL-02, B-EVL-04 |
+| User-generated content | B-UGC-01, B-UGC-02 |
+| Research exports | B-DAT-01 |
+| Dashboards | B-OPS-01 |
 
 ## Profile C, gamified applications
 
-| Look at | What to check | Rules |
-|---|---|---|
-| Streak logic and copy | Optional, no loss framing, no reset penalty | C-ENG-01 |
-| Leaderboards | Class scope, nicknames, teacher toggle | C-ENG-02 |
-| Points and badges | No money value or purchase path | C-ENG-03 |
-| Bonus and reward schedule | Predictable rewards, no spins or random drops | C-ENG-04 |
-| Product metrics and goals | Learning and wellbeing metrics next to engagement | C-ENG-05 |
-| Quests and challenges | No anxiety timers for under-13s | C-ENG-06 |
+| Where to look | Rules |
+|---|---|
+| Streak logic and copy | C-ENG-01 |
+| Leaderboards | C-ENG-02 |
+| Points and badges | C-ENG-03 |
+| Bonus and reward schedule | C-ENG-04 |
+| Product metrics and goals | C-ENG-05 |
+| Quests and challenges | C-ENG-06 |

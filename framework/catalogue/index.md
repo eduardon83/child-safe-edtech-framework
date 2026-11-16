@@ -2,29 +2,27 @@
 
 # Rule catalogue
 
-CSEF v0.10.0: 118 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
+CSEF v0.11.0: 122 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
 
 | Level | MUST | SHOULD |
 |---|---|---|
 | 1 Legal baseline | 39 | 2 |
-| 2 Forward-compliant | 41 | 5 |
-| 3 Best practice | 0 | 31 |
+| 2 Forward-compliant | 40 | 11 |
+| 3 Best practice | 0 | 30 |
 
 | ID | Title | Profiles | Strength | Level | Age bands |
 |---|---|---|---|---|---|
 | A-ASM-01 | In-game assessment is transparent and separated | A | MUST | 2 | all |
 | A-ECO-01 | No paid randomised rewards (loot boxes) | A, B, C | MUST | 2 | all |
 | A-ECO-02 | No pay-to-win | A, B, C | MUST | 2 | all |
-| A-ECO-03 | Virtual currency is not sold to children and shows its real value | A, C | MUST | 2 | all |
-| A-ECO-04 | Rewards follow learning, not time or return visits | A, C | SHOULD | 3 | all |
-| A-MOT-01 | No reward pile-up | A, B, C | SHOULD | 3 | all |
+| A-ECO-03 | Virtual currency shows its real value | A, C | MUST | 2 | all |
+| A-MOT-01 | Rewards are for learning, and the inventory shows it | A, B, C | SHOULD | 3 | all |
 | A-MOT-02 | Feedback informs, it does not control | A, B, C | SHOULD | 3 | all |
 | A-MOT-03 | The product works with rewards switched off | A, C | SHOULD | 3 | all |
 | A-MOT-04 | Room for curiosity | A, B, C | SHOULD | 3 | all |
 | A-MOT-05 | Helping and creativity are recognised, not paid | A, B, C | SHOULD | 3 | all |
 | A-PLY-01 | No penalties for not playing | A, C | MUST | 2 | all |
 | A-PLY-02 | Non-shaming failure and feedback | A, B | SHOULD | 3 | all |
-| A-SOC-01 | Multiplayer limited to closed groups | A | MUST | 2 | all |
 | AGE-B1-01 | Ages 3 to 5 use the product only with an adult in control | core | MUST | 2 | B1 (3-5) |
 | AGE-B2-01 | Under 10, communication uses preset messages only | core | MUST | 2 | B1 (3-5), B2 (6-9) |
 | AGE-B3-01 | Under 13, access is enabled and controlled by a guardian or the school | core | MUST | 2 | B1 (3-5), B2 (6-9), B3 (10-12) |
@@ -54,13 +52,14 @@ CSEF v0.10.0: 118 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Be
 | CORE-AI-02 | No manipulative AI exploiting age | core | MUST | 1 | all |
 | CORE-AI-03 | AI interaction and AI-generated content are disclosed | core | MUST | 1 | all |
 | CORE-AI-04 | AI inventory and no training on learners' data by default | core | MUST | 1 | all |
-| CORE-AI-05 | Age-appropriate AI output, tested before release | core | MUST | 2 | all |
+| CORE-AI-05 | Age-appropriate AI input and output filters | core | MUST | 2 | all |
 | CORE-AI-06 | No AI persona that simulates a relationship | core | MUST | 2 | all |
 | CORE-AI-07 | Human review of decisions about learners | core | MUST | 1 | all |
 | CORE-AI-08 | Conversation memory is off by default | core | MUST | 2 | all |
-| CORE-AI-09 | AI is re-tested regularly and monitored after release | core | MUST | 2 | all |
+| CORE-AI-09 | AI is red-teamed before release, re-tested regularly and monitored | core | MUST | 2 | all |
 | CORE-AI-10 | An AI assistant inside a game or app is opt-in and easy to leave | core | MUST | 2 | all |
 | CORE-AI-11 | AI never nudges children to spend or towards ads | core | MUST | 2 | all |
+| CORE-AI-12 | Generative features cannot depict real people | core | MUST | 2 | all |
 | CORE-CHT-01 | Every communication channel is declared | core | MUST | 1 | all |
 | CORE-CHT-02 | Report and block in every channel | core | MUST | 1 | all |
 | CORE-CHT-03 | Moderation by people and by tools | core | MUST | 2 | all |
@@ -68,8 +67,14 @@ CSEF v0.10.0: 118 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Be
 | CORE-CHT-05 | No links, handles or contact details in children's messages | core | MUST | 2 | all |
 | CORE-CHT-06 | Voice, video and live streaming off by default | core | MUST | 2 | all |
 | CORE-CHT-07 | Children's shared media is protected | core | MUST | 2 | all |
-| CORE-CHT-08 | Safeguarding procedure for communication risks | core | MUST | 2 | all |
+| CORE-CHT-08 | Safeguarding procedure with a route for each kind of harm | core | MUST | 2 | all |
 | CORE-CHT-09 | Messages are kept only as long as needed | core | SHOULD | 1 | all |
+| CORE-CHT-10 | Reports stay confidential | core | SHOULD | 2 | all |
+| CORE-CHT-11 | Children can report for a friend; misuse is handled by people | core | SHOULD | 2 | all |
+| CORE-CHT-12 | No design that lets children exclude, rank or expose each other | core | SHOULD | 2 | all |
+| CORE-CHT-13 | Children can keep evidence and reach national help | core | SHOULD | 2 | all |
+| CORE-CHT-14 | Communication is open only when someone can respond | core | SHOULD | 2 | all |
+| CORE-CHT-15 | Bullying between children follows the school's procedure, or a default one | core | SHOULD | 2 | all |
 | CORE-CNT-01 | Asset provenance and licences recorded | core | SHOULD | 3 | all |
 | CORE-CNT-02 | Age rating self-assessment | core | SHOULD | 3 | all |
 | CORE-COM-01 | No advertising or ad tracking SDKs | core | MUST | 1 | all |
@@ -117,18 +122,27 @@ CSEF v0.10.0: 118 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Be
 | CORE-SAF-02 | Notifications only about the child's own activity, off by default, quiet hours | core | MUST | 2 | all |
 | CORE-SAF-03 | Natural stopping points, no autoplay or endless feeds | core | MUST | 2 | all |
 | CORE-SAF-04 | Time-awareness tools | core | SHOULD | 3 | all |
-| CORE-SAF-05 | No contact from strangers | core | MUST | 1 | all |
-| CORE-SAF-06 | Child-friendly reporting and support | core | MUST | 2 | all |
+| CORE-SAF-05 | No contact from strangers; play stays in closed groups | core | MUST | 1 | all |
+| CORE-SAF-06 | Reports are acknowledged, answered and followed by help | core | MUST | 2 | all |
 | CORE-SAF-07 | Tools for guardians and teachers that respect the child | core | MUST | 2 | all |
 | CORE-SAF-08 | Proportionate, privacy-preserving age assurance | core | MUST | 2 | all |
 | CORE-SAF-09 | Children can control and give feedback on what they see | core | SHOULD | 2 | B3 (10-12), B4 (13-15), B5 (16-17) |
 | CORE-SAF-10 | No social comparison or image-altering features | core | MUST | 2 | all |
-| CORE-SAF-11 | Disclosures in answers reach a trusted adult, not a log | core | MUST | 2 | all |
 | CORE-SEC-01 | No secrets in the repository | core | MUST | 1 | all |
 | CORE-SEC-02 | Access control on every store of learner data | core | MUST | 1 | all |
 | CORE-SEC-03 | Encryption in transit | core | MUST | 1 | all |
 | CORE-SEC-04 | No personal data in logs | core | SHOULD | 1 | all |
 | CORE-SEC-05 | Vulnerability handling and breach response | core | MUST | 1 | all |
 | CORE-SEC-06 | Strong authentication for adults, simple safe login for children | core | SHOULD | 3 | all |
+
+## Retired rules
+
+Merged into other rules. Packs, waivers and `csef-ignore` comments that use an old id keep working.
+
+| Old ID | Replaced by | Since |
+|---|---|---|
+| A-SOC-01 | CORE-SAF-05 | 0.11.0 |
+| A-ECO-04 | A-MOT-01 | 0.11.0 |
+| CORE-SAF-11 | CORE-CHT-08 | 0.11.0 |
 
 Packs: [pt](pack-pt.md)
