@@ -22,6 +22,8 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **A-ECO-02** (MUST) No pay-to-win. Nothing bought with money gives a gameplay or learning advantage.  
       Evidence: 
+- [ ] **A-ECO-03** (MUST) Virtual currency: real price, one currency, exact amounts. Wherever in-game currency can be bought with money (by adults only, CORE-COM-04): (1) the real-world price of every item and every currency amount is shown clearly next to it, also when it is paid with currency, without counting discounts, promotions or currency earned in play; (2) there is one purchasable currency, and no exchanges between currencies are needed to buy something; (3) players can buy the exact amount an item needs, not only bundles that leave unwanted leftovers; and (4) spending it is off for children unless a guardian approves. Changes to the currency's value are covered by CORE-COM-10.  
+      Evidence: 
 - [ ] **B-EVL-03** (MUST) Results are explainable and contestable. Teachers and learners can see why a result was given and can contest it with a human.  
       Evidence: 
 - [ ] **B-UGC-01** (MUST) User-generated content is moderated and visible to the teacher. Content created or uploaded by children is moderated proportionally to age, visible to the responsible teacher, reportable, and not public. Uploaded media has metadata (e.g. GPS) stripped.  

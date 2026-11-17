@@ -15,7 +15,7 @@
 #   effort      low | medium | high (used to prioritise the improvement list)
 #   detection   method: static | manifest | manual | mixed, plus patterns
 
-version: "0.11.0"
+version: "0.12.0"
 
 # Rules merged into others. Packs, waivers and csef-ignore comments that use an old id keep working:
 # the tools map it to the rule that replaced it.
@@ -533,10 +533,10 @@ rules:
     requirement: >
       No fake urgency or scarcity, confirmshaming, pre-ticked options, nagging after a choice,
       obstruction to leave or cancel, fake notifications, or confusing double negatives.
-    rationale: DSA Art. 25, UCPD. The DFA proposal blacklists these in all circumstances.
+    rationale: DSA Art. 25, UCPD. The CPC Network's 2026 Joint Statement names misleading countdown timers and false scarcity in games. The DFA proposal blacklists these in all circumstances.
     improvement: Rewrite the copy neutrally, remove timers and pre-selected options, make 'no' as easy as 'yes'.
     effort: low
-    sources: [DSA, UCPD, DFA, R-RADESKY2022]
+    sources: [DSA, UCPD, CPC-JS, DFA, R-RADESKY2022]
     detection:
       method: mixed
       patterns:
@@ -551,12 +551,18 @@ rules:
     profiles: [core]
     age_bands: [all]
     requirement: >
-      Children are never directly exhorted to buy, and any purchase flow is behind an adult gate
-      (guardian or school account), with the price in real currency.
-    rationale: UCPD Annex I point 28 (direct exhortation to children). KIDS Act Art. 13 and 14(1)(c).
+      Children are never directly exhorted to buy, or to ask adults to buy for them, and any purchase flow
+      is behind an adult gate (guardian or school account), with the price in real currency. This applies
+      to any product likely to appeal to children, even if it is not aimed at them, and an age gate does
+      not remove the duty. Spending real money is off by default, and parental controls work, with
+      defaults that suit the age.
+    rationale: >
+      UCPD Annex I point 28 (direct exhortation to children). KIDS Act Art. 13 and 14(1)(c). CPC Key
+      Principle 7: children are always vulnerable, and age gates do not reduce the trader's
+      responsibility. The CPC Network's 2026 Joint Statement found games that still urge children to buy.
     improvement: Move purchases to a guardian or school portal; remove buy prompts from child screens.
     effort: medium
-    sources: [UCPD, KIDS, DFA]
+    sources: [UCPD, CPC-VC, CPC-JS, KIDS, DFA]
     detection:
       method: mixed
       patterns:
@@ -1191,10 +1197,10 @@ rules:
     requirement: >
       No loot boxes, gacha, mystery chests or other variable rewards that can be obtained with
       money or with currency purchasable with money.
-    rationale: KIDS Act Art. 13(2) bans variable reward systems on social and video services. DFA proposal bans paid loot boxes for minors in games.
+    rationale: KIDS Act Art. 13(2) bans variable reward systems on social and video services. The CPC Network asks all game companies to review loot boxes, above all where children can reach them (Joint Statement, 2026). The DFA proposal would ban paid variable rewards for minors.
     improvement: Replace with fixed, visible rewards earned through learning.
     effort: medium
-    sources: [KIDS, DFA]
+    sources: [KIDS, CPC-JS, DFA]
     detection:
       method: static
       patterns:
@@ -1217,18 +1223,28 @@ rules:
         - {type: regex, confidence: medium, flags: i, pattern: '(buy(Boost|PowerUp|Hint|Lives|Energy)|purchase(Boost|PowerUp|Hint|Lives|Energy)|comprar(Vidas|Energia|Dica))'}
 
   - id: A-ECO-03
-    title: Virtual currency shows its real value
+    title: "Virtual currency: real price, one currency, exact amounts"
     level: MUST
     tier: 2
-    profiles: [A, C]
+    profiles: [A, B, C]
     age_bands: [all]
     requirement: >
-      Where adults can buy in-game currency (children never can, CORE-COM-04), its value in euro is shown
-      wherever it is spent, and spending it is off for children unless a guardian approves.
-    rationale: KIDS Act Art. 13(1) (applied to chatbots via Art. 14(1)(c)). DFA proposal.
-    improvement: Show euro equivalents wherever currency is spent; add guardian approval; keep currency purchases out of child screens.
+      Wherever in-game currency can be bought with money (by adults only, CORE-COM-04): (1) the real-world
+      price of every item and every currency amount is shown clearly next to it, also when it is paid with
+      currency, without counting discounts, promotions or currency earned in play; (2) there is one
+      purchasable currency, and no exchanges between currencies are needed to buy something; (3) players can
+      buy the exact amount an item needs, not only bundles that leave unwanted leftovers; and (4) spending it
+      is off for children unless a guardian approves. Changes to the currency's value are covered by
+      CORE-COM-10.
+    rationale: >
+      The EU consumer authorities read the UCPD and the Consumer Rights Directive this way in their Key
+      Principles on in-game virtual currencies (CPC Network, March 2025, principles 1 to 3), and since
+      September 2026 they enforce them in coordinated actions against game companies. Prices hidden behind
+      currencies, several currencies and forced bundles make the real cost unclear, above all for children.
+      KIDS Act Art. 13(1).
+    improvement: Show euro prices next to every item and currency pack; merge purchasable currencies into one; sell exact amounts; add guardian approval for children's spending.
     effort: medium
-    sources: [KIDS, DFA, UCPD]
+    sources: [CPC-VC, CPC-JS, UCPD, CRD, KIDS, DFA]
     detection:
       method: static
       patterns:
@@ -1939,7 +1955,7 @@ rules:
       and video services and AI chatbots (Art. 14(1)(c)); applied to games and learning apps as good practice.
     improvement: Add a purchase confirmation screen for child accounts that says "This costs money" with the euro price and requires an adult step.
     effort: low
-    sources: [KIDS, UCPD, DFA]
+    sources: [KIDS, UCPD, CPC-VC, DFA]
     detection:
       method: manual
 
@@ -1957,10 +1973,12 @@ rules:
     rationale: >
       KIDS Act Art. 13(2) and Recital 31: services must not be designed in a way that leads to excessive,
       impulsive or unwanted spending, including through separation or friction between content and
-      purchases. DFA proposal targets the same practices.
+      purchases. CPC Key Principle 7 asks for purchase prompts clearly separate from gameplay, and holds
+      business models that depend on a few heavy spenders to a stricter fairness standard. DFA proposal
+      targets the same practices.
     improvement: Move every purchase out of the child experience into a guardian or school area; remove purchase buttons from gameplay, results and failure screens.
     effort: medium
-    sources: [KIDS, DFA, UCPD, R-RADESKY2022]
+    sources: [KIDS, DFA, UCPD, CPC-VC, R-RADESKY2022]
     detection:
       method: mixed
       patterns:
@@ -2008,6 +2026,58 @@ rules:
     sources: [KIDS, UNCRC-GC25, R-RADESKY2022]
     detection:
       method: manual
+
+  - id: CORE-COM-09
+    title: Clear purchase information and a working right of withdrawal
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [purchases]
+    requirement: >
+      Before any purchase, with money or with purchasable currency, the buyer sees in plain words what is
+      being bought, who sells it and how to contact them, the real-world price, whether and how the right of
+      withdrawal applies, the legal guarantee, and how payment and delivery work. The buyer can withdraw
+      within 14 days, and unused purchased currency can be returned in that time. For digital content the
+      right is lost only after a separate, express consent to immediate delivery and an acknowledgement of
+      losing it, confirmed afterwards. Paying with personal data does not remove it.
+    rationale: >
+      Consumer Rights Directive Art. 6 (pre-contractual information) and Art. 9 to 16 (withdrawal), as the
+      EU consumer authorities read them for games in CPC Key Principles 4 and 5. Missing purchase information
+      and withdrawal rights are among the issues in the CPC Network's coordinated actions on games.
+    improvement: Add an information screen before every purchase; add a 14-day withdrawal path, unused currency included; make the digital-content waiver a separate, explicit step and confirm it on the receipt.
+    effort: medium
+    sources: [CRD, CPC-VC, CPC-JS, UCPD]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(all sales (are )?final|non-?refundable|no refunds?\b|not eligible for (a )?refund|n[ãa]o (é )?reembols[áa]vel|sem (direito a )?reembolso)'}
+
+
+  - id: CORE-COM-10
+    title: Fair, plain terms for purchases and accounts
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    features: [purchases]
+    requirement: >
+      Terms for the game, purchases and currency are in plain language and do not limit statutory rights.
+      They do not let the trader remove or change bought content or currency, or change the currency's
+      value, on its own; content that players can reasonably expect to keep stays available. An account ban,
+      suspension or removal comes with a reason and a way to contest it.
+    rationale: >
+      Unfair Contract Terms Directive Art. 3 and 5, as read by CPC Key Principle 6. For online platforms, DSA
+      Art. 17 and 20 also require reasons and an internal complaint system for suspensions. Terms are written
+      for adults; the child-friendly summary is in CORE-DAT-12.
+    improvement: Rewrite currency and account terms in plain language; remove clauses that allow one-sided changes or removal; add a reasoned notice and an appeal for bans and suspensions.
+    effort: medium
+    sources: [UCTD, CPC-VC, DSA]
+    detection:
+      method: mixed
+      patterns:
+        - {type: regex, confidence: medium, flags: i, pattern: '(reserves? the right to|may at any time)[^.\n]{0,40}(change|modify|remove|revoke|delete|adjust)[^.\n]{0,60}(virtual currency|currency|coins|gems|items|purchases)'}
+
 
   # ================================================================ AI COMPANIONS AND CHATBOTS (KIDS Act Recitals 32-34, Art. 14)
   - id: CORE-AI-08

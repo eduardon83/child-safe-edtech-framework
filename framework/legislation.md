@@ -2,7 +2,7 @@
 
 This page lists every legal and policy source behind the Child-Safe EdTech Framework (CSEF): what it is, its status, the provisions that matter for EdTech used by children, and which CSEF rules rely on it.
 
-> Status as of **16 November 2026**. Each source has a `verified` date in `framework/sources.yaml`. Proposals are not law. This page is not legal advice.
+> Status as of **17 November 2026**. Each source has a `verified` date in `framework/sources.yaml`. Proposals are not law. This page is not legal advice.
 
 ## How sources map to compliance levels
 
@@ -19,17 +19,19 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 |---|---|---|---|---|
 | **GDPR** Regulation (EU) 2016/679, General Data Protection Regulation | law | In force since 25 May 2018 | 47 | 3 |
 | **EPRIV** Directive 2002/58/EC, ePrivacy Directive (cookies and terminal equipment) | law | In force (transposed nationally) | 1 | 0 |
-| **DSA** Regulation (EU) 2022/2065, Digital Services Act | law | Fully applicable since 17 Feb 2024 | 8 | 2 |
+| **DSA** Regulation (EU) 2022/2065, Digital Services Act | law | Fully applicable since 17 Feb 2024 | 9 | 2 |
 | **AIA** Regulation (EU) 2024/1689, Artificial Intelligence Act | law | Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025 | 16 | 3 |
-| **UCPD** Directive 2005/29/EC, Unfair Commercial Practices Directive | law | In force (transposed nationally) | 8 | 3 |
+| **UCPD** Directive 2005/29/EC, Unfair Commercial Practices Directive | law | In force (transposed nationally) | 9 | 3 |
 | **EAA** Directive (EU) 2019/882, European Accessibility Act | law | Applies since 28 Jun 2025 | 4 | 1 |
 | **CRA** Regulation (EU) 2024/2847, Cyber Resilience Act | law | Reporting obligations from 11 Sep 2026 | 1 | 0 |
 | **DATA-ACT** Regulation (EU) 2023/2854 (Data Act), Chapter VI: switching between data processing services | law | In force 11 Jan 2024; applies from 12 Sep 2025 | 1 | 0 |
 | **CJEU-ART9** CJEU (Grand Chamber), C-184/20, OT v Vyriausioji tarnybinės etikos komisija, 1 Aug 2022 (EU:C:2022:601); see also C-252/21, Meta Platforms v Bundeskartellamt, 4 Jul 2023 | law | Case law | 1 | 0 |
 | **VAW-DIR** Directive (EU) 2024/1385 on combating violence against women and domestic violence | law | In force 13 Jun 2024; transposition by 14 Jun 2027 | 1 | 0 |
+| **CRD** Directive 2011/83/EU, Consumer Rights Directive | law | In force (transposed nationally) | 2 | 0 |
+| **UCTD** Council Directive 93/13/EEC on unfair terms in consumer contracts | law | In force (transposed nationally) | 1 | 0 |
 | **AIA-OMNIBUS** Digital Omnibus on AI: Regulation amending the AI Act (reported as Regulation (EU) 2026/1744) | law | Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026 | 4 | 1 |
 | **KIDS** Proposal for a Regulation: EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681 | proposal | Commission proposal of 17 Sep 2026 (2026/0286 COD) | 57 | 9 |
-| **DFA** Digital Fairness Act (proposal replacing the Unfair Commercial Practices Directive) | proposal | Proposal due 11 Nov 2026 | 14 | 3 |
+| **DFA** Digital Fairness Act (proposal replacing the Unfair Commercial Practices Directive) | proposal | Proposed 11 Nov 2026 as COM(2026) 1100, procedure 2026/0356(COD), a regulation replacing the UCPD. Would apply 12 months after entry into force | 14 | 3 |
 | **DSA-G28** Commission Guidelines on the protection of minors under Article 28 DSA | guidance | Adopted 14 Jul 2025 | 23 | 2 |
 | **KIDS-COM** Communication: An EU approach to online child safety, COM(2026) 680 | guidance | Published 17 Sep 2026 | 5 | 0 |
 | **KIDS-FAQ** The KIDS Act explained (Commission Q&A) | guidance | Published Sep 2026 | 1 | 0 |
@@ -43,6 +45,8 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 | **AILIT** Empowering Learners for the Age of AI: an AI Literacy Framework for Primary and Secondary Education (AILit), European Commission and OECD | guidance | Final version presented 18 Jun 2026. 4 domains (Engage, Create, Manage, Shape AI), 19 competences, learner expectations at basic, intermediate and advanced levels | 0 | 20 |
 | **EU-DEC** European Commission (2025). Making informed choices on digital education content: EU guidelines for teachers and educators | guidance | Manuscript completed Oct 2025; launched 5 Mar 2026 | 1 | 4 |
 | **EDPB-DSAGDPR** EDPB Guidelines 3/2025 on the interplay between the DSA and the GDPR | guidance | Adopted 11 Sep 2025 for public consultation (closed 31 Oct 2025) | 1 | 0 |
+| **CPC-VC** CPC Network: Key Principles on In-game Virtual Currencies (21 March 2025) | guidance | Published 21 Mar 2025 by the EU consumer protection authorities (CPC Network), coordinated by the Commission | 6 | 1 |
+| **CPC-JS** CPC Network: Joint Statement on Stronger Consumer Protection in Video Games across the EU Single Market (30 September 2026) | guidance | Adopted 30 Sep 2026 together with coordinated actions against nine game companies | 5 | 0 |
 | **EDU-EDIC** Commission Implementing Decision (EU) 2026/2413 of 3 November 2026 on setting up the European Digital Infrastructure Consortium on Education (EDU-EDIC) | policy | In force 4 Nov 2026 | 4 | 0 |
 | **EU-EDUPKG** European Commission (2026). Education and Skills Package (factsheet), with the Communication on stronger education foundations in the age of AI | policy | Presented 2026 | 0 | 3 |
 | **CB-AP** Communication COM(2026) 71: Action plan against cyberbullying, "Safer online, stronger together" (10 February 2026) | policy | Adopted 10 Feb 2026 | 8 | 1 |
@@ -140,7 +144,7 @@ Applies to intermediary services; the strongest duties fall on online platforms 
 
 **In CSEF.** Level 1 rules on advertising, dark patterns and contact; the Art. 28 guidelines drive many Level 2 rules.
 
-**Rules citing it.** `CORE-COM-01`, `CORE-COM-03`, `CORE-SAF-05`, `CORE-SAF-06`, `CORE-COM-07`, `CORE-CHT-02`, `CORE-CHT-03`, `CORE-CHT-11`
+**Rules citing it.** `CORE-COM-01`, `CORE-COM-03`, `CORE-SAF-05`, `CORE-SAF-06`, `CORE-COM-07`, `CORE-COM-10`, `CORE-CHT-02`, `CORE-CHT-03`, `CORE-CHT-11`
 
 **Compass targets citing it.** `TRN-03`, `TRN-06`
 
@@ -186,7 +190,7 @@ Consumer protection against misleading and aggressive practices.
 
 **In CSEF.** Level 1 rules on purchases, disguised advertising and dark patterns; will be replaced or amended by the Digital Fairness Act.
 
-**Rules citing it.** `CORE-COM-03`, `CORE-COM-04`, `A-ECO-02`, `A-ECO-03`, `CORE-COM-05`, `CORE-COM-06`, `CORE-COM-07`, `CORE-AI-11`
+**Rules citing it.** `CORE-COM-03`, `CORE-COM-04`, `A-ECO-02`, `A-ECO-03`, `CORE-COM-05`, `CORE-COM-06`, `CORE-COM-07`, `CORE-COM-09`, `CORE-AI-11`
 
 **Compass targets citing it.** `INF-03`, `SAF-05`, `TRN-04`
 
@@ -281,6 +285,26 @@ EU minimum rules on violence against women, including cyber violence.
 
 **Link.** [https://eur-lex.europa.eu/eli/dir/2024/1385/oj](https://eur-lex.europa.eu/eli/dir/2024/1385/oj)
 
+### Directive 2011/83/EU, Consumer Rights Directive
+
+*Id `CRD` · law · EU · verified 2026-11-17*
+
+**Status.** In force (transposed nationally). Art. 6 pre-contractual information; Art. 9 to 16 right of withdrawal within 14 days, with the digital-content exception in Art. 16(m) only after express consent and acknowledgement.
+
+**Rules citing it.** `A-ECO-03`, `CORE-COM-09`
+
+**Link.** [https://eur-lex.europa.eu/eli/dir/2011/83/oj](https://eur-lex.europa.eu/eli/dir/2011/83/oj)
+
+### Council Directive 93/13/EEC on unfair terms in consumer contracts
+
+*Id `UCTD` · law · EU · verified 2026-11-17*
+
+**Status.** In force (transposed nationally). Art. 3 unfair terms are not binding on the consumer; Art. 5 terms must be in plain, intelligible language.
+
+**Rules citing it.** `CORE-COM-10`
+
+**Link.** [https://eur-lex.europa.eu/eli/dir/1993/13/oj](https://eur-lex.europa.eu/eli/dir/1993/13/oj)
+
 ## Adopted, applying later
 
 ### Digital Omnibus on AI (amendments to the AI Act)
@@ -343,19 +367,19 @@ Commission proposal of 17 September 2026 (procedure 2026/0286 COD). The single m
 
 ### Digital Fairness Act (proposal)
 
-*Id `DFA` · proposal · EU · verified 2026-11-11*
+*Id `DFA` · proposal · EU · verified 2026-11-17*
 
-Expected to revise consumer law for the digital environment. Content in CSEF is based on a leaked draft and must be re-checked.
+Revises consumer law for the digital environment. CSEF first used a leaked draft; summaries of the official text confirm the points below.
 
-**Status.** Proposal due 11 Nov 2026. Content known from a leaked draft only. Re-verify against the official text.
+**Status.** Proposed 11 Nov 2026 as COM(2026) 1100, procedure 2026/0356(COD), a regulation replacing the UCPD. Would apply 12 months after entry into force. Art. 10 bans manipulative interfaces and Annex I Part III blacklists ten dark patterns; Art. 12 bars profiling-based ads to known minors; Art. 17 gives off switches for autoplay, streaks and relationship-simulating features. Bans pay-to-win and paid variable rewards for minors; paid currency shows its real-money value and is off by default for minors. Checked against secondary summaries of the official text; confirm article numbers on EUR-Lex.
 
 **Provisions that matter for EdTech.**
 
-- Leaked draft: blacklist of manipulative design practices.
-- Ban on paid loot boxes and pay-to-win mechanics for minors.
-- Virtual currencies: real-money value shown; off by default for children unless a guardian approves.
-- Right to switch off streaks, autoplay and relationship-simulating chatbots.
-- Ban on profiling-based advertising to minors extended to all traders.
+- Art. 10 and Annex I Part III: a general ban on manipulative interfaces and a blacklist of ten practices.
+- Ban on pay-to-win and on paid variable rewards (loot boxes) for minors.
+- Virtual currencies: real-money value shown; paid currency off by default for minors unless a guardian approves.
+- Art. 17: easy off switches for autoplay, unrelated notifications, streaks with penalties and relationship-simulating features.
+- Art. 12: no profiling-based ads to known minors, for all traders outside the DSA.
 
 **Note.** Leaked draft: ban on paid loot boxes and pay-to-win for minors, virtual currency value shown and off by default for children, right to switch off streaks, autoplay and relationship-simulating chatbots, blacklist of 10 dark patterns.
 
@@ -566,6 +590,28 @@ How the GDPR applies when providers meet DSA duties, including notice and action
 **Rules citing it.** `CORE-CHT-10`
 
 **Link.** [https://www.edpb.europa.eu/system/files/2025-09/edpb_guidelines_202503_interplay-dsa-gdpr_v1_en.pdf](https://www.edpb.europa.eu/system/files/2025-09/edpb_guidelines_202503_interplay-dsa-gdpr_v1_en.pdf)
+
+### CPC Network: Key Principles on In-game Virtual Currencies (21 March 2025)
+
+*Id `CPC-VC` · guidance · EU · verified 2026-11-17*
+
+**Status.** Published 21 Mar 2025 by the EU consumer protection authorities (CPC Network), coordinated by the Commission. Non-binding reading of the UCPD, the Consumer Rights Directive and the Unfair Contract Terms Directive for currencies bought with money. Seven principles: real-world prices shown; no mixing of currencies or forced exchanges; no bundles that force unwanted currency; pre-contractual information; 14-day withdrawal, unused currency included; fair, plain terms (no unilateral value changes, contestable account bans); design that respects vulnerabilities (children always vulnerable, no direct exhortation, parental controls with spending off by default for games not limited to adults, age gates do not reduce responsibility).
+
+**Rules citing it.** `CORE-COM-04`, `A-ECO-03`, `CORE-COM-05`, `CORE-COM-06`, `CORE-COM-09`, `CORE-COM-10`
+
+**Compass targets citing it.** `TRN-04`
+
+**Link.** [https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en)
+
+### CPC Network: Joint Statement on Stronger Consumer Protection in Video Games across the EU Single Market (30 September 2026)
+
+*Id `CPC-JS` · guidance · EU · verified 2026-11-17*
+
+**Status.** Adopted 30 Sep 2026 together with coordinated actions against nine game companies. Finds that many companies made no substantive changes after the Key Principles; names virtual currencies, loot boxes, misleading countdown timers, false scarcity and direct exhortation of children; says self-regulation often does not address the core problems. National enforcement may follow.
+
+**Rules citing it.** `CORE-COM-03`, `CORE-COM-04`, `A-ECO-01`, `A-ECO-03`, `CORE-COM-09`
+
+**Link.** [https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en)
 
 ## Policy context
 
@@ -1036,7 +1082,8 @@ Portugal's national plan against bullying and cyberbullying in schools.
 | Item | What to watch | Effect on CSEF |
 |---|---|---|
 | EU KIDS Act | Feedback until 26 Nov 2026; then Parliament and Council positions | Level 2 rules may change; when adopted, they move to Level 1 with the application date |
-| Digital Fairness Act | Publication of the official proposal | Replace leaked-draft source; confirm A-ECO-01/02/03, C-ENG-01, CORE-AI-06, CORE-SAF-03 |
+| Digital Fairness Act | Official text on EUR-Lex (COM(2026) 1100); Parliament and Council positions | Confirm article numbers in A-ECO-01/02/03, C-ENG-01, CORE-AI-06, CORE-SAF-03; when adopted, Level 2 rules move to Level 1 with the application date |
+| CPC coordinated actions on games | Company commitments, or national enforcement, after the 30 Sep 2026 actions | More detail for A-ECO-03, CORE-COM-09 and CORE-COM-10 |
 | Digital Omnibus on AI | Commission guidance on the recast Art. 4 | Check AI literacy wording and high-risk dates |
 | EDU-EDIC | Work programme and the technical standards it chooses | CORE-INT rules may become more specific |
 | DSA Art. 28 guidelines on minors | Review in 2026 with more focus on cyberbullying (EU action plan) | CORE-CHT-10 to 15 may become MUST where the guidelines ask for them |

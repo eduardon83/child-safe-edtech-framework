@@ -27,9 +27,9 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 
 | | |
 |---|---|
-| **The framework** | 122 rules: a core set plus three profiles, **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Rules on data, safety by design, commercial practices, AI companions and chatbots, communications, accessibility, security, and design for learning (visuals, sound, motion, motivation). |
+| **The framework** | 124 rules: a core set plus three profiles, **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Rules on data, safety by design, commercial practices, AI companions and chatbots, communications, accessibility, security, and design for learning (visuals, sound, motion, motivation). |
 | **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). You decide which level of compliance you want in your software. |
-| **Sources on every rule** | 77 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
+| **Sources on every rule** | 81 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
 | **Policy questionnaire** | `tooling/policy.py`: answer questions about your boundaries (terminal or local web form). Get your guardrails file, a report that matches each answer with the law and recommendations, a plain-language staff policy, AI agent instructions and a ready CI workflow. Run it again anytime. |
 | **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included (draft, not legally reviewed). |
 | **Company packs and Pack Builder** | Each organisation sets its minimum level, no-gos, forbidden SDKs and phrases and its own rules, in a web form, then publishes the pack to GitHub. |
@@ -41,12 +41,14 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 | **CI** | A GitHub Action, generated Semgrep rules, a PR template. |
 | **Templates** | Manifest, DPIA starter, AI risk file, waiver record, instructions for AI coding agents. |
 
-## What's new in v0.11
+## What's new in v0.12
 
-**Bullying and peer safety.** Six SHOULD rules: reports stay confidential, children can report for a friend,
-no design that lets children exclude or rank each other, evidence and national help, communication open only
-when someone can respond, and bullying routed to the school's procedure or a default one. A MUST rule stops
-generative features from depicting real people. Guide: [06-bullying.md](framework/06-bullying.md).
+**In-game purchases, as EU consumer authorities read the law.** The CPC Network's Key Principles on in-game
+virtual currencies (2025) and its Joint Statement on video games (30 Sep 2026) are now sources. They come with
+coordinated actions against nine game companies. Two new MUST rules: clear purchase information with a working
+14-day withdrawal (CORE-COM-09), and fair, plain terms for purchases and accounts (CORE-COM-10). A-ECO-03 now
+asks for real prices everywhere, one purchasable currency and exact amounts. The Digital Fairness Act source
+now points to the official proposal of 11 Nov 2026.
 
 Earlier versions: [CHANGELOG.md](CHANGELOG.md) (one short entry per version) and
 [release notes](docs/releases/) (the full story of each release).

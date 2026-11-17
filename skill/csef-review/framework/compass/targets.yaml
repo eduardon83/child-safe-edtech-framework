@@ -754,7 +754,7 @@ targets:
     ideas: [Coins-to-euros label on every price, This is an ad tag with a tap-to-learn note]
     improvement: Label prices in real money and mark commercial content, with a one-line explanation for children.
     refs: {DIGCOMP3: ["1.2"]}
-    sources: [UCPD, KIDS, DFA]
+    sources: [UCPD, CPC-VC, KIDS, DFA]
     builds_on: [CORE-COM-05, CORE-COM-07]
     terms: [[price, purchase, cost, ad, ads, sponsored, advert, preco, compra, custo, anuncio, patrocinad, publicidade], [label, labelled, labeled, real money, euros, explain, rotul, dinheiro real, explica]]
 

@@ -11,6 +11,7 @@ rules:
     tier: 2
     sources:
     - KIDS
+    - CPC-JS
     - DFA
 - id: a-eco-02-1
   message: 'A-ECO-02 (MUST, level 2): No pay-to-win. Make all progression earnable through play; keep any paid items cosmetic and adult-purchased.'
@@ -25,7 +26,8 @@ rules:
     - DFA
     - UCPD
 - id: a-eco-03-1
-  message: 'A-ECO-03 (MUST, level 2): Virtual currency shows its real value. Show euro equivalents wherever currency is spent; add guardian approval; keep currency purchases out of child screens.'
+  message: 'A-ECO-03 (MUST, level 2): Virtual currency: real price, one currency, exact amounts. Show euro prices next to every item and currency pack; merge purchasable currencies into one; sell exact
+    amounts; add guardian approval for children''s spending.'
   severity: WARNING
   languages:
   - generic
@@ -34,9 +36,12 @@ rules:
     csef_rule: A-ECO-03
     tier: 2
     sources:
+    - CPC-VC
+    - CPC-JS
+    - UCPD
+    - CRD
     - KIDS
     - DFA
-    - UCPD
 - id: a-mot-02-1
   message: 'A-MOT-02 (SHOULD, level 3): Feedback informs, it does not control. Rewrite feedback strings as specific, informational messages; review copy for ''must'' and reward-centred goals.'
   severity: INFO
@@ -373,6 +378,7 @@ rules:
     sources: &id004
     - DSA
     - UCPD
+    - CPC-JS
     - DFA
     - R-RADESKY2022
 - id: core-com-03-2
@@ -406,6 +412,8 @@ rules:
     tier: 1
     sources:
     - UCPD
+    - CPC-VC
+    - CPC-JS
     - KIDS
     - DFA
   paths:
@@ -425,6 +433,7 @@ rules:
     - KIDS
     - DFA
     - UCPD
+    - CPC-VC
     - R-RADESKY2022
 - id: core-com-07-1
   message: 'CORE-COM-07 (MUST, level 1): No disguised advertising. Label any commercial content clearly (e.g. "Ad" or "Paid partnership" with an icon); remove promotion voiced by characters or tutors.'
@@ -439,6 +448,35 @@ rules:
     - UCPD
     - DSA
     - KIDS
+- id: core-com-09-1
+  message: 'CORE-COM-09 (MUST, level 1): Clear purchase information and a working right of withdrawal. Add an information screen before every purchase; add a 14-day withdrawal path, unused currency included;
+    make the digital-content waiver a separate, explicit step and confirm it on the receipt.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)(all sales (are )?final|non-?refundable|no refunds?\b|not eligible for (a )?refund|n[ãa]o (é )?reembols[áa]vel|sem (direito a )?reembolso)
+  metadata:
+    csef_rule: CORE-COM-09
+    tier: 1
+    sources:
+    - CRD
+    - CPC-VC
+    - CPC-JS
+    - UCPD
+- id: core-com-10-1
+  message: 'CORE-COM-10 (MUST, level 1): Fair, plain terms for purchases and accounts. Rewrite currency and account terms in plain language; remove clauses that allow one-sided changes or removal; add a
+    reasoned notice and an appeal for bans and suspensions.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)(reserves? the right to|may at any time)[^.\n]{0,40}(change|modify|remove|revoke|delete|adjust)[^.\n]{0,60}(virtual currency|currency|coins|gems|items|purchases)
+  metadata:
+    csef_rule: CORE-COM-10
+    tier: 1
+    sources:
+    - UCTD
+    - CPC-VC
+    - DSA
 - id: core-dat-04-1
   message: 'CORE-DAT-04 (MUST, level 1): No personal data in analytics events. Replace identifiers with a pseudonymous learner ID and drop free-text fields from events.'
   severity: WARNING

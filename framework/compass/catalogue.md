@@ -233,7 +233,7 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Improvement:** Explain virtual currencies and chance in plain language and show real costs.
 - **Ideas:** Price-tag converter from coins to euros; Odds explainer before any chance mechanic
 - **Framework references:** DIGCOMP3 2.5, 4.3
-- **Sources:** [DIGCOMP3](https://data.europa.eu/doi/10.2760/0001149), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
+- **Sources:** [DIGCOMP3](https://data.europa.eu/doi/10.2760/0001149), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
 - **Hidden-curriculum phrases:** "loot box", "mystery box", "spin the wheel", "caixa mistério", "roda da sorte"
 
 ### SAF-06 Consider the environmental footprint of digital tech and AI
@@ -430,7 +430,7 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Ideas:** Coins-to-euros label on every price; This is an ad tag with a tap-to-learn note
 - **Framework references:** DIGCOMP3 1.2
 - **Builds on rules:** CORE-COM-05, CORE-COM-07. The rule requires the feature; this target asks whether it also teaches.
-- **Sources:** [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+- **Sources:** [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [CPC-VC](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act)
 
 ### TRN-05 Provenance labels for generated or manipulated media
 
@@ -465,7 +465,7 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Improvement:** Remove or rewrite the copy and mechanics flagged as conflicts, and add a review step for new content.
 - **Ideas:** Review all character dialogue against AI-02; Review reward loops against SAF-04
 - **Framework references:** AILIT Engage 2
-- **Sources:** [UNESCO-AIAGE](https://www.unesco.org/en/digital-education), [AILIT](https://ailiteracyframework.org/), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+- **Sources:** [UNESCO-AIAGE](https://www.unesco.org/en/digital-education), [AILIT](https://ailiteracyframework.org/), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act)
 
 ### TRN-08 Personal questions say why they are asked
 

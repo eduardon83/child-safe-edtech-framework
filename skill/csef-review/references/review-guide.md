@@ -17,6 +17,8 @@ What to check is in each rule's requirement: see the [rule catalogue](../../../f
 | Seeds, fixtures, test data, staging config | CORE-DAT-07 |
 | Login and onboarding | CORE-SEC-06, CORE-SAF-08, AGE-B3-01 |
 | Child-facing copy (i18n files) | CORE-COM-03, CORE-DAT-12 |
+| Shop screens, currency packs, purchase confirmations, receipts | A-ECO-03, CORE-COM-09 |
+| Terms of service, currency terms, account ban and appeal flows | CORE-COM-10 |
 | Help and report screens, report outcome messages | CORE-SAF-06, PT-SUP-01 |
 | UI components | CORE-ACC-01, CORE-ACC-02 |
 

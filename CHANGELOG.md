@@ -3,6 +3,21 @@
 Newest first. One short entry per version; the full story of each release is in [docs/releases/](docs/releases/).
 Open items and what we are watching: [legislation.md, watch list](framework/legislation.md#open-discussions-and-watch-list).
 
+## v0.12.0 (2026-11-17)
+
+- **In-game purchases, as EU consumer authorities read the law.** New sources: CPC-VC (CPC Network Key Principles
+  on in-game virtual currencies, 2025), CPC-JS (Joint Statement on video games and coordinated actions against
+  nine game companies, 30 Sep 2026), CRD (Consumer Rights Directive), UCTD (Unfair Contract Terms Directive).
+- New MUST rules: CORE-COM-09 clear purchase information and a working 14-day withdrawal, unused currency
+  included; CORE-COM-10 fair, plain terms (no one-sided changes to bought content or currency value, bans with a
+  reason and an appeal). Both apply with feature `purchases`.
+- A-ECO-03 now asks for real prices everywhere, one purchasable currency and exact amounts, and applies to
+  profile B too. CORE-COM-04 adds exhortation to ask adults, products likely to appeal to children, and spending
+  off by default. CORE-COM-03, COM-05, COM-06, A-ECO-01 and Compass TRN-04 cite the CPC texts.
+- DFA source updated to the official proposal, COM(2026) 1100 (11 Nov 2026). Watch list: CPC actions on games.
+- Detection of "all sales final" and "we may change or remove your currency" wording.
+- Rules: 122 to 124. Sources: 77 to 81, plus 9 in the Portugal pack.
+
 ## v0.11.0 (2026-11-16)
 
 - **Bullying and peer safety** ([06-bullying.md](framework/06-bullying.md)): six SHOULD rules, CORE-CHT-10 reports

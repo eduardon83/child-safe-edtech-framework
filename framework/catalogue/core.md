@@ -48,6 +48,8 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-COM-06](#core-com-06-no-design-for-impulsive-or-unwanted-spending) | No design for impulsive or unwanted spending | MUST | 2 | mixed |
 | [CORE-COM-07](#core-com-07-no-disguised-advertising) | No disguised advertising | MUST | 1 | mixed |
 | [CORE-COM-08](#core-com-08-no-commercial-content-inside-learning-activities-for-children) | No commercial content inside learning activities for children | SHOULD | 3 | manual |
+| [CORE-COM-09](#core-com-09-clear-purchase-information-and-a-working-right-of-withdrawal) | Clear purchase information and a working right of withdrawal | MUST | 1 | mixed |
+| [CORE-COM-10](#core-com-10-fair-plain-terms-for-purchases-and-accounts) | Fair, plain terms for purchases and accounts | MUST | 1 | mixed |
 | [CORE-DAT-01](#core-dat-01-dpia-before-launch) | DPIA before launch | MUST | 1 | manifest |
 | [CORE-DAT-02](#core-dat-02-controller-and-processor-roles-are-defined-with-processor-agreements) | Controller and processor roles are defined, with processor agreements | MUST | 1 | manifest |
 | [CORE-DAT-03](#core-dat-03-no-transfers-outside-the-eea-without-a-valid-mechanism) | No transfers outside the EEA without a valid mechanism | MUST | 1 | manifest |
@@ -228,7 +230,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Rewrite the system prompt persona; add tests that reject outputs claiming feelings or friendship.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
 
 ### CORE-AI-07: Human review of decisions about learners
 
@@ -516,7 +518,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Remove the SDK. If marketing attribution is needed, measure it on the adult-facing website only.
 
-**Sources.** [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+**Sources.** [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
 
 ### CORE-COM-02: Third-party analytics and session recording reviewed
 
@@ -536,23 +538,23 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Requirement.** No fake urgency or scarcity, confirmshaming, pre-ticked options, nagging after a choice, obstruction to leave or cancel, fake notifications, or confusing double negatives.
 
-**Why.** DSA Art. 25, UCPD. The DFA proposal blacklists these in all circumstances.
+**Why.** DSA Art. 25, UCPD. The CPC Network's 2026 Joint Statement names misleading countdown timers and false scarcity in games. The DFA proposal blacklists these in all circumstances.
 
 **How to improve.** Rewrite the copy neutrally, remove timers and pre-selected options, make 'no' as easy as 'yes'.
 
-**Sources.** [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
+**Sources.** [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [CPC-JS](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
 
 ### CORE-COM-04: Purchases are adult-facing only
 
 **MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: mixed · Effort: medium
 
-**Requirement.** Children are never directly exhorted to buy, and any purchase flow is behind an adult gate (guardian or school account), with the price in real currency.
+**Requirement.** Children are never directly exhorted to buy, or to ask adults to buy for them, and any purchase flow is behind an adult gate (guardian or school account), with the price in real currency. This applies to any product likely to appeal to children, even if it is not aimed at them, and an age gate does not remove the duty. Spending real money is off by default, and parental controls work, with defaults that suit the age.
 
-**Why.** UCPD Annex I point 28 (direct exhortation to children). KIDS Act Art. 13 and 14(1)(c).
+**Why.** UCPD Annex I point 28 (direct exhortation to children). KIDS Act Art. 13 and 14(1)(c). CPC Key Principle 7: children are always vulnerable, and age gates do not reduce the trader's responsibility. The CPC Network's 2026 Joint Statement found games that still urge children to buy.
 
 **How to improve.** Move purchases to a guardian or school portal; remove buy prompts from child screens.
 
-**Sources.** [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+**Sources.** [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [CPC-VC](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [CPC-JS](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act)
 
 ### CORE-COM-05: Purchases are labelled as purchases, in real time
 
@@ -564,7 +566,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Add a purchase confirmation screen for child accounts that says "This costs money" with the euro price and requires an adult step.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [CPC-VC](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act)
 
 ### CORE-COM-06: No design for impulsive or unwanted spending
 
@@ -572,11 +574,11 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Requirement.** No one-tap or in-content purchases for children. There is a clear separation and friction between learning or play content and buying anything related to it (for example a separate adult area and a confirmation step). No spending prompts at moments of frustration, failure or excitement.
 
-**Why.** KIDS Act Art. 13(2) and Recital 31: services must not be designed in a way that leads to excessive, impulsive or unwanted spending, including through separation or friction between content and purchases. DFA proposal targets the same practices.
+**Why.** KIDS Act Art. 13(2) and Recital 31: services must not be designed in a way that leads to excessive, impulsive or unwanted spending, including through separation or friction between content and purchases. CPC Key Principle 7 asks for purchase prompts clearly separate from gameplay, and holds business models that depend on a few heavy spenders to a stricter fairness standard. DFA proposal targets the same practices.
 
 **How to improve.** Move every purchase out of the child experience into a guardian or school area; remove purchase buttons from gameplay, results and failure screens.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [CPC-VC](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
 
 ### CORE-COM-07: No disguised advertising
 
@@ -601,6 +603,30 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Remove brands and sponsored items from learning content; move partner credits to the teacher or guardian area.
 
 **Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
+
+### CORE-COM-09: Clear purchase information and a working right of withdrawal
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Features: purchases · Detection: mixed · Effort: medium
+
+**Requirement.** Before any purchase, with money or with purchasable currency, the buyer sees in plain words what is being bought, who sells it and how to contact them, the real-world price, whether and how the right of withdrawal applies, the legal guarantee, and how payment and delivery work. The buyer can withdraw within 14 days, and unused purchased currency can be returned in that time. For digital content the right is lost only after a separate, express consent to immediate delivery and an acknowledgement of losing it, confirmed afterwards. Paying with personal data does not remove it.
+
+**Why.** Consumer Rights Directive Art. 6 (pre-contractual information) and Art. 9 to 16 (withdrawal), as the EU consumer authorities read them for games in CPC Key Principles 4 and 5. Missing purchase information and withdrawal rights are among the issues in the CPC Network's coordinated actions on games.
+
+**How to improve.** Add an information screen before every purchase; add a 14-day withdrawal path, unused currency included; make the digital-content waiver a separate, explicit step and confirm it on the receipt.
+
+**Sources.** [CRD](https://eur-lex.europa.eu/eli/dir/2011/83/oj), [CPC-VC](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [CPC-JS](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
+
+### CORE-COM-10: Fair, plain terms for purchases and accounts
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Features: purchases · Detection: mixed · Effort: medium
+
+**Requirement.** Terms for the game, purchases and currency are in plain language and do not limit statutory rights. They do not let the trader remove or change bought content or currency, or change the currency's value, on its own; content that players can reasonably expect to keep stays available. An account ban, suspension or removal comes with a reason and a way to contest it.
+
+**Why.** Unfair Contract Terms Directive Art. 3 and 5, as read by CPC Key Principle 6. For online platforms, DSA Art. 17 and 20 also require reasons and an internal complaint system for suspensions. Terms are written for adults; the child-friendly summary is in CORE-DAT-12.
+
+**How to improve.** Rewrite currency and account terms in plain language; remove clauses that allow one-sided changes or removal; add a reasoned notice and an appeal for bans and suspensions.
+
+**Sources.** [UCTD](https://eur-lex.europa.eu/eli/dir/1993/13/oj), [CPC-VC](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj)
 
 ### CORE-DAT-01: DPIA before launch
 
@@ -1020,7 +1046,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Default the push flag to false, remove re-engagement campaigns, add quiet hours (e.g. 21:00 to 08:00 and school hours).
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act)
 
 ### CORE-SAF-03: Natural stopping points, no autoplay or endless feeds
 
@@ -1032,7 +1058,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Remove autoplay; end each activity with a clear 'done' screen and an explicit choice to continue.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act), [DSA-G28](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
 
 ### CORE-SAF-04: Time-awareness tools
 

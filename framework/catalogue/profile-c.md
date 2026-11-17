@@ -8,7 +8,7 @@ Profile C: gamified applications. Read together with the core rules.
 |---|---|---|---|---|
 | [A-ECO-01](#a-eco-01-no-paid-randomised-rewards-loot-boxes) | No paid randomised rewards (loot boxes) | MUST | 2 | static |
 | [A-ECO-02](#a-eco-02-no-pay-to-win) | No pay-to-win | MUST | 2 | mixed |
-| [A-ECO-03](#a-eco-03-virtual-currency-shows-its-real-value) | Virtual currency shows its real value | MUST | 2 | static |
+| [A-ECO-03](#a-eco-03-virtual-currency-real-price-one-currency-exact-amounts) | Virtual currency: real price, one currency, exact amounts | MUST | 2 | static |
 | [A-MOT-01](#a-mot-01-rewards-are-for-learning-and-the-inventory-shows-it) | Rewards are for learning, and the inventory shows it | SHOULD | 3 | mixed |
 | [A-MOT-02](#a-mot-02-feedback-informs-it-does-not-control) | Feedback informs, it does not control | SHOULD | 3 | mixed |
 | [A-MOT-03](#a-mot-03-the-product-works-with-rewards-switched-off) | The product works with rewards switched off | SHOULD | 3 | manual |
@@ -32,11 +32,11 @@ Profile C: gamified applications. Read together with the core rules.
 
 **Requirement.** No loot boxes, gacha, mystery chests or other variable rewards that can be obtained with money or with currency purchasable with money.
 
-**Why.** KIDS Act Art. 13(2) bans variable reward systems on social and video services. DFA proposal bans paid loot boxes for minors in games.
+**Why.** KIDS Act Art. 13(2) bans variable reward systems on social and video services. The CPC Network asks all game companies to review loot boxes, above all where children can reach them (Joint Statement, 2026). The DFA proposal would ban paid variable rewards for minors.
 
 **How to improve.** Replace with fixed, visible rewards earned through learning.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [CPC-JS](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act)
 
 ### A-ECO-02: No pay-to-win
 
@@ -48,19 +48,19 @@ Profile C: gamified applications. Read together with the core rules.
 
 **How to improve.** Make all progression earnable through play; keep any paid items cosmetic and adult-purchased.
 
-**Sources.** [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
+**Sources.** [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
 
-### A-ECO-03: Virtual currency shows its real value
+### A-ECO-03: Virtual currency: real price, one currency, exact amounts
 
 **MUST** · Level 2 (Forward-compliant) · Age bands: all · Detection: static · Effort: medium
 
-**Requirement.** Where adults can buy in-game currency (children never can, CORE-COM-04), its value in euro is shown wherever it is spent, and spending it is off for children unless a guardian approves.
+**Requirement.** Wherever in-game currency can be bought with money (by adults only, CORE-COM-04): (1) the real-world price of every item and every currency amount is shown clearly next to it, also when it is paid with currency, without counting discounts, promotions or currency earned in play; (2) there is one purchasable currency, and no exchanges between currencies are needed to buy something; (3) players can buy the exact amount an item needs, not only bundles that leave unwanted leftovers; and (4) spending it is off for children unless a guardian approves. Changes to the currency's value are covered by CORE-COM-10.
 
-**Why.** KIDS Act Art. 13(1) (applied to chatbots via Art. 14(1)(c)). DFA proposal.
+**Why.** The EU consumer authorities read the UCPD and the Consumer Rights Directive this way in their Key Principles on in-game virtual currencies (CPC Network, March 2025, principles 1 to 3), and since September 2026 they enforce them in coordinated actions against game companies. Prices hidden behind currencies, several currencies and forced bundles make the real cost unclear, above all for children. KIDS Act Art. 13(1).
 
-**How to improve.** Show euro equivalents wherever currency is spent; add guardian approval; keep currency purchases out of child screens.
+**How to improve.** Show euro prices next to every item and currency pack; merge purchasable currencies into one; sell exact amounts; add guardian approval for children's spending.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj)
+**Sources.** [CPC-VC](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [CPC-JS](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en), [UCPD](https://eur-lex.europa.eu/eli/dir/2005/29/oj), [CRD](https://eur-lex.europa.eu/eli/dir/2011/83/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act)
 
 ### A-MOT-01: Rewards are for learning, and the inventory shows it
 
@@ -132,7 +132,7 @@ Profile C: gamified applications. Read together with the core rules.
 
 **How to improve.** Remove decay and energy timers; let the world wait for the child unchanged.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act), [R-RADESKY2022](https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use)
 
 ### B-DAT-01: Research use of learning data is separated
 
@@ -192,7 +192,7 @@ Profile C: gamified applications. Read together with the core rules.
 
 **How to improve.** Add a 'turn off streaks' setting and replace 'you will lose your streak' with neutral progress messages.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act)
 
 ### C-ENG-02: Leaderboards are class-scoped and pseudonymous
 
@@ -216,7 +216,7 @@ Profile C: gamified applications. Read together with the core rules.
 
 **How to improve.** Remove any purchase or exchange path for points.
 
-**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act)
 
 ### C-ENG-04: No variable reward schedules designed for engagement
 

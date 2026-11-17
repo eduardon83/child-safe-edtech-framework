@@ -137,6 +137,12 @@ rules:
   CORE-COM-08:
     terms: [[product placement, sponsor, brand, influencer, commercial content], [learning, educational, children, activities]]
     conflict: [product placement, branded content, sponsored rewards, brand partnerships]
+  CORE-COM-09:
+    terms: [[withdraw, refund, cancel a purchase, cooling off, 14 days, reembolso, desist], [purchase, currency, in-app, digital content, information before]]
+    conflict: [all sales final, non refundable, no refunds]
+  CORE-COM-10:
+    terms: [[terms, conditions, account ban, suspension, currency value], [plain language, fair, contest, appeal, reason]]
+    conflict: [at our sole discretion, without notice or reason]
   CORE-SAF-01:
     terms: [[default, defaults], [privacy, private, protective, highest level, safe settings, safety settings]]
     conflict_regex: ['(public|visible to everyone|sharing)[^.]{0,40}by default', 'opt[ -]?out']

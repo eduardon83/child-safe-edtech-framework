@@ -84,10 +84,42 @@ sources:
     title: "Digital Fairness Act (proposal replacing the Unfair Commercial Practices Directive)"
     type: proposal
     jurisdiction: EU
-    status: "Proposal due 11 Nov 2026. Content known from a leaked draft only. Re-verify against the official text"
-    url: "https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows"
-    notes: "Leaked draft: ban on paid loot boxes and pay-to-win for minors, virtual currency value shown and off by default for children, right to switch off streaks, autoplay and relationship-simulating chatbots, blacklist of 10 dark patterns."
-    verified: 2026-11-11
+    status: "Proposed 11 Nov 2026 as COM(2026) 1100, procedure 2026/0356(COD), a regulation replacing the UCPD. Would apply 12 months after entry into force. Art. 10 bans manipulative interfaces and Annex I Part III blacklists ten dark patterns; Art. 12 bars profiling-based ads to known minors; Art. 17 gives off switches for autoplay, streaks and relationship-simulating features. Bans pay-to-win and paid variable rewards for minors; paid currency shows its real-money value and is off by default for minors. Checked against secondary summaries of the official text; confirm article numbers on EUR-Lex"
+    url: "https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act"
+    notes: "CSEF rules first cited a leaked draft (Nov 2026). Summaries of the official text confirm the points CSEF uses. The parallel CPC Regulation revision would let the Commission fine up to 6% of turnover in large cross-border cases."
+    verified: 2026-11-17
+
+  - id: CRD
+    title: "Directive 2011/83/EU, Consumer Rights Directive"
+    type: law
+    jurisdiction: EU
+    status: "In force (transposed nationally). Art. 6 pre-contractual information; Art. 9 to 16 right of withdrawal within 14 days, with the digital-content exception in Art. 16(m) only after express consent and acknowledgement"
+    url: "https://eur-lex.europa.eu/eli/dir/2011/83/oj"
+    verified: 2026-11-17
+
+  - id: UCTD
+    title: "Council Directive 93/13/EEC on unfair terms in consumer contracts"
+    type: law
+    jurisdiction: EU
+    status: "In force (transposed nationally). Art. 3 unfair terms are not binding on the consumer; Art. 5 terms must be in plain, intelligible language"
+    url: "https://eur-lex.europa.eu/eli/dir/1993/13/oj"
+    verified: 2026-11-17
+
+  - id: CPC-VC
+    title: "CPC Network: Key Principles on In-game Virtual Currencies (21 March 2025)"
+    type: guidance
+    jurisdiction: EU
+    status: "Published 21 Mar 2025 by the EU consumer protection authorities (CPC Network), coordinated by the Commission. Non-binding reading of the UCPD, the Consumer Rights Directive and the Unfair Contract Terms Directive for currencies bought with money. Seven principles: real-world prices shown; no mixing of currencies or forced exchanges; no bundles that force unwanted currency; pre-contractual information; 14-day withdrawal, unused currency included; fair, plain terms (no unilateral value changes, contestable account bans); design that respects vulnerabilities (children always vulnerable, no direct exhortation, parental controls with spending off by default for games not limited to adults, age gates do not reduce responsibility)"
+    url: "https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en"
+    verified: 2026-11-17
+
+  - id: CPC-JS
+    title: "CPC Network: Joint Statement on Stronger Consumer Protection in Video Games across the EU Single Market (30 September 2026)"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 30 Sep 2026 together with coordinated actions against nine game companies. Finds that many companies made no substantive changes after the Key Principles; names virtual currencies, loot boxes, misleading countdown timers, false scarcity and direct exhortation of children; says self-regulation often does not address the core problems. National enforcement may follow"
+    url: "https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en"
+    verified: 2026-11-17
 
   - id: UCPD
     title: "Directive 2005/29/EC, Unfair Commercial Practices Directive"

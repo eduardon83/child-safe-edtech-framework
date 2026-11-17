@@ -2,11 +2,11 @@
 
 # Rule catalogue
 
-CSEF v0.11.0: 122 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
+CSEF v0.12.0: 124 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
 
 | Level | MUST | SHOULD |
 |---|---|---|
-| 1 Legal baseline | 39 | 2 |
+| 1 Legal baseline | 41 | 2 |
 | 2 Forward-compliant | 40 | 11 |
 | 3 Best practice | 0 | 30 |
 
@@ -15,7 +15,7 @@ CSEF v0.11.0: 122 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Be
 | A-ASM-01 | In-game assessment is transparent and separated | A | MUST | 2 | all |
 | A-ECO-01 | No paid randomised rewards (loot boxes) | A, B, C | MUST | 2 | all |
 | A-ECO-02 | No pay-to-win | A, B, C | MUST | 2 | all |
-| A-ECO-03 | Virtual currency shows its real value | A, C | MUST | 2 | all |
+| A-ECO-03 | Virtual currency: real price, one currency, exact amounts | A, B, C | MUST | 2 | all |
 | A-MOT-01 | Rewards are for learning, and the inventory shows it | A, B, C | SHOULD | 3 | all |
 | A-MOT-02 | Feedback informs, it does not control | A, B, C | SHOULD | 3 | all |
 | A-MOT-03 | The product works with rewards switched off | A, C | SHOULD | 3 | all |
@@ -85,6 +85,8 @@ CSEF v0.11.0: 122 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Be
 | CORE-COM-06 | No design for impulsive or unwanted spending | core | MUST | 2 | all |
 | CORE-COM-07 | No disguised advertising | core | MUST | 1 | all |
 | CORE-COM-08 | No commercial content inside learning activities for children | core | SHOULD | 3 | all |
+| CORE-COM-09 | Clear purchase information and a working right of withdrawal | core | MUST | 1 | all |
+| CORE-COM-10 | Fair, plain terms for purchases and accounts | core | MUST | 1 | all |
 | CORE-DAT-01 | DPIA before launch | core | MUST | 1 | all |
 | CORE-DAT-02 | Controller and processor roles are defined, with processor agreements | core | MUST | 1 | all |
 | CORE-DAT-03 | No transfers outside the EEA without a valid mechanism | core | MUST | 1 | all |

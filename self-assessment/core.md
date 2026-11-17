@@ -37,9 +37,13 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **CORE-COM-03** (MUST) No dark patterns. No fake urgency or scarcity, confirmshaming, pre-ticked options, nagging after a choice, obstruction to leave or cancel, fake notifications, or confusing double negatives.  
       Evidence: 
-- [ ] **CORE-COM-04** (MUST) Purchases are adult-facing only. Children are never directly exhorted to buy, and any purchase flow is behind an adult gate (guardian or school account), with the price in real currency.  
+- [ ] **CORE-COM-04** (MUST) Purchases are adult-facing only. Children are never directly exhorted to buy, or to ask adults to buy for them, and any purchase flow is behind an adult gate (guardian or school account), with the price in real currency. This applies to any product likely to appeal to children, even if it is not aimed at them, and an age gate does not remove the duty. Spending real money is off by default, and parental controls work, with defaults that suit the age.  
       Evidence: 
 - [ ] **CORE-COM-07** (MUST) No disguised advertising. Paid promotion is never presented as learning content, game content or a character's own opinion. Any sponsorship, product placement or brand partnership is clearly identified as such, in words a child of the target age understands.  
+      Evidence: 
+- [ ] **CORE-COM-09** (MUST) Clear purchase information and a working right of withdrawal. Before any purchase, with money or with purchasable currency, the buyer sees in plain words what is being bought, who sells it and how to contact them, the real-world price, whether and how the right of withdrawal applies, the legal guarantee, and how payment and delivery work. The buyer can withdraw within 14 days, and unused purchased currency can be returned in that time. For digital content the right is lost only after a separate, express consent to immediate delivery and an acknowledgement of losing it, confirmed afterwards. Paying with personal data does not remove it.  
+      Evidence: 
+- [ ] **CORE-COM-10** (MUST) Fair, plain terms for purchases and accounts. Terms for the game, purchases and currency are in plain language and do not limit statutory rights. They do not let the trader remove or change bought content or currency, or change the currency's value, on its own; content that players can reasonably expect to keep stays available. An account ban, suspension or removal comes with a reason and a way to contest it.  
       Evidence: 
 - [ ] **CORE-DAT-01** (MUST) DPIA before launch. A Data Protection Impact Assessment exists before launch when children's data is processed at scale, with new technology (including AI), or for systematic monitoring of learners.  
       Evidence: 
