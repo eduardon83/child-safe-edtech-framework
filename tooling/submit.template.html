@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Submission preview · CSEF</title>
+<meta name="description" content="Preview of the CSEF label package submission. Submissions are not open yet; nothing is uploaded or sent.">
+<meta name="robots" content="noindex">
+{head}
+<style>{brand_css}
+*{box-sizing:border-box}body{margin:0;background:var(--c-paper);color:var(--c-ink);font:17px/1.6 var(--font)}
+a{color:var(--c-indigo-t)}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--c-indigo);outline-offset:2px}
+.in{max-width:1000px;margin:0 auto;padding:0 24px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px}.top .csef-brand{margin:0}
+.top a.back{display:inline-flex;align-items:center;min-height:44px;font-weight:600}
+.note{display:flex;gap:10px;align-items:center;margin:0 0 22px;padding:12px 16px;border-radius:12px;background:var(--c-sun-bg);color:var(--c-sun-t);font-weight:600}
+h1,h2,h3{font-family:var(--font-display);letter-spacing:-.01em}h1{font-size:clamp(2rem,4.5vw,2.8rem);margin:0 0 6px}
+.lead{margin:0 0 24px;color:var(--c-ink2);font-size:1.1rem}
+ol.steps{list-style:none;margin:0 0 24px;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+ol.steps li{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 16px 0 8px;border-radius:999px;font-size:.95rem;font-weight:600;background:var(--c-panel);color:var(--c-ink2);border:1px solid var(--c-line)}
+ol.steps li span{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:999px;background:var(--c-paper);font-size:.82rem}
+ol.steps li[aria-current=step]{background:var(--c-ink);color:var(--c-paper);border-color:var(--c-ink)}ol.steps li[aria-current=step] span{background:var(--c-paper);color:var(--c-ink)}
+ol.steps li.done{background:var(--c-teal-bg);color:var(--c-teal-t);border-color:transparent}ol.steps li.done span{background:var(--c-teal-t);color:#fff}
+.card{background:var(--c-panel);border:1px solid var(--c-line);border-radius:18px;padding:30px}
+.card h2{margin:0 0 4px;font-size:1.6rem}.card .sub{margin:0 0 22px;color:var(--c-ink2)}
+.fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}.field label{font-weight:600;font-size:.95rem}
+.field input{min-height:48px;padding:0 14px;border:1.5px solid var(--c-line);border-radius:10px;font:inherit;background:var(--c-panel);color:var(--c-ink)}
+fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border-radius:14px;border:1.5px solid var(--c-line);cursor:pointer}
+.opt:has(input:checked){border:2px solid var(--c-teal);background:var(--c-teal-bg)}
+.opt input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--c-teal-t)}.opt b{display:block}.opt small{display:block;color:var(--c-ink2);font-size:.92rem}
+.chip{margin-left:auto;flex:none;padding:2px 10px;border-radius:999px;font-size:.75rem;font-weight:600;background:var(--b);color:var(--t)}
+.drop{display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:24px;border:2px dashed var(--c-line);border-radius:14px;background:var(--c-paper)}
+.drop .field{flex:1 1 260px}.btn{min-height:48px;padding:0 20px;border-radius:10px;font:inherit;font-weight:600;cursor:pointer;border:1.5px solid var(--c-ink);background:var(--c-panel);color:var(--c-ink)}
+.btn.p{background:var(--c-teal-t);border-color:var(--c-teal-t);color:#fff}.btn:disabled{opacity:.45;cursor:not-allowed}
+ul.checks{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+ul.checks li{display:flex;gap:12px;align-items:flex-start}.b{flex:none;min-width:58px;text-align:center;padding:2px 8px;border-radius:999px;font-size:.75rem;font-weight:700;background:var(--b);color:var(--t)}
+dl{margin:0 0 22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px 24px;padding:18px;border-radius:14px;background:var(--c-paper)}
+dt{font-size:.82rem;font-weight:600;color:var(--c-ink2)}dd{margin:2px 0 0;overflow-wrap:anywhere}
+.tick{display:flex;gap:12px;align-items:flex-start;margin:0 0 12px;cursor:pointer}.tick input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--c-teal-t)}
+.nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin:28px 0 0;padding:22px 0 0;border-top:1px solid var(--c-line)}
+ol.next{list-style:none;margin:0;padding:0}ol.next li{display:flex;gap:14px;margin:0 0 14px}
+ol.next li span{flex:none;width:28px;height:28px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;background:var(--c-indigo-bg);color:var(--c-indigo-t)}
+[hidden]{display:none!important}
+footer{margin-top:48px;padding:28px 0;border-top:1px solid var(--c-line);color:var(--c-ink2);font-size:.9rem}
+</style></head>
+<body><div class="csef-stripe"></div>
+<header class="in top"><a href="../" aria-label="CSEF home" style="text-decoration:none">{logo}</a><a class="back" href="../#labels">Back to the overview</a></header>
+<main class="in">
+<p class="note" role="note"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Preview. Submissions are not open yet. Nothing is uploaded or sent.</p>
+<h1>Submit a label package</h1>
+<p class="lead">Four short steps. When submissions open, the label body receives your package and replies to you.</p>
+<ol class="steps" aria-label="Steps">
+<li data-s="1"><span>1</span>Product</li><li data-s="2"><span>2</span>Destination</li><li data-s="3"><span>3</span>Package</li><li data-s="4"><span>4</span>Confirm</li>
+</ol>
+<form class="card" id="flow" novalidate>
+<section data-step="1">
+<h2>Your product</h2><p class="sub">Who should the label body write to?</p>
+<div class="fields">
+<div class="field"><label for="product">Product name</label><input id="product" autocomplete="off" placeholder="Garden of Numbers"></div>
+<div class="field"><label for="org">Organisation</label><input id="org" autocomplete="organization" placeholder="Your studio or school"></div>
+<div class="field"><label for="email">Contact email</label><input id="email" type="email" autocomplete="email" placeholder="name@studio.example"></div>
+</div>
+</section>
+<section data-step="2" hidden>
+<h2>Choose where it goes</h2><p class="sub">Pick one. You can send the same package elsewhere later.</p>
+<fieldset><legend>Label or catalogue</legend>
+<label class="opt"><input type="radio" name="dest" value="Serious-game quality label"><span><b>Serious-game quality label</b><small>Based on published quality criteria for serious games.</small></span><span class="chip" style="--b:var(--c-sun-bg);--t:var(--c-sun-t)">Planned</span></label>
+<label class="opt"><input type="radio" name="dest" value="Serious-game catalogue"><span><b>Serious-game catalogue</b><small>A listing in a catalogue that reads SG-MDF metadata.</small></span><span class="chip" style="--b:var(--c-teal-bg);--t:var(--c-teal-t)">Format ready</span></label>
+<label class="opt"><input type="radio" name="dest" value="Learning resource repository"><span><b>Learning resource repository</b><small>Any product. Uses the schema.org LearningResource description.</small></span><span class="chip" style="--b:var(--c-teal-bg);--t:var(--c-teal-t)">Format ready</span></label>
+<label class="opt"><input type="radio" name="dest" value="Advice from the CSEF team"><span><b>Not sure yet</b><small>Send it to the CSEF team, and we suggest where it fits.</small></span><span class="chip" style="--b:var(--c-indigo-bg);--t:var(--c-indigo-t)">Advice</span></label>
+</fieldset>
+</section>
+<section data-step="3" hidden>
+<h2>Upload the package</h2><p class="sub">The zip made by <code>metadata.py --package</code>. It is checked before it goes on.</p>
+<div class="drop">
+<div class="field"><label for="pkg">Label package (.zip)</label><input id="pkg" type="file" accept=".zip"></div>
+<button type="button" class="btn" id="example">Use the example package</button>
+</div>
+<div id="results" hidden>
+<p style="margin:18px 0 0"><strong id="fname"></strong> <span id="fnote" style="color:var(--c-ink2)"></span></p>
+<ul class="checks" id="checks"></ul>
+</div>
+</section>
+<section data-step="4" hidden>
+<h2>Check and confirm</h2><p class="sub">This is what the label body will receive.</p>
+<dl><div><dt>Product</dt><dd id="s-product"></dd></div><div><dt>Organisation</dt><dd id="s-org"></dd></div><div><dt>Goes to</dt><dd id="s-dest"></dd></div><div><dt>Package</dt><dd id="s-file"></dd></div></dl>
+<label class="tick"><input type="checkbox" class="c">The package holds no learner data.</label>
+<label class="tick"><input type="checkbox" class="c">We may share the evidence it lists with the label body.</label>
+<label class="tick"><input type="checkbox" class="c">We understand the pre-check is not a label. The label body decides.</label>
+</section>
+<section data-step="5" hidden>
+<h2>Preview complete</h2>
+<p class="sub">Nothing was uploaded or sent. When submissions open, this is what will happen:</p>
+<ol class="next">
+<li><span>1</span><div><strong>Received.</strong> The package and its hashes are stored as sent, and you get a reference number by email.</div></li>
+<li><span>2</span><div><strong>Format check.</strong> Files, hashes and metadata fields are checked. You hear back if something is missing.</div></li>
+<li><span>3</span><div><strong>With the label body.</strong> It runs its own assessment and may ask you questions.</div></li>
+<li><span>4</span><div><strong>Decision.</strong> The label body tells you its decision and how to use the label.</div></li>
+</ol>
+<p style="margin:8px 0 0"><a href="https://github.com/eduardon83/child-safe-edtech-framework/issues">Tell us what you think of this flow</a>.</p>
+</section>
+<div class="nav" id="nav"><button type="button" class="btn" id="back">Back</button><button type="button" class="btn p" id="next">Next</button></div>
+</form>
+</main>
+<footer><div class="in">Child-Safe EdTech Framework (CSEF) v{version}. Framework content CC BY 4.0 · code Apache 2.0</div></footer>
+<script>
+(function () {
+  var step = 1, file = "", example = false;
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $("flow");
+  var ok = "--b:var(--c-teal-bg);--t:var(--c-teal-t)", note = "--b:var(--c-sun-bg);--t:var(--c-sun-t)";
+  function dest() { var r = form.querySelector("input[name=dest]:checked"); return r ? r.value : ""; }
+  function valid() {
+    if (step === 1) return $("product").value.trim() && $("org").value.trim() && /.+@.+\..+/.test($("email").value);
+    if (step === 2) return !!dest();
+    if (step === 3) return !!file;
+    if (step === 4) return Array.prototype.every.call(form.querySelectorAll(".c"), function (c) { return c.checked; });
+    return true;
+  }
+  function checks() {
+    var list = example ? [
+      ["OK", ok, "MANIFEST.json found; all 9 file hashes match."], ["OK", ok, "SG-MDF Core fields complete."],
+      ["OK", ok, "CSEF scan at level 2: 0 blocking findings."],
+      ["Note", note, "Pre-check: 4 ready, 5 partial, 13 missing. You can still submit; the label body sees the gaps."],
+      ["OK", ok, "No learner data found in the package."]
+    ] : [["Note", note, "In this preview your file stays on your computer. The checks run when submissions open."]];
+    $("checks").innerHTML = "";
+    list.forEach(function (c) {
+      var li = document.createElement("li"), b = document.createElement("span"), t = document.createElement("span");
+      b.className = "b"; b.setAttribute("style", c[1]); b.textContent = c[0]; t.textContent = c[2];
+      li.appendChild(b); li.appendChild(t); $("checks").appendChild(li);
+    });
+    $("fname").textContent = file; $("fnote").textContent = example ? "· example results" : "";
+    $("results").hidden = !file;
+  }
+  function render() {
+    form.querySelectorAll("section[data-step]").forEach(function (s) { s.hidden = +s.getAttribute("data-step") !== step; });
+    document.querySelectorAll("ol.steps li").forEach(function (li) {
+      var n = +li.getAttribute("data-s");
+      li.classList.toggle("done", n < step);
+      if (n === step) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
+      li.querySelector("span").textContent = n < step ? "✓" : String(n);
+    });
+    $("back").disabled = step === 1;
+    $("next").textContent = step === 4 ? "Finish the preview" : "Next";
+    $("nav").hidden = step === 5;
+    $("next").disabled = !valid();
+    if (step === 4) {
+      $("s-product").textContent = $("product").value; $("s-org").textContent = $("org").value;
+      $("s-dest").textContent = dest(); $("s-file").textContent = file;
+    }
+  }
+  form.addEventListener("input", render); form.addEventListener("change", render);
+  $("pkg").addEventListener("change", function (e) { var f = e.target.files[0]; file = f ? f.name : ""; example = false; checks(); render(); });
+  $("example").addEventListener("click", function () { file = "csef-label-package-garden-of-numbers.zip"; example = true; checks(); render(); });
+  $("back").addEventListener("click", function () { step = Math.max(1, step - 1); render(); });
+  $("next").addEventListener("click", function () { if (valid()) { step += 1; render(); $("flow").scrollIntoView({behavior: "smooth", block: "start"}); } });
+  render();
+})();
+</script>
+</body></html>

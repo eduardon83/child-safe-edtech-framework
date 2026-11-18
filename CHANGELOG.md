@@ -15,6 +15,11 @@ Open items and what we are watching: [legislation.md, watch list](framework/legi
   schema.org LearningResource JSON-LD. The required data statement is written from what csef.yaml declares.
 - **Label package**: metadata, findings, pre-check, evidence index, MANIFEST.json with SHA-256 hashes, zipped.
 - New sources: R-CASERMAN2020, DIN-SPEC-91380. Example: the compliant game now has metadata and statements.
+- **Website** (csef.kendirstudios.pt): new home page that starts with "Let's get you started" (six paths,
+  with suggestions by role) and a section per path; example reports for each audience in `docs/examples/`
+  (dashboards, PDF and Word reports, policy kit, Compass, code-of-conduct comparison, pre-check, metadata,
+  label package), made by `tooling/examples.py`; a submission preview in `docs/submit/` (nothing is sent).
+  The build checks every local link on the site.
 - Rules unchanged (124). Sources: 81 to 83, plus 9 in the Portugal pack.
 
 ## v0.12.0 (2026-11-17)

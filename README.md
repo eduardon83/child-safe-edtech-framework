@@ -249,13 +249,15 @@ framework/        rules.yaml + sources.yaml (single source of truth), coc-topics
                  compass/targets.yaml + crosswalk.yaml (Literacy Compass), generated compass/catalogue.md
                  serious-games/criteria.yaml (serious-game pre-check)
 packs/           country and extra packs (pt.yaml, _template.yaml)
-tooling/         scan.py, comms.py, export.py, coc.py, policy.py, compass.py, precheck.py, metadata.py, build.py, generated Semgrep rules
+tooling/         scan.py, comms.py, export.py, coc.py, policy.py, compass.py, precheck.py, metadata.py, build.py,
+                 examples.py (example reports for the website), site templates, generated Semgrep rules
 skill/           csef-review skill for Claude (generated copies + SKILL.md + references)
 templates/       manifest, DPIA starter, AI risk file, waiver, agent instructions, GitHub files
 self-assessment/ generated checklists per profile and level
 examples/        non-compliant, compliant and Unity sample products; example company pack and code of conduct
 tests/           test-suite
-docs/            GitHub Pages site, questionnaire and Pack Builder (generated), release notes
+docs/            GitHub Pages site (csef.kendirstudios.pt): home, questionnaire, Pack Builder, submission preview
+                 (generated), example reports (tooling/examples.py), release notes
 brand/           logo, icons, colours and fonts (see brand/README.md)
 ```
 

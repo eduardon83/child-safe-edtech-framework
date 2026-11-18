@@ -117,3 +117,15 @@ def test_label_package(tmp_path):
         assert f"{top}/MANIFEST.json" in names and f"{top}/metadata/sg-mdf.xml" in names
         ev = json.loads(zf.read(f"{top}/evidence/index.json"))
         assert {"criterion": "SG-09", "ref": "docs/playtest-summary.md", "found": True} in ev
+
+
+def test_site_example_links_resolve():
+    import re
+    page = (ROOT / "docs" / "examples" / "index.html").read_text(encoding="utf-8")
+    links = [h for h in re.findall(r'href="([^"]+)"', page) if not re.match(r"^(https?:|#|\.\./)", h)]
+    assert len(links) >= 15
+    for h in links:
+        assert (ROOT / "docs" / "examples" / h).exists(), h
+    landing = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
+    assert "Let's get you started" in landing and 'href="examples/"' in landing and 'href="submit/"' in landing
+    assert "Nothing is uploaded or sent" in (ROOT / "docs" / "submit" / "index.html").read_text(encoding="utf-8")

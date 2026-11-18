@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CSEF serialisation of SG-MDF. DIN SPEC 91380:2018-06 defines SG-MDF as a grammar with no official JSON or XML schema. Element names and nesting follow the DIN SPEC. This file is not published or endorsed by DIN. -->
+<SG-MD serialisation="csef-1">
+  <gameInfo>
+    <titleInfo>
+      <gameID>garden-of-numbers</gameID>
+      <title>Garden of Numbers (good example)</title>
+    </titleInfo>
+    <characterizingGoal>
+      <primaryGoal>Educational Game</primaryGoal>
+      <goalDescription>knowledge of player - sustainably - improve</goalDescription>
+    </characterizingGoal>
+    <abstract>Maths puzzle game played in class, teacher-managed.</abstract>
+    <keywordInfo>
+      <keyword>fractions</keyword>
+    </keywordInfo>
+    <keywordInfo>
+      <keyword>number sense</keyword>
+    </keywordInfo>
+    <keywordInfo>
+      <keyword>primary maths</keyword>
+    </keywordInfo>
+    <gameGenre>logic and puzzle games</gameGenre>
+    <gameMode>single player</gameMode>
+    <previewInfo>
+      <previewObject>https://example.org/garden-of-numbers/title.png</previewObject>
+      <previewObjectType>title image</previewObjectType>
+    </previewInfo>
+    <playTime>15 to 20 minutes per lesson; 12 lessons in the full garden</playTime>
+    <releaseInfo>
+      <releaseVersion>1.4.0</releaseVersion>
+      <releaseDate>2026-09-01</releaseDate>
+      <releaseStatus>complete</releaseStatus>
+    </releaseInfo>
+  </gameInfo>
+  <useInfo>
+    <applicationFields>
+      <applicationField>education</applicationField>
+    </applicationFields>
+    <targetUserGroups>
+      <targetUserGroup>players - pupils, ages 6 to 9</targetUserGroup>
+    </targetUserGroups>
+    <targetUserGroups>
+      <targetUserGroup>intermediaries - teacher</targetUserGroup>
+    </targetUserGroups>
+    <ageRestrictions>
+      <ageRestriction>PEGI-3</ageRestriction>
+    </ageRestrictions>
+    <language>pt</language>
+    <language>en</language>
+    <dataRecordingTransfer>Personal data recorded: yes, user accounts. Processed by third parties: Hosting provider (hosting and database, DE). Provider's GDPR role: processor (the school or family decides what happens to the data). Retention: gameplay events for end of school year + 30 days. Privacy notice: https://example.org/garden-of-numbers/privacy. Declared in csef.yaml; checked with CSEF 0.13.0.</dataRecordingTransfer>
+    <educational>
+      <learningResourceType>exercise</learningResourceType>
+      <context>school</context>
+      <teachingConcept>Guided discovery with worked examples, then practice</teachingConcept>
+      <curriculum>Portuguese Aprendizagens Essenciais, Mathematics, years 3 and 4 (fractions)</curriculum>
+      <priorKnowledge>Counting to 100 and halves</priorKnowledge>
+    </educational>
+  </useInfo>
+  <distributionInfo>
+    <distributionChannel>school licence</distributionChannel>
+    <distributionDescription>https://example.org/garden-of-numbers</distributionDescription>
+    <priceInfo>Yearly school licence per class. No purchases inside the product; licences are bought by adults (school or family).</priceInfo>
+    <withCosts>yes</withCosts>
+  </distributionInfo>
+  <technicalInfo>
+    <platformInfo>
+      <platform>web browser</platform>
+      <requirementInfo>Current Chrome, Edge, Firefox or Safari on a tablet or laptop; no installation</requirementInfo>
+    </platformInfo>
+  </technicalInfo>
+  <involvedPartyInfo>
+    <involvedParty>
+      <involvedPartyName>Example Studio</involvedPartyName>
+      <partyRoleCode>developer</partyRoleCode>
+      <involvedPartyReference>https://example.org</involvedPartyReference>
+    </involvedParty>
+    <involvedParty>
+      <involvedPartyName>Example University</involvedPartyName>
+      <partyRoleCode>scientific research</partyRoleCode>
+      <involvedPartyReference>https://example.org/university</involvedPartyReference>
+    </involvedParty>
+  </involvedPartyInfo>
+  <metadataInfo>
+    <metadataLanguage>en</metadataLanguage>
+    <metadataCharacterSet>UTF-8 (Unicode, ISO/IEC 10646)</metadataCharacterSet>
+    <metadataFormat>
+      <metadataFormatID>SG-MDF</metadataFormatID>
+      <metadataFormatName>SG-MDF</metadataFormatName>
+      <metadataFormatVersion>DIN SPEC 91380:2018-06</metadataFormatVersion>
+      <metadataFormatReleaseDate>2018-06</metadataFormatReleaseDate>
+    </metadataFormat>
+  </metadataInfo>
+</SG-MD>

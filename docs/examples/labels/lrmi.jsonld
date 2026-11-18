@@ -1,0 +1,67 @@
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "LearningResource",
+    "VideoGame"
+  ],
+  "identifier": "garden-of-numbers",
+  "name": "Garden of Numbers (good example)",
+  "description": "Maths puzzle game played in class, teacher-managed.",
+  "keywords": "fractions, number sense, primary maths",
+  "inLanguage": [
+    "pt",
+    "en"
+  ],
+  "typicalAgeRange": "6-9",
+  "audience": [
+    {
+      "@type": "EducationalAudience",
+      "educationalRole": "student"
+    },
+    {
+      "@type": "EducationalAudience",
+      "educationalRole": "teacher"
+    }
+  ],
+  "teaches": [
+    "Pupils aged 6 to 9 understand and compare simple fractions."
+  ],
+  "learningResourceType": [
+    "exercise"
+  ],
+  "educationalAlignment": [
+    {
+      "@type": "AlignmentObject",
+      "alignmentType": "educationalFramework",
+      "targetName": "Portuguese Aprendizagens Essenciais, Mathematics, years 3 and 4 (fractions)"
+    }
+  ],
+  "competencyRequired": "Counting to 100 and halves",
+  "contentRating": "PEGI-3",
+  "version": "1.4.0",
+  "datePublished": "2026-09-01",
+  "isAccessibleForFree": false,
+  "url": "https://example.org/garden-of-numbers",
+  "image": "https://example.org/garden-of-numbers/title.png",
+  "author": [
+    {
+      "@type": "Organization",
+      "name": "Example Studio",
+      "url": "https://example.org"
+    }
+  ],
+  "contributor": [
+    {
+      "@type": "Organization",
+      "name": "Example University",
+      "url": "https://example.org/university"
+    }
+  ],
+  "gamePlatform": [
+    "web browser"
+  ],
+  "playMode": [
+    "https://schema.org/SinglePlayer"
+  ],
+  "usageInfo": "https://example.org/garden-of-numbers/privacy"
+}

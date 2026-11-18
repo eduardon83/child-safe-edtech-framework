@@ -1,0 +1,129 @@
+{
+  "serialisation": {
+    "name": "CSEF serialisation of SG-MDF",
+    "version": "1",
+    "note": "DIN SPEC 91380:2018-06 defines SG-MDF as a grammar with no official JSON or XML schema. Element names and nesting follow the DIN SPEC. This file is not published or endorsed by DIN."
+  },
+  "SG-MD": {
+    "gameInfo": {
+      "titleInfo": {
+        "gameID": "garden-of-numbers",
+        "title": "Garden of Numbers (good example)"
+      },
+      "characterizingGoal": {
+        "primaryGoal": "Educational Game",
+        "goalDescription": [
+          "knowledge of player - sustainably - improve"
+        ]
+      },
+      "abstract": "Maths puzzle game played in class, teacher-managed.",
+      "keywordInfo": [
+        {
+          "keyword": "fractions"
+        },
+        {
+          "keyword": "number sense"
+        },
+        {
+          "keyword": "primary maths"
+        }
+      ],
+      "gameGenre": [
+        "logic and puzzle games"
+      ],
+      "gameMode": [
+        "single player"
+      ],
+      "previewInfo": [
+        {
+          "previewObject": "https://example.org/garden-of-numbers/title.png",
+          "previewObjectType": "title image"
+        }
+      ],
+      "playTime": "15 to 20 minutes per lesson; 12 lessons in the full garden",
+      "releaseInfo": [
+        {
+          "releaseVersion": "1.4.0",
+          "releaseDate": "2026-09-01",
+          "releaseStatus": "complete"
+        }
+      ]
+    },
+    "useInfo": {
+      "applicationFields": [
+        {
+          "applicationField": "education"
+        }
+      ],
+      "targetUserGroups": [
+        {
+          "targetUserGroup": "players - pupils, ages 6 to 9"
+        },
+        {
+          "targetUserGroup": "intermediaries - teacher"
+        }
+      ],
+      "ageRestrictions": [
+        {
+          "ageRestriction": "PEGI-3"
+        }
+      ],
+      "language": [
+        "pt",
+        "en"
+      ],
+      "dataRecordingTransfer": "Personal data recorded: yes, user accounts. Processed by third parties: Hosting provider (hosting and database, DE). Provider's GDPR role: processor (the school or family decides what happens to the data). Retention: gameplay events for end of school year + 30 days. Privacy notice: https://example.org/garden-of-numbers/privacy. Declared in csef.yaml; checked with CSEF 0.13.0.",
+      "educational": {
+        "learningResourceType": [
+          "exercise"
+        ],
+        "context": [
+          "school"
+        ],
+        "teachingConcept": "Guided discovery with worked examples, then practice",
+        "curriculum": "Portuguese Aprendizagens Essenciais, Mathematics, years 3 and 4 (fractions)",
+        "priorKnowledge": "Counting to 100 and halves"
+      }
+    },
+    "distributionInfo": [
+      {
+        "distributionChannel": "school licence",
+        "distributionDescription": "https://example.org/garden-of-numbers",
+        "priceInfo": "Yearly school licence per class. No purchases inside the product; licences are bought by adults (school or family).",
+        "withCosts": "yes"
+      }
+    ],
+    "technicalInfo": {
+      "platformInfo": [
+        {
+          "platform": "web browser",
+          "requirementInfo": "Current Chrome, Edge, Firefox or Safari on a tablet or laptop; no installation"
+        }
+      ]
+    },
+    "involvedPartyInfo": {
+      "involvedParty": [
+        {
+          "involvedPartyName": "Example Studio",
+          "partyRoleCode": "developer",
+          "involvedPartyReference": "https://example.org"
+        },
+        {
+          "involvedPartyName": "Example University",
+          "partyRoleCode": "scientific research",
+          "involvedPartyReference": "https://example.org/university"
+        }
+      ]
+    },
+    "metadataInfo": {
+      "metadataLanguage": "en",
+      "metadataCharacterSet": "UTF-8 (Unicode, ISO/IEC 10646)",
+      "metadataFormat": {
+        "metadataFormatID": "SG-MDF",
+        "metadataFormatName": "SG-MDF",
+        "metadataFormatVersion": "DIN SPEC 91380:2018-06",
+        "metadataFormatReleaseDate": "2018-06"
+      }
+    }
+  }
+}

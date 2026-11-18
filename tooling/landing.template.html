@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSEF, Child-Safe EdTech Framework</title>
+<meta name="description" content="An open framework and toolkit to build safe digital learning for children. Check your products, set your boundaries, show what your product teaches and prepare for quality labels.">
+<meta property="og:title" content="CSEF, Child-Safe EdTech Framework"><meta property="og:description" content="Build safe things for kids. Together.">
+<meta property="og:image" content="brand/csef-social-preview-on-light.png">
+{head}<link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="site.webmanifest">
+<style>{brand_css}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--c-paper);color:var(--c-ink);font:17px/1.6 var(--font)}
+a{color:var(--c-indigo-t)}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--c-indigo);outline-offset:2px}
+.in{max-width:1200px;margin:0 auto;padding:0 24px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px 24px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px}
+.top .csef-brand{margin:0}.top nav{display:flex;gap:4px 20px;flex-wrap:wrap;align-items:center}
+.top nav a{text-decoration:none;color:var(--c-ink);font-weight:500;font-size:.95rem;padding:10px 0}
+.btn{display:inline-flex;align-items:center;min-height:50px;padding:0 22px;border-radius:12px;font-weight:600;text-decoration:none}
+.btn.p{background:var(--c-teal-t);color:#fff}.btn.p:hover{color:#fff;filter:brightness(1.1)}
+.btn.s{border:1.5px solid var(--c-ink);color:var(--c-ink);background:transparent}
+.top nav .btn{min-height:44px;padding:0 16px;font-size:.95rem}
+.pill{display:inline-block;padding:5px 13px;border-radius:999px;font-size:.85rem;font-weight:600}
+.eyebrow{margin:0 0 10px;font-size:.82rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:-.01em}
+h1{font-size:clamp(2.4rem,5.6vw,3.8rem);line-height:1.03;margin:0 0 16px;max-width:15ch}
+h2{font-size:clamp(1.8rem,3.4vw,2.5rem);line-height:1.1;margin:0 0 12px}
+.lead{font-size:1.18rem;color:var(--c-ink2);max-width:60ch;margin:0 0 28px}
+section{scroll-margin-top:12px}.band{padding-top:72px;padding-bottom:72px}.panel{background:var(--c-panel);border-top:1px solid var(--c-line);border-bottom:1px solid var(--c-line)}
+.hero{padding-top:28px;padding-bottom:72px}
+.chooser{background:var(--c-panel);border:1px solid var(--c-line);border-radius:22px;padding:28px;box-shadow:0 18px 40px rgba(23,35,63,.06)}
+.chooser-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:0 0 22px}
+.chooser-head h2{font-size:1.9rem;margin:0 0 4px}.chooser-head p{margin:0;color:var(--c-ink2)}
+.roles{display:flex;flex-wrap:wrap;gap:8px}.roles-label{margin:0 0 8px;font-size:.88rem;font-weight:600;color:var(--c-ink2)}
+.roles button{min-height:44px;padding:0 16px;border-radius:999px;font:inherit;font-size:.93rem;font-weight:600;cursor:pointer;
+background:var(--c-panel);color:var(--c-ink);border:1.5px solid var(--c-line)}
+.roles button[aria-pressed=true]{background:var(--c-ink);color:var(--c-paper);border-color:var(--c-ink)}
+.picks{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.pick{display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:16px;text-decoration:none;color:var(--c-ink);
+background:var(--c-paper);border:2px solid transparent}.pick:hover{border-color:var(--c-line)}
+.pick.sug{border-color:var(--c-teal);background:var(--c-teal-bg)}
+.ico{flex:none;width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:var(--b);color:var(--t)}
+.pick b{display:block;font-family:var(--font-display);font-size:1.2rem;line-height:1.3}
+.pick span.d{display:block;font-size:.95rem;color:var(--c-ink2);margin-top:4px}
+.badge{display:none;margin-left:8px;padding:2px 9px;border-radius:999px;background:var(--c-teal-t);color:#fff;font-family:var(--font);font-size:.75rem;vertical-align:middle}
+.pick.sug .badge{display:inline-block}
+.seeall{margin:18px 0 0;font-size:.98rem;color:var(--c-ink2)}
+.two{display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start}.two>*{flex:1 1 440px;min-width:0}
+.feat{display:flex;flex-direction:column;gap:16px;margin:0 0 26px}.feat p{margin:0;color:var(--c-ink2)}.feat strong{display:block;color:var(--c-ink)}
+pre{margin:0;padding:20px 22px;border-radius:16px;background:#17233F;color:#F6F3EC;font:14px/1.7 ui-monospace,"SF Mono",Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.box{border:1px solid var(--c-line);border-radius:16px;padding:22px;background:var(--c-paper)}.panel .box{background:var(--c-paper)}
+.levels{display:flex;flex-direction:column;gap:12px}.lv{display:flex;gap:14px;align-items:baseline}
+.num{flex:none;width:32px;height:32px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;background:var(--b);color:var(--t)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:0 0 28px}
+.card{background:var(--c-panel);border:1px solid var(--c-line);border-radius:16px;padding:22px}.panel .card{background:var(--c-paper)}
+.card h3,.card h4{margin:0 0 6px;font-size:1.25rem}.card p{margin:0;color:var(--c-ink2);font-size:.98rem}
+.ex{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:22px 0 0}
+.ex>span{font-weight:600;font-size:.95rem;margin-right:4px}
+.ex a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:10px;background:var(--c-panel);border:1px solid var(--c-line);color:var(--c-ink);text-decoration:none;font-weight:500;font-size:.95rem}
+.panel .ex a{background:var(--c-paper)}.ex a:hover{border-color:var(--c-ink2)}
+.fmt{padding:1px 7px;border-radius:6px;background:var(--c-ink);color:var(--c-paper);font-size:.7rem;font-weight:700;letter-spacing:.03em}
+.ladder{display:flex;flex-direction:column;gap:10px}.rung{display:flex;gap:14px;align-items:center;padding:11px 16px;border-radius:12px;background:var(--b)}
+.rung b{flex:none;width:24px;font-family:var(--font-display);font-size:1.25rem;color:var(--t)}
+.steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin:0 0 36px}
+.steps .card b{font-family:var(--font-display);color:var(--t)}
+.stat{display:flex;flex-wrap:wrap;gap:10px 22px;margin:0 0 18px}.stat strong{font-family:var(--font-display);font-size:1.4rem;margin-right:4px}
+.sample{border:1px solid var(--c-line);border-radius:18px;overflow:hidden;background:var(--c-panel)}
+.sample-h{display:flex;justify-content:space-between;gap:8px;padding:14px 20px;border-bottom:1px solid var(--c-line);background:var(--c-paper);font-weight:600}
+.sample-h span{font-weight:400;font-size:.88rem;color:var(--c-ink2)}
+.counts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:16px 20px}
+.counts div{padding:10px 12px;border-radius:12px;background:var(--b);color:var(--t);font-size:.82rem;font-weight:600}
+.counts div b{display:block;font-family:var(--font-display);font-size:1.6rem}
+.row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 14px;padding:12px 20px;border-top:1px solid var(--c-line);font-size:.95rem}
+.row small{display:block;color:var(--c-ink2)}.st{padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:600;background:var(--b);color:var(--t)}
+.cta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px 32px;padding:28px 32px;border-radius:18px;background:var(--c-ink);color:var(--c-paper)}
+.cta p{margin:0;opacity:.85}.cta h3{margin:0 0 4px;font-size:1.5rem}.cta .btn{background:var(--c-paper);color:var(--c-ink)}
+.cmp{display:flex;flex-direction:column;gap:10px}.cmp div{display:flex;gap:14px;padding:14px 18px;border-radius:14px;background:var(--b)}
+.cmp b{flex:none;min-width:80px;color:var(--t)}
+.nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin:0 0 32px}
+.nums div{padding:18px 20px;border-radius:16px;background:var(--c-panel);border:1px solid var(--c-line);color:var(--c-ink2);font-size:.95rem}
+.nums b{display:block;font-family:var(--font-display);font-size:2.1rem;color:var(--c-ink);line-height:1.2}
+.guides{display:flex;flex-wrap:wrap;gap:10px}.guides a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:var(--c-panel);border:1px solid var(--c-line);color:var(--c-ink);text-decoration:none;font-weight:500}
+details{border-bottom:1px solid var(--c-line)}summary{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:62px;font-size:1.08rem;font-weight:600;cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}summary:after{content:"+";font-size:1.5rem;font-weight:400;transition:transform .15s}details[open] summary:after{transform:rotate(45deg)}
+details p{margin:0 0 18px;color:var(--c-ink2)}
+footer{border-top:1px solid var(--c-line);background:var(--c-panel);padding:36px 0;color:var(--c-ink2);font-size:.92rem}
+footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 32px}footer nav{display:flex;flex-wrap:wrap;gap:4px 22px}
+footer nav a{color:var(--c-ink);padding:8px 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:560px){.counts{grid-template-columns:repeat(2,minmax(0,1fr))}.chooser{padding:20px}.band{padding-top:56px;padding-bottom:56px}}
+</style></head>
+<body><div class="csef-stripe"></div>
+<header class="in top"><a href="./" aria-label="CSEF home" style="text-decoration:none">{logo}</a>
+<nav aria-label="Main"><a href="examples/">Examples</a><a href="questionnaire/">Questionnaire</a><a href="pack-builder/">Pack Builder</a>
+<a href="https://github.com/eduardon83/child-safe-edtech-framework">GitHub</a><a class="btn p" href="#start">Get started</a></nav></header>
+<main>
+
+<section id="start" class="in hero">
+<p class="pill" style="background:var(--c-indigo-bg);color:var(--c-indigo-t);margin:0 0 18px">Open framework · v{version} · draft for public comment</p>
+<h1>Build safe things for kids. Together.</h1>
+<p class="lead">CSEF is an open framework and toolkit for digital learning used by children. It turns EU law, coming rules and research into clear boundaries and checks you can run on every product.</p>
+<div class="chooser">
+<div class="chooser-head"><div><h2>Let's get you started</h2><p>What are you looking for? Pick one and we take you there.</p></div>
+<div><p class="roles-label" id="roles-label">Not sure? Tell us who you are.</p>
+<div class="roles" role="group" aria-labelledby="roles-label">
+<button type="button" data-role="company" aria-pressed="false">Company lead</button><button type="button" data-role="developer" aria-pressed="false">Developer</button><button type="button" data-role="designer" aria-pressed="false">Designer</button><button type="button" data-role="educator" aria-pressed="false">Educator or school</button><button type="button" data-role="label" aria-pressed="false">Label or catalogue</button>
+</div></div></div>
+<p class="sr" aria-live="polite" id="sugtext"></p>
+<div class="picks">
+<a class="pick" data-pick="check" href="#check"><span class="ico" style="--b:var(--c-teal-bg);--t:var(--c-teal-t)"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M8 11l2 2 4-4"/></svg></span><span><b>Check a product<span class="badge">Suggested</span></b><span class="d">Scan code and settings against {rules} rules. Get a report and an improvement plan.</span></span></a>
+<a class="pick" data-pick="policy" href="#policy"><span class="ico" style="--b:var(--c-indigo-bg);--t:var(--c-indigo-t)"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12h6"/></svg></span><span><b>Set our company's boundaries<span class="badge">Suggested</span></b><span class="d">Answer a short questionnaire. Get a staff policy and a guardrails file.</span></span></a>
+<a class="pick" data-pick="compass" href="#compass"><span class="ico" style="--b:var(--c-sky-bg);--t:var(--c-sky-t)"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5 5-2z"/></svg></span><span><b>Show what my product teaches<span class="badge">Suggested</span></b><span class="d">Map digital, media and AI literacy, with the evidence behind each claim.</span></span></a>
+<a class="pick" data-pick="labels" href="#labels"><span class="ico" style="--b:var(--c-lilac-bg);--t:var(--c-lilac-t)"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.5L7.5 21l4.5-2.5 4.5 2.5-1.5-7.5"/></svg></span><span><b>Prepare for a quality label<span class="badge">Suggested</span></b><span class="d">Pre-check a serious game and build a label package.</span></span></a>
+<a class="pick" data-pick="coc" href="#coc"><span class="ico" style="--b:var(--c-sun-bg);--t:var(--c-sun-t)"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="16" rx="1.5"/><rect x="13" y="4" width="8" height="16" rx="1.5"/><path d="M5.5 9h3M5.5 13h3M15.5 9h3M15.5 13h3"/></svg></span><span><b>Compare a code of conduct<span class="badge">Suggested</span></b><span class="d">See what your code covers, misses or contradicts.</span></span></a>
+<a class="pick" data-pick="rules" href="#rules"><span class="ico" style="--b:var(--c-coral-bg);--t:var(--c-coral-t)"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5z"/><path d="M4 19a2 2 0 0 1 2-2h12M8 7h6M8 11h4"/></svg></span><span><b>Understand the rules<span class="badge">Suggested</span></b><span class="d">Every rule, why it exists, and the law or research behind it.</span></span></a>
+</div>
+<p class="seeall">Want to see what you get first? <a href="examples/">Browse the example reports</a>.</p>
+</div>
+</section>
+
+<section id="check" class="panel band"><div class="in two">
+<div><p class="eyebrow" style="color:var(--c-teal-t)">For developers</p><h2>Check a product</h2>
+<p class="lead">Describe the product in one file, csef.yaml. The scanner reads your code and settings and tells you what to fix first.</p>
+<div class="feat"><p><strong>A report and a plan</strong>Findings by severity, a prioritised improvement plan and an inventory of every way children can communicate. JSON and SARIF for your tools.</p>
+<p><strong>A dashboard to share</strong>An interactive HTML dashboard, PDF and Word, with a section for your legal counsel.</p>
+<p><strong>In every pull request</strong>A GitHub Action, Semgrep rules and a Claude skill that verifies findings and reviews what patterns cannot see.</p></div>
+<a class="btn p" href="https://github.com/eduardon83/child-safe-edtech-framework#quick-start">Quick start on GitHub</a>
+<div class="ex"><span>See an example:</span><a href="examples/developers/word-quest/dashboard.html"><span class="fmt">HTML</span>Dashboard</a><a href="examples/developers/word-quest/report.pdf"><span class="fmt">PDF</span>Report</a><a href="examples/developers/garden-of-numbers/dashboard.html"><span class="fmt">HTML</span>A product that passes</a></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:18px">
+<pre><code># 1. Describe your product
+cp templates/csef.yaml my-product/csef.yaml
+
+# 2. Check it
+python3 tooling/scan.py --repo my-product --out-dir csef-report</code></pre>
+<div class="box"><p style="margin:0 0 14px;font-weight:600">You choose how far to go</p><div class="levels">
+<div class="lv"><span class="num" style="--b:var(--c-teal-bg);--t:var(--c-teal-t)">1</span><span><strong>Legal baseline.</strong> Law in force today.</span></div>
+<div class="lv"><span class="num" style="--b:var(--c-indigo-bg);--t:var(--c-indigo-t)">2</span><span><strong>Forward-compliant.</strong> Adds adopted proposals and official benchmarks.</span></div>
+<div class="lv"><span class="num" style="--b:var(--c-lilac-bg);--t:var(--c-lilac-t)">3</span><span><strong>Best practice.</strong> Adds research and expert recommendations.</span></div>
+</div></div>
+<p style="margin:0;font-size:.9rem;color:var(--c-ink2)">A pre-compliance check. Not legal advice and not a certification.</p>
+</div></div></section>
+
+<section id="policy" class="in band">
+<p class="eyebrow" style="color:var(--c-indigo-t)">For companies</p><h2>Set your company's boundaries</h2>
+<p class="lead">Decide your red lines in a short questionnaire, in about 15 minutes. You do not need to be a developer. Change your answers anytime.</p>
+<div class="cards">
+<div class="card"><h3>A staff policy</h3><p>Your boundaries in plain language, for everyone who builds the product.</p></div>
+<div class="card"><h3>A boundaries report</h3><p>Each answer matched with the law and recommendations, to discuss with legal counsel.</p></div>
+<div class="card"><h3>A guardrails file</h3><p>Your company pack: minimum level, no-gos, forbidden SDKs and phrases. The scanner checks it in every project.</p></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px"><a class="btn p" href="questionnaire/">Start the questionnaire</a><a class="btn s" href="pack-builder/">Open the Pack Builder</a><span style="color:var(--c-ink2);font-size:.95rem">National packs add country rules. Portugal is included as a draft.</span></div>
+<div class="ex"><span>See an example:</span><a href="examples/companies/staff-policy.html"><span class="fmt">HTML</span>Staff policy</a><a href="examples/companies/boundaries-report.pdf"><span class="fmt">PDF</span>Boundaries report</a><a href="examples/companies/company-pack.yaml"><span class="fmt">YAML</span>Company pack</a></div>
+</section>
+
+<section id="compass" class="panel band"><div class="in two">
+<div><p class="eyebrow" style="color:var(--c-sky-t)">For designers and educators</p><h2>Show what your product teaches</h2>
+<p class="lead">The Literacy Compass reads your design documents, teacher guides and in-product text. It shows what the product teaches about digital, media and AI literacy, and how you know.</p>
+<ul style="margin:0 0 20px;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+<li>45 targets on 8 axes, from DigComp 3.0, AILit, UNESCO and EU policy.</li>
+<li>Flags claims with nothing behind them, and copy that teaches the opposite.</li>
+<li>Shows the next three steps.</li>
+<li>Maps your evidence to the EU guidelines on digital education content, Swedish Edtech's Kvalitetsportfolio and UNICEF's EdTech for Good.</li></ul>
+<p style="margin:0;font-weight:600">A profile, never a score. No total, no ranking, no badge.</p>
+<div class="ex"><span>See an example:</span><a href="examples/designers/compass.html"><span class="fmt">HTML</span>Compass report</a><a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/03-design-and-motivation.md">Design for learning guide</a></div>
+</div>
+<div class="box"><p style="margin:0 0 14px;font-weight:600">Evidence ladder, for each target</p><div class="ladder">
+<div class="rung" style="--b:var(--c-panel);--t:var(--c-ink2)"><b>0</b><span><strong>Not found.</strong> Nothing addresses it.</span></div>
+<div class="rung" style="--b:var(--c-sun-bg);--t:var(--c-sun-t)"><b>1</b><span><strong>Stated.</strong> A goal is written down.</span></div>
+<div class="rung" style="--b:var(--c-sky-bg);--t:var(--c-sky-t)"><b>2</b><span><strong>Designed.</strong> Activities are built for it.</span></div>
+<div class="rung" style="--b:var(--c-indigo-bg);--t:var(--c-indigo-t)"><b>3</b><span><strong>Tested.</strong> Tried with learners.</span></div>
+<div class="rung" style="--b:var(--c-teal-bg);--t:var(--c-teal-t)"><b>4</b><span><strong>Measured.</strong> Outcomes are measured.</span></div>
+</div><p style="margin:14px 0 0;font-size:.9rem;color:var(--c-ink2)">Plans do not count.</p></div>
+</div></section>
+
+<section id="labels" class="in band">
+<p class="eyebrow" style="color:var(--c-lilac-t)">For teams preparing a label</p><h2>Describe your product. Submit it to any label.</h2>
+<p class="lead">CSEF already checks what your product does with children's data, money and attention. Turn that work into a label package: standard metadata, scan results, a serious-game pre-check and your evidence, in one file.</p>
+<div class="steps">
+<div class="card" style="--t:var(--c-teal-t)"><h4><b>1</b> Describe</h4><p>Add a short metadata block to csef.yaml.</p></div>
+<div class="card" style="--t:var(--c-indigo-t)"><h4><b>2</b> Check</h4><p>Run the scan, the Compass and the pre-check.</p></div>
+<div class="card" style="--t:var(--c-sky-t)"><h4><b>3</b> Package</h4><p>One command builds the zip, with a hash for every file.</p></div>
+<div class="card" style="--t:var(--c-lilac-t)"><h4><b>4</b> Submit</h4><p>Choose a label. The label body assesses and replies.</p></div>
+</div>
+<div class="two" style="margin:0 0 36px">
+<div><h3 style="margin:0 0 10px;font-size:1.5rem">22 criteria, checked before you apply</h3>
+<p style="margin:0 0 18px;color:var(--c-ink2)">For serious games, the pre-check uses the criteria of Caserman et al. (2020): the serious part, the game part and the balance between them. CSEF checks many of them already. For the rest, your team writes a short statement and points to evidence.</p>
+<div class="stat"><span><strong style="color:var(--c-teal-t)">5</strong>checked by CSEF</span><span><strong style="color:var(--c-indigo-t)">10</strong>in part</span><span><strong style="color:var(--c-sun-t)">5</strong>need a statement</span><span><strong style="color:var(--c-coral-t)">2</strong>limited for children</span></div>
+<p style="margin:0 0 14px;padding:14px 16px;border-radius:12px;background:var(--c-teal-bg)">The package describes the product, never the children who use it. No learner data.</p>
+<p style="margin:0;color:var(--c-ink2);font-size:.95rem">Formats: SG-MDF (DIN SPEC 91380) as JSON and XML for serious-game catalogues, and schema.org LearningResource for any learning product.</p>
+<div class="ex"><span>See an example:</span><a href="examples/labels/precheck.html"><span class="fmt">HTML</span>Pre-check</a><a href="examples/labels/sg-mdf.xml"><span class="fmt">XML</span>SG-MDF</a><a href="examples/labels/lrmi.jsonld"><span class="fmt">JSON-LD</span>schema.org</a><a href="examples/labels/label-package-garden-of-numbers.zip"><span class="fmt">ZIP</span>Label package</a></div>
+</div>
+<div class="sample"><div class="sample-h">Garden of Numbers <span>Example pre-check</span></div>
+<div class="counts"><div style="--b:var(--c-teal-bg);--t:var(--c-teal-t)"><b>4</b>Ready</div><div style="--b:var(--c-sun-bg);--t:var(--c-sun-t)"><b>5</b>Partial</div><div style="--b:var(--c-coral-bg);--t:var(--c-coral-t)"><b>13</b>Missing</div><div style="--b:var(--c-paper);--t:var(--c-ink2)"><b style="color:var(--c-ink)">0</b>CSEF issue</div></div>
+<div class="row"><span><strong>SG-03</strong> The serious part cannot be skipped</span><span class="st" style="--b:var(--c-teal-bg);--t:var(--c-teal-t)">Ready</span></div>
+<div class="row"><span><strong>SG-05</strong> Feedback on progress<small>One CSEF rule to review</small></span><span class="st" style="--b:var(--c-sun-bg);--t:var(--c-sun-t)">Partial</span></div>
+<div class="row"><span><strong>SG-13</strong> Social play and game modes<small>For children: class leaderboards, nicknames, team goals</small></span><span class="st" style="--b:var(--c-coral-bg);--t:var(--c-coral-t)">Missing</span></div>
+</div></div>
+<h3 style="margin:0 0 14px;font-size:1.5rem">Where a package can go</h3>
+<div class="cards">
+<div class="card"><span class="st" style="--b:var(--c-sun-bg);--t:var(--c-sun-t)">Planned</span><h4 style="margin-top:10px">Serious-game quality labels</h4><p>Pre-check and package are ready. Submission routes with label bodies are being prepared.</p></div>
+<div class="card"><span class="st" style="--b:var(--c-teal-bg);--t:var(--c-teal-t)">Format ready</span><h4 style="margin-top:10px">Serious-game catalogues</h4><p>The SG-MDF export is ready. The route to submit is still to be agreed.</p></div>
+<div class="card"><span class="st" style="--b:var(--c-teal-bg);--t:var(--c-teal-t)">Format ready</span><h4 style="margin-top:10px">Learning resource repositories</h4><p>schema.org LearningResource, for games and other learning products.</p></div>
+<div class="card" style="border-style:dashed"><h4>Run a label or catalogue?</h4><p>Tell us what you need. We add it as a crosswalk, so products do not describe themselves again.</p><p style="margin-top:10px"><a href="https://github.com/eduardon83/child-safe-edtech-framework/issues">Get in touch on GitHub</a></p></div>
+</div>
+<div class="cta"><div><h3>Ready to submit?</h3><p>Try the submission flow. Submissions are not open yet, so nothing is uploaded or sent.</p></div><a class="btn" href="submit/">Preview the submission</a></div>
+</section>
+
+<section id="coc" class="panel band"><div class="in two">
+<div><p class="eyebrow" style="color:var(--c-sun-t)">For industry bodies and companies</p><h2>Compare a code of conduct</h2>
+<p class="lead">Bring any code of conduct. CSEF compares it with what the EU KIDS Act expects from codes, and with the CSEF rules. Each point cites the clauses and suggests an addition.</p>
+<pre><code>python3 tooling/coc.py --input our-code.md --level 2</code></pre>
+<div class="ex"><span>See an example:</span><a href="examples/industry/coc-comparison.html"><span class="fmt">HTML</span>Comparison of a fictional code</a></div>
+</div>
+<div class="cmp">
+<div style="--b:var(--c-teal-bg);--t:var(--c-teal-t)"><b>Covered</b><span>The code commits to what the rule asks.</span></div>
+<div style="--b:var(--c-sun-bg);--t:var(--c-sun-t)"><b>Partial</b><span>A weak or narrow commitment.</span></div>
+<div style="--b:var(--c-paper);--t:var(--c-ink2)"><b>Missing</b><span>Nothing in the code addresses it.</span></div>
+<div style="--b:var(--c-coral-bg);--t:var(--c-coral-t)"><b>Conflict</b><span>The code permits what a rule forbids, such as loot boxes "provided that odds are disclosed".</span></div>
+</div></div></section>
+
+<section id="rules" class="in band">
+<p class="eyebrow" style="color:var(--c-coral-t)">For everyone</p><h2>Understand the rules</h2>
+<p class="lead">Every rule says what to do, why, how to improve, and which law, proposal or study it comes from.</p>
+<div class="nums">
+<div><b>{rules}</b>rules: a core set and three profiles</div>
+<div><b>{sources}</b>sources, each with status and date checked</div>
+<div><b>3 to 17</b>years, in five age bands</div>
+<div><b>3</b>profiles: educational games, game-based software, gamified apps</div>
+</div>
+<h3 style="margin:0 0 12px;font-size:1.3rem">Guides</h3>
+<div class="guides">
+<a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/catalogue/index.md">Rule catalogue</a>
+<a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/01-regulatory-map.md">Regulatory map</a>
+<a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/legislation.md">Legislation</a>
+<a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/research.md">Research</a>
+<a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/03-design-and-motivation.md">Design for learning</a>
+<a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/05-several-countries.md">Several countries</a>
+<a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/06-bullying.md">Bullying</a>
+<a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/framework/07-labels-and-metadata.md">Labels and metadata</a>
+<a href="https://github.com/eduardon83/child-safe-edtech-framework/tree/main/self-assessment">Self-assessment checklists</a>
+</div></section>
+
+<section id="faq" class="panel band"><div class="in" style="max-width:880px">
+<h2 style="margin-bottom:20px">Questions</h2>
+<div style="border-top:1px solid var(--c-line)">
+<details><summary>Is CSEF a standard or a certification?</summary><p>No. It is a framework, published as a draft for public comment. It is not legal advice and not a certification.</p></details>
+<details><summary>Do I need to be a developer?</summary><p>No. Companies start with the questionnaire. Designers and educators start with the guides and the Compass.</p></details>
+<details><summary>What does it cost?</summary><p>Nothing. Framework content is CC BY 4.0 and code is Apache 2.0. Label bodies set their own fees, if any.</p></details>
+<details><summary>Is the pre-check a label?</summary><p>No. It shows what is ready and what is missing. Only a label body can award its label, after its own assessment.</p></details>
+<details><summary>What data leaves my company?</summary><p>The tools run on your own machines. When submissions open, only a label package you choose to send will leave, and it holds no learner data.</p></details>
+<details><summary>How can I give feedback?</summary><p>Open an issue on <a href="https://github.com/eduardon83/child-safe-edtech-framework/issues">GitHub</a>. CSEF is a draft, and comments shape the next version.</p></details>
+</div></div></section>
+</main>
+<footer><div class="in"><div><span>Child-Safe EdTech Framework (CSEF) v{version}, maintained by Kendir Studios with the EdTech community.</span><br><span>Framework content CC BY 4.0 · code Apache 2.0</span></div>
+<nav aria-label="Footer"><a href="#start">Get started</a><a href="examples/">Examples</a><a href="submit/">Submission preview</a><a href="https://github.com/eduardon83/child-safe-edtech-framework">GitHub</a></nav></div></footer>
+<script>
+(function () {
+  var map = {company: ["policy", "labels", "coc"], developer: ["check", "labels"], designer: ["compass", "check", "rules"],
+             educator: ["rules", "compass"], label: ["labels", "coc"]};
+  var names = {check: "Check a product", policy: "Set our company's boundaries", compass: "Show what my product teaches",
+               labels: "Prepare for a quality label", coc: "Compare a code of conduct", rules: "Understand the rules"};
+  var buttons = document.querySelectorAll("[data-role]"), picks = document.querySelectorAll("[data-pick]");
+  var live = document.getElementById("sugtext");
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var on = b.getAttribute("aria-pressed") !== "true";
+      buttons.forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+      if (on) b.setAttribute("aria-pressed", "true");
+      var sel = on ? map[b.getAttribute("data-role")] : [];
+      picks.forEach(function (p) { p.classList.toggle("sug", sel.indexOf(p.getAttribute("data-pick")) > -1); });
+      live.textContent = sel.length ? "Suggested for you: " + sel.map(function (k) { return names[k]; }).join(", ") + "." : "";
+    });
+  });
+})();
+</script>
+</body></html>
