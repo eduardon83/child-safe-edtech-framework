@@ -374,6 +374,18 @@ CSEF Level 3 (Best practice) rules come from research on how children learn, att
 - **Rules citing it.** `CORE-CHT-12`
 - **Link.** [https://link.springer.com/10.1007/s00787-017-0954-6](https://link.springer.com/10.1007/s00787-017-0954-6)
 
+## Serious-game quality
+
+Criteria that judge whether a serious game teaches well and is good to play. CSEF maps them in the serious-game pre-check (`tooling/precheck.py`); for children, CSEF rules set the limits.
+
+### Caserman P., Hoffmann K., Müller P., Schaub M., Straßburg K., Wiemeyer J., Bruder R. and Göbel S. (2020). Quality criteria for serious games: serious part, game part, and balance. JMIR Serious Games 8(3):e19037
+
+*Id `R-CASERMAN2020` · verified 2026-11-18*
+
+- **Key finding.** Peer-reviewed viewpoint, open access. 22 quality aspects in three groups: the serious part (characterizing goal, methods, quality), the game part (enjoyment, media presentation) and the balance between them (integration, interaction technology). One of the two publications behind the quality label of the Serious Games Gütegemeinschaft. Basis of the CSEF serious-game pre-check (framework/serious-games/criteria.yaml)
+- **Rules citing it.** none (context)
+- **Link.** [https://games.jmir.org/2020/3/e19037/](https://games.jmir.org/2020/3/e19037/)
+
 ## Gaps and research wanted
 
 - Direct tests of **reward stacking** in children's learning products (current rules infer it from single-element studies).

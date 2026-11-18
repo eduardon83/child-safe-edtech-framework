@@ -357,6 +357,14 @@ sources:
     url: "https://glassmanlab.seas.harvard.edu/annotated_works/mekler17.pdf"
     verified: 2026-11-11
 
+  - id: R-CASERMAN2020
+    title: "Caserman P., Hoffmann K., Müller P., Schaub M., Straßburg K., Wiemeyer J., Bruder R. and Göbel S. (2020). Quality criteria for serious games: serious part, game part, and balance. JMIR Serious Games 8(3):e19037"
+    type: literature
+    jurisdiction: international
+    status: "Peer-reviewed viewpoint, open access. 22 quality aspects in three groups: the serious part (characterizing goal, methods, quality), the game part (enjoyment, media presentation) and the balance between them (integration, interaction technology). One of the two publications behind the quality label of the Serious Games Gütegemeinschaft. Basis of the CSEF serious-game pre-check (framework/serious-games/criteria.yaml)"
+    url: "https://games.jmir.org/2020/3/e19037/"
+    verified: 2026-11-18
+
   - id: R-SAILER2020
     title: "Sailer, M. and Homner, L. (2020). The gamification of learning: a meta-analysis. Educational Psychology Review 32"
     type: literature
@@ -569,6 +577,14 @@ sources:
     status: "Active standard, published 15 Jan 2021. 8 areas of digital life, 3 levels, 24 competences"
     url: "https://standards.ieee.org/ieee/3527.1/7589/"
     verified: 2026-11-14
+
+  - id: DIN-SPEC-91380
+    title: "DIN SPEC 91380:2018-06, Serious Games Metadata Format (SG-MDF)"
+    type: standard
+    jurisdiction: DE
+    status: "Current (PAS procedure), in German, free download from DIN Media. Defines SG-MDF as a grammar: Core fields required for every serious game (Level 1), optional detail (Level 2) and application profiles for learning and health games (Level 3). No official JSON or XML schema. Basis of the Serious Games Information Center and of CSEF's metadata export (tooling/metadata.py), which copies no text from the DIN SPEC"
+    url: "https://doi.org/10.31030/2853739"
+    verified: 2026-11-18
 
   - id: IEEE2089
     title: "IEEE 2089-2021, Standard for an Age Appropriate Digital Services Framework Based on the 5Rights Principles for Children"

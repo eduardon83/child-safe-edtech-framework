@@ -1,0 +1,234 @@
+# Serious-game quality criteria, mapped to CSEF.
+#
+# Basis: Caserman et al. (2020), "Quality criteria for serious games: serious part, game part, and balance"
+# (source R-CASERMAN2020). The 22 aspects of its three tables are paraphrased here; read the paper for the
+# full text. The paper is one of the two publications behind the quality label of the Serious Games
+# Gütegemeinschaft. The label's own test rules are not public, so this map is a pre-check, not the label.
+#
+# Fields
+#   id          SG-01 to SG-22
+#   group       serious | game | balance
+#   aspect      short name of the quality aspect
+#   asks        what an assessor looks for (paraphrased)
+#   coverage    how much CSEF already checks: covered | partial | declaration | tension
+#   rules       CSEF rules whose scan results count for this criterion (only rules in scope count)
+#   compass     Compass targets whose document level counts, with the minimum level (2 Designed, 3 Tested)
+#   declare     true when the team must add a statement with evidence in csef.yaml (serious_game.claims)
+#   evidence    kinds of evidence that fit
+#   csef_note   where CSEF is stricter for children; for under-18s the CSEF rule applies
+
+version: "0.1"
+basis: R-CASERMAN2020
+status: draft
+
+criteria:
+  # ------------------------------------------------------------------ serious part
+  - id: SG-01
+    group: serious
+    aspect: Focus on the characterizing goal
+    asks: The learning or training goal stays in focus during play, and game elements do not get in its way.
+    coverage: partial
+    rules: [A-MOT-03, CORE-DES-02]
+    compass: {EDU-01: 2}
+    declare: true
+    evidence: [design document, playtest]
+
+  - id: SG-02
+    group: serious
+    aspect: Clear goals
+    asks: Players always know what to do to move towards the goal; complex games show it first or offer a tutorial.
+    coverage: partial
+    rules: []
+    compass: {EDU-01: 2}
+    declare: true
+    evidence: [design document, playtest]
+
+  - id: SG-03
+    group: serious
+    aspect: The serious part cannot be skipped
+    asks: Learning tasks are needed to play, cannot be avoided, and do not feel like a hurdle before the fun part.
+    coverage: declaration
+    rules: [A-MOT-01]
+    declare: true
+    evidence: [design document, playtest]
+
+  - id: SG-04
+    group: serious
+    aspect: Correct, neutral content that fits the players
+    asks: No subject errors and correct terminology; neutral on political and social issues; suitable for the culture and traditions of the target group.
+    coverage: declaration
+    rules: [CORE-DES-04]
+    compass: {TRN-07: 2}
+    declare: true
+    evidence: [subject expert review, curriculum mapping]
+
+  - id: SG-05
+    group: serious
+    aspect: Feedback on progress
+    asks: Players see their performance and progress clearly, ideally through more than one sense (visual, audio, haptic).
+    coverage: covered
+    rules: [A-MOT-02, A-PLY-02, CORE-ACC-05]
+    declare: false
+    evidence: [screens]
+
+  - id: SG-06
+    group: serious
+    aspect: Rewards used deliberately
+    asks: Positive reinforcement and in-game awards, without rewards that control players and undermine intrinsic motivation.
+    coverage: covered
+    rules: [A-MOT-01, A-MOT-03, A-MOT-05, C-ENG-03, C-ENG-04, CORE-DES-06]
+    declare: false
+    evidence: [reward inventory]
+
+  - id: SG-07
+    group: serious
+    aspect: Proof of effectiveness and lasting effects
+    asks: A study shows that players reach the goal and that the effect lasts; randomised controlled trials are the strongest evidence.
+    coverage: covered
+    rules: []
+    compass: {EDU-03: 3}
+    declare: false
+    evidence: [study]
+
+  - id: SG-08
+    group: serious
+    aspect: Awards, ratings and expert recommendations
+    asks: Game awards, professional and user ratings, expert recommendations, reviews and numbers of players.
+    coverage: declaration
+    rules: []
+    declare: true
+    evidence: [award, rating, recommendation, usage figures]
+
+  # ------------------------------------------------------------------ game part
+  - id: SG-09
+    group: game
+    aspect: Engaging for different player types
+    asks: A positive, enjoyable play experience, with something for different kinds of players.
+    coverage: declaration
+    rules: []
+    declare: true
+    evidence: [playtest]
+
+  - id: SG-10
+    group: game
+    aspect: Flow and adaptive difficulty
+    asks: Challenge matches skill and grows as players improve ("easy to learn, hard to master"); play is varied; difficulty adapts to the player.
+    coverage: partial
+    rules: [C-ENG-06, CORE-AI-07]
+    compass: {EDU-04: 2, TRN-03: 2}
+    declare: true
+    evidence: [design document, playtest]
+    csef_note: Adaptive difficulty that uses learner data must be explained to children (TRN-03); if AI places or evaluates learners, a teacher reviews it (CORE-AI-07).
+
+  - id: SG-11
+    group: game
+    aspect: Emotional connection
+    asks: The game evokes emotions and draws on instincts such as collecting or overcoming danger to keep players engaged.
+    coverage: tension
+    rules: [CORE-COM-03, CORE-AI-02, CORE-AI-06, C-ENG-04, A-PLY-01]
+    declare: true
+    evidence: [design document]
+    csef_note: Emotions yes, pressure no. No guilt, fear of missing out, loss framing, random rewards or AI characters that simulate a relationship.
+
+  - id: SG-12
+    group: game
+    aspect: Sense of control
+    asks: Players control their actions and see how their choices change the game world or the story.
+    coverage: partial
+    rules: [A-MOT-04]
+    declare: true
+    evidence: [design document]
+
+  - id: SG-13
+    group: game
+    aspect: Social play and game modes
+    asks: Different modes, cooperative and competitive, for players who do better in groups.
+    coverage: tension
+    rules: [C-ENG-02, CORE-CHT-12, CORE-CHT-02, AGE-B2-01, A-MOT-03]
+    declare: true
+    evidence: [design document]
+    csef_note: Competition stays inside the class, with nicknames, a teacher switch and team goals. No public high scores of named children; under 10, preset messages only.
+
+  - id: SG-14
+    group: game
+    aspect: Immersive experience
+    asks: Several senses are engaged (visual, audio, haptic) to create a sense of "being there".
+    coverage: partial
+    rules: [CORE-DES-01, CORE-DES-03, CORE-ACC-04, CORE-ACC-02]
+    declare: true
+    evidence: [design document]
+    csef_note: Under 8, calm screens come first; motion and sound can always be turned down or paused.
+
+  - id: SG-15
+    group: game
+    aspect: Graphics that fit, and a clear interface
+    asks: Graphics suit the purpose, the field and the target group; the interface shows nothing that distracts from the task.
+    coverage: covered
+    rules: [CORE-DES-03, CORE-DES-05, CORE-ACC-01, CORE-ACC-05]
+    declare: false
+    evidence: [screens]
+
+  - id: SG-16
+    group: game
+    aspect: Appropriate sound
+    asks: Background music and sound effects suit the game.
+    coverage: partial
+    rules: [CORE-DES-01, CORE-ACC-04]
+    declare: true
+    evidence: [design document]
+
+  # ------------------------------------------------------------------ balance
+  - id: SG-17
+    group: balance
+    aspect: Learning built into the gameplay
+    asks: Learning tasks are part of the game world and its story, not a gate in front of a reward.
+    coverage: partial
+    rules: [A-MOT-01]
+    compass: {EDU-01: 2}
+    declare: true
+    evidence: [design document, learning and game mechanics map]
+
+  - id: SG-18
+    group: balance
+    aspect: Scientific foundation and a mixed team
+    asks: Game designers and subject experts work together from the start, with the target group, using the state of the art in each field.
+    coverage: declaration
+    rules: []
+    declare: true
+    evidence: [team list, co-design record, references]
+
+  - id: SG-19
+    group: balance
+    aspect: Interaction technology that fits the players
+    asks: Devices and controls suit the physical and mental abilities of the target group and the purpose of the game.
+    coverage: covered
+    rules: [CORE-ACC-01, CORE-ACC-03, AGE-B1-01]
+    declare: false
+    evidence: [accessibility report]
+
+  - id: SG-20
+    group: balance
+    aspect: Intuitive controls and tutorials
+    asks: Players understand how to play quickly; complex games teach both how to act and what to do.
+    coverage: partial
+    rules: [CORE-ACC-01]
+    declare: true
+    evidence: [playtest]
+
+  - id: SG-21
+    group: balance
+    aspect: No shortcuts around the learning
+    asks: Technical features do not let players reach the goal without doing the learning or training, for example by cheating the tracking.
+    coverage: partial
+    rules: [A-ASM-01, B-EVL-04]
+    declare: true
+    evidence: [design document, playtest]
+
+  - id: SG-22
+    group: balance
+    aspect: No adverse effects
+    asks: Low risk of accidents, injuries or overload; breaks are suggested; few technical issues and easy maintenance.
+    coverage: partial
+    rules: [CORE-SAF-03, CORE-ACC-02, CORE-DES-01, C-ENG-06, CORE-SEC-05]
+    declare: true
+    evidence: [risk notes, maintenance plan]

@@ -15,7 +15,7 @@
 #   effort      low | medium | high (used to prioritise the improvement list)
 #   detection   method: static | manifest | manual | mixed, plus patterns
 
-version: "0.12.0"
+version: "0.13.0"
 
 # Rules merged into others. Packs, waivers and csef-ignore comments that use an old id keep working:
 # the tools map it to the rule that replaced it.

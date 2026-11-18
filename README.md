@@ -29,7 +29,7 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 |---|---|
 | **The framework** | 124 rules: a core set plus three profiles, **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Rules on data, safety by design, commercial practices, AI companions and chatbots, communications, accessibility, security, and design for learning (visuals, sound, motion, motivation). |
 | **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). You decide which level of compliance you want in your software. |
-| **Sources on every rule** | 81 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
+| **Sources on every rule** | 83 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
 | **Policy questionnaire** | `tooling/policy.py`: answer questions about your boundaries (terminal or local web form). Get your guardrails file, a report that matches each answer with the law and recommendations, a plain-language staff policy, AI agent instructions and a ready CI workflow. Run it again anytime. |
 | **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included (draft, not legally reviewed). |
 | **Company packs and Pack Builder** | Each organisation sets its minimum level, no-gos, forbidden SDKs and phrases and its own rules, in a web form, then publishes the pack to GitHub. |
@@ -37,18 +37,18 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 | **Dashboard and exports** | `tooling/export.py`: interactive HTML dashboard (levels, age bands, communications, colour-coded findings, checklists, legal counsel section), PDF and Word. |
 | **Code-of-conduct comparison** | `tooling/coc.py`: compares any code of conduct with the KIDS Act expectations for codes and with CSEF rules; shows what is covered, partial, missing or in conflict. |
 | **Literacy Compass** | `tooling/compass.py`: what does the product teach about digital, media and AI literacy, and how do we know? 45 targets on 8 axes from DigComp 3.0, AILit, UNESCO and EU policy; an evidence level per target (Stated, Designed, Tested, Measured) with the passages behind it; unsupported learning claims; copy that teaches the opposite (hidden curriculum); the next three steps; and a crosswalk to the EU guidelines on digital education content, Swedish Edtech's Kvalitetsportfolio and UNICEF's EdTech for Good. A profile, never a score. |
+| **Serious-game pre-check and label package** | `tooling/precheck.py` checks a serious game against 22 published quality criteria (Caserman et al. 2020) using CSEF results and the team's statements with evidence. `tooling/metadata.py` exports the product description as SG-MDF (DIN SPEC 91380) JSON and XML and as schema.org LearningResource, and bundles everything into a label package. Preparation, not a label. |
 | **AI review skill** | `skill/csef-review/`: Claude runs the tools, verifies findings, reviews what patterns cannot see, and finalises the reports. |
 | **CI** | A GitHub Action, generated Semgrep rules, a PR template. |
 | **Templates** | Manifest, DPIA starter, AI risk file, waiver record, instructions for AI coding agents. |
 
-## What's new in v0.12
+## What's new in v0.13
 
-**In-game purchases, as EU consumer authorities read the law.** The CPC Network's Key Principles on in-game
-virtual currencies (2025) and its Joint Statement on video games (30 Sep 2026) are now sources. They come with
-coordinated actions against nine game companies. Two new MUST rules: clear purchase information with a working
-14-day withdrawal (CORE-COM-09), and fair, plain terms for purchases and accounts (CORE-COM-10). A-ECO-03 now
-asks for real prices everywhere, one purchasable currency and exact amounts. The Digital Fairness Act source
-now points to the official proposal of 11 Nov 2026.
+**Labels and metadata.** A serious-game pre-check maps CSEF results and the team's statements to 22 published
+quality criteria (Caserman et al. 2020), and shows where CSEF sets limits for children. A metadata export writes
+the product description as SG-MDF (DIN SPEC 91380) JSON and XML and as schema.org LearningResource. A label
+package bundles metadata, findings, pre-check and evidence with hashes, ready for any label that asks.
+Guide: [07-labels-and-metadata.md](framework/07-labels-and-metadata.md).
 
 Earlier versions: [CHANGELOG.md](CHANGELOG.md) (one short entry per version) and
 [release notes](docs/releases/) (the full story of each release).
@@ -238,16 +238,18 @@ compares meaning and reads any language.
 7. [Literacy Compass](framework/04-literacy-compass.md): what a product teaches about digital, media and AI literacy; [target catalogue](framework/compass/catalogue.md)
 8. [Several countries](framework/05-several-countries.md): preparing the architecture for multi-country products and shared infrastructure (EDU-EDIC)
 9. [Bullying](framework/06-bullying.md): what the product can do, and who can respond; default procedure for schools without a plan
-10. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
-11. [Self-assessment checklists](self-assessment/)
+10. [Labels and metadata](framework/07-labels-and-metadata.md): serious-game pre-check, SG-MDF and LRMI export, label package
+11. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
+12. [Self-assessment checklists](self-assessment/)
 
 ## Repository layout
 
 ```
 framework/        rules.yaml + sources.yaml (single source of truth), coc-topics.yaml, questionnaire.yaml, docs, generated catalogue
                  compass/targets.yaml + crosswalk.yaml (Literacy Compass), generated compass/catalogue.md
+                 serious-games/criteria.yaml (serious-game pre-check)
 packs/           country and extra packs (pt.yaml, _template.yaml)
-tooling/         scan.py, comms.py, export.py, coc.py, policy.py, compass.py, build.py, generated Semgrep rules
+tooling/         scan.py, comms.py, export.py, coc.py, policy.py, compass.py, precheck.py, metadata.py, build.py, generated Semgrep rules
 skill/           csef-review skill for Claude (generated copies + SKILL.md + references)
 templates/       manifest, DPIA starter, AI risk file, waiver, agent instructions, GitHub files
 self-assessment/ generated checklists per profile and level

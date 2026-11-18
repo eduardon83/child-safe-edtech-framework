@@ -382,6 +382,36 @@ def compass_catalogue(std, c) -> str:
     return "\n".join(L)
 
 
+def validate_serious_games(std):
+    """framework/serious-games/criteria.yaml: ids, groups and links to rules and Compass targets."""
+    doc = scan.load_yaml(ROOT / "framework" / "serious-games" / "criteria.yaml") or {}
+    targets = {t["id"] for t in scan.load_yaml(ROOT / "framework" / "compass" / "targets.yaml")["targets"]}
+    if doc.get("basis") not in std.sources:
+        err(f"serious-games criteria: basis {doc.get('basis')} is not a source")
+    seen = set()
+    for c in doc.get("criteria", []):
+        cid = c.get("id", "?")
+        if not re.fullmatch(r"SG-\d{2}", cid) or cid in seen:
+            err(f"serious-games criteria: bad or duplicate id {cid}")
+        seen.add(cid)
+        if c.get("group") not in ("serious", "game", "balance"):
+            err(f"serious-games {cid}: group must be serious, game or balance")
+        if c.get("coverage") not in ("covered", "partial", "declaration", "tension"):
+            err(f"serious-games {cid}: unknown coverage {c.get('coverage')}")
+        if c.get("coverage") == "tension" and not c.get("csef_note"):
+            err(f"serious-games {cid}: a tension needs a csef_note")
+        for rid in c.get("rules") or []:
+            if rid not in std.rules:
+                err(f"serious-games {cid}: unknown rule {rid}")
+        for tid, lvl in (c.get("compass") or {}).items():
+            if tid not in targets:
+                err(f"serious-games {cid}: unknown Compass target {tid}")
+            if lvl not in (1, 2, 3, 4):
+                err(f"serious-games {cid}: Compass level for {tid} must be 1 to 4")
+        if not (c.get("rules") or c.get("compass") or c.get("declare")):
+            err(f"serious-games {cid}: needs rules, compass targets or declare: true")
+
+
 def load_and_validate():
     std = scan.load_standard(ROOT)
     ids = [r["id"] for r in scan.load_yaml(ROOT / "framework" / "rules.yaml")["rules"]]
@@ -414,6 +444,7 @@ def load_and_validate():
                 err(f"coc-topics.yaml: {rid} bad conflict_regex: {ex}")
 
     validate_compass(std, packs_for_compass())
+    validate_serious_games(std)
 
     pack_rule_ids = {r["id"] for pf in (ROOT / "packs").glob("*.yaml") for r in scan.load_yaml(pf).get("rules", []) or []}
     guide = (ROOT / "skill" / "csef-review" / "references" / "review-guide.md").read_text(encoding="utf-8")
@@ -730,7 +761,8 @@ def generate(std, packs) -> dict[Path, str]:
     for name in ("csef-lockup-on-light.svg", "csef-mark-on-light.svg"):
         files[sk / "brand" / "svg" / name] = (ROOT / "brand" / "svg" / name).read_text(encoding="utf-8")
     files[sk / "brand" / "web" / "favicon.svg"] = (ROOT / "brand" / "web" / "favicon.svg").read_text(encoding="utf-8")
-    for t in ("export.py", "comms.py", "coc.py", "policy.py", "brand.py", "compass.py"):
+    files[sk / "framework" / "serious-games" / "criteria.yaml"] = (ROOT / "framework" / "serious-games" / "criteria.yaml").read_text(encoding="utf-8")
+    for t in ("export.py", "comms.py", "coc.py", "policy.py", "brand.py", "compass.py", "precheck.py", "metadata.py"):
         files[sk / "scripts" / t] = (ROOT / "tooling" / t).read_text(encoding="utf-8")
     for t in ("coc-topics.yaml", "questionnaire.yaml"):
         files[sk / "framework" / t] = (ROOT / "framework" / t).read_text(encoding="utf-8")

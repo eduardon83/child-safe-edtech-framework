@@ -28,4 +28,43 @@ retention:
     enforced_by: jobs/purge-gameplay.ts
 dpia: docs/dpia.md
 security_policy: SECURITY.md
+# Product description for labels and catalogues (tooling/metadata.py). Exports SG-MDF (DIN SPEC 91380) and
+# schema.org LearningResource. Values for the selection lists: DIN SPEC 91380 Annex A.
+metadata:
+  game_id: garden-of-numbers
+  goal_descriptions:
+    - {subject: knowledge of player, adverb: sustainably, verb: improve}
+  keywords: [fractions, number sense, primary maths]
+  genre: [logic and puzzle games]
+  previews:
+    - {url: "https://example.org/garden-of-numbers/title.png", type: title image}
+  play_time: "15 to 20 minutes per lesson; 12 lessons in the full garden"
+  release: {version: "1.4.0", date: 2026-09-01, status: complete}
+  age_rating: PEGI-3
+  languages: [pt, en]
+  privacy_notice: "https://example.org/garden-of-numbers/privacy"
+  distribution:
+    - {channel: school licence, url: "https://example.org/garden-of-numbers", price_info: "Yearly school licence per class", with_costs: "yes"}
+  platforms:
+    - {platform: web browser, requirements: "Current Chrome, Edge, Firefox or Safari on a tablet or laptop; no installation"}
+  parties:
+    - {name: Example Studio, role: developer, url: "https://example.org"}
+    - {name: Example University, role: scientific research, url: "https://example.org/university"}
+  learning:
+    resource_type: [exercise]
+    context: [school]
+    teaching_concept: "Guided discovery with worked examples, then practice"
+    curriculum: "Portuguese Aprendizagens Essenciais, Mathematics, years 3 and 4 (fractions)"
+    prior_knowledge: "Counting to 100 and halves"
+
+# Serious-game pre-check (tooling/precheck.py): statements with evidence for the criteria that CSEF cannot read
+# from code. Ids SG-01 to SG-22 are in framework/serious-games/criteria.yaml.
+serious_game:
+  characterizing_goal: "Pupils aged 6 to 9 understand and compare simple fractions."
+  claims:
+    SG-01: {statement: "Every garden plot is a fraction task; decorations never interrupt a task.", evidence: [docs/design-document.md]}
+    SG-03: {statement: "Paths only open when a fraction task is solved; there is no way around them.", evidence: [docs/design-document.md]}
+    SG-09: {statement: "Playtested with two classes (41 pupils); most wanted to keep playing.", evidence: [docs/playtest-summary.md]}
+    SG-18: {statement: "Designed by game designers with two primary teachers and a maths education researcher.", evidence: [docs/design-document.md]}
+
 last_review: 2026-11-11

@@ -21,6 +21,7 @@ Bundled files (paths relative to this skill folder):
 - `references/review-guide.md`: what to inspect by hand, per profile
 - `references/report-additions.md`: how to add your judgement to the generated report
 - `scripts/compass.py`, `framework/compass/`: the Literacy Compass (targets, crosswalk); `references/compass-review.md`: how to review it
+- `scripts/precheck.py`, `framework/serious-games/criteria.yaml`: serious-game pre-check; `scripts/metadata.py`: SG-MDF and LRMI export, label package
 - `templates/`: manifest, DPIA starter, AI risk file, waiver record, agent instructions
 
 ## Workflow
@@ -148,6 +149,23 @@ It writes `compass.md`, `compass.html` and `compass.json`: 45 targets on 8 axes 
 only; design lens: every product), an evidence level per target (0 Not found to 4 Measured), unsupported
 claims, hidden-curriculum conflicts and the next three steps. Verify every level by meaning, in any language.
 Never turn it into a score or a ranking.
+
+## Serious-game pre-check and label package
+
+When the user prepares a serious game for a quality label or catalogue, or wants the product described in a
+standard metadata format:
+
+```bash
+python3 <skill-folder>/scripts/precheck.py --repo . --findings csef-report/findings.json \
+        [--compass csef-compass/compass.json] --out-dir csef-precheck
+python3 <skill-folder>/scripts/metadata.py --repo . --package --findings csef-report/findings.json --out-dir csef-package
+```
+
+The pre-check maps CSEF results and the team's statements (`serious_game.claims` in csef.yaml) to 22 quality
+criteria. Read each statement against its evidence and say where the evidence does not support it. Where the
+criteria and a CSEF rule disagree, the CSEF rule applies for children. Never call the pre-check a label or
+say a product qualifies for one. The metadata export lists missing SG-MDF fields by DIN reference; help the
+team fill the `metadata` block. Do not copy text or value lists from DIN SPEC 91380.
 
 ## Company policy questionnaire
 

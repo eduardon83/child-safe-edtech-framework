@@ -3,6 +3,20 @@
 Newest first. One short entry per version; the full story of each release is in [docs/releases/](docs/releases/).
 Open items and what we are watching: [legislation.md, watch list](framework/legislation.md#open-discussions-and-watch-list).
 
+## v0.13.0 (2026-11-18)
+
+- **Serious-game pre-check** (`tooling/precheck.py`, [07-labels-and-metadata.md](framework/07-labels-and-metadata.md)):
+  22 quality criteria (Caserman et al. 2020) mapped to CSEF rules and Compass targets in
+  `framework/serious-games/criteria.yaml`. Statuses ready, partial, missing or CSEF issue. Statements with
+  evidence go in a new `serious_game` block in csef.yaml. Where the criteria recommend competition or emotional
+  hooks, CSEF limits apply for children.
+- **Metadata export** (`tooling/metadata.py`): a new `metadata` block; SG-MDF (DIN SPEC 91380) Core and
+  learning-games profile as JSON and XML (CSEF serialisation; the DIN SPEC has no official schema), and
+  schema.org LearningResource JSON-LD. The required data statement is written from what csef.yaml declares.
+- **Label package**: metadata, findings, pre-check, evidence index, MANIFEST.json with SHA-256 hashes, zipped.
+- New sources: R-CASERMAN2020, DIN-SPEC-91380. Example: the compliant game now has metadata and statements.
+- Rules unchanged (124). Sources: 81 to 83, plus 9 in the Portugal pack.
+
 ## v0.12.0 (2026-11-17)
 
 - **In-game purchases, as EU consumer authorities read the law.** New sources: CPC-VC (CPC Network Key Principles

@@ -103,6 +103,47 @@ compass:
 #    - target: INF-05
 #      reason: "Covered elsewhere in the school programme"
 
+# Product description for labels and catalogues (tooling/metadata.py). Exports the Serious Games Metadata Format
+# (SG-MDF, DIN SPEC 91380) as JSON and XML, and schema.org LearningResource (JSON-LD) for any learning product.
+# Title, summary, age groups, game mode, purchases and the data statement come from the rest of this file.
+# Values for the selection lists: DIN SPEC 91380 Annex A (free download, https://doi.org/10.31030/2853739).
+# metadata:
+#   game_id: my-product                  # stable id; default: slug of the product name
+#   primary_goal: Educational Game        # default for profile A
+#   goal_descriptions:                    # subject, adverb, verb
+#     - {subject: knowledge of player, adverb: sustainably, verb: improve}
+#   keywords: [fractions, primary maths]
+#   genre: [logic and puzzle games]
+#   game_mode: [single player]           # default when no multiplayer feature is declared
+#   previews:
+#     - {url: "https://...", type: title image}
+#   play_time: "15 to 20 minutes per lesson"
+#   release: {version: "1.0.0", date: 2026-09-01, status: complete}
+#   age_rating: PEGI-3
+#   languages: [pt, en]                  # ISO 639
+#   privacy_notice: "https://..."
+#   distribution:
+#     - {channel: school licence, url: "https://...", price_info: "Yearly licence per class", with_costs: "yes"}
+#   platforms:
+#     - {platform: web browser, requirements: "Current browsers on tablet or laptop"}
+#   parties:
+#     - {name: My Studio, role: developer, url: "https://..."}
+#   quality:                             # awards, ratings, studies (also SG-08 in the pre-check)
+#     - {aspect: "Award name, year", type: awards, url: "https://..."}
+#   learning:                            # learning-games profile (Level 3)
+#     resource_type: [exercise]
+#     context: [school]
+#     teaching_concept: "Guided discovery, then practice"
+#     curriculum: "Curriculum or competence framework it maps to"
+#     prior_knowledge: "What players must know before"
+
+# Serious-game pre-check (tooling/precheck.py). Statements with evidence for criteria CSEF cannot read from code.
+# Ids SG-01 to SG-22: framework/serious-games/criteria.yaml. Evidence: paths in this repo or links.
+# serious_game:
+#   characterizing_goal: "Pupils aged 6 to 9 understand and compare simple fractions."
+#   claims:
+#     SG-03: {statement: "Paths open only when a task is solved.", evidence: [docs/design-document.md]}
+
 # Accepted gaps. A waiver needs a reason, a named approver and an expiry date.
 waivers: []
 #  - rule: CORE-SEC-03

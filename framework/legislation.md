@@ -2,7 +2,7 @@
 
 This page lists every legal and policy source behind the Child-Safe EdTech Framework (CSEF): what it is, its status, the provisions that matter for EdTech used by children, and which CSEF rules rely on it.
 
-> Status as of **17 November 2026**. Each source has a `verified` date in `framework/sources.yaml`. Proposals are not law. This page is not legal advice.
+> Status as of **18 November 2026**. Each source has a `verified` date in `framework/sources.yaml`. Proposals are not law. This page is not legal advice.
 
 ## How sources map to compliance levels
 
@@ -57,6 +57,7 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 | **1EDTECH** 1EdTech Learning Tools Interoperability (LTI) 1.3 and OneRoster 1.2 | standard | Current versions (OneRoster 1.2 published Sep 2022) | 2 | 0 |
 | **IEEE3527** IEEE 3527.1-2020, Standard for Digital Intelligence (DQ): Framework for Digital Literacy, Skills, and Readiness | standard | Active standard, published 15 Jan 2021. 8 areas of digital life, 3 levels, 24 competences | 0 | 4 |
 | **IEEE2089** IEEE 2089-2021, Standard for an Age Appropriate Digital Services Framework Based on the 5Rights Principles for Children | standard | Active standard (2021) | 0 | 1 |
+| **DIN-SPEC-91380** DIN SPEC 91380:2018-06, Serious Games Metadata Format (SG-MDF) | standard | Current (PAS procedure), in German, free download from DIN Media | 0 | 0 |
 | **UNESCO-MIL** UNESCO (2021). Media and Information Literate Citizens: Think Critically, Click Wisely! Media and Information Literacy Curriculum for Educators and Learners, second edition | guidance | Published 2021. 19 broad learning outcomes and 6 values; 14 modules | 0 | 6 |
 | **UNESCO-AIMIL** UNESCO (2026). AI Answers. You Decide. A Companion Guide to the UNESCO Media and Information Literacy Curriculum | guidance | Published 2026 | 0 | 6 |
 | **UNESCO-AICFS** UNESCO (2024). AI Competency Framework for Students | guidance | Published 2024 | 0 | 4 |
@@ -778,6 +779,16 @@ IEEE standard for age-appropriate design of digital services for children.
 **Compass targets citing it.** `TRN-01`
 
 **Link.** [https://ieeexplore.ieee.org/document/9627644](https://ieeexplore.ieee.org/document/9627644)
+
+### DIN SPEC 91380:2018-06, Serious Games Metadata Format (SG-MDF)
+
+*Id `DIN-SPEC-91380` · standard · DE · verified 2026-11-18*
+
+**Status.** Current (PAS procedure), in German, free download from DIN Media. Defines SG-MDF as a grammar: Core fields required for every serious game (Level 1), optional detail (Level 2) and application profiles for learning and health games (Level 3). No official JSON or XML schema. Basis of the Serious Games Information Center and of CSEF's metadata export (tooling/metadata.py), which copies no text from the DIN SPEC.
+
+**Rules citing it.** none (context)
+
+**Link.** [https://doi.org/10.31030/2853739](https://doi.org/10.31030/2853739)
 
 ## International guidance and frameworks
 
