@@ -1,6 +1,129 @@
-population_id	unit_id	players	classes	ev_time_p25_min	ev_time_p50_min	ev_time_p75_min	ev_done_share	ev_stuck_share	ev_help_share	ev_gain_mean	ev_gain_n	ev_access_captions	ev_access_reduced_motion	ev_access_text_size	ev_stop_share	ev_mode_solo	ev_mode_teacher_led	ev_mode_team	ev_device_desktop	ev_device_laptop	ev_device_tablet
-dataset	*	60	6							0.3	60	0.2	0.22	0.08	0.82	0.43	0.2	0.37	0.29	0.28	0.43
-dataset	lvl1	60	6	6.0	7.3	9.0	0.98	0.02	0.08												
-dataset	lvl2	60	6	7.5	9.8	12.2	0.98	0.1	0.24												
-dataset	lvl3	60	6	8.9	10.8	13.4	0.92	0.08	0.28												
-dataset	lvl4	20	6	10.3	12.8	16.4	0.82	0.32	0.64												
+unit	unit_order	feature	category	stat	value	players	classes	age_band	country	period	instrument
+Level 1	1	EV-TIME		p25	6	60	6	all	all	2026-09/2026-11	
+Level 1	1	EV-TIME		p50	7.3	60	6	all	all	2026-09/2026-11	
+Level 1	1	EV-TIME		p75	9	60	6	all	all	2026-09/2026-11	
+Level 1	1	EV-DONE		share	0.98	60	6	all	all	2026-09/2026-11	
+Level 1	1	EV-STUCK		share	0.02	60	6	all	all	2026-09/2026-11	
+Level 1	1	EV-HELP		share	0.08	60	6	all	all	2026-09/2026-11	
+Level 2	2	EV-TIME		p25	7.5	60	6	all	all	2026-09/2026-11	
+Level 2	2	EV-TIME		p50	9.8	60	6	all	all	2026-09/2026-11	
+Level 2	2	EV-TIME		p75	12.2	60	6	all	all	2026-09/2026-11	
+Level 2	2	EV-DONE		share	0.98	60	6	all	all	2026-09/2026-11	
+Level 2	2	EV-STUCK		share	0.1	60	6	all	all	2026-09/2026-11	
+Level 2	2	EV-HELP		share	0.24	60	6	all	all	2026-09/2026-11	
+Level 3	3	EV-TIME		p25	8.9	55	6	all	all	2026-09/2026-11	
+Level 3	3	EV-TIME		p50	10.8	55	6	all	all	2026-09/2026-11	
+Level 3	3	EV-TIME		p75	13.4	55	6	all	all	2026-09/2026-11	
+Level 3	3	EV-DONE		share	0.92	60	6	all	all	2026-09/2026-11	
+Level 3	3	EV-STUCK		share	0.08	60	6	all	all	2026-09/2026-11	
+Level 3	3	EV-HELP		share	0.28	60	6	all	all	2026-09/2026-11	
+Level 4	4	EV-TIME		p25	10.3	20	5	all	all	2026-09/2026-11	
+Level 4	4	EV-TIME		p50	12.8	20	5	all	all	2026-09/2026-11	
+Level 4	4	EV-TIME		p75	16.4	20	5	all	all	2026-09/2026-11	
+Level 4	4	EV-DONE		share	0.82	20	6	all	all	2026-09/2026-11	
+Level 4	4	EV-STUCK		share	0.32	20	6	all	all	2026-09/2026-11	
+Level 4	4	EV-HELP		share	0.64	20	6	all	all	2026-09/2026-11	
+Whole game	0	EV-TIME		p25	28.7	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-TIME		p50	34.9	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-TIME		p75	46.3	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-STUCK		share	0.3	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-HELP		share	0.67	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-STOP		share	0.82	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-GAIN		pre	0.49	60	6	all	all	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-GAIN		post	0.79	60	6	all	all	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-GAIN		change	0.3	60	6	all	all	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-GAIN		effect_size	2.08	60	6	all	all	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-ACCESS	captions	share	0.2	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-ACCESS	reduced_motion	share	0.22	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-ACCESS	text_size	share	0.08	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-MODE	solo	share	0.43	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-MODE	teacher_led	share	0.2	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-MODE	team	share	0.37	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-DEVICE	desktop	share	0.29	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-DEVICE	laptop	share	0.28	60	6	all	all	2026-09/2026-11	
+Whole game	0	EV-DEVICE	tablet	share	0.43	60	6	all	all	2026-09/2026-11	
+Whole game	0	CONTEXT	players	count	60	60	6	all	all	2026-09/2026-11	
+Whole game	0	CONTEXT	classes	count	6	60	6	all	all	2026-09/2026-11	
+Whole game	0	CONTEXT	age_bands	list	B2	60	6	all	all	2026-09/2026-11	
+Whole game	0	CONTEXT	countries	list	ES,PT	60	6	all	all	2026-09/2026-11	
+Whole game	0	CONTEXT	months	list	2026-09,2026-10,2026-11	60	6	all	all	2026-09/2026-11	
+Level 1	1	EV-TIME		p25	5.9	25	3	all	ES	2026-09/2026-11	
+Level 1	1	EV-TIME		p50	6.7	25	3	all	ES	2026-09/2026-11	
+Level 1	1	EV-TIME		p75	7.8	25	3	all	ES	2026-09/2026-11	
+Level 1	1	EV-DONE		share	0.96	25	3	all	ES	2026-09/2026-11	
+Level 1	1	EV-STUCK		share	0	25	3	all	ES	2026-09/2026-11	
+Level 1	1	EV-HELP		share	0.04	25	3	all	ES	2026-09/2026-11	
+Level 2	2	EV-TIME		p25	7.6	25	3	all	ES	2026-09/2026-11	
+Level 2	2	EV-TIME		p50	8.5	25	3	all	ES	2026-09/2026-11	
+Level 2	2	EV-TIME		p75	11.6	25	3	all	ES	2026-09/2026-11	
+Level 2	2	EV-DONE		share	0.96	25	3	all	ES	2026-09/2026-11	
+Level 2	2	EV-STUCK		share	0.04	25	3	all	ES	2026-09/2026-11	
+Level 2	2	EV-HELP		share	0.25	25	3	all	ES	2026-09/2026-11	
+Level 3	3	EV-TIME		p25	8.9	25	3	all	ES	2026-09/2026-11	
+Level 3	3	EV-TIME		p50	10.2	25	3	all	ES	2026-09/2026-11	
+Level 3	3	EV-TIME		p75	12.3	25	3	all	ES	2026-09/2026-11	
+Level 3	3	EV-DONE		share	1	25	3	all	ES	2026-09/2026-11	
+Level 3	3	EV-STUCK		share	0.08	25	3	all	ES	2026-09/2026-11	
+Level 3	3	EV-HELP		share	0.28	25	3	all	ES	2026-09/2026-11	
+Level 4	4	EV-DONE		share	0.83	10	3	all	ES	2026-09/2026-11	
+Level 4	4	EV-STUCK		share	0.25	10	3	all	ES	2026-09/2026-11	
+Level 4	4	EV-HELP		share	0.5	10	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-TIME		p25	28.9	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-TIME		p50	36.1	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-TIME		p75	41.8	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-STUCK		share	0.28	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-HELP		share	0.68	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-STOP		share	0.82	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-GAIN		pre	0.49	25	3	all	ES	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-GAIN		post	0.82	25	3	all	ES	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-GAIN		change	0.32	25	3	all	ES	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-GAIN		effect_size	2.56	25	3	all	ES	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-ACCESS	captions	share	0.12	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-ACCESS	reduced_motion	share	0.24	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-ACCESS	text_size	share	0.04	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-MODE	solo	share	0.56	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-MODE	team	share	0.44	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-DEVICE	desktop	share	0.28	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-DEVICE	laptop	share	0.3	25	3	all	ES	2026-09/2026-11	
+Whole game	0	EV-DEVICE	tablet	share	0.42	25	3	all	ES	2026-09/2026-11	
+Level 1	1	EV-TIME		p25	6.2	35	3	all	PT	2026-09/2026-11	
+Level 1	1	EV-TIME		p50	7.4	35	3	all	PT	2026-09/2026-11	
+Level 1	1	EV-TIME		p75	9.5	35	3	all	PT	2026-09/2026-11	
+Level 1	1	EV-DONE		share	1	35	3	all	PT	2026-09/2026-11	
+Level 1	1	EV-STUCK		share	0.03	35	3	all	PT	2026-09/2026-11	
+Level 1	1	EV-HELP		share	0.11	35	3	all	PT	2026-09/2026-11	
+Level 2	2	EV-TIME		p25	7.3	35	3	all	PT	2026-09/2026-11	
+Level 2	2	EV-TIME		p50	10.6	35	3	all	PT	2026-09/2026-11	
+Level 2	2	EV-TIME		p75	13.2	35	3	all	PT	2026-09/2026-11	
+Level 2	2	EV-DONE		share	1	35	3	all	PT	2026-09/2026-11	
+Level 2	2	EV-STUCK		share	0.14	35	3	all	PT	2026-09/2026-11	
+Level 2	2	EV-HELP		share	0.23	35	3	all	PT	2026-09/2026-11	
+Level 3	3	EV-TIME		p25	9.1	30	3	all	PT	2026-09/2026-11	
+Level 3	3	EV-TIME		p50	11.2	30	3	all	PT	2026-09/2026-11	
+Level 3	3	EV-TIME		p75	13.9	30	3	all	PT	2026-09/2026-11	
+Level 3	3	EV-DONE		share	0.86	35	3	all	PT	2026-09/2026-11	
+Level 3	3	EV-STUCK		share	0.09	35	3	all	PT	2026-09/2026-11	
+Level 3	3	EV-HELP		share	0.29	35	3	all	PT	2026-09/2026-11	
+Level 4	4	EV-DONE		share	0.8	10	3	all	PT	2026-09/2026-11	
+Level 4	4	EV-STUCK		share	0.4	10	3	all	PT	2026-09/2026-11	
+Level 4	4	EV-HELP		share	0.8	10	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-TIME		p25	28.2	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-TIME		p50	34.2	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-TIME		p75	46.6	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-STUCK		share	0.31	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-HELP		share	0.66	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-STOP		share	0.81	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-GAIN		pre	0.49	35	3	all	PT	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-GAIN		post	0.76	35	3	all	PT	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-GAIN		change	0.28	35	3	all	PT	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-GAIN		effect_size	1.83	35	3	all	PT	2026-09/2026-11	Fractions check, 10 items
+Whole game	0	EV-ACCESS	captions	share	0.26	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-ACCESS	reduced_motion	share	0.2	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-ACCESS	text_size	share	0.11	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-MODE	solo	share	0.34	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-MODE	teacher_led	share	0.34	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-MODE	team	share	0.31	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-DEVICE	desktop	share	0.3	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-DEVICE	laptop	share	0.26	35	3	all	PT	2026-09/2026-11	
+Whole game	0	EV-DEVICE	tablet	share	0.44	35	3	all	PT	2026-09/2026-11	
+Whole game	0	CONTEXT	languages	list	pt	60	6	all	all	2026-09/2026-11	

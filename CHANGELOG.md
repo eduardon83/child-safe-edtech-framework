@@ -7,9 +7,10 @@ Open items and what we are watching: [legislation.md, watch list](framework/legi
 
 - **Learning data** ([08-learning-data.md](framework/08-learning-data.md), online at csef.kendirstudios.pt/learning-data/):
   a child-safe profile of the Open Game Data event standard (`framework/data/profile.yaml`), four data tiers, and
-  an open evidence feed format, csef-evidence-0.1 (`framework/data/evidence-ontology.yaml`): time per unit,
-  completion, stuck, help, learning gain, accessibility, natural stops, play mode, devices; at least 10 players and
-  3 classes per figure, counts rounded to 5, dates to the month.
+  an open evidence feed format, csef-evidence-0.1 (`framework/data/evidence-ontology.yaml`): one row per figure
+  (time per unit, completion, stuck, help, learning gain, accessibility, natural stops, play mode, devices), for
+  everyone and per age band, country and period; at least 10 players and 3 classes per row, counts rounded to 5,
+  periods to the month. Same layout as the Play to Learn Toolkit.
 - New rules: CORE-DAT-19 event catalogue, CORE-DAT-20 random product-scoped player codes, CORE-DAT-21 no
   fingerprinting in telemetry, CORE-DAT-22 inferences at population level (level 2), CORE-DAT-23 no engagement
   targets for children (SHOULD, level 2), CORE-DAT-24 open releases hold group figures only, CORE-DAT-25 research

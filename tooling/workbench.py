@@ -381,8 +381,8 @@ def summarise(tool: str, d: Path) -> str:
     if tool == "feed":
         meta = json.loads((d / "feed" / "META.json").read_text(encoding="utf-8")) if (d / "feed" / "META.json").exists() else {}
         rows = max(0, len((d / "feed" / "population.tsv").read_text(encoding="utf-8").splitlines()) - 1) if (d / "feed" / "population.tsv").exists() else 0
-        return (f"{_n(rows, 'row')} of group figures from {meta.get('player_count', 0)} players in {meta.get('class_count', 0)} classes; "
-                f"{_n(meta.get('suppressed_cells', 0), 'small cell')} removed. Check it, then publish feed.zip.")
+        return (f"{_n(rows, 'group figure')} from {meta.get('player_count', 0)} players in {meta.get('class_count', 0)} classes; "
+                f"{_n(meta.get('suppressed_cells', 0), 'small group')} left out. Check it, then publish feed.zip.")
     if tool == "feedcheck":
         r = js("feed-check.json") or {}
         c = r.get("counts", {})

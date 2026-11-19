@@ -1,8 +1,20 @@
 {
   "ontology": "csef-evidence-0.1",
-  "files": {
-    "population.tsv": "118835cc083f5b29ce8f9e7963631e8ce6229cfacf4f85a83bd26686f2b104e5",
-    "META.json": "cab7306d62227ae84038944bdca42800d2f0cb5f6f44125d84f2ef4c86c7e40f",
-    "README.md": "db76e1dffc31dd96b077e8e603e47aae6e08784071d38e46ca097b34583be7cc"
-  }
+  "files": [
+    {
+      "path": "population.tsv",
+      "sha256": "30b599b9a8a4bb80ad5a3cb9db9593e9bf2b0387613a2e311e131de2164d38b3",
+      "bytes": 8372
+    },
+    {
+      "path": "META.json",
+      "sha256": "ca199101b2477f156a78fe86f864e2ff49b086ba29a0a6a41b9c01759ad00802",
+      "bytes": 1348
+    },
+    {
+      "path": "README.md",
+      "sha256": "7fbebc39ac6e286e85735167821fd6f2564b4c2f314c5e4f0bf0c2131aa24261",
+      "bytes": 2962
+    }
+  ]
 }

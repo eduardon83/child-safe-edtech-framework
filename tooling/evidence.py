@@ -7,11 +7,12 @@ child-safe (framework/08-learning-data.md):
   check-events  an OGD event file (TSV) against the child-safe profile and the product's event catalogue:
                 undeclared events and fields, forbidden columns, possible free text, emails, IP addresses,
                 player codes that look like hashes, player metadata beyond the allow-list.
-  build-feed    an open evidence feed (csef-evidence-0.1) from an event file and its catalogue: group figures
-                per unit (time to finish, completion, stuck, help) and for the whole game (learning gain,
-                accessibility settings, natural stops, play mode, devices). Every figure has at least
-                10 players and 3 classes behind it; smaller cells are removed. Counts are rounded to 5, dates
-                to the month. Writes population.tsv, META.json, README.md and MANIFEST.json (and a zip).
+  build-feed    an open evidence feed (csef-evidence-0.1) from an event file and its catalogue: one row per
+                figure, per unit (time to finish, completion, stuck, help) and for the whole game (time,
+                learning gain, accessibility settings, natural stops, play mode, devices), for everyone and for
+                each age band and country large enough on its own. Every row has at least 10 players and
+                3 classes behind it; smaller groups are left out. Counts are rounded to 5, periods to the
+                month. Writes population.tsv, META.json, README.md and MANIFEST.json (and a zip).
   check-feed    a feed (folder or zip) before release, or before a catalogue such as the Play to Learn
                 Toolkit shows it: hashes, format, thresholds, forbidden metrics.
 
@@ -248,6 +249,10 @@ def check_events(cols: list[str], events: list[dict], cat: dict, profile: dict |
 
 
 # --------------------------------------------------------------------------- build-feed
+COLUMNS = ["unit", "unit_order", "feature", "category", "stat", "value", "players", "classes", "age_band", "country", "period", "instrument"]
+WHOLE = "Whole game"
+
+
 def r5(n: int, step: int = 5) -> int:
     return int(step * round(n / step))
 
@@ -270,8 +275,18 @@ def _unit(ev) -> str | None:
     return None
 
 
-def compute_features(events: list[dict], cat: dict, ont: dict, min_players: int, min_classes: int, round_to: int = 5) -> dict:
-    """Population features per unit and for the whole game, with suppression of small cells."""
+def unit_label(u: str) -> str:
+    m = re.match(r"^lvl\s*(\d+)$", u, re.I)
+    return f"Level {m.group(1)}" if m else u
+
+
+def _num(x: float, nd: int = 2):
+    x = round(float(x), nd)
+    return int(x) if x == int(x) else x
+
+
+def play_facts(events: list[dict], cat: dict) -> dict:
+    """Per player and per session facts from an event file, read once."""
     idx = catalogue_index(cat)
     role = lambda ev: (idx.get(str(ev.get("event_name"))) or {}).get("evidence_role")  # noqa: E731
     by_session = defaultdict(list)
@@ -279,215 +294,266 @@ def compute_features(events: list[dict], cat: dict, ont: dict, min_players: int,
         by_session[ev.get("session_id")].append(ev)
     for evs in by_session.values():
         evs.sort(key=lambda e: (int(e.get("session_sequence_index") or 0), str(e.get("timestamp") or "")))
-
-    player_class = {}
+    f = {"player_class": {}, "player_age": {}, "started": defaultdict(set), "finished": defaultdict(dict),
+         "helped": defaultdict(set), "stuck": defaultdict(set), "settings": defaultdict(set), "pre": {}, "post": {},
+         "active": defaultdict(float), "sess_player": {}, "sess_mode": {}, "sess_device": {}, "sess_stop": {},
+         "months": set(), "unit_order": {}}
     for ev in events:
-        if ev.get("player_id"):
-            player_class.setdefault(ev["player_id"], ev.get("instance_id") or "?")
-
-    started, finished, helped, stuck = defaultdict(set), defaultdict(dict), defaultdict(set), defaultdict(set)
-    settings, gain_pre, gain_post = defaultdict(set), {}, {}
-    sess_mode, sess_device, sess_stop = {}, {}, {}
-    months = set()
+        pid = ev.get("player_id")
+        if pid:
+            f["player_class"].setdefault(pid, ev.get("instance_id") or "?")
+            pm = ev.get("player_metadata")
+            if isinstance(pm, dict) and pm.get("age_band"):
+                f["player_age"].setdefault(pid, str(pm["age_band"]))
     for sid, evs in by_session.items():
-        open_units: dict[str, list] = {}
+        open_units: dict[str, float] = {}
         prev_t = None
+        pid = next((e.get("player_id") for e in evs if e.get("player_id")), None)
+        f["sess_player"][sid] = pid
         for ev in evs:
             t = ts(ev.get("timestamp"))
             if t:
-                months.add(t.strftime("%Y-%m"))
-            gap = min((t - prev_t).total_seconds(), ACTIVE_GAP_S) if (t and prev_t) else 0.0
+                f["months"].add(t.strftime("%Y-%m"))
+            gap = max(min((t - prev_t).total_seconds(), ACTIVE_GAP_S), 0.0) if (t and prev_t) else 0.0
             prev_t = t or prev_t
+            if pid:
+                f["active"][pid] += gap
             for u in open_units:
-                open_units[u][1] += max(gap, 0.0)
-            pid, r, u = ev.get("player_id"), role(ev), _unit(ev)
+                open_units[u] += gap
+            r, u = role(ev), _unit(ev)
             data = ev.get("event_data") if isinstance(ev.get("event_data"), dict) else {}
             gs = ev.get("game_state") if isinstance(ev.get("game_state"), dict) else {}
-            if gs.get("mode") and sid not in sess_mode:
-                sess_mode[sid] = str(gs["mode"])
+            if gs.get("mode") and sid not in f["sess_mode"]:
+                f["sess_mode"][sid] = str(gs["mode"])
+            if u and u not in f["unit_order"] and r in ("unit_start", "unit_complete"):
+                f["unit_order"][u] = len(f["unit_order"]) + 1
             if not pid:
                 continue
             if r == "unit_start" and u:
-                started[u].add(pid)
-                open_units.setdefault(u, [pid, 0.0])
+                f["started"][u].add(pid)
+                open_units.setdefault(u, 0.0)
             elif r == "unit_complete" and u:
-                started[u].add(pid)
-                if u in open_units and pid not in finished[u]:
-                    finished[u][pid] = open_units[u][1] / 60.0
+                f["started"][u].add(pid)
+                if u in open_units and pid not in f["finished"][u]:
+                    f["finished"][u][pid] = open_units[u] / 60.0
                 open_units.pop(u, None)
             elif r == "help" and u:
-                helped[u].add(pid)
+                f["helped"][u].add(pid)
             elif r == "stuck" and u and str(ev.get("event_source", "")).upper() != "GAME":
-                stuck[u].add(pid)
+                f["stuck"][u].add(pid)
             elif r == "setting" and data.get("on") is True and data.get("setting"):
-                settings[str(data["setting"])].add(pid)
+                f["settings"][str(data["setting"])].add(pid)
             elif r == "assessment" and isinstance(data.get("score"), (int, float)) and data.get("max"):
-                (gain_pre if data.get("phase") == "pre" else gain_post)[pid] = float(data["score"]) / float(data["max"])
+                (f["pre"] if data.get("phase") == "pre" else f["post"])[pid] = float(data["score"]) / float(data["max"])
             elif r == "mode" and data.get("mode"):
-                sess_mode[sid] = str(data["mode"])
+                f["sess_mode"][sid] = str(data["mode"])
             elif r == "session_start" and data.get("device"):
-                sess_device[sid] = str(data["device"])
+                f["sess_device"][sid] = str(data["device"])
             elif r == "session_end" and isinstance(data.get("natural_stop"), bool):
-                sess_stop[sid] = data["natural_stop"]
+                f["sess_stop"][sid] = data["natural_stop"]
+    # Units in playing order: the order they were first started in the file is close; the catalogue can set it.
+    order = {str(u.get("unit")): i for i, u in enumerate(cat.get("units") or [], 1) if isinstance(u, dict)}
+    if order:
+        f["unit_order"] = {u: order.get(u, 100 + n) for u, n in f["unit_order"].items()}
+    else:
+        f["unit_order"] = {u: i for i, u in enumerate(sorted(f["unit_order"], key=lambda u: (re.sub(r"\d+", "", u), int(re.sub(r"\D", "", u) or 0), u)), 1)}
+    return f
+
+
+SETTING_CATS = {"captions": "captions", "text_size": "text_size", "reduced_motion": "reduced_motion", "audio_descriptions": "audio",
+                "read_aloud": "audio", "audio": "audio", "high_contrast": "high_contrast"}
+
+
+def compute_features(events: list[dict], cat: dict, ont: dict, min_players: int, min_classes: int, round_to: int = 5,
+                     class_country: dict | None = None, instrument: str | None = None) -> dict:
+    """One row per figure, for the whole group and for every age band and country large enough on its own."""
+    f = play_facts(events, cat)
+    class_country = class_country or {}
+    pc = f["player_class"]
+    sm = sorted(f["months"])
+    period = f"{sm[0]}/{sm[-1]}" if sm else "all"
+    rows, suppressed = [], []
 
     def classes(players) -> int:
-        return len({player_class.get(p, "?") for p in players} - {"?"})
+        return len({pc.get(p, "?") for p in players} - {"?"})
 
     def ok(players) -> bool:
         return len(players) >= min_players and classes(players) >= min_classes
 
-    sess_player = {sid: next((e.get("player_id") for e in evs if e.get("player_id")), None) for sid, evs in by_session.items()}
-    all_players = set(player_class)
-    rows, suppressed = [], []
-    units = sorted(started, key=lambda u: (re.sub(r"\d+", "", u), int(re.sub(r"\D", "", u) or 0), u))
-    for u in units:
-        ps = started[u]
-        if not ok(ps):
-            suppressed.append({"unit_id": u, "reason": "fewer than the minimum players or classes"})
-            continue
-        row = {"population_id": "dataset", "unit_id": u, "players": r5(len(ps), round_to), "classes": classes(ps)}
-        fin = finished[u]
-        if ok(set(fin)):
-            mins = list(fin.values())
-            row.update({"ev_time_p25_min": round(pct(mins, .25), 1), "ev_time_p50_min": round(pct(mins, .5), 1),
-                        "ev_time_p75_min": round(pct(mins, .75), 1)})
-        else:
-            suppressed.append({"unit_id": u, "feature": "EV-TIME", "reason": "fewer finishers than the minimum"})
-        row["ev_done_share"] = round(len(set(fin) & ps) / len(ps), 2)
-        row["ev_help_share"] = round(len(helped[u] & ps) / len(ps), 2)
+    def add(unit, order, feature, stat, value, players, age, country, category="", instr=""):
+        rows.append({"unit": unit, "unit_order": order, "feature": feature, "category": category, "stat": stat,
+                     "value": value, "players": r5(len(players), round_to), "classes": classes(players),
+                     "age_band": age, "country": country, "period": period, "instrument": instr})
+
+    def figures(group: set, age: str, country: str):
+        tag = {"age_band": age, "country": country}
+        for u, order in sorted(f["unit_order"].items(), key=lambda x: x[1]):
+            ps = f["started"][u] & group
+            if not ok(ps):
+                suppressed.append(dict(tag, unit=u, reason="fewer than the minimum players or classes"))
+                continue
+            name = unit_label(u)
+            fin = {p: m for p, m in f["finished"][u].items() if p in group}
+            if ok(set(fin)):
+                for st, q in (("p25", .25), ("p50", .5), ("p75", .75)):
+                    add(name, order, "EV-TIME", st, _num(pct(list(fin.values()), q), 1), set(fin), age, country)
+            else:
+                suppressed.append(dict(tag, unit=u, feature="EV-TIME", reason="fewer finishers than the minimum"))
+            add(name, order, "EV-DONE", "share", _num(len(set(fin) & ps) / len(ps)), ps, age, country)
+            if any(d.get("evidence_role") == "stuck" for d in cat.get("detectors") or []):
+                add(name, order, "EV-STUCK", "share", _num(len(f["stuck"][u] & ps) / len(ps)), ps, age, country)
+            add(name, order, "EV-HELP", "share", _num(len(f["helped"][u] & ps) / len(ps)), ps, age, country)
+        if not ok(group):
+            suppressed.append(dict(tag, unit=WHOLE, reason="fewer than the minimum players or classes"))
+            return
+        act = {p: f["active"][p] / 60.0 for p in group if f["active"].get(p)}
+        if ok(set(act)):
+            for st, q in (("p25", .25), ("p50", .5), ("p75", .75)):
+                add(WHOLE, 0, "EV-TIME", st, _num(pct(list(act.values()), q), 1), set(act), age, country)
         if any(d.get("evidence_role") == "stuck" for d in cat.get("detectors") or []):
-            row["ev_stuck_share"] = round(len(stuck[u] & ps) / len(ps), 2)
-        rows.append(row)
-
-    whole = {"population_id": "dataset", "unit_id": "*", "players": r5(len(all_players), round_to), "classes": classes(all_players)}
-    if ok(all_players):
-        both = set(gain_pre) & set(gain_post)
-        if ok(both):
-            whole["ev_gain_mean"] = round(sum(gain_post[p] - gain_pre[p] for p in both) / len(both), 2)
-            whole["ev_gain_n"] = r5(len(both), round_to)
-        elif gain_pre or gain_post:
-            suppressed.append({"unit_id": "*", "feature": "EV-GAIN", "reason": "fewer players with both checks than the minimum"})
-        for s, ps in sorted(settings.items()):
-            whole[f"ev_access_{norm_col(s)}"] = round(len(ps) / len(all_players), 2)
-        stops = {sid: v for sid, v in sess_stop.items() if sess_player.get(sid)}
-        if stops and ok({sess_player[s] for s in stops}):
-            whole["ev_stop_share"] = round(sum(1 for v in stops.values() if v) / len(stops), 2)
-        for key, src in (("mode", sess_mode), ("device", sess_device)):
-            have = {sid: v for sid, v in src.items() if sess_player.get(sid)}
-            if have and ok({sess_player[s] for s in have}):
+            add(WHOLE, 0, "EV-STUCK", "share", _num(len(set().union(*f["stuck"].values()) & group) / len(group)) if f["stuck"] else 0, group, age, country)
+        add(WHOLE, 0, "EV-HELP", "share", _num(len(set().union(*f["helped"].values()) & group) / len(group)) if f["helped"] else 0, group, age, country)
+        stops = {s: v for s, v in f["sess_stop"].items() if f["sess_player"].get(s) in group}
+        if stops and ok({f["sess_player"][s] for s in stops}):
+            add(WHOLE, 0, "EV-STOP", "share", _num(sum(1 for v in stops.values() if v) / len(stops)), {f["sess_player"][s] for s in stops}, age, country)
+        both = set(f["pre"]) & set(f["post"]) & group
+        if both and ok(both):
+            d = [f["post"][p] - f["pre"][p] for p in both]
+            mean = sum(d) / len(d)
+            sd = (sum((x - mean) ** 2 for x in d) / (len(d) - 1)) ** .5 if len(d) > 1 else 0
+            ins = instrument or "Pre and post check (name it with --instrument)"
+            for st, v in (("pre", sum(f["pre"][p] for p in both) / len(both)), ("post", sum(f["post"][p] for p in both) / len(both)),
+                          ("change", mean)) + ((("effect_size", mean / sd),) if sd else ()):
+                add(WHOLE, 0, "EV-GAIN", st, _num(v), both, age, country, instr=ins)
+        elif both or f["pre"] or f["post"]:
+            suppressed.append(dict(tag, unit=WHOLE, feature="EV-GAIN", reason="fewer players with both checks than the minimum"))
+        for s, ps in sorted(f["settings"].items()):
+            add(WHOLE, 0, "EV-ACCESS", "share", _num(len(ps & group) / len(group)), group, age, country, category=SETTING_CATS.get(s, "other"))
+        for key, src in (("EV-MODE", f["sess_mode"]), ("EV-DEVICE", f["sess_device"])):
+            have = {s: v for s, v in src.items() if f["sess_player"].get(s) in group}
+            players = {f["sess_player"][s] for s in have}
+            if have and ok(players):
                 for val in sorted(set(have.values())):
-                    whole[f"ev_{key}_{norm_col(val)}"] = round(sum(1 for v in have.values() if v == val) / len(have), 2)
-        rows.insert(0, whole)
-    else:
-        suppressed.append({"unit_id": "*", "reason": "fewer than the minimum players or classes in the whole dataset"})
+                    add(WHOLE, 0, key, "share", _num(sum(1 for v in have.values() if v == val) / len(have)), players, age, country, category=val)
 
-    age = defaultdict(set)
-    for ev in events:
-        pm = ev.get("player_metadata")
-        if isinstance(pm, dict) and pm.get("age_band") and ev.get("player_id"):
-            age[str(pm["age_band"])].add(ev["player_id"])
-    sm = sorted(months)
+    everyone = set(pc)
+    figures(everyone, "all", "all")
+    bands = defaultdict(set)
+    for p, b in f["player_age"].items():
+        bands[b].add(p)
+    for b in sorted(bands):
+        if len(bands) > 1 and ok(bands[b]):
+            figures(bands[b], b, "all")
+    countries = defaultdict(set)
+    for p, c in pc.items():
+        if class_country.get(c):
+            countries[class_country[c].upper()].add(p)
+    for c in sorted(countries):
+        if len(countries) > 1 and ok(countries[c]):
+            figures(countries[c], "all", c)
+    published_countries = sorted(c for c in countries if ok(countries[c]))
+    age_list = sorted(b for b in bands if ok(bands[b]))
+    if ok(everyone):
+        for cat_, stat, val in (("players", "count", r5(len(everyone), round_to)), ("classes", "count", classes(everyone)),
+                                ("age_bands", "list", ",".join(age_list)), ("countries", "list", ",".join(published_countries)),
+                                ("months", "list", ",".join(sm))):
+            if val not in ("", None):
+                add(WHOLE, 0, "CONTEXT", stat, val, everyone, "all", "all", category=cat_)
+    rows.sort(key=lambda r: (r["age_band"] != "all", r["age_band"], r["country"] != "all", r["country"], r["unit_order"] == 0, r["unit_order"]))
     return {
-        "rows": rows, "suppressed": suppressed,
-        "players": r5(len(all_players), round_to), "sessions": r5(len(by_session), round_to),
-        "classes": classes(all_players),
-        "start": sm[0] if sm else None, "end": sm[-1] if sm else None,
-        "age_bands": sorted(b for b, ps in age.items() if ok(ps)),
-        "units": [[r["unit_id"], r["players"]] for r in rows if r["unit_id"] != "*"],
+        "rows": rows, "suppressed": suppressed, "period": period,
+        "players": r5(len(everyone), round_to), "sessions": r5(len(f["sess_player"]), round_to), "classes": classes(everyone),
+        "start": sm[0] if sm else None, "end": sm[-1] if sm else None, "age_bands": age_list, "countries": published_countries,
+        "units": [[unit_label(u), o] for u, o in sorted(f["unit_order"].items(), key=lambda x: x[1])
+                  if any(r["unit"] == unit_label(u) for r in rows)],
     }
 
 
-def feed_columns(rows: list[dict], ont: dict) -> list[str]:
-    cols = list(ont.get("context_columns") or ["population_id", "unit_id", "players", "classes"])
-    for f in ont["features"]:
-        for c in f.get("columns", []):
-            if any(c in r for r in rows):
-                cols.append(c)
-        if f.get("columns_prefix"):
-            cols += sorted({k for r in rows for k in r if k.startswith(f["columns_prefix"])})
-    return cols
-
-
-def tsv(rows: list[dict], cols: list[str]) -> str:
-    out = ["\t".join(cols)]
-    for r in rows:
-        out.append("\t".join("" if r.get(c) is None else str(r[c]) for c in cols))
-    return "\n".join(out) + "\n"
+def tsv(rows: list[dict], cols: list[str] = COLUMNS) -> str:
+    cell = lambda v: "" if v is None else re.sub(r"[\t\r\n]+", " ", str(v))  # noqa: E731
+    return "\t".join(cols) + "\n" + "".join("\t".join(cell(r.get(c)) for c in cols) + "\n" for r in rows)
 
 
 def sha256_bytes(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 
 
+def read_class_countries(path: Path | str | None) -> dict:
+    """Optional: a CSV or TSV with instance_id and country (two-letter code). Kept by the controller, never in events."""
+    if not path:
+        return {}
+    text = Path(path).read_text(encoding="utf-8-sig")
+    rows = list(csv.reader(io.StringIO(text), delimiter="\t" if "\t" in text.splitlines()[0] else ","))
+    head = [norm_col(c) for c in rows[0]]
+    i, j = head.index("instance_id"), head.index("country")
+    return {r[i].strip(): r[j].strip().upper() for r in rows[1:] if len(r) > max(i, j) and re.match(r"^[A-Za-z]{2}$", r[j].strip())}
+
+
 def build_feed(events: list[dict], cat: dict, opts: dict, root: Path = ROOT) -> dict:
-    """Returns {files: {name: text}, meta, features}. opts: game, maker, url, maker_url, collected_under,
-    approval, instrument, countries, languages, purposes, min_players, min_classes, licence."""
+    """Returns {files: {name: text}, meta, features}. opts: game, url, maker, maker_url, collected_under, approval,
+    instrument, countries, languages, purposes, min_players, min_classes, licence, class_countries (dict)."""
     ont = load_ontology(root)
     th = ont["thresholds"]
     mp = max(int(opts.get("min_players") or th["min_players"]), th["min_players"])
     mc = max(int(opts.get("min_classes") or th["min_classes"]), th["min_classes"])
-    feat = compute_features(events, cat, ont, mp, mc, th.get("round_counts_to", 5))
-    cols = feed_columns(feat["rows"], ont)
+    feat = compute_features(events, cat, ont, mp, mc, th.get("round_counts_to", 5), opts.get("class_countries") or {},
+                            opts.get("instrument"))
+    if opts.get("languages") and feat["rows"]:
+        r0 = next((r for r in feat["rows"] if r["feature"] == "CONTEXT"), None)
+        if r0:
+            feat["rows"].append(dict(r0, category="languages", stat="list", value=",".join(opts["languages"])))
     game_id = next((ev.get("game_id") for ev in events if ev.get("game_id")), cat.get("game_id", "game"))
+    name = opts.get("game") or game_id
+    maker = opts.get("maker") or ""
+    countries = feat["countries"] or [c.upper() for c in opts.get("countries") or []]
     meta = {
-        "dataset_id": f"{game_id}_{feat['start'] or 'na'}_{feat['end'] or 'na'}_population",
-        "dataset_type": "Population",
-        "game_id": game_id,
-        "player_count": feat["players"], "session_count": feat["sessions"], "class_count": feat["classes"],
-        "start_date": feat["start"], "end_date": feat["end"],
-        "units": feat["units"],
-        "csef_profile": PROFILE, "ontology": ONTOLOGY,
-        "thresholds": {"min_players": mp, "min_classes": mc, "round_counts_to": th.get("round_counts_to", 5), "time_precision": "month"},
+        "ontology": ONTOLOGY, "csef_profile": PROFILE,
+        "title": f"{name}: open evidence",
+        "game": {"id": game_id, "name": name, "url": opts.get("url")},
+        "maker": maker, "maker_url": opts.get("maker_url"),
+        "period": feat["period"],
+        "licence": opts.get("licence") or "CC0-1.0",
         "purposes": opts.get("purposes") or ["improvement", "evaluation"],
         "collected_under": opts.get("collected_under"),
         "approval": opts.get("approval"),
-        "instrument": opts.get("instrument"),
-        "age_bands": feat["age_bands"],
-        "countries": opts.get("countries") or [],
-        "languages": opts.get("languages") or [],
-        "game": {"name": opts.get("game") or game_id, "url": opts.get("url")},
-        "maker": {"name": opts.get("maker"), "url": opts.get("maker_url")},
-        "licence": opts.get("licence") or "CC0-1.0",
-        "suppressed_cells": len(feat["suppressed"]),
-        "generated_by": f"{TOOL} {VERSION}",
+        "thresholds": {"min_players": mp, "min_classes": mc, "round_counts_to": th.get("round_counts_to", 5), "time_resolution": "month"},
+        "citation": f"{maker or 'The maker'}. {name}: open evidence ({feat['period']}). {ONTOLOGY}.",
+        # Open Game Data dataset keys
+        "dataset_id": f"{game_id}_{feat['start'] or 'na'}_{feat['end'] or 'na'}_population", "dataset_type": "Population",
+        "game_id": game_id, "start_date": feat["start"], "end_date": feat["end"],
+        "player_count": feat["players"], "session_count": feat["sessions"], "class_count": feat["classes"],
+        "units": feat["units"], "age_bands": feat["age_bands"], "countries": countries, "languages": opts.get("languages") or [],
+        "suppressed_cells": len(feat["suppressed"]), "generated_by": f"{TOOL} {VERSION}",
     }
-    files = {"population.tsv": tsv(feat["rows"], cols),
-             "META.json": json.dumps(meta, indent=2, ensure_ascii=False) + "\n"}
-    files["README.md"] = feed_readme(meta, cols, ont)
-    manifest = {"ontology": ONTOLOGY, "files": {n: sha256_bytes(t.encode("utf-8")) for n, t in files.items()}}
-    files["MANIFEST.json"] = json.dumps(manifest, indent=2) + "\n"
-    return {"files": files, "meta": meta, "features": feat, "columns": cols}
+    files = {"population.tsv": tsv(feat["rows"]), "META.json": json.dumps(meta, indent=2, ensure_ascii=False) + "\n"}
+    files["README.md"] = feed_readme(meta, ont)
+    files["MANIFEST.json"] = json.dumps({"ontology": ONTOLOGY, "files": [
+        {"path": n, "sha256": sha256_bytes(t.encode("utf-8")), "bytes": len(t.encode("utf-8"))} for n, t in files.items()]}, indent=2) + "\n"
+    return {"files": files, "meta": meta, "features": feat, "columns": COLUMNS}
 
 
-def feed_readme(meta: dict, cols: list[str], ont: dict) -> str:
+def feed_readme(meta: dict, ont: dict) -> str:
     g = meta["game"]
-    lines = [f"# Open evidence feed: {g.get('name')}", "",
+    cu = {"processor_for_school": "for schools, as their processor; released under their contract",
+          "own_study": "in the maker's own study" + (f" ({meta['approval']})" if meta.get("approval") else "")}.get(meta.get("collected_under"), "not stated")
+    lines = [f"# {meta['title']}", "",
              f"Group figures from play, in the {ONTOLOGY} format of the Child-Safe EdTech Framework (CSEF). "
-             f"They describe how groups of pupils played, never one pupil or one class.", "",
+             "They describe how groups of pupils played, never one pupil or one class.", "",
              "| | |", "|---|---|",
              f"| Game | {g.get('name')}" + (f" ({g['url']})" if g.get("url") else "") + " |",
-             f"| Maker | {meta['maker'].get('name') or 'not given'}" + (f" ({meta['maker']['url']})" if meta["maker"].get("url") else "") + " |",
-             f"| Period | {meta['start_date']} to {meta['end_date']} |",
+             f"| Maker | {meta.get('maker') or 'not given'}" + (f" ({meta['maker_url']})" if meta.get("maker_url") else "") + " |",
+             f"| Period | {meta['period']} |",
              f"| Players (rounded to 5) | {meta['player_count']} in {meta['class_count']} classes |",
              f"| Age bands | {', '.join(meta['age_bands']) or 'not shown'} |",
              f"| Countries | {', '.join(meta['countries']) or 'not given'} |",
-             f"| Collected | {'as a processor for schools, released under their contract' if meta['collected_under'] == 'processor_for_school' else 'in the maker’s own study' if meta['collected_under'] == 'own_study' else 'not stated'} |",
-             f"| Thresholds | at least {meta['thresholds']['min_players']} players and {meta['thresholds']['min_classes']} classes behind every figure; {meta['suppressed_cells']} small cell(s) removed |",
+             f"| Collected | {cu} |",
+             f"| Thresholds | at least {meta['thresholds']['min_players']} players and {meta['thresholds']['min_classes']} classes behind every row; {meta['suppressed_cells']} small group(s) left out |",
              f"| Licence | {meta['licence']} |", "",
-             "## Columns", "", "| Column | Meaning |", "|---|---|"]
-    ctx = {"population_id": "The group: 'dataset' is everyone in this file.", "unit_id": "A unit of play (level, mission); * is the whole game.",
-           "players": "Players behind the row, rounded to 5.", "classes": "Classes behind the row."}
-    for c in cols:
-        if c in ctx:
-            lines.append(f"| {c} | {ctx[c]} |")
-            continue
-        f = next((f for f in ont["features"] if c in f.get("columns", []) or (f.get("columns_prefix") and c.startswith(f["columns_prefix"]))), None)
-        if f:
-            lines.append(f"| {c} | {f['id']}: {f['meaning']} |")
-    if meta.get("instrument"):
-        lines += ["", f"Learning gain instrument: {meta['instrument']}."]
-    lines += ["", "## How to cite", "", f"{meta['maker'].get('name') or 'The maker'} ({(meta['end_date'] or '')[:4]}). "
-              f"Open evidence feed for {g.get('name')}, {meta['start_date']} to {meta['end_date']}. {ONTOLOGY}.", "",
+             "## population.tsv", "", "One row per figure. Tab-separated.", "", "| Column | Meaning |", "|---|---|"]
+    lines += [f"| {c['name']} | {c['meaning']} |" for c in ont["columns"]]
+    lines += ["", "| Feature | Stats | Meaning |", "|---|---|---|"]
+    lines += [f"| {x['id']} | {', '.join(x['stats'])} | {x['meaning']} |" for x in ont["features"]]
+    lines += ["", "## How to cite", "", meta["citation"], "",
               "## Not in this file", "",
               "No player codes, sessions, timestamps, schools, classes or free text. No retention, daily users, streaks or revenue.",
               "Figures are the maker's own unless a researcher or curator has checked the method.", ""]
@@ -527,17 +593,24 @@ def read_feed(path: Path) -> dict[str, str]:
     return files
 
 
+PERIOD_RX = re.compile(r"^\d{4}-(0[1-9]|1[0-2])/\d{4}-(0[1-9]|1[0-2])$")
+
+
 def check_feed(files: dict[str, str], root: Path = ROOT) -> dict:
+    """The rules a feed must meet before it is published or shown. Same rules as the Play to Learn Toolkit."""
     ont = load_ontology(root)
     th = ont["thresholds"]
+    feats = {f["id"]: f for f in ont["features"]}
     issues = []
 
-    def add(sev, msg):
-        issues.append({"severity": sev, "rule": "CORE-DAT-24", "message": msg})
+    def add(sev, msg, rule="CORE-DAT-24"):
+        issues.append({"severity": sev, "rule": rule, "message": msg})
 
+    forbidden = ont["forbidden_metrics"]
+    bad_word = lambda s: any(w in str(s).lower() for w in forbidden)  # noqa: E731
     for n in FEED_FILES:
         if n not in files:
-            add("BLOCK", f"{n} is missing.")
+            add("BLOCK" if n != "README.md" else "REVIEW", f"{n} is missing.")
     meta = {}
     if "META.json" in files:
         try:
@@ -546,14 +619,18 @@ def check_feed(files: dict[str, str], root: Path = ROOT) -> dict:
             add("BLOCK", "META.json is not valid JSON.")
     if "MANIFEST.json" in files:
         try:
-            man = json.loads(files["MANIFEST.json"]).get("files", {})
-            for n, h in man.items():
+            man = json.loads(files["MANIFEST.json"]).get("files", [])
+            entries = man if isinstance(man, list) else [{"path": k, "sha256": v} for k, v in man.items()]
+            for e in entries:
+                n = str(e.get("path") or e.get("name") or "")
                 if n not in files:
                     add("BLOCK", f"MANIFEST.json lists {n}, which is missing.")
-                elif sha256_bytes(files[n].encode("utf-8")) != h:
+                elif sha256_bytes(files[n].encode("utf-8")) != str(e.get("sha256", "")).lower():
                     add("BLOCK", f"{n} does not match its SHA-256 hash in MANIFEST.json: the file changed after the feed was built.")
-        except json.JSONDecodeError:
-            add("BLOCK", "MANIFEST.json is not valid JSON.")
+            if not any(str(e.get("path") or e.get("name")) == "population.tsv" for e in entries):
+                add("REVIEW", "MANIFEST.json does not list population.tsv.")
+        except (json.JSONDecodeError, AttributeError):
+            add("BLOCK", "MANIFEST.json is not valid.")
     else:
         add("REVIEW", "MANIFEST.json is missing: hashes cannot be checked.")
     if meta:
@@ -563,59 +640,80 @@ def check_feed(files: dict[str, str], root: Path = ROOT) -> dict:
         if int(t.get("min_players") or 0) < th["min_players"] or int(t.get("min_classes") or 0) < th["min_classes"]:
             add("BLOCK", f"Thresholds are {t.get('min_players')} players and {t.get('min_classes')} classes: at least "
                          f"{th['min_players']} and {th['min_classes']} are needed.")
-        for k in ("start_date", "end_date"):
-            if meta.get(k) and not MONTH_RX.match(str(meta[k])):
-                add("BLOCK", f"META.json {k} is '{meta[k]}': dates are given to the month (YYYY-MM).")
+        if meta.get("period") and not PERIOD_RX.match(str(meta["period"])):
+            add("BLOCK", f"META.json period is '{meta['period']}': months only (YYYY-MM/YYYY-MM).")
         if meta.get("collected_under") not in ("processor_for_school", "own_study"):
             add("REVIEW", "META.json does not say how the data were collected (collected_under: processor_for_school or own_study).")
         for k in _keys(meta):
-            if any(w in k.lower() for w in ont["forbidden_metrics"]):
-                add("BLOCK", f"META.json key '{k}' is an engagement or commercial metric (CORE-DAT-23).")
+            if bad_word(k.rsplit(".", 1)[-1]):
+                add("BLOCK", f"META.json key '{k}' is an engagement or commercial metric.", "CORE-DAT-23")
     rows, cols = [], []
     if "population.tsv" in files:
-        rd = list(csv.reader(io.StringIO(files["population.tsv"]), delimiter="\t"))
-        cols = rd[0] if rd else []
-        rows = [dict(zip(cols, r)) for r in rd[1:] if any(x.strip() for x in r)]
-        allowed = set(ont.get("context_columns") or [])
-        prefixes = []
-        for f in ont["features"]:
-            allowed |= set(f.get("columns", []))
-            if f.get("columns_prefix"):
-                prefixes.append(f["columns_prefix"])
-        for c in cols:
-            if any(w in c.lower() for w in ont["forbidden_metrics"]):
-                add("BLOCK", f"Column '{c}' is an engagement or commercial metric (CORE-DAT-23).")
-            elif c in ("player_id", "session_id", "instance_id", "timestamp") or "school" in c or "class_name" in c:
-                add("BLOCK", f"Column '{c}' identifies players, sessions or classes: open feeds hold group figures only.")
-            elif c not in allowed and not any(c.startswith(p) for p in prefixes):
-                add("REVIEW", f"Column '{c}' is not in {ONTOLOGY}.")
-        mp = max(int((meta.get("thresholds") or {}).get("min_players") or 0), th["min_players"])
-        mc = max(int((meta.get("thresholds") or {}).get("min_classes") or 0), th["min_classes"])
+        lines = [ln for ln in files["population.tsv"].splitlines() if ln.strip() and not ln.startswith("#")]
+        cols = [c.strip().lower() for c in lines[0].split("\t")] if lines else []
+        rows = [dict(zip(cols, [x.strip() for x in ln.split("\t")]), _line=i) for i, ln in enumerate(lines[1:], 2)]
+        bad_cols = [c for c in cols if c in ont["forbidden_columns"]]
+        if bad_cols:
+            add("BLOCK", f"Columns that could point at a person, class, school or moment: {', '.join(bad_cols)}.")
+        missing = [c for c in ont["required"] if c not in cols]
+        if missing:
+            add("BLOCK", f"Missing columns: {', '.join(missing)}.")
+        extra = [c for c in cols if c not in COLUMNS and c not in bad_cols]
+        if extra:
+            add("REVIEW", f"Columns not in {ONTOLOGY}: {', '.join(extra)}.")
         step = int(th.get("round_counts_to", 5))
-        for r in rows:
+        for r in rows if not missing else []:
+            where = f"Line {r['_line']} ({r.get('unit')}, {r.get('feature')} {r.get('stat')})"
+            f = feats.get(r.get("feature"))
+            if bad_word(r.get("feature")) or bad_word(r.get("category")) or bad_word(r.get("stat")):
+                add("BLOCK", f"{where}: an engagement or commercial metric.", "CORE-DAT-23")
+                continue
+            if not f:
+                add("BLOCK", f"{where}: unknown feature.")
+                continue
+            if r.get("stat") not in f["stats"]:
+                add("BLOCK", f"{where}: stat is not one of {', '.join(f['stats'])}.")
+            if f.get("categories") and r.get("category") and r["category"] not in f["categories"]:
+                add("REVIEW", f"{where}: category '{r['category']}' is not declared.")
+            age, country, period = r.get("age_band") or "all", r.get("country") or "all", r.get("period") or "all"
+            if age != "all" and age not in ("B1", "B2", "B3", "B4", "B5"):
+                add("BLOCK", f"{where}: age band '{age}' is not B1 to B5.")
+            if country != "all" and not re.match(r"^[A-Z]{2}$", country):
+                add("BLOCK", f"{where}: country '{country}' is not a two-letter code.")
+            if period != "all" and not PERIOD_RX.match(period):
+                add("BLOCK", f"{where}: period '{period}' is not month level (YYYY-MM/YYYY-MM).")
             try:
                 p, c = int(r.get("players") or 0), int(r.get("classes") or 0)
             except ValueError:
-                add("BLOCK", f"Row {r.get('unit_id')}: players or classes is not a number.")
+                add("BLOCK", f"{where}: players and classes must be numbers.")
                 continue
-            if p < mp or c < mc:
-                add("BLOCK", f"Row {r.get('unit_id')}: {p} players in {c} classes, below the thresholds.")
+            if p < th["min_players"] or c < th["min_classes"]:
+                add("BLOCK", f"{where}: {p} players in {c} classes, below the thresholds.")
             if p % step:
-                add("BLOCK", f"Row {r.get('unit_id')}: players ({p}) is not rounded to {step}.")
-            for k, v in r.items():
-                if v and k.endswith("_share"):
-                    try:
-                        if not 0 <= float(v) <= 1:
-                            add("REVIEW", f"Row {r.get('unit_id')}: {k} = {v} is not a share between 0 and 1.")
-                    except ValueError:
-                        add("REVIEW", f"Row {r.get('unit_id')}: {k} = {v} is not a number.")
+                add("BLOCK", f"{where}: players ({p}) is not rounded to {step}.")
+            v = r.get("value", "")
+            if f["kind"] == "context":
+                if r.get("stat") == "list" and not re.match(r"^[A-Za-z0-9_,\- ]{0,120}$", v):
+                    add("BLOCK", f"{where}: lists hold codes only.")
+            else:
+                try:
+                    x = float(v)
+                    if f["kind"] == "share" and not 0 <= x <= 1:
+                        add("BLOCK", f"{where}: a share is between 0 and 1.")
+                    if f["kind"] == "minutes" and not 0 <= x <= 600:
+                        add("REVIEW", f"{where}: minutes out of range.")
+                except ValueError:
+                    add("BLOCK", f"{where}: value must be a number.")
+                if f["id"] == "EV-GAIN" and not r.get("instrument"):
+                    add("BLOCK", f"{where}: a learning gain must name its instrument.")
         if not rows:
             add("BLOCK", "population.tsv has no rows.")
     order = {"BLOCK": 0, "REVIEW": 1}
     issues.sort(key=lambda x: order.get(x["severity"], 9))
     counts = {s: sum(1 for i in issues if i["severity"] == s) for s in ("BLOCK", "REVIEW")}
     return {"kind": "feed", "tool": f"{TOOL} {VERSION}", "ok": counts["BLOCK"] == 0, "meta": meta,
-            "columns": cols, "rows": rows, "issues": issues, "counts": counts}
+            "columns": [c for c in cols], "rows": [{k: v for k, v in r.items() if k != "_line"} for r in rows],
+            "issues": issues, "counts": counts}
 
 
 def _keys(d, prefix=""):
@@ -638,7 +736,7 @@ def render_md(res: dict) -> str:
         m = res.get("meta") or {}
         L += [f"# CSEF evidence feed check: {(m.get('game') or {}).get('name') or m.get('game_id') or 'feed'}", "",
               f"{'Ready to publish' if res['ok'] else 'Not ready to publish'}: {len(res['rows'])} rows, "
-              f"{m.get('player_count', '?')} players in {m.get('class_count', '?')} classes, {m.get('start_date')} to {m.get('end_date')}.", ""]
+              f"{m.get('player_count', '?')} players in {m.get('class_count', '?')} classes, {m.get('period', '?')}.", ""]
     L += [f"Blocking: {res['counts'].get('BLOCK', 0)} · To review: {res['counts'].get('REVIEW', 0)}", ""]
     if res["issues"]:
         L += ["| Severity | Rule | Issue | Rows |", "|---|---|---|---|"]
@@ -677,7 +775,7 @@ def render_html(res: dict) -> str:
         name = (m.get("game") or {}).get("name") or m.get("game_id") or ""
         st = '<span class="pill ok">Ready to publish</span>' if res["ok"] else '<span class="pill BLOCK">Not ready to publish</span>'
         body.append(f'<p>{st} {e(str(m.get("player_count", "?")))} players in {e(str(m.get("class_count", "?")))} classes, '
-                    f'{e(str(m.get("start_date")))} to {e(str(m.get("end_date")))}. Thresholds: {e(str((m.get("thresholds") or {}).get("min_players")))} players and '
+                    f'{e(str(m.get("period")))}. Thresholds: {e(str((m.get("thresholds") or {}).get("min_players")))} players and '
                     f'{e(str((m.get("thresholds") or {}).get("min_classes")))} classes per figure.</p>')
         if res["rows"]:
             cols = res["columns"]
@@ -737,6 +835,7 @@ def main(argv=None) -> int:
     bf.add_argument("--instrument", help="name of the pre and post check, for EV-GAIN")
     bf.add_argument("--countries", default="")
     bf.add_argument("--languages", default="")
+    bf.add_argument("--class-countries", help="CSV or TSV with instance_id and country, kept by the controller: adds figures per country")
     bf.add_argument("--min-players", type=int)
     bf.add_argument("--min-classes", type=int)
     bf.add_argument("--zip", action="store_true")
@@ -766,11 +865,12 @@ def main(argv=None) -> int:
             "approval": a.approval, "instrument": a.instrument,
             "countries": [x.strip() for x in a.countries.split(",") if x.strip()],
             "languages": [x.strip() for x in a.languages.split(",") if x.strip()],
-            "min_players": a.min_players, "min_classes": a.min_classes})
+            "min_players": a.min_players, "min_classes": a.min_classes,
+            "class_countries": read_class_countries(a.class_countries)})
         paths = write_feed(feed, Path(a.out_dir), a.zip)
         res = check_feed(feed["files"])
         f = feed["features"]
-        print(f"{TOOL}: {len(f['rows'])} rows, {len(f['suppressed'])} small cell(s) removed, feed {'ready' if res['ok'] else 'NOT ready'} | "
+        print(f"{TOOL}: {len(f['rows'])} rows, {len(f['suppressed'])} small group(s) left out, feed {'ready' if res['ok'] else 'NOT ready'} | "
               + ", ".join(str(p) for p in paths))
         return 0 if res["ok"] else 1
     if a.cmd == "check-feed":

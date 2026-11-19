@@ -151,29 +151,51 @@ change a red line. CSEF relies on neither change.
 
 ## 6. The open evidence feed (csef-evidence-0.1)
 
-The feed is an OGD population feature file with stricter rules: a small set of features that help teachers choose
-and plan, published only for groups large enough that no child or class can be picked out. It is an OGD
-"ontology" in their terms, so OGD tools can read it. Definitions: [`framework/data/evidence-ontology.yaml`](data/evidence-ontology.yaml).
+The feed holds group figures that help teachers choose and plan, published only for groups large enough that no
+child or class can be picked out. It has **one row per figure**, so a figure can be given for everyone and also for
+an age band, a country or a period. The Play to Learn Toolkit reads the same layout with the same rules.
+Definitions: [`framework/data/evidence-ontology.yaml`](data/evidence-ontology.yaml).
 
-| Feature | What it measures, per unit (level, mission) or for the whole game | Use in catalogues |
-|---|---|---|
-| EV-TIME | Active minutes to finish a unit: 25th, 50th, 75th percentile | Lesson time and number of lessons |
-| EV-DONE | Share of players who started a unit and finished it | Difficulty curve |
-| EV-STUCK | Share of players a detector marked as stuck in a unit | Where a teacher should step in |
-| EV-HELP | Share of players who used hints or help in a unit | Support needed |
-| EV-GAIN | Change between a pre and post check, with the instrument named | Evidence of learning |
-| EV-ACCESS | Share of players using each accessibility setting | Universal Design for Learning |
-| EV-STOP | Share of sessions that end at a natural stopping point | No pressure to keep playing |
-| EV-MODE | Share of sessions played solo, in teams, teacher-led | Play mode |
-| EV-DEVICE | Device class mix | Technical fit |
+| Feature | Stats | What it measures, per unit (level, mission) or for the whole game | Use in catalogues |
+|---|---|---|---|
+| EV-TIME | p25, p50, p75 | Active minutes to finish a unit; for the whole game, minutes played in total | Lesson time and number of lessons |
+| EV-DONE | share | Share of players who started a unit and finished it | Difficulty curve |
+| EV-STUCK | share | Share of players a detector marked as stuck | Where a teacher should step in |
+| EV-HELP | share | Share of players who used hints or help | Support needed |
+| EV-GAIN | pre, post, change, effect_size | Scores before and after a check, with the instrument named on every row | Evidence of learning |
+| EV-ACCESS | share, per setting | Share of players using each accessibility setting | Universal Design for Learning |
+| EV-STOP | share | Share of sessions that end at a natural stopping point | No pressure to keep playing |
+| EV-MODE | share, per mode | Share of sessions played solo, in teams, teacher-led | Play mode |
+| EV-DEVICE | share, per device | Device class mix | Technical fit |
+| CONTEXT | count, list | Players, classes, age bands, countries, languages, months | Shown next to every figure |
 
-**Thresholds.** At least **10 players and 3 classes** behind every figure. Smaller cells are removed, not merged
-by hand. Three classes stop a teacher reading their own class in the totals. Counts are rounded to 5, dates to the
-month. No per-class, per-school or per-player rows, no free text, no retention, daily users, streaks or revenue.
+Each row of `population.tsv` has these columns:
+
+```csv
+unit,unit_order,feature,category,stat,value,players,classes,age_band,country,period,instrument
+Level 1,1,EV-TIME,,p50,7.3,60,6,all,all,2026-09/2026-11,
+Whole game,0,EV-GAIN,,change,0.3,60,6,all,all,2026-09/2026-11,"Fractions check, 10 items"
+Whole game,0,EV-ACCESS,captions,share,0.22,60,6,all,all,2026-09/2026-11,
+Level 1,1,EV-DONE,,share,0.97,35,3,all,PT,2026-09/2026-11,
+```
+
+(Shown with commas here; the file uses tabs.) `unit_order` is 0 for the whole game and 1, 2, 3 for units in
+playing order. `age_band` is `all` or B1 to B5, `country` is `all` or a two-letter code, `period` is
+`YYYY-MM/YYYY-MM`.
+
+**Thresholds.** At least **10 players and 3 classes** behind every row. Groups that are smaller are left out, never
+merged by hand: a level few pupils reach, an age band or a country with too few classes. Three classes stop a
+teacher reading their own class in the totals. Player counts are rounded to 5, periods to the month. No per-class,
+per-school or per-player rows, no free text, no retention, daily users, streaks or revenue.
+
+**Figures per country.** Events do not carry a country. The controller can give `build-feed` a small file that
+says which country each class is in (`--class-countries`, columns `instance_id,country`). It stays with the
+controller; only countries with enough classes of their own get figures.
 
 **Package.** One folder or zip: `population.tsv`, `README.md` (licence CC0 1.0, citation, game and maker),
-`META.json` (OGD keys plus `csef_profile`, `ontology`, `thresholds`, `purposes`, `collected_under` and the
-approval) and `MANIFEST.json` with SHA-256 hashes. An example built from fictional data is in
+`META.json` (`ontology`, `csef_profile`, `title`, `game`, `maker`, `period`, `licence`, `purposes`,
+`collected_under`, `thresholds`, `citation`, and the Open Game Data dataset keys) and `MANIFEST.json` with the
+SHA-256 of each file. An example built from fictional data is in
 [`examples/evidence-feed/feed/`](../examples/evidence-feed/feed/).
 
 ## 7. Run it
@@ -185,7 +207,8 @@ python3 tooling/evidence.py check-events --events events.tsv --catalogue docs/ev
 # 2. Build the open evidence feed (thresholds applied, small cells removed)
 python3 tooling/evidence.py build-feed --events events.tsv --catalogue docs/event-catalogue.yaml \
   --game "Garden of Numbers" --maker "Example Studio" --collected-under own_study \
-  --approval "Ethics committee, ref. 2026-031" --instrument "Fractions check, 10 items" --out-dir feed --zip
+  --approval "Ethics committee, ref. 2026-031" --instrument "Fractions check, 10 items" \
+  --class-countries class-countries.csv --out-dir feed --zip
 
 # 3. Check a feed before you publish it, or before you show someone else's
 python3 tooling/evidence.py check-feed --feed feed.zip --out-dir csef-feed-check

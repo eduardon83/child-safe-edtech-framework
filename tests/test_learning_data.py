@@ -116,24 +116,28 @@ def test_feed_thresholds_and_suppression():
     cols, evs = events()
     feed = evidence.build_feed(evs, evidence.load_yaml(CAT), {"collected_under": "own_study", "game": "Garden of Numbers"})
     rows = feed["features"]["rows"]
-    units = [r["unit_id"] for r in rows]
-    assert units[0] == "*" and "lvl1" in units
-    assert "lvl5" not in units                             # reached by too few players: removed
-    assert any(s["unit_id"] == "lvl5" for s in feed["features"]["suppressed"])
+    units = {r["unit"] for r in rows}
+    assert {"Whole game", "Level 1", "Level 4"} <= units
+    assert "Level 5" not in units                          # reached by too few players: left out
+    assert any(s["unit"] == "lvl5" for s in feed["features"]["suppressed"])
     for r in rows:
         assert r["players"] >= 10 and r["classes"] >= 3 and r["players"] % 5 == 0
+    assert feed["files"]["population.tsv"].splitlines()[0].split("\t") == evidence.COLUMNS
+    assert {r["feature"] for r in rows} >= {"EV-TIME", "EV-DONE", "EV-STUCK", "EV-HELP", "EV-GAIN", "EV-ACCESS", "EV-STOP", "EV-MODE", "EV-DEVICE", "CONTEXT"}
+    gain = [r for r in rows if r["feature"] == "EV-GAIN"]
+    assert {r["stat"] for r in gain} == {"pre", "post", "change", "effect_size"} and all(r["instrument"] for r in gain)
     tsv = feed["files"]["population.tsv"]
     for word in ("player_id", "session_id", "timestamp", "retention"):
         assert word not in tsv
     meta = json.loads(feed["files"]["META.json"])
-    assert evidence.MONTH_RX.match(meta["start_date"]) and meta["ontology"] == "csef-evidence-0.1"
+    assert evidence.PERIOD_RX.match(meta["period"]) and meta["ontology"] == "csef-evidence-0.1"
     assert evidence.check_feed(feed["files"])["ok"]
 
 
 def test_feed_respects_higher_thresholds():
     cols, evs = events()
     feed = evidence.build_feed(evs, evidence.load_yaml(CAT), {"collected_under": "own_study", "min_players": 25})
-    assert "lvl4" not in [r["unit_id"] for r in feed["features"]["rows"]]
+    assert "Level 4" not in {r["unit"] for r in feed["features"]["rows"]}
     lower = evidence.build_feed(evs, evidence.load_yaml(CAT), {"collected_under": "own_study", "min_players": 2, "min_classes": 1})
     assert lower["meta"]["thresholds"]["min_players"] == 10 and lower["meta"]["thresholds"]["min_classes"] == 3
 
@@ -158,9 +162,9 @@ def test_committed_feed_matches_sample():
     cols, evs = events()
     meta = json.loads((SAMPLE / "feed" / "META.json").read_text(encoding="utf-8"))
     feed = evidence.build_feed(evs, evidence.load_yaml(CAT), {
-        "game": meta["game"]["name"], "url": meta["game"]["url"], "maker": meta["maker"]["name"], "maker_url": meta["maker"]["url"],
-        "collected_under": meta["collected_under"], "approval": meta["approval"], "instrument": meta["instrument"],
-        "countries": meta["countries"], "languages": meta["languages"]})
+        "game": meta["game"]["name"], "url": meta["game"]["url"], "maker": meta["maker"], "maker_url": meta["maker_url"],
+        "collected_under": meta["collected_under"], "approval": meta["approval"], "instrument": "Fractions check, 10 items",
+        "languages": meta["languages"], "class_countries": evidence.read_class_countries(SAMPLE / "class-countries.csv")})
     for name, text in feed["files"].items():
         assert (SAMPLE / "feed" / name).read_text(encoding="utf-8") == text, name
 
@@ -234,3 +238,23 @@ def test_site_pages_are_built():
         assert f in b["files"], f
     guide = (ROOT / "docs/learning-data/index.html").read_text(encoding="utf-8")
     assert "csef-evidence-0.1" in guide and 'src="tiers.svg"' in guide
+
+
+def test_feed_breaks_down_by_country_only_when_large_enough():
+    cols, evs = events()
+    cc = evidence.read_class_countries(SAMPLE / "class-countries.csv")
+    feed = evidence.build_feed(evs, evidence.load_yaml(CAT), {"collected_under": "own_study", "class_countries": cc})
+    rows = feed["features"]["rows"]
+    assert {r["country"] for r in rows} == {"all", "PT", "ES"}
+    assert feed["meta"]["countries"] == ["ES", "PT"]
+    one = {k: ("PT" if i < 5 else "ES") for i, k in enumerate(cc)}           # ES left with one class
+    rows2 = evidence.build_feed(evs, evidence.load_yaml(CAT), {"collected_under": "own_study", "class_countries": one})["features"]["rows"]
+    assert "ES" not in {r["country"] for r in rows2}
+
+
+def test_check_feed_reads_both_manifest_shapes():
+    files = evidence.read_feed(SAMPLE / "feed")
+    man = json.loads(files["MANIFEST.json"])
+    assert isinstance(man["files"], list)
+    files2 = dict(files, **{"MANIFEST.json": json.dumps({"files": {e["path"]: e["sha256"] for e in man["files"]}})})
+    assert evidence.check_feed(files2)["ok"]

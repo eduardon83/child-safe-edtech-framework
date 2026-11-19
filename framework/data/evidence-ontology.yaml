@@ -1,8 +1,9 @@
 # csef-evidence-0.1: open evidence features for learning games
-# An OGD "ontology": a small set of population features that help teachers choose and plan, published only
-# for groups large enough that no child or class can be picked out. Built by tooling/evidence.py build-feed
-# from an OGD event file and an event catalogue; checked by evidence.py check-feed, the Workbench and the
-# Play to Learn Toolkit. Read with framework/08-learning-data.md.
+# A small set of group figures that help teachers choose and plan, published only for groups large enough that no
+# child or class can be picked out. One row per figure, so a feed can break figures down by age band, country and
+# period. Built by tooling/evidence.py build-feed from an OGD event file and an event catalogue; checked by
+# evidence.py check-feed, the Workbench and the Play to Learn Toolkit (same layout, same rules).
+# Read with framework/08-learning-data.md.
 #
 # Licence: CC BY 4.0
 
@@ -10,10 +11,26 @@ ontology: csef-evidence-0.1
 profile: csef-ogd-0.1
 
 thresholds:
-  min_players: 10          # players behind every published figure
-  min_classes: 3           # classes (instance ids) behind every published figure
-  round_counts_to: 5       # player and session counts are rounded to this
-  time_precision: month    # dates in META.json and README.md
+  min_players: 10          # players behind every row
+  min_classes: 3           # classes (instance ids) behind every row
+  round_counts_to: 5       # the players column, and counts, are rounded to this
+  time_resolution: month   # periods are YYYY-MM/YYYY-MM
+
+# population.tsv: tab-separated, one row per figure, in this column order. Lines starting with # are notes.
+columns:
+  - {name: unit, meaning: "A unit of play (level, mission, chapter), or 'Whole game'."}
+  - {name: unit_order, meaning: "0 for the whole game; 1, 2, 3 for units in playing order."}
+  - {name: feature, meaning: "One of the feature ids below."}
+  - {name: category, meaning: "For features with categories (a setting, a mode, a device, a context item). Empty otherwise."}
+  - {name: stat, meaning: "One of the feature's stats."}
+  - {name: value, meaning: "A number; a list of codes for CONTEXT lists."}
+  - {name: players, meaning: "Players behind the row, rounded to 5. At least min_players."}
+  - {name: classes, meaning: "Classes behind the row. At least min_classes."}
+  - {name: age_band, meaning: "all, or B1 to B5."}
+  - {name: country, meaning: "all, or a two-letter country code."}
+  - {name: period, meaning: "YYYY-MM/YYYY-MM, or all."}
+  - {name: instrument, meaning: "The pre and post check, required for EV-GAIN. A short name."}
+required: [unit, feature, stat, value, players, classes]
 
 # Event roles an event catalogue can give its events (`evidence_role`). build-feed reads only these.
 roles:
@@ -29,65 +46,80 @@ roles:
 
 features:
   - id: EV-TIME
-    columns: [ev_time_p25_min, ev_time_p50_min, ev_time_p75_min]
-    per: unit
-    meaning: "Active minutes from start to finish of the unit, among players who finished: 25th, 50th and 75th percentile. Gaps over 60 seconds count as 60."
+    stats: [p25, p50, p75]
+    kind: minutes
+    meaning: "Active minutes to finish a unit, among players who finished it (for the whole game: active minutes played in total). Gaps over 60 seconds count as 60."
     toolkit: "Lesson time and number of lessons (Pedagogical Fit)."
   - id: EV-DONE
-    columns: [ev_done_share]
-    per: unit
+    stats: [share]
+    kind: share
     meaning: "Share of players who started the unit and finished it."
     toolkit: "Difficulty curve; Educator Capacity."
   - id: EV-STUCK
-    columns: [ev_stuck_share]
-    per: unit
-    meaning: "Share of players a detector marked as stuck in the unit."
+    stats: [share]
+    kind: share
+    meaning: "Share of players a detector marked as stuck (in the unit, or anywhere for the whole game)."
     toolkit: "Where a teacher should step in (lesson plan tips, Educator Capacity)."
   - id: EV-HELP
-    columns: [ev_help_share]
-    per: unit
-    meaning: "Share of players who used a hint or help in the unit."
+    stats: [share]
+    kind: share
+    meaning: "Share of players who used a hint or help (in the unit, or anywhere for the whole game)."
     toolkit: "Support needed (Educator Capacity)."
   - id: EV-GAIN
-    columns: [ev_gain_mean, ev_gain_n]
-    per: all
-    meaning: "Mean change between the pre and post check (score / max), for players with both. The instrument is named in META.json."
-    toolkit: "Evidence item V33 for Learning Purpose and Skill Development; lower weight than a peer-reviewed study unless checked."
+    stats: [pre, post, change, effect_size]
+    kind: gain
+    meaning: "Mean score before and after (score / max), the mean change, and the paired effect size (mean change / its standard deviation), for players with both checks. The instrument is named on every row."
+    toolkit: "Evidence for Learning Purpose and Skill Development; lower weight than a peer-reviewed study unless checked."
   - id: EV-ACCESS
-    columns_prefix: ev_access_
-    per: all
-    meaning: "Share of players who turned on each declared accessibility setting."
+    stats: [share]
+    kind: share
+    categories: [captions, text_size, reduced_motion, audio, high_contrast, other]
+    meaning: "Share of players who turned on each accessibility setting."
     toolkit: "Universal Design for Learning (PF6)."
   - id: EV-STOP
-    columns: [ev_stop_share]
-    per: all
+    stats: [share]
+    kind: share
     meaning: "Share of sessions that ended at a natural stopping point."
     toolkit: "Safety and best practices (S2): no pressure to keep playing."
   - id: EV-MODE
-    columns_prefix: ev_mode_
-    per: all
+    stats: [share]
+    kind: share
+    categories: [solo, team, teacher_led]
     meaning: "Share of sessions played solo, in teams or teacher-led."
     toolkit: "Play mode (Pedagogical Fit)."
   - id: EV-DEVICE
-    columns_prefix: ev_device_
-    per: all
+    stats: [share]
+    kind: share
+    categories: [tablet, laptop, desktop, phone, console, other]
     meaning: "Share of sessions per device class."
     toolkit: "Technical fit."
+  - id: CONTEXT
+    stats: [count, list]
+    kind: context
+    categories: [players, classes, countries, languages, age_bands, months]
+    meaning: "Who stands behind the feed: counts, and lists of codes."
+    toolkit: "Shown next to every figure."
 
-# Context columns on every row.
-context_columns: [population_id, unit_id, players, classes]
-
-# Never in a feed. check-feed refuses a feed with any of these words in a column or META key.
+# Never in a feed. check-feed refuses a feed with any of these words in a column, feature, category, stat or META key.
 forbidden_metrics:
   - retention
   - dau
   - mau
   - wau
+  - daily_active
   - stickiness
   - streak
   - revenue
   - arpu
+  - spend
   - purchase
   - churn
-  - session_count_per_player
+  - return_rate
+  - sessions_per_day
+  - sessions_per_week
+  - session_length_growth
   - time_spent_total
+
+# Columns that would point at a child, a class, a school or a moment. A feed with any of them is refused.
+forbidden_columns: [player, player_id, user, user_id, session, session_id, timestamp, date, datetime, ip, ip_address,
+                    email, name, first_name, last_name, school, school_id, class, class_id, class_name, teacher, username]
