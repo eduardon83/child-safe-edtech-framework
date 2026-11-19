@@ -1,0 +1,63 @@
+{
+  "dataset_id": "garden-of-numbers_2026-09_2026-11_population",
+  "dataset_type": "Population",
+  "game_id": "garden-of-numbers",
+  "player_count": 60,
+  "session_count": 120,
+  "class_count": 6,
+  "start_date": "2026-09",
+  "end_date": "2026-11",
+  "units": [
+    [
+      "lvl1",
+      60
+    ],
+    [
+      "lvl2",
+      60
+    ],
+    [
+      "lvl3",
+      60
+    ],
+    [
+      "lvl4",
+      20
+    ]
+  ],
+  "csef_profile": "csef-ogd-0.1",
+  "ontology": "csef-evidence-0.1",
+  "thresholds": {
+    "min_players": 10,
+    "min_classes": 3,
+    "round_counts_to": 5,
+    "time_precision": "month"
+  },
+  "purposes": [
+    "improvement",
+    "evaluation"
+  ],
+  "collected_under": "own_study",
+  "approval": "Example University ethics committee, ref. 2026-031",
+  "instrument": "Fractions check, 10 items (pre and post)",
+  "age_bands": [
+    "B2"
+  ],
+  "countries": [
+    "PT"
+  ],
+  "languages": [
+    "pt"
+  ],
+  "game": {
+    "name": "Garden of Numbers",
+    "url": "https://example.org/garden-of-numbers"
+  },
+  "maker": {
+    "name": "Example Studio",
+    "url": "https://example.org"
+  },
+  "licence": "CC0-1.0",
+  "suppressed_cells": 1,
+  "generated_by": "csef-evidence 0.14.0"
+}

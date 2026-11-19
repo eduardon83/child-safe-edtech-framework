@@ -72,7 +72,7 @@
         "pt",
         "en"
       ],
-      "dataRecordingTransfer": "Personal data recorded: yes, user accounts. Processed by third parties: Hosting provider (hosting and database, DE). Provider's GDPR role: processor (the school or family decides what happens to the data). Retention: gameplay events for end of school year + 30 days. Privacy notice: https://example.org/garden-of-numbers/privacy. Declared in csef.yaml; checked with CSEF 0.13.0.",
+      "dataRecordingTransfer": "Personal data recorded: yes, user accounts. Processed by third parties: Hosting provider (hosting and database, DE). Provider's GDPR role: processor (the school or family decides what happens to the data). Retention: gameplay events for end of school year + 30 days. Privacy notice: https://example.org/garden-of-numbers/privacy. Declared in csef.yaml; checked with CSEF 0.14.0.",
       "educational": {
         "learningResourceType": [
           "exercise"
@@ -112,6 +112,14 @@
           "involvedPartyName": "Example University",
           "partyRoleCode": "scientific research",
           "involvedPartyReference": "https://example.org/university"
+        }
+      ]
+    },
+    "qualityInfo": {
+      "qualityFeature": [
+        {
+          "qualityAspect": "Open evidence feed from play (csef-evidence-0.1, group figures only): https://example.org/garden-of-numbers/evidence/",
+          "qualityAspectType": "evaluation"
         }
       ]
     },

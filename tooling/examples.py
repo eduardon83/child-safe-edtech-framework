@@ -84,6 +84,14 @@ def build(tmp: Path) -> dict:
     run("tooling/metadata.py", "--repo", "examples/compliant-game", "--package", "--out-dir", tmp / "pkg")
     z = sorted((tmp / "pkg").glob("*.zip"))[-1]
     made["package"] = copy(z, "labels/label-package-garden-of-numbers.zip")
+    # Researchers: the event file check, the open evidence feed and its check (fictional data).
+    ev, cat = "examples/evidence-feed/events.tsv", "examples/compliant-game/docs/event-catalogue.yaml"
+    run("tooling/evidence.py", "check-events", "--events", ev, "--catalogue", cat, "--out-dir", tmp / "ev", "--formats", "html")
+    made["events"] = copy(tmp / "ev" / "events-check.html", "researchers/events-check.html")
+    shutil.make_archive(str(tmp / "feed"), "zip", ROOT / "examples" / "evidence-feed", "feed")
+    made["feed"] = copy(tmp / "feed.zip", "researchers/garden-of-numbers-evidence-feed.zip")
+    run("tooling/evidence.py", "check-feed", "--feed", tmp / "feed.zip", "--out-dir", tmp / "fc", "--formats", "html")
+    made["feedcheck"] = copy(tmp / "fc" / "feed-check.html", "researchers/feed-check.html")
     return made
 
 
@@ -125,6 +133,12 @@ def page(made: dict) -> str:
          "A fictional code of conduct, written with gaps and conflicts on purpose.",
          [("Code-of-conduct comparison", "Covered, partial, missing or in conflict, with the clauses cited.",
            [("coc", "Comparison")])]),
+        ("researchers", "For researchers and data teams", "sky",
+         "Garden of Numbers logs play in the Open Game Data format for a study. Fictional data: 60 pupils in 6 classes.",
+         [("Event file check", "The event file against the child-safe profile and the game's event catalogue.",
+           [("events", "Event file check")]),
+          ("Open evidence feed", "Group figures per level, with at least 10 players and 3 classes behind each.",
+           [("feed", "Evidence feed"), ("feedcheck", "Feed check")])]),
         ("labels", "For teams preparing a label", "lilac",
          "Garden of Numbers, prepared for a serious-game quality label.",
          [("Serious-game pre-check", "22 quality criteria: ready, partial, missing or CSEF issue.",
@@ -178,7 +192,7 @@ footer{margin-top:40px;padding:28px 0;border-top:1px solid var(--c-line);color:v
             f'<main class="in"><h1>Example reports</h1><p class="lead">See what you get before you start. Every file here was made by the '
             f'CSEF tools from fictional example products in the repository.</p>'
             f'<nav class="jump" aria-label="Audiences"><a href="#developers">Developers</a><a href="#companies">Companies</a>'
-            f'<a href="#designers">Designers and educators</a><a href="#industry">Industry bodies</a><a href="#labels">Label teams</a></nav>'
+            f'<a href="#designers">Designers and educators</a><a href="#industry">Industry bodies</a><a href="#labels">Label teams</a><a href="#researchers">Researchers</a></nav>'
             f'<p class="note">Made with CSEF {scan.TOOL_VERSION} on {today}. Fictional products, no real data. A pre-compliance check, '
             f'not legal advice and not a certification.</p>{"".join(blocks)}</main>'
             f'<footer><div class="in">Child-Safe EdTech Framework (CSEF), maintained by Kendir Studios with the EdTech community. '

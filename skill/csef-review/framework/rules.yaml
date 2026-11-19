@@ -15,7 +15,7 @@
 #   effort      low | medium | high (used to prioritise the improvement list)
 #   detection   method: static | manifest | manual | mixed, plus patterns
 
-version: "0.13.0"
+version: "0.14.0"
 
 # Rules merged into others. Packs, waivers and csef-ignore comments that use an old id keep working:
 # the tools map it to the rule that replaced it.
@@ -478,6 +478,192 @@ rules:
       method: manifest
       patterns:
         - {type: manifest, check: survey_research_without_approval, confidence: medium}
+
+  # ---------------------------------------------------------------- CORE: learning data (v0.14)
+  # Event data, research use and open evidence. See framework/08-learning-data.md and framework/data/.
+
+  - id: CORE-DAT-19
+    title: Every logged event is declared in an event catalogue
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      The product keeps an event catalogue (templates/event-catalogue.yaml) listing every gameplay or usage
+      event it logs, each field of each event with its type, and the purpose it serves (operation,
+      improvement, evaluation or research). Events and fields that are not in the catalogue are not sent.
+      csef.yaml says whether the product logs events (`data_collection`) and links the catalogue.
+    rationale: >
+      Purpose limitation and data minimisation (GDPR Art. 5(1)(b)(c)) and records of processing (Art. 30)
+      need to know what is collected and why. Open Game Data's design goal "capture then analyze" is useful
+      for research but collects more than a stated purpose needs; a catalogue turns it into "declare, then
+      capture". The catalogue is also the allow-list that tooling/evidence.py checks event files against.
+    improvement: Copy templates/event-catalogue.yaml, list every event with its fields and purpose, link it from csef.yaml, and remove logging calls that are not in it.
+    effort: medium
+    sources: [GDPR, R-OGD2024]
+    detection:
+      method: mixed
+      patterns:
+        - {type: manifest, check: event_catalogue_missing, confidence: medium}
+        - {type: repo, check: undeclared_event, confidence: medium}
+
+  - id: CORE-DAT-20
+    title: Player codes are random, scoped to one product and not derived from identifiers
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Event data uses a random player code made by the game or the server. It is never a hash or encoding
+      of an email, name, username, account id or student number. A code is used in one product only and
+      renewed each school year. Codes are not linked across products or providers, except inside a study
+      with a recorded approval. The key between codes and accounts stays with the controller.
+    rationale: >
+      A hash of a known value can be reversed by hashing likely values, so it is not effective
+      pseudonymisation (GDPR Art. 4(5), EDPB Guidelines 01/2025). Codes shared across products enable
+      profiling of children (GDPR Art. 5(1)(b), Recital 38). Keeping the key with the controller lets
+      recipients receive data they cannot re-identify (CJEU, EDPS v SRB).
+    improvement: Generate player codes with a secure random generator, store the link to accounts in a separate table, rotate codes each school year, and set cross_product_linking to false.
+    effort: low
+    sources: [GDPR, EDPB-PSEUDO, CJEU-SRB]
+    detection:
+      method: mixed
+      patterns:
+        - type: regex
+          confidence: medium
+          pattern: '((sha1|sha256|sha512|md5|hashlib\.\w+|digest|hmac|btoa|base64\w*|Hash128\.Compute|ComputeHash)\s*\(|createHash\([^)]*\)\s*\.update\s*\()[^;\n]{0,80}\b(e_?mail|user_?name|full_?name|first_?name|last_?name|account_?id|student_?(id|number)|user\.id|userId)\b'
+          flags: i
+        - {type: manifest, check: player_code_scope, confidence: high}
+
+  - id: CORE-DAT-21
+    title: No fingerprinting attributes in telemetry
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Analytics and gameplay events do not carry device attributes that can single out a device: user agent
+      strings, screen size or pixel ratio, installed fonts or plugins, hardware details, advertising ids
+      (IDFA, GAID) or unique device ids. One coarse device class (tablet, laptop, desktop, phone, other) per
+      session is enough for research and for teachers.
+    rationale: >
+      Reading such attributes from the device to recognise it is access to terminal equipment under
+      ePrivacy Art. 5(3) and needs consent unless strictly necessary (EDPB Guidelines 2/2023). Combined,
+      they work as an identifier (GDPR Recital 30).
+    improvement: Replace device attributes with one device class computed on the device, and remove advertising and unique device ids from events.
+    effort: low
+    sources: [EPRIV, EDPB-ART53, GDPR]
+    detection:
+      method: static
+      patterns:
+        - type: regex
+          confidence: medium
+          pattern: '\b(track|logEvent|log_event|trackEvent|capture|sendEvent|analytics\.\w+|Log)\s*\([^;\n]{0,200}(navigator\.userAgent|userAgent|screen\.(width|height|availWidth|availHeight)|devicePixelRatio|hardwareConcurrency|deviceMemory|deviceUniqueIdentifier|advertisingId|idfa|gaid)'
+          flags: i
+        - type: regex
+          confidence: high
+          pattern: '\b(AdvertisingIdClient|getAdvertisingIdInfo|ASIdentifierManager|advertisingIdentifier|SystemInfo\.deviceUniqueIdentifier|Settings\.Secure\.ANDROID_ID)\b'
+
+  - id: CORE-DAT-22
+    title: Inferences about a child stay at population level by default
+    level: MUST
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Detectors that infer a state (stuck, frustrated, idle, likely to quit, ability) are used to improve the
+      design for everyone, at population level. They are not shown as labels on a named child, used to rank
+      children or used to decide for them, unless the product declares assessment and meets the assessment
+      rules (A-ASM-01, B-EVL-01 to 04), and a teacher can see why and override. Emotion is never inferred
+      from camera, voice or face.
+    rationale: >
+      Inferences about a person are personal data. Labels on children invite surveillance and automated
+      decisions (GDPR Art. 22, Recital 71); systems that evaluate learners are high-risk (AI Act Annex III)
+      and emotion recognition in education is banned (AI Act Art. 5(1)(f)). The EU KIDS Act proposal and UN
+      General Comment 25 ask for the child's best interests and privacy by default.
+    improvement: Keep detector output in population features; if teachers need it, show class totals, or declare assessment and follow its rules.
+    effort: medium
+    sources: [GDPR, AIA, KIDS, UNCRC-GC25]
+    detection:
+      method: mixed
+      patterns:
+        - {type: manifest, check: detectors_teacher_view_without_assessment, confidence: high}
+
+  - id: CORE-DAT-23
+    title: No engagement targets for children
+    level: SHOULD
+    tier: 2
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Retention, daily or monthly active users, streak length, sessions per week or growth in playing time
+      are not product targets, experiment goals or quality signals for children. Teams report learning,
+      completion, help needed, accessibility and natural stopping points instead. Typical time to finish a
+      unit may be measured to help teachers plan, never as a number to increase.
+    rationale: >
+      The EU KIDS Act proposal bans design that leads to excessive use, and the Digital Fairness Act
+      proposal targets features that keep minors engaged. Optimising for engagement pulls design towards
+      those features. Engagement-based rewards lower intrinsic motivation and learning (Deci et al. 1999;
+      Hanus and Fox 2015).
+    improvement: Replace engagement KPIs in dashboards, experiments and OKRs with the csef-evidence-0.1 features.
+    effort: low
+    sources: [KIDS, DFA, R-DECI1999, R-HANUS2015]
+    detection:
+      method: mixed
+      patterns:
+        - type: regex
+          confidence: medium
+          pattern: '\b(d1|d7|d30|day_?1|day_?7|day_?30)_?retention\b|\bretention_?(rate|target|goal|kpi)\b|\b(dau|mau|wau)\b|\bstickiness\b|\bstreak_?length_?(goal|target)\b|\bsession_?(length|time)_?(goal|target|kpi)\b'
+          flags: i
+
+  - id: CORE-DAT-24
+    title: Open releases of learning data hold group figures only
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Data published openly (to a public site, repository or catalogue) holds population features only, in
+      the csef-evidence-0.1 format: at least 10 players and 3 classes behind every figure, counts rounded to 5,
+      dates to the month, no free text, no per-player, per-class or per-school rows, and no engagement metrics.
+      Event-level and player-level data are never published, even with anonymous codes. When the data were
+      collected as a processor for schools, the schools' contract allows the release.
+    rationale: >
+      A stable player code with exact times can single out a child; small groups break aggregation (Article
+      29 Working Party, WP216). For the controller holding the key, pseudonymised data stay personal (CJEU,
+      EDPS v SRB; EDPB Guidelines 01/2025), so publishing them is a disclosure of personal data. A processor
+      may only process on the school's instructions (GDPR Art. 28(3)(a)).
+    improvement: Publish with tooling/evidence.py build-feed and check every feed with check-feed before release.
+    effort: low
+    sources: [GDPR, WP216, CJEU-SRB, EDPB-PSEUDO]
+    detection:
+      method: mixed
+      patterns:
+        - {type: manifest, check: open_evidence_thresholds, confidence: high}
+
+  - id: CORE-DAT-25
+    title: Research logging runs only in a study build
+    level: MUST
+    tier: 1
+    profiles: [core]
+    age_bands: [all]
+    requirement: >
+      Logging for research is off in the normal build. It runs in a study build with its own version branch
+      (for example 2.1.0-study), given only to classes that agreed, under a data sharing agreement and an
+      ethics approval, with a child-friendly notice and a way to leave the study without leaving the lesson.
+      Device storage for research identifiers has a valid basis (consent where ePrivacy Art. 5(3) needs it).
+    rationale: >
+      Research is a new purpose that needs a compatibility check and safeguards (GDPR Art. 6(4), 89). Storing
+      or reading an identifier on the device for a purpose that is not strictly necessary needs consent under
+      ePrivacy Art. 5(3) (EDPB Guidelines 2/2023). A separate build keeps the normal product within its
+      purpose, and the version branch keeps study data apart (Open Game Data versioning).
+    improvement: Add a study build flag that is off by default, record the agreement and approval in csef.yaml, and tag study builds with a version branch.
+    effort: medium
+    sources: [GDPR, EPRIV, EDPB-ART53, R-OGD2024]
+    detection:
+      method: mixed
+      patterns:
+        - {type: manifest, check: research_logging_default_on, confidence: high}
 
   # ---------------------------------------------------------------- CORE: commercial
   - id: CORE-COM-01
@@ -1414,11 +1600,16 @@ rules:
     age_bands: [all]
     requirement: >
       Learning data is only shared for research under a data sharing agreement, with legal basis,
-      ethics approval and pseudonymisation, and never as a by-product of normal operation.
-    rationale: GDPR Art. 5(1)(b), 6 and 89.
-    improvement: Create a research export pipeline that pseudonymises and logs every extract.
+      ethics approval and pseudonymisation, and never as a by-product of normal operation. Research data
+      come from a study build (CORE-DAT-25). Extracts use relative time (seconds since session start), drop
+      the time zone, and never include the key between player codes and accounts: the controller keeps it.
+    rationale: >
+      GDPR Art. 5(1)(b), 6 and 89. A recipient without the key and without means reasonably likely to
+      re-identify holds data that may not be personal for it, while they stay personal for the controller
+      (CJEU, EDPS v SRB). CSEF still treats extracts about children as personal data.
+    improvement: Create a research export pipeline that pseudonymises, uses relative time, keeps the key at home and logs every extract.
     effort: medium
-    sources: [GDPR]
+    sources: [GDPR, CJEU-SRB, EDPB-PSEUDO]
     detection:
       method: manual
 

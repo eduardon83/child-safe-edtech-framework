@@ -1,0 +1,144 @@
+# CSEF child-safe event profile (csef-ogd-0.1)
+# How to log gameplay events for children with the Open Game Data (OGD) event standard
+# (Gagnon, Swanson and Harpstead 2024, Table I), and what may travel to each data tier.
+# Read with framework/08-learning-data.md. Used by tooling/evidence.py (check-events) and the Workbench.
+#
+# tiers:   1 event data (controller and its processors), 2 research extracts (named researchers,
+#          no key), 3 open evidence (everyone; population features only, see evidence-ontology.yaml)
+# verdict: keep | restrict | never
+#
+# Licence: CC BY 4.0
+
+profile: csef-ogd-0.1
+based_on: "Open Game Data event data standard v0.1 (IEEE CoG 2024)"
+tiers:
+  1: {name: Event data, who: "The controller (the school, or the studio for its own study) and its processors", public: false}
+  2: {name: Research extracts, who: "Named researchers under a data sharing agreement, without the key", public: false}
+  3: {name: Open evidence, who: "Everyone, CC0. Population features only", public: true}
+
+fields:
+  - name: game_id
+    verdict: keep
+    tiers: [1, 2, 3]
+    why: "Public fact about the product."
+
+  - name: instance_id
+    verdict: restrict
+    tiers: [1, 2]
+    rule: "Random per class, group or match. Never a class, school or teacher name."
+    why: "A school or class name points to a small group of children."
+
+  - name: player_id
+    verdict: restrict
+    tiers: [1, 2]
+    rule: >-
+      Random, made by the game or the server. Never a hash of an email, name, account or student id.
+      One product only. A new code each school year.
+    why: "A hash of a known value can be reversed by guessing (EDPB Guidelines 01/2025). Codes shared across products allow profiling."
+    rules: [CORE-DAT-20]
+
+  - name: session_id
+    verdict: keep
+    tiers: [1, 2]
+    rule: "Random."
+    why: "Needed to order and group events."
+
+  - name: timestamp
+    verdict: restrict
+    tiers: [1]
+    rule: "Tier 1 only. Research extracts use seconds since session start. Open evidence uses the month."
+    why: "Exact times plus a school timetable can point to one class."
+
+  - name: offset
+    verdict: restrict
+    tiers: [1]
+    rule: "Time zone offset only. Dropped in research extracts and open evidence."
+    why: "A location hint."
+
+  - name: instance_sequence_index
+    verdict: keep
+    tiers: [1, 2]
+    why: "Orders events without exact time."
+
+  - name: session_sequence_index
+    verdict: keep
+    tiers: [1, 2]
+    why: "Orders events without exact time."
+
+  - name: event_name
+    verdict: restrict
+    tiers: [1, 2]
+    rule: "Every event name is declared in the event catalogue, with its purpose."
+    rules: [CORE-DAT-19]
+
+  - name: event_source
+    verdict: keep
+    tiers: [1, 2]
+    rule: "GAME, or the name of the detector that made the event."
+
+  - name: source_hash
+    verdict: keep
+    tiers: [1, 2, 3]
+
+  - name: event_data
+    verdict: restrict
+    tiers: [1, 2]
+    rule: >-
+      Numbers, booleans and declared values only. No text typed by the child, no voice, drawings,
+      chat or names. Every key is declared in the event catalogue.
+    why: "Free text is where children write who they are (CORE-DAT-04)."
+    rules: [CORE-DAT-04, CORE-DAT-19]
+
+  - name: game_state
+    verdict: restrict
+    tiers: [1, 2]
+    rule: "Declared keys only (for example unit, score, mode)."
+
+  - name: player_metadata
+    verdict: restrict
+    tiers: [1, 2]
+    allowed_keys: [age_band, captions, text_size, reduced_motion, high_contrast, audio_descriptions, language]
+    rule: >-
+      Age band (B1 to B5) and the settings in use. Nothing else without a recorded research approval:
+      no gender, needs, nationality, language spoken at home or family situation.
+    why: "Demographics and needs can reveal special-category data, also indirectly (CJEU, C-184/20)."
+    rules: [CORE-DAT-15, CORE-DAT-22]
+
+  - name: game_version
+    verdict: keep
+    tiers: [1, 2, 3]
+    rule: "Semantic version. Study builds use a branch name, for example 2.1.0-study."
+    rules: [CORE-DAT-25]
+
+  - name: game_log_version
+    verdict: keep
+    tiers: [1, 2, 3]
+
+# Columns that are not OGD fields and must never appear in an event file.
+forbidden_columns:
+  - {name: ip, why: "Direct identifier (CORE-DAT-04)."}
+  - {name: ip_address, why: "Direct identifier (CORE-DAT-04)."}
+  - {name: user_agent, why: "Fingerprinting attribute (CORE-DAT-21, EDPB Guidelines 2/2023)."}
+  - {name: email, why: "Direct identifier."}
+  - {name: name, why: "Direct identifier."}
+  - {name: first_name, why: "Direct identifier."}
+  - {name: last_name, why: "Direct identifier."}
+  - {name: username, why: "Often a real name."}
+  - {name: latitude, why: "Precise location (CORE-DAT-09)."}
+  - {name: longitude, why: "Precise location (CORE-DAT-09)."}
+  - {name: screen_width, why: "Fingerprinting attribute (CORE-DAT-21)."}
+  - {name: screen_height, why: "Fingerprinting attribute (CORE-DAT-21)."}
+  - {name: advertising_id, why: "Cross-service tracking id (CORE-DAT-21)."}
+  - {name: idfa, why: "Cross-service tracking id (CORE-DAT-21)."}
+  - {name: gaid, why: "Cross-service tracking id (CORE-DAT-21)."}
+  - {name: school, why: "Points to a small group."}
+  - {name: class_name, why: "Points to a small group."}
+  - {name: teacher, why: "Identifies an adult and the class."}
+
+# Device facts: one coarse class, sent once per session (for example in session_start event_data).
+device_classes: [tablet, laptop, desktop, phone, console, other]
+
+# Signals tooling/evidence.py check-events treats as possible personal data in any value.
+value_checks:
+  free_text_min_chars: 40          # a string value this long, with spaces, is treated as possible free text
+  hash_like: "^[0-9a-f]{32}$|^[0-9a-f]{40}$|^[0-9a-f]{64}$"

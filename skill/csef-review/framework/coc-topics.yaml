@@ -115,6 +115,25 @@ rules:
     conflict: [individual answers, individual responses, per child answers]
   CORE-DAT-18:
     terms: [[answers, responses, survey data, questionnaire data], [purpose, delete, deletion, not share, not used for, access, correct]]
+  CORE-DAT-19:
+    skip: true
+  CORE-DAT-20:
+    terms: [[player id, player code, pseudonym, identifier, tracking id], [random, not linked, not shared across, one product, not derived]]
+    conflict: [cross service tracking, cross product tracking, shared identifier, link accounts across]
+  CORE-DAT-21:
+    terms: [[fingerprint, device id, advertising id, device identifier], [not collect, never, do not, prohibit, avoid]]
+    conflict: [device fingerprinting, advertising identifier, advertising id]
+  CORE-DAT-22:
+    terms: [[infer, inference, emotion, detector, profil], [population, aggregate, not label, never label, not individual, teacher override]]
+    conflict: [emotion recognition, emotion detection, mood detection, behavioural profile, behavioral profile]
+  CORE-DAT-23:
+    terms: [[engagement, retention, daily active, time spent, screen time], [not optimise, not optimize, not a target, no targets, not measure success, never]]
+    conflict: [maximise engagement, maximize engagement, increase engagement, increase time spent, retention target]
+  CORE-DAT-24:
+    terms: [[publish, open data, share data, release data, dataset], [aggregate, group, minimum group, anonymi, no individual]]
+    conflict: [publish individual, share player data, sell data, individual level data]
+  CORE-DAT-25:
+    terms: [[research, study, studies], [consent, agreement, ethics, opt in, approval, separate]]
   CORE-COM-01:
     terms: [[advertis, ads, ad network, marketing], [profiling, behavioural, behavioral, targeted, personalised, personalized, minors, children]]
     conflict: [advertising, advertisements, targeted ads, personalised advertising, personalized advertising, ad network]

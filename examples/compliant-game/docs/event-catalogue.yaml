@@ -1,0 +1,80 @@
+# Event catalogue of Garden of Numbers (fictional example). Built from templates/event-catalogue.yaml.
+
+catalogue: csef-event-catalogue-0.1
+game_id: garden-of-numbers
+log_version: 1
+event_standard: ogd-0.1
+
+events:
+  - name: session_start
+    purpose: operation
+    evidence_role: session_start
+    fields:
+      device: {type: enum, values: [tablet, laptop, desktop, phone, other]}
+
+  - name: unit_start
+    purpose: improvement
+    evidence_role: unit_start
+    fields:
+      unit: {type: id}
+
+  - name: unit_complete
+    purpose: improvement
+    evidence_role: unit_complete
+    fields:
+      unit: {type: id}
+      attempts: {type: integer}
+
+  - name: answer
+    purpose: improvement
+    fields:
+      unit: {type: id}
+      correct: {type: boolean}
+
+  - name: hint_used
+    purpose: improvement
+    evidence_role: help
+    fields:
+      unit: {type: id}
+
+  - name: setting_changed
+    purpose: operation
+    evidence_role: setting
+    fields:
+      setting: {type: enum, values: [captions, text_size, reduced_motion, high_contrast]}
+      "on": {type: boolean}
+
+  - name: mode_set
+    purpose: operation
+    evidence_role: mode
+    fields:
+      mode: {type: enum, values: [solo, team, teacher_led]}
+
+  - name: check_score
+    purpose: evaluation
+    evidence_role: assessment
+    fields:
+      phase: {type: enum, values: [pre, post]}
+      score: {type: integer}
+      max: {type: integer}
+
+  - name: session_end
+    purpose: operation
+    evidence_role: session_end
+    fields:
+      natural_stop: {type: boolean}
+
+# Events made by detectors (event_source is the detector name, never GAME).
+detectors:
+  - name: stuck
+    source: StuckDetector
+    purpose: improvement
+    evidence_role: stuck
+    level: population          # population | teacher_view (teacher_view needs the assessment rules)
+    meaning: "Three failed attempts and a help request in the same unit within five minutes."
+    fields:
+      unit: {type: id}
+
+# Keys allowed in game_state and player_metadata.
+game_state: [unit, score, mode]
+player_metadata: [age_band, captions, text_size, reduced_motion]

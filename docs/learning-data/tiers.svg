@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 536" role="img" aria-label="Data gets safer at each step, and only group figures go public" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12.5">
+  <title>Data gets safer at each step, and only group figures go public</title>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8A8F9C"/></marker></defs>
+  <rect width="760" height="536" fill="#F6F3EC"/>
+  <text x="24" y="28" font-size="15" font-weight="600" fill="#17233F">Data gets safer at each step, and only group figures go public</text>
+  <g fill="none" stroke="#8A8F9C" stroke-width="1.25">
+    <path d="M380 120V166" marker-end="url(#a)"/><path d="M196 240V302" marker-end="url(#a)"/>
+    <path d="M564 240V302" marker-end="url(#a)"/><path d="M564 392V438" marker-end="url(#a)"/>
+  </g>
+  <rect x="24" y="48" width="712" height="72" rx="8" fill="#FFFFFF" stroke="#8A8F9C" stroke-width="1.25"/>
+  <text x="40" y="72" font-size="13" font-weight="600" fill="#17233F">Tier 0 · Operation data</text>
+  <text x="40" y="88" fill="#4A5468">Saves progress and runs the lesson. Never reused for research.</text>
+  <text x="40" y="104" fill="#4A5468">Who sees it: the school, and the studio as its processor.</text>
+  <text x="392" y="148" font-size="11.5" fill="#4A5468">Event catalogue: every event declared with its purpose</text>
+  <rect x="24" y="168" width="712" height="72" rx="8" fill="#FFFFFF" stroke="#8A8F9C" stroke-width="1.25"/>
+  <text x="40" y="192" font-size="13" font-weight="600" fill="#17233F">Tier 1 · Event data, OGD format with the child-safe profile</text>
+  <text x="40" y="208" fill="#4A5468">Random player codes per product, declared fields only, no free text, device class only.</text>
+  <text x="40" y="224" fill="#4A5468">Who sees it: the controller and its processors. Never public.</text>
+  <text x="208" y="268" font-size="11.5" fill="#4A5468">Study build for classes that agreed,</text>
+  <text x="208" y="284" font-size="11.5" fill="#4A5468">with agreement and ethics approval</text>
+  <text x="576" y="268" font-size="11.5" fill="#4A5468">At least 10 players and</text>
+  <text x="576" y="284" font-size="11.5" fill="#4A5468">3 classes per figure</text>
+  <rect x="24" y="304" width="344" height="88" rx="8" fill="#FFFFFF" stroke="#8A8F9C" stroke-width="1.25"/>
+  <text x="40" y="328" font-size="13" font-weight="600" fill="#17233F">Tier 2 · Research extracts</text>
+  <text x="40" y="344" fill="#4A5468">Relative time; the studio keeps the key.</text>
+  <text x="40" y="360" fill="#4A5468">Who sees it: named researchers</text>
+  <text x="40" y="376" fill="#4A5468">under the research agreement.</text>
+  <rect x="392" y="304" width="344" height="88" rx="8" fill="#E0F0EC" stroke="#1F8A7A" stroke-width="2"/>
+  <text x="408" y="328" font-size="13" font-weight="600" fill="#17233F">Tier 3 · Open evidence feed</text>
+  <text x="408" y="344" fill="#17233F">Group figures per level: time, stuck,</text>
+  <text x="408" y="360" fill="#17233F">help, gain, access, natural stops.</text>
+  <text x="408" y="376" fill="#17233F">Who sees it: everyone, CC0 licence.</text>
+  <text x="552" y="420" text-anchor="end" font-size="11.5" fill="#4A5468">check-feed: hashes, profile, thresholds</text>
+  <rect x="392" y="440" width="344" height="72" rx="8" fill="#FFFFFF" stroke="#8A8F9C" stroke-width="1.25"/>
+  <text x="408" y="464" font-size="13" font-weight="600" fill="#17233F">Catalogues and the Play to Learn Toolkit</text>
+  <text x="408" y="480" fill="#4A5468">Play data panel, evidence items,</text>
+  <text x="408" y="496" fill="#4A5468">lesson plan tips, research commons.</text>
+</svg>

@@ -1,0 +1,6 @@
+population_id	unit_id	players	classes	ev_time_p25_min	ev_time_p50_min	ev_time_p75_min	ev_done_share	ev_stuck_share	ev_help_share	ev_gain_mean	ev_gain_n	ev_access_captions	ev_access_reduced_motion	ev_access_text_size	ev_stop_share	ev_mode_solo	ev_mode_teacher_led	ev_mode_team	ev_device_desktop	ev_device_laptop	ev_device_tablet
+dataset	*	60	6							0.3	60	0.2	0.22	0.08	0.82	0.43	0.2	0.37	0.29	0.28	0.43
+dataset	lvl1	60	6	6.0	7.3	9.0	0.98	0.02	0.08												
+dataset	lvl2	60	6	7.5	9.8	12.2	0.98	0.1	0.24												
+dataset	lvl3	60	6	8.9	10.8	13.4	0.92	0.08	0.28												
+dataset	lvl4	20	6	10.3	12.8	16.4	0.82	0.32	0.64												

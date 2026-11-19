@@ -16,3 +16,17 @@ third_parties:
     purpose: product analytics
     region: us-east-1
     dpa_signed: false
+# Learning data (framework/08-learning-data.md): logs events, shows detector labels per child and publishes
+# small groups. Each line below breaks a CSEF rule on purpose.
+data_collection:
+  event_standard: custom
+  event_catalogue: docs/event-catalogue.yaml     # does not exist
+  purposes: [operation, research]
+  player_id: {kind: hashed_email, scope: company}
+  cross_product_linking: true
+  detectors: teacher_view
+  research: {default_on: true}
+  open_evidence:
+    ontology: custom
+    min_players: 5
+    min_classes: 1

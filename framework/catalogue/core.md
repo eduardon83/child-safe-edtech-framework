@@ -68,6 +68,13 @@ Rules that apply to every product used by minors, whatever its profile.
 | [CORE-DAT-16](#core-dat-16-who-answers-personal-questions-fits-the-childs-age) | Who answers personal questions fits the child's age | MUST | 2 | manifest |
 | [CORE-DAT-17](#core-dat-17-teachers-see-answers-about-childrens-lives-only-as-class-totals) | Teachers see answers about children's lives only as class totals | MUST | 2 | manifest |
 | [CORE-DAT-18](#core-dat-18-answers-stay-with-their-purpose-and-under-the-familys-control) | Answers stay with their purpose and under the family's control | MUST | 1 | manifest |
+| [CORE-DAT-19](#core-dat-19-every-logged-event-is-declared-in-an-event-catalogue) | Every logged event is declared in an event catalogue | MUST | 1 | mixed |
+| [CORE-DAT-20](#core-dat-20-player-codes-are-random-scoped-to-one-product-and-not-derived-from-identifiers) | Player codes are random, scoped to one product and not derived from identifiers | MUST | 1 | mixed |
+| [CORE-DAT-21](#core-dat-21-no-fingerprinting-attributes-in-telemetry) | No fingerprinting attributes in telemetry | MUST | 1 | static |
+| [CORE-DAT-22](#core-dat-22-inferences-about-a-child-stay-at-population-level-by-default) | Inferences about a child stay at population level by default | MUST | 2 | mixed |
+| [CORE-DAT-23](#core-dat-23-no-engagement-targets-for-children) | No engagement targets for children | SHOULD | 2 | mixed |
+| [CORE-DAT-24](#core-dat-24-open-releases-of-learning-data-hold-group-figures-only) | Open releases of learning data hold group figures only | MUST | 1 | mixed |
+| [CORE-DAT-25](#core-dat-25-research-logging-runs-only-in-a-study-build) | Research logging runs only in a study build | MUST | 1 | mixed |
 | [CORE-DES-01](#core-des-01-motion-and-sound-can-be-turned-down-or-off) | Motion and sound can be turned down or off | SHOULD | 2 | static |
 | [CORE-DES-02](#core-des-02-motion-shows-the-content-not-decoration) | Motion shows the content, not decoration | SHOULD | 3 | manual |
 | [CORE-DES-03](#core-des-03-calm-screens-especially-under-8) | Calm screens, especially under 8 | SHOULD | 3 | manual |
@@ -843,6 +850,90 @@ Rules that apply to every product used by minors, whatever its profile.
 **How to improve.** Keep answers in the class instance, add see, correct and delete for answers, and make personalisation visible and reversible.
 
 **Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681)
+
+### CORE-DAT-19: Every logged event is declared in an event catalogue
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: mixed · Effort: medium
+
+**Requirement.** The product keeps an event catalogue (templates/event-catalogue.yaml) listing every gameplay or usage event it logs, each field of each event with its type, and the purpose it serves (operation, improvement, evaluation or research). Events and fields that are not in the catalogue are not sent. csef.yaml says whether the product logs events (`data_collection`) and links the catalogue.
+
+**Why.** Purpose limitation and data minimisation (GDPR Art. 5(1)(b)(c)) and records of processing (Art. 30) need to know what is collected and why. Open Game Data's design goal "capture then analyze" is useful for research but collects more than a stated purpose needs; a catalogue turns it into "declare, then capture". The catalogue is also the allow-list that tooling/evidence.py checks event files against.
+
+**How to improve.** Copy templates/event-catalogue.yaml, list every event with its fields and purpose, link it from csef.yaml, and remove logging calls that are not in it.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [R-OGD2024](https://par.nsf.gov/servlets/purl/10593375)
+
+### CORE-DAT-20: Player codes are random, scoped to one product and not derived from identifiers
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: mixed · Effort: low
+
+**Requirement.** Event data uses a random player code made by the game or the server. It is never a hash or encoding of an email, name, username, account id or student number. A code is used in one product only and renewed each school year. Codes are not linked across products or providers, except inside a study with a recorded approval. The key between codes and accounts stays with the controller.
+
+**Why.** A hash of a known value can be reversed by hashing likely values, so it is not effective pseudonymisation (GDPR Art. 4(5), EDPB Guidelines 01/2025). Codes shared across products enable profiling of children (GDPR Art. 5(1)(b), Recital 38). Keeping the key with the controller lets recipients receive data they cannot re-identify (CJEU, EDPS v SRB).
+
+**How to improve.** Generate player codes with a secure random generator, store the link to accounts in a separate table, rotate codes each school year, and set cross_product_linking to false.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [EDPB-PSEUDO](https://edpb.europa.eu/news/news/2025/edpb-adopts-pseudonymisation-guidelines-and-paves-way-improve-cooperation_en), [CJEU-SRB](https://curia.europa.eu/juris/liste.jsf?num=C-413/23%20P)
+
+### CORE-DAT-21: No fingerprinting attributes in telemetry
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: static · Effort: low
+
+**Requirement.** Analytics and gameplay events do not carry device attributes that can single out a device: user agent strings, screen size or pixel ratio, installed fonts or plugins, hardware details, advertising ids (IDFA, GAID) or unique device ids. One coarse device class (tablet, laptop, desktop, phone, other) per session is enough for research and for teachers.
+
+**Why.** Reading such attributes from the device to recognise it is access to terminal equipment under ePrivacy Art. 5(3) and needs consent unless strictly necessary (EDPB Guidelines 2/2023). Combined, they work as an identifier (GDPR Recital 30).
+
+**How to improve.** Replace device attributes with one device class computed on the device, and remove advertising and unique device ids from events.
+
+**Sources.** [EPRIV](https://eur-lex.europa.eu/eli/dir/2002/58/oj), [EDPB-ART53](https://www.edpb.europa.eu/system/files/2024-10/edpb_guidelines_202302_technical_scope_art_53_eprivacydirective_v2_en_0.pdf), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+
+### CORE-DAT-22: Inferences about a child stay at population level by default
+
+**MUST** · Level 2 (Forward-compliant) · Age bands: all · Detection: mixed · Effort: medium
+
+**Requirement.** Detectors that infer a state (stuck, frustrated, idle, likely to quit, ability) are used to improve the design for everyone, at population level. They are not shown as labels on a named child, used to rank children or used to decide for them, unless the product declares assessment and meets the assessment rules (A-ASM-01, B-EVL-01 to 04), and a teacher can see why and override. Emotion is never inferred from camera, voice or face.
+
+**Why.** Inferences about a person are personal data. Labels on children invite surveillance and automated decisions (GDPR Art. 22, Recital 71); systems that evaluate learners are high-risk (AI Act Annex III) and emotion recognition in education is banned (AI Act Art. 5(1)(f)). The EU KIDS Act proposal and UN General Comment 25 ask for the child's best interests and privacy by default.
+
+**How to improve.** Keep detector output in population features; if teachers need it, show class totals, or declare assessment and follow its rules.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [UNCRC-GC25](https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-25-2021-childrens-rights-relation)
+
+### CORE-DAT-23: No engagement targets for children
+
+**SHOULD** · Level 2 (Forward-compliant) · Age bands: all · Detection: mixed · Effort: low
+
+**Requirement.** Retention, daily or monthly active users, streak length, sessions per week or growth in playing time are not product targets, experiment goals or quality signals for children. Teams report learning, completion, help needed, accessibility and natural stopping points instead. Typical time to finish a unit may be measured to help teachers plan, never as a number to increase.
+
+**Why.** The EU KIDS Act proposal bans design that leads to excessive use, and the Digital Fairness Act proposal targets features that keep minors engaged. Optimising for engagement pulls design towards those features. Engagement-based rewards lower intrinsic motivation and learning (Deci et al. 1999; Hanus and Fox 2015).
+
+**How to improve.** Replace engagement KPIs in dashboards, experiments and OKRs with the csef-evidence-0.1 features.
+
+**Sources.** [KIDS](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026PC0681), [DFA](https://www.europarl.europa.eu/legislative-train/theme-protecting-our-democracy-upholding-our-values/file-digital-fairness-act), [R-DECI1999](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf), [R-HANUS2015](https://www.smhp.psych.ucla.edu/pdfdocs/gamil.pdf)
+
+### CORE-DAT-24: Open releases of learning data hold group figures only
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: mixed · Effort: low
+
+**Requirement.** Data published openly (to a public site, repository or catalogue) holds population features only, in the csef-evidence-0.1 format: at least 10 players and 3 classes behind every figure, counts rounded to 5, dates to the month, no free text, no per-player, per-class or per-school rows, and no engagement metrics. Event-level and player-level data are never published, even with anonymous codes. When the data were collected as a processor for schools, the schools' contract allows the release.
+
+**Why.** A stable player code with exact times can single out a child; small groups break aggregation (Article 29 Working Party, WP216). For the controller holding the key, pseudonymised data stay personal (CJEU, EDPS v SRB; EDPB Guidelines 01/2025), so publishing them is a disclosure of personal data. A processor may only process on the school's instructions (GDPR Art. 28(3)(a)).
+
+**How to improve.** Publish with tooling/evidence.py build-feed and check every feed with check-feed before release.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [WP216](https://ec.europa.eu/justice/article-29/documentation/opinion-recommendation/files/2014/wp216_en.pdf), [CJEU-SRB](https://curia.europa.eu/juris/liste.jsf?num=C-413/23%20P), [EDPB-PSEUDO](https://edpb.europa.eu/news/news/2025/edpb-adopts-pseudonymisation-guidelines-and-paves-way-improve-cooperation_en)
+
+### CORE-DAT-25: Research logging runs only in a study build
+
+**MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: mixed · Effort: medium
+
+**Requirement.** Logging for research is off in the normal build. It runs in a study build with its own version branch (for example 2.1.0-study), given only to classes that agreed, under a data sharing agreement and an ethics approval, with a child-friendly notice and a way to leave the study without leaving the lesson. Device storage for research identifiers has a valid basis (consent where ePrivacy Art. 5(3) needs it).
+
+**Why.** Research is a new purpose that needs a compatibility check and safeguards (GDPR Art. 6(4), 89). Storing or reading an identifier on the device for a purpose that is not strictly necessary needs consent under ePrivacy Art. 5(3) (EDPB Guidelines 2/2023). A separate build keeps the normal product within its purpose, and the version branch keeps study data apart (Open Game Data versioning).
+
+**How to improve.** Add a study build flag that is off by default, record the agreement and approval in csef.yaml, and tag study builds with a version branch.
+
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [EPRIV](https://eur-lex.europa.eu/eli/dir/2002/58/oj), [EDPB-ART53](https://www.edpb.europa.eu/system/files/2024-10/edpb_guidelines_202302_technical_scope_art_53_eprivacydirective_v2_en_0.pdf), [R-OGD2024](https://par.nsf.gov/servlets/purl/10593375)
 
 ### CORE-DES-01: Motion and sound can be turned down or off
 

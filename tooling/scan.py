@@ -37,7 +37,7 @@ except ImportError:  # pragma: no cover
     sys.exit("CSEF scanner needs PyYAML: pip install pyyaml")
 
 TOOL_NAME = "csef-scan"
-TOOL_VERSION = "0.13.0"
+TOOL_VERSION = "0.14.0"
 
 PROFILES = {"core", "A", "B", "C"}
 BANDS = ["B1", "B2", "B3", "B4", "B5"]
@@ -97,7 +97,12 @@ MANIFEST_CHECKS = [
     "survey_free_text_without_route", "survey_research_without_approval",
     "country_config_missing", "third_party_jurisdiction_missing", "critical_dependency_without_fallback",
     "moderation_coverage_missing", "bullying_route_missing",
+    "event_catalogue_missing", "player_code_scope", "detectors_teacher_view_without_assessment",
+    "open_evidence_thresholds", "research_logging_default_on",
 ]
+# Open evidence (CORE-DAT-24): smallest groups behind a published figure. See framework/data/evidence-ontology.yaml.
+EVIDENCE_MIN_PLAYERS = 10
+EVIDENCE_MIN_CLASSES = 3
 # EU and EEA jurisdictions (ISO 3166-1 alpha-2), for CORE-INT-04.
 EEA_CODES = {"EU", "EEA", "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "EL", "HU", "IE",
              "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO"}
@@ -619,17 +624,101 @@ def manifest_check(name: str, manifest: dict | None, repo: Path, bands: set, pat
             if uses & {"research", "evaluation"} and not path_exists(repo, sv.get("research_approval")):
                 return ["Answers are used for research or evaluation but no approval record is linked (`survey.research_approval`): ethics, legal basis, and national approval where required."]
             return []
+    if name in ("event_catalogue_missing", "player_code_scope", "detectors_teacher_view_without_assessment",
+                "open_evidence_thresholds", "research_logging_default_on"):
+        return data_collection_check(name, m, repo, features)
     if name == "security_policy_missing":
         candidates = [m.get("security_policy"), "SECURITY.md", ".github/SECURITY.md", ".well-known/security.txt", "public/.well-known/security.txt"]
         return [] if any(path_exists(repo, c) for c in candidates) else ["No SECURITY.md or security.txt found."]
     raise ValueError(f"Unknown manifest check: {name}")
 
 
+def data_collection_check(name: str, m: dict, repo: Path, features: set) -> list[str]:
+    """Checks on the `data_collection` block (CORE-DAT-19 to 25). See framework/08-learning-data.md."""
+    dc = m.get("data_collection")
+    if name == "event_catalogue_missing":
+        if dc is None:
+            return ["No `data_collection` block: say whether the product logs gameplay or usage events "
+                    "(`event_standard: none` if it does not) and link the event catalogue (CORE-DAT-19)."]
+        if str(dc.get("event_standard", "none")) == "none":
+            return []
+        return [] if path_exists(repo, dc.get("event_catalogue")) else [
+            "The product logs events but no event catalogue is linked (`data_collection.event_catalogue`), "
+            "or the file does not exist. Start from templates/event-catalogue.yaml."]
+    if not dc or str(dc.get("event_standard", "none")) == "none" and not dc.get("open_evidence"):
+        return []
+    purposes = set(dc.get("purposes") or [])
+    research = dc.get("research") or {}
+    approved = path_exists(repo, research.get("agreement")) and bool(research.get("ethics_approval"))
+    if name == "player_code_scope":
+        msgs = []
+        pid = dc.get("player_id") or {}
+        if pid.get("kind") not in (None, "random"):
+            msgs.append(f"`data_collection.player_id.kind` is '{pid.get('kind')}': player codes must be random, "
+                        "never derived from an email, name or account id.")
+        if pid.get("scope") not in (None, "product"):
+            msgs.append(f"`data_collection.player_id.scope` is '{pid.get('scope')}': a code is used in one product only.")
+        if dc.get("cross_product_linking") is True and not approved:
+            msgs.append("`cross_product_linking: true` without a research agreement and ethics approval "
+                        "(`data_collection.research`).")
+        return msgs
+    if name == "detectors_teacher_view_without_assessment":
+        if dc.get("detectors") == "teacher_view" and not features & {"assessment", "ai_assessment"}:
+            return ["Detectors are shown to teachers per child (`detectors: teacher_view`) but `assessment` is not "
+                    "declared: per-child inferences need the assessment rules and a teacher override."]
+        return []
+    if name == "open_evidence_thresholds":
+        oe = dc.get("open_evidence")
+        if not oe:
+            return []
+        msgs = []
+        try:
+            mp, mc = int(oe.get("min_players", 0)), int(oe.get("min_classes", 0))
+        except (TypeError, ValueError):
+            mp = mc = 0
+        if mp < EVIDENCE_MIN_PLAYERS or mc < EVIDENCE_MIN_CLASSES:
+            msgs.append(f"Open evidence thresholds are {oe.get('min_players', '?')} players and "
+                        f"{oe.get('min_classes', '?')} classes: at least {EVIDENCE_MIN_PLAYERS} and "
+                        f"{EVIDENCE_MIN_CLASSES} are needed behind every published figure.")
+        if oe.get("ontology") != "csef-evidence-0.1":
+            msgs.append("`open_evidence.ontology` is not csef-evidence-0.1: publish group figures only, in that format.")
+        cu = oe.get("collected_under")
+        if cu not in ("processor_for_school", "own_study"):
+            msgs.append("`open_evidence.collected_under` is missing: processor_for_school (the schools' contract must "
+                        "allow the release) or own_study (with the study's approval).")
+        elif cu == "processor_for_school" and m.get("gdpr_role") == "processor" and not oe.get("school_instruction"):
+            msgs.append("Data collected as a processor for schools: link the contract clause that allows open release "
+                        "(`open_evidence.school_instruction`).")
+        elif cu == "own_study" and not approved:
+            msgs.append("Open evidence from the studio's own study needs the research agreement and ethics approval "
+                        "(`data_collection.research`).")
+        return msgs
+    if name == "research_logging_default_on":
+        if "research" not in purposes:
+            return []
+        missing = [k for k in ("study_branch", "agreement", "ethics_approval") if not research.get(k)]
+        msgs = []
+        if missing:
+            msgs.append(f"Research is a declared purpose but `data_collection.research` does not give {', '.join(missing)}: "
+                        "research logging runs only in a study build for classes that agreed.")
+        elif not path_exists(repo, research.get("agreement")):
+            msgs.append("The research agreement linked in `data_collection.research.agreement` does not exist.")
+        if research.get("default_on") is True:
+            msgs.append("`research.default_on: true`: research logging must be off in the normal build.")
+        if research.get("key_holder") not in (None, "studio", "school", "controller"):
+            msgs.append("`research.key_holder` must be the controller (studio or school): researchers never get the key.")
+        return msgs
+    raise ValueError(name)
+
+
 # --------------------------------------------------------------------------- repository checks
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import comms  # noqa: E402
 
-REPO_CHECKS = ["reduced_motion_missing", "reward_layers", "agent_instructions_missing"] + comms.CHECKS
+REPO_CHECKS = ["reduced_motion_missing", "reward_layers", "agent_instructions_missing", "undeclared_event"] + comms.CHECKS
+# Event names in logging calls, for CORE-DAT-19 (compared with the event catalogue).
+EVENT_CALL_RX = re.compile(r"\b(?:logEvent|log_event|LogEvent|trackEvent|track_event|ogd\.log|OGD\.Log|Logger\.Log|logger\.event|"
+                           r"analytics\.track|telemetry\.(?:log|send|event))\s*\(\s*[\"']([A-Za-z0-9_.:-]{2,60})[\"']")
 AGENT_FILES = ["CLAUDE.md", "AGENTS.md", ".cursorrules", ".github/copilot-instructions.md", ".windsurfrules", ".lovable/knowledge.md"]
 ANIMATION_RX = re.compile(r"(@keyframes|framer-motion|from ['\"]motion/react|gsap|lottie|Animated\.(timing|spring|loop)|anime\.js|animation\s*:\s*[a-z])", re.I)
 REDUCED_RX = re.compile(r"(prefers-reduced-motion|useReducedMotion|isReduceMotionEnabled|reduceMotion|reducedMotion|AccessibilityInfo)", re.I)
@@ -649,6 +738,24 @@ def repo_check(name, files_cache, repo=None, inv=None, manifest=None):
     """Return list of (path, line, message) for repository-wide checks."""
     if name in comms.CHECKS:
         return comms.check(name, inv, manifest) if inv else []
+    if name == "undeclared_event":
+        dc = (manifest or {}).get("data_collection") or {}
+        cat_path = dc.get("event_catalogue")
+        if not cat_path or not repo or not (repo / str(cat_path)).exists():
+            return []
+        cat = load_yaml(repo / str(cat_path)) or {}
+        known = {str(e.get("name")) for e in (cat.get("events") or []) + (cat.get("detectors") or [])}
+        out, seen = [], set()
+        for rel, lines, text in files_cache:
+            if rel == str(cat_path) or not EVENT_CALL_RX.search(text):
+                continue
+            for i, ln in enumerate(lines):
+                for mm in EVENT_CALL_RX.finditer(ln):
+                    ev = mm.group(1)
+                    if ev not in known and ev not in seen:
+                        seen.add(ev)
+                        out.append((rel, i + 1, f"Event '{ev}' is logged but not declared in {cat_path}."))
+        return out
     if name == "agent_instructions_missing":
         for f in AGENT_FILES:
             p = repo / f if repo else None
@@ -714,7 +821,9 @@ def _with_raw(findings, std):
     return findings
 
 
-def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
+def scan(repo: Path, std: Standard, manifest: dict | None, level: int, description_only: bool = False):
+    """description_only: check the product description (csef.yaml and the files it links) and list human checks,
+    without reading code. Used by the Workbench on the website for designers, decision makers and researchers."""
     profiles = set(manifest.get("profiles") or []) if manifest else {"A", "B", "C"}
     bands = set(manifest.get("age_bands") or []) if manifest else set(BANDS)
     waivers = [dict(w, rule=std.resolve(w.get("rule"))) for w in (manifest or {}).get("waivers") or []]
@@ -723,7 +832,7 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
     in_scope = {rid: r for rid, r in std.rules.items() if rule_in_scope(r, profiles, bands)}
 
     files_cache = []
-    for p in iter_files(repo):
+    for p in ([] if description_only else iter_files(repo)):
         text = read_text(p)
         if text is None:
             continue
@@ -741,6 +850,8 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
             conf = pat.get("confidence", "medium")
             sev = severity_for(rule, conf, level)
             undeclared = None if declared else "Feature not declared in the manifest but found in code."
+            if description_only and pat["type"] in ("regex", "dependency", "repo"):
+                continue
             if pat["type"] == "regex":
                 checked_static.add(rid)
                 for rel, ln, snippet, ignored in regex_findings(rule, pat, files_cache, repo):
@@ -789,7 +900,11 @@ def scan(repo: Path, std: Standard, manifest: dict | None, level: int):
             hit = any(f.rule_id == rid and f.severity not in ("WAIVED",) for f in findings)
             human.append({"rule_id": rid, "next_level": int(rule["tier"]) > level, "has_static_hit": hit})
 
+    code_rules = sorted(rid for rid, r in in_scope.items()
+                        if any(pt.get("type") in ("regex", "dependency", "repo") for pt in (r.get("detection") or {}).get("patterns", []) or []))
     return {
+        "mode": "description" if description_only else "full",
+        "code_rules_not_checked": code_rules if description_only else [],
         "profiles": sorted(profiles), "bands": sorted(bands), "level": level,
         "rules_in_scope": sorted(in_scope), "findings": _with_raw(findings, std), "human_checks": human,
         "communications": inv,
@@ -845,6 +960,11 @@ def render_report(repo, std, manifest, result, manifest_path) -> str:
     a("> technical signals in code and configuration. It cannot see contracts, legal bases, real user")
     a("> experience or how the product is operated. Items under *Human checks* need a person to confirm.")
     a("")
+    if result.get("mode") == "description":
+        a(f"> **Description check.** This report reads the product description (csef.yaml) and the documents it links, "
+          f"not the code. {len(result.get('code_rules_not_checked') or [])} rules in scope are checked in code: ask a "
+          "developer to run the full scan (tooling/scan.py) before release.")
+        a("")
     a("## Scope")
     a("")
     a("| | |")
@@ -1086,6 +1206,7 @@ def to_json(std, manifest, result, improvements):
         "human_checks": result["human_checks"],
         "improvements": improvements,
         "communications": result.get("communications"),
+        "mode": result.get("mode", "full"), "code_rules_not_checked": result.get("code_rules_not_checked", []),
         "sources": {sid: std.sources[sid] for sid in cited_sources(std, result["rules_in_scope"]) if sid in std.sources},
     }
 
@@ -1159,6 +1280,8 @@ def main(argv=None) -> int:
     ap.add_argument("--format", choices=["text", "json", "none"], default="text", help="stdout format")
     ap.add_argument("--fail-on", choices=["block", "review", "warn", "never"], default="block")
     ap.add_argument("--export", default="", help="also export: comma-separated html,pdf,docx (needs --out-dir)")
+    ap.add_argument("--description-only", action="store_true",
+                    help="check csef.yaml and the files it links, without reading code (as the website Workbench does)")
     args = ap.parse_args(argv)
 
     repo = Path(args.repo).resolve()
@@ -1177,7 +1300,7 @@ def main(argv=None) -> int:
     if level < std.minimum_level:
         print(f"csef: level raised from {level} to {std.minimum_level}, the minimum set by {std.minimum_level_by}", file=sys.stderr)
         level = std.minimum_level
-    result = scan(repo, std, manifest, level)
+    result = scan(repo, std, manifest, level, description_only=args.description_only)
     improvements = build_improvements(std, result)
 
     if args.out_dir:

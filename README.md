@@ -11,7 +11,7 @@ An open framework and toolkit for building safe educational software for under-1
 It turns EU law, pending EU proposals (EU KIDS Act, Digital Fairness Act) and expert recommendations into
 rules a team can check in code, in CI and in review.
 
-> **Status:** v0.11.0, draft for public comment (November 2026).
+> **Status:** v0.14.0, draft for public comment (November 2026).
 > **Not legal advice and not a certification.** CSEF produces *pre-compliance* reports. Legal compliance
 > depends on facts code cannot show; involve your DPO and legal counsel. See [Limitations](#limitations).
 >
@@ -27,9 +27,9 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 
 | | |
 |---|---|
-| **The framework** | 124 rules: a core set plus three profiles, **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Rules on data, safety by design, commercial practices, AI companions and chatbots, communications, accessibility, security, and design for learning (visuals, sound, motion, motivation). |
+| **The framework** | 131 rules: a core set plus three profiles, **A** educational games, **B** game-based applications and software, **C** gamified applications. Age-band modifiers for 3 to 17. Rules on data, learning data and research, safety by design, commercial practices, AI companions and chatbots, communications, accessibility, security, and design for learning (visuals, sound, motion, motivation). |
 | **Three compliance levels** | **1** Legal baseline, **2** Forward-compliant (adds adopted proposals and official benchmarks), **3** Best practice (adds research and expert recommendations). You decide which level of compliance you want in your software. |
-| **Sources on every rule** | 83 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
+| **Sources on every rule** | 89 sources with type, status and verification date. Every report lists the sources it relies on. See [legislation.md](framework/legislation.md) and [research.md](framework/research.md). |
 | **Policy questionnaire** | `tooling/policy.py`: answer questions about your boundaries (terminal or local web form). Get your guardrails file, a report that matches each answer with the law and recommendations, a plain-language staff policy, AI agent instructions and a ready CI workflow. Run it again anytime. |
 | **Packs** | Add national laws, sector rules, literature or your own red lines without forking. Portugal pack included (draft, not legally reviewed). |
 | **Company packs and Pack Builder** | Each organisation sets its minimum level, no-gos, forbidden SDKs and phrases and its own rules, in a web form, then publishes the pack to GitHub. |
@@ -38,17 +38,23 @@ Site and Pack Builder: <https://csef.kendirstudios.pt/>
 | **Code-of-conduct comparison** | `tooling/coc.py`: compares any code of conduct with the KIDS Act expectations for codes and with CSEF rules; shows what is covered, partial, missing or in conflict. |
 | **Literacy Compass** | `tooling/compass.py`: what does the product teach about digital, media and AI literacy, and how do we know? 45 targets on 8 axes from DigComp 3.0, AILit, UNESCO and EU policy; an evidence level per target (Stated, Designed, Tested, Measured) with the passages behind it; unsupported learning claims; copy that teaches the opposite (hidden curriculum); the next three steps; and a crosswalk to the EU guidelines on digital education content, Swedish Edtech's Kvalitetsportfolio and UNICEF's EdTech for Good. A profile, never a score. |
 | **Serious-game pre-check and label package** | `tooling/precheck.py` checks a serious game against 22 published quality criteria (Caserman et al. 2020) using CSEF results and the team's statements with evidence. `tooling/metadata.py` exports the product description as SG-MDF (DIN SPEC 91380) JSON and XML and as schema.org LearningResource, and bundles everything into a label package. Preparation, not a label. |
+| **Learning data** | `tooling/evidence.py`: a child-safe profile of the Open Game Data event standard, checks for event files, and open evidence feeds with group figures only (at least 10 players and 3 classes per figure), ready for catalogues such as the Play to Learn Toolkit. Guide online: <https://csef.kendirstudios.pt/learning-data/>. |
+| **Workbench** | <https://csef.kendirstudios.pt/workbench/>: for designers, decision makers and researchers. Describe the product in a form, add documents, and run every check that does not read code, in the browser. Nothing is uploaded. Same engine on a computer: `tooling/workbench.py`. |
 | **AI review skill** | `skill/csef-review/`: Claude runs the tools, verifies findings, reviews what patterns cannot see, and finalises the reports. |
 | **CI** | A GitHub Action, generated Semgrep rules, a PR template. |
 | **Templates** | Manifest, DPIA starter, AI risk file, waiver record, instructions for AI coding agents. |
 
-## What's new in v0.13
+## What's new in v0.14
 
-**Labels and metadata.** A serious-game pre-check maps CSEF results and the team's statements to 22 published
-quality criteria (Caserman et al. 2020), and shows where CSEF sets limits for children. A metadata export writes
-the product description as SG-MDF (DIN SPEC 91380) JSON and XML and as schema.org LearningResource. A label
-package bundles metadata, findings, pre-check and evidence with hashes, ready for any label that asks.
-Guide: [07-labels-and-metadata.md](framework/07-labels-and-metadata.md).
+**Learning data.** Learning games can log what pupils do with the Open Game Data (OGD) event standard. CSEF adds
+the limits EU children need: four data tiers, a field-by-field event profile, seven rules (CORE-DAT-19 to 25) and
+a tool that checks event files and builds open evidence feeds with group figures only. Catalogues such as the
+Play to Learn Toolkit can read the feeds as evidence. Guide: [08-learning-data.md](framework/08-learning-data.md),
+also [online](https://csef.kendirstudios.pt/learning-data/).
+
+**Workbench.** Designers, decision makers and researchers can now run every check that does not read code on the
+website: describe the product in a form, add documents, and download the reports. Everything runs in the browser
+and nothing is uploaded: <https://csef.kendirstudios.pt/workbench/>.
 
 Earlier versions: [CHANGELOG.md](CHANGELOG.md) (one short entry per version) and
 [release notes](docs/releases/) (the full story of each release).
@@ -239,8 +245,9 @@ compares meaning and reads any language.
 8. [Several countries](framework/05-several-countries.md): preparing the architecture for multi-country products and shared infrastructure (EDU-EDIC)
 9. [Bullying](framework/06-bullying.md): what the product can do, and who can respond; default procedure for schools without a plan
 10. [Labels and metadata](framework/07-labels-and-metadata.md): serious-game pre-check, SG-MDF and LRMI export, label package
-11. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
-12. [Self-assessment checklists](self-assessment/)
+11. [Learning data](framework/08-learning-data.md): logging play safely, research studies, open evidence feeds ([online](https://csef.kendirstudios.pt/learning-data/))
+12. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
+13. [Self-assessment checklists](self-assessment/)
 
 ## Repository layout
 
@@ -248,16 +255,18 @@ compares meaning and reads any language.
 framework/        rules.yaml + sources.yaml (single source of truth), coc-topics.yaml, questionnaire.yaml, docs, generated catalogue
                  compass/targets.yaml + crosswalk.yaml (Literacy Compass), generated compass/catalogue.md
                  serious-games/criteria.yaml (serious-game pre-check)
+                 data/profile.yaml + evidence-ontology.yaml (learning data)
 packs/           country and extra packs (pt.yaml, _template.yaml)
-tooling/         scan.py, comms.py, export.py, coc.py, policy.py, compass.py, precheck.py, metadata.py, build.py,
-                 examples.py (example reports for the website), site templates, generated Semgrep rules
+tooling/         scan.py, comms.py, export.py, coc.py, policy.py, compass.py, precheck.py, metadata.py, evidence.py,
+                 workbench.py, mdpage.py, build.py, examples.py (example reports for the website), site templates, generated Semgrep rules
 skill/           csef-review skill for Claude (generated copies + SKILL.md + references)
 templates/       manifest, DPIA starter, AI risk file, waiver, agent instructions, GitHub files
 self-assessment/ generated checklists per profile and level
-examples/        non-compliant, compliant and Unity sample products; example company pack and code of conduct
+examples/        non-compliant, compliant and Unity sample products; example company pack and code of conduct;
+                 evidence-feed (fictional event file and feed)
 tests/           test-suite
-docs/            GitHub Pages site (csef.kendirstudios.pt): home, questionnaire, Pack Builder, submission preview
-                 (generated), example reports (tooling/examples.py), release notes
+docs/            GitHub Pages site (csef.kendirstudios.pt): home, Workbench, questionnaire, Pack Builder, Learning data
+                 guide, submission preview (generated), example reports (tooling/examples.py), release notes
 brand/           logo, icons, colours and fonts (see brand/README.md)
 ```
 

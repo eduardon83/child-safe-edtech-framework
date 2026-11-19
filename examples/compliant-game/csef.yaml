@@ -27,6 +27,27 @@ retention:
     period: end of school year + 30 days
     enforced_by: jobs/purge-gameplay.ts
 dpia: docs/dpia.md
+
+# Learning data (framework/08-learning-data.md): what the game logs, why, and what it publishes.
+data_collection:
+  event_standard: ogd-0.1
+  event_catalogue: docs/event-catalogue.yaml
+  purposes: [operation, improvement, evaluation, research]
+  player_id: {kind: random, scope: product, renews: school_year}
+  cross_product_linking: false
+  detectors: population_only
+  research:
+    study_branch: study
+    agreement: docs/research/agreement.md
+    ethics_approval: "Example University ethics committee, ref. 2026-031"
+    key_holder: studio
+    default_on: false
+  open_evidence:
+    ontology: csef-evidence-0.1
+    collected_under: own_study
+    min_players: 10
+    min_classes: 3
+    url: "https://example.org/garden-of-numbers/evidence/"
 security_policy: SECURITY.md
 # Product description for labels and catalogues (tooling/metadata.py). Exports SG-MDF (DIN SPEC 91380) and
 # schema.org LearningResource. Values for the selection lists: DIN SPEC 91380 Annex A.

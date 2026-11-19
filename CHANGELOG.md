@@ -3,6 +3,27 @@
 Newest first. One short entry per version; the full story of each release is in [docs/releases/](docs/releases/).
 Open items and what we are watching: [legislation.md, watch list](framework/legislation.md#open-discussions-and-watch-list).
 
+## v0.14.0 (2026-11-19)
+
+- **Learning data** ([08-learning-data.md](framework/08-learning-data.md), online at csef.kendirstudios.pt/learning-data/):
+  a child-safe profile of the Open Game Data event standard (`framework/data/profile.yaml`), four data tiers, and
+  an open evidence feed format, csef-evidence-0.1 (`framework/data/evidence-ontology.yaml`): time per unit,
+  completion, stuck, help, learning gain, accessibility, natural stops, play mode, devices; at least 10 players and
+  3 classes per figure, counts rounded to 5, dates to the month.
+- New rules: CORE-DAT-19 event catalogue, CORE-DAT-20 random product-scoped player codes, CORE-DAT-21 no
+  fingerprinting in telemetry, CORE-DAT-22 inferences at population level (level 2), CORE-DAT-23 no engagement
+  targets for children (SHOULD, level 2), CORE-DAT-24 open releases hold group figures only, CORE-DAT-25 research
+  logging only in a study build. B-DAT-01 adds the study build and "keys stay home".
+- `tooling/evidence.py`: check-events, build-feed, check-feed. `data_collection` block in csef.yaml with five
+  manifest checks; event names in code compared with the catalogue; `templates/event-catalogue.yaml`.
+  The metadata export links a product's feed.
+- **Workbench** (csef.kendirstudios.pt/workbench/): every check that does not read code, in the browser, for
+  designers, decision makers and researchers. A form writes csef.yaml; documents stay on the computer.
+  `scan.py --description-only` and `tooling/workbench.py` run the same on a computer.
+- Guides can be published as website pages (`tooling/mdpage.py`). Example reports for researchers.
+- New sources: EDPB-PSEUDO, CJEU-SRB, EDPB-ART53, OMNIBUS-DATA (watch list), R-OGD2024, R-OGD-EDS.
+- Rules: 124 to 131. Sources: 83 to 89, plus 9 in the Portugal pack.
+
 ## v0.13.0 (2026-11-18)
 
 - **Serious-game pre-check** (`tooling/precheck.py`, [07-labels-and-metadata.md](framework/07-labels-and-metadata.md)):

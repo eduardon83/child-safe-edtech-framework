@@ -167,6 +167,26 @@ criteria and a CSEF rule disagree, the CSEF rule applies for children. Never cal
 say a product qualifies for one. The metadata export lists missing SG-MDF fields by DIN reference; help the
 team fill the `metadata` block. Do not copy text or value lists from DIN SPEC 91380.
 
+## Learning data: event files and open evidence feeds
+
+When the product logs what pupils do (analytics, telemetry, learning analytics, research data), or the user
+wants to share or publish play data, read the `data_collection` block in csef.yaml and the rules CORE-DAT-19 to
+25 and B-DAT-01 (guide: framework/08-learning-data.md, child-safe profile: framework/data/profile.yaml).
+
+```bash
+python3 <skill-folder>/scripts/evidence.py check-events --events events.tsv --catalogue docs/event-catalogue.yaml --out-dir csef-events
+python3 <skill-folder>/scripts/evidence.py build-feed --events events.tsv --catalogue docs/event-catalogue.yaml \
+        --collected-under own_study --out-dir feed --zip
+python3 <skill-folder>/scripts/evidence.py check-feed --feed feed.zip --out-dir csef-feed-check
+```
+
+In code, look beyond the patterns: player codes built from emails or account ids, device details in events,
+detector output shown per child, engagement targets in dashboards, experiments or OKRs, research logging that is
+on in the normal build. Never suggest publishing event-level or player-level data, even with anonymous codes:
+open data is group figures only, with at least 10 players and 3 classes per figure. People who do not use a
+terminal can run the non-code checks in the Workbench (https://csef.kendirstudios.pt/workbench/), or with
+`scripts/workbench.py --work <folder>`.
+
 ## Company policy questionnaire
 
 When someone wants to set or change their organisation's boundaries ("define our policy", "what are our red

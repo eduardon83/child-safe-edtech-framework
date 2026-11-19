@@ -215,7 +215,7 @@ CSEF Level 3 (Best practice) rules come from research on how children learn, att
 - **Design.** Meta-analysis, 128 experiments.
 - **Key finding.** Expected tangible rewards lowered intrinsic motivation (d = -0.36), more in children; informational feedback raised it (+0.33).
 - **Limits.** Lab tasks; effects depend on how rewards are given.
-- **Rules citing it.** `C-ENG-04`, `A-MOT-01`, `A-MOT-02`
+- **Rules citing it.** `CORE-DAT-23`, `C-ENG-04`, `A-MOT-01`, `A-MOT-02`
 - **Link.** [https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf](https://depts.washington.edu/techdocs/papers/deciExtrinsicRewardsAndIntrinsicMotivation99.pdf)
 
 ### Hanus, M. D. and Fox, J. (2015). Assessing the effects of gamification in the classroom. Computers & Education 80
@@ -226,7 +226,7 @@ CSEF Level 3 (Best practice) rules come from research on how children learn, att
 - **Design.** Semester-long field study.
 - **Key finding.** Compulsory badges and leaderboards lowered intrinsic motivation, satisfaction and exam scores.
 - **Limits.** University students.
-- **Rules citing it.** `C-ENG-02`, `A-MOT-01`, `A-MOT-03`
+- **Rules citing it.** `CORE-DAT-23`, `C-ENG-02`, `A-MOT-01`, `A-MOT-03`
 - **Link.** [https://www.smhp.psych.ucla.edu/pdfdocs/gamil.pdf](https://www.smhp.psych.ucla.edu/pdfdocs/gamil.pdf)
 
 ### Mekler, E. D. et al. (2017). Towards understanding the effects of individual gamification elements on intrinsic motivation and performance. Computers in Human Behavior
@@ -385,6 +385,22 @@ Criteria that judge whether a serious game teaches well and is good to play. CSE
 - **Key finding.** Peer-reviewed viewpoint, open access. 22 quality aspects in three groups: the serious part (characterizing goal, methods, quality), the game part (enjoyment, media presentation) and the balance between them (integration, interaction technology). One of the two publications behind the quality label of the Serious Games Gütegemeinschaft. Basis of the CSEF serious-game pre-check (framework/serious-games/criteria.yaml)
 - **Rules citing it.** none (context)
 - **Link.** [https://games.jmir.org/2020/3/e19037/](https://games.jmir.org/2020/3/e19037/)
+
+### Gagnon, D. J., Swanson, L. and Harpstead, E. (2024). Open Game Data: Defining a Pipeline and Standards for Educational Data Mining and Learning Analytics with Video Game Data. IEEE Conference on Games (CoG), pp. 1-8. doi:10.1109/CoG60054.2024.10645573
+
+*Id `R-OGD2024` · verified 2026-11-19*
+
+- **Key finding.** Peer-reviewed. Pipeline (logger, detectors, player and population features) and event and feature data standards v0.1; 21 games log with it, 2 to 10 million events a day, monthly public releases. Basis of the CSEF event profile and evidence feed
+- **Rules citing it.** `CORE-DAT-19`, `CORE-DAT-25`
+- **Link.** [https://par.nsf.gov/servlets/purl/10593375](https://par.nsf.gov/servlets/purl/10593375)
+
+### Open Game Data (2025). Case study: an event data standard for learning games (Harpstead, Swanson and Younger; NSF grant 2243668)
+
+*Id `R-OGD-EDS` · verified 2026-11-19*
+
+- **Key finding.** Project page. Shared event schema blending the PBS KIDS approach, xAPI serious-game profiles and CMU DataShop; anonymous player codes; modular and extensible; draft schema to go to standards bodies
+- **Rules citing it.** none (context)
+- **Link.** [https://opengamedata.io/case-studies/event-data-standard](https://opengamedata.io/case-studies/event-data-standard)
 
 ## Gaps and research wanted
 

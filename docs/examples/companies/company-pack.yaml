@@ -15,11 +15,11 @@ pack:
   title: Acme Learning child-safety policy
   jurisdiction: ORG
   version: 1.0.0
-  date: '2026-11-18'
+  date: '2026-11-19'
   maintainer: 'Acme Learning: CEO'
   status: 'In force for: All Acme games and apps for primary and lower secondary schools'
   url: null
-  generated_by: csef-policy 0.13.0 from answers.json
+  generated_by: csef-policy 0.14.0 from answers.json
 parameters:
   owner: CEO
   waiver_approvers: the Data Protection Officer or the CEO

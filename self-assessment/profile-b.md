@@ -9,7 +9,7 @@ Product: ____________________  Date: __________  Assessor: ____________________
 
 ## Level 1: Legal baseline
 
-- [ ] **B-DAT-01** (MUST) Research use of learning data is separated. Learning data is only shared for research under a data sharing agreement, with legal basis, ethics approval and pseudonymisation, and never as a by-product of normal operation.  
+- [ ] **B-DAT-01** (MUST) Research use of learning data is separated. Learning data is only shared for research under a data sharing agreement, with legal basis, ethics approval and pseudonymisation, and never as a by-product of normal operation. Research data come from a study build (CORE-DAT-25). Extracts use relative time (seconds since session start), drop the time zone, and never include the key between player codes and accounts: the controller keeps it.  
       Evidence: 
 - [ ] **B-EVL-01** (MUST) High-risk path for systems that evaluate or place learners. AI that evaluates learning outcomes, steers learning, assigns levels or monitors tests is treated as an Annex III high-risk candidate: risk management file, data governance, logging, human oversight, accuracy and robustness testing.  
       Evidence: 

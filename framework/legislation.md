@@ -2,7 +2,7 @@
 
 This page lists every legal and policy source behind the Child-Safe EdTech Framework (CSEF): what it is, its status, the provisions that matter for EdTech used by children, and which CSEF rules rely on it.
 
-> Status as of **18 November 2026**. Each source has a `verified` date in `framework/sources.yaml`. Proposals are not law. This page is not legal advice.
+> Status as of **19 November 2026**. Each source has a `verified` date in `framework/sources.yaml`. Proposals are not law. This page is not legal advice.
 
 ## How sources map to compliance levels
 
@@ -17,10 +17,10 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 
 | Source | Type | Status | CSEF rules | Compass targets |
 |---|---|---|---|---|
-| **GDPR** Regulation (EU) 2016/679, General Data Protection Regulation | law | In force since 25 May 2018 | 47 | 3 |
-| **EPRIV** Directive 2002/58/EC, ePrivacy Directive (cookies and terminal equipment) | law | In force (transposed nationally) | 1 | 0 |
+| **GDPR** Regulation (EU) 2016/679, General Data Protection Regulation | law | In force since 25 May 2018 | 53 | 3 |
+| **EPRIV** Directive 2002/58/EC, ePrivacy Directive (cookies and terminal equipment) | law | In force (transposed nationally) | 3 | 0 |
 | **DSA** Regulation (EU) 2022/2065, Digital Services Act | law | Fully applicable since 17 Feb 2024 | 9 | 2 |
-| **AIA** Regulation (EU) 2024/1689, Artificial Intelligence Act | law | Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025 | 16 | 3 |
+| **AIA** Regulation (EU) 2024/1689, Artificial Intelligence Act | law | Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025 | 17 | 3 |
 | **UCPD** Directive 2005/29/EC, Unfair Commercial Practices Directive | law | In force (transposed nationally) | 9 | 3 |
 | **EAA** Directive (EU) 2019/882, European Accessibility Act | law | Applies since 28 Jun 2025 | 4 | 1 |
 | **CRA** Regulation (EU) 2024/2847, Cyber Resilience Act | law | Reporting obligations from 11 Sep 2026 | 1 | 0 |
@@ -29,24 +29,28 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 | **VAW-DIR** Directive (EU) 2024/1385 on combating violence against women and domestic violence | law | In force 13 Jun 2024; transposition by 14 Jun 2027 | 1 | 0 |
 | **CRD** Directive 2011/83/EU, Consumer Rights Directive | law | In force (transposed nationally) | 2 | 0 |
 | **UCTD** Council Directive 93/13/EEC on unfair terms in consumer contracts | law | In force (transposed nationally) | 1 | 0 |
+| **CJEU-SRB** CJEU, C-413/23 P, EDPS v Single Resolution Board, 4 Sep 2025 (EU:C:2025:645) | law | Case law | 3 | 0 |
 | **AIA-OMNIBUS** Digital Omnibus on AI: Regulation amending the AI Act (reported as Regulation (EU) 2026/1744) | law | Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026 | 4 | 1 |
-| **KIDS** Proposal for a Regulation: EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681 | proposal | Commission proposal of 17 Sep 2026 (2026/0286 COD) | 57 | 9 |
-| **DFA** Digital Fairness Act (proposal replacing the Unfair Commercial Practices Directive) | proposal | Proposed 11 Nov 2026 as COM(2026) 1100, procedure 2026/0356(COD), a regulation replacing the UCPD. Would apply 12 months after entry into force | 14 | 3 |
+| **KIDS** Proposal for a Regulation: EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681 | proposal | Commission proposal of 17 Sep 2026 (2026/0286 COD) | 59 | 9 |
+| **DFA** Digital Fairness Act (proposal replacing the Unfair Commercial Practices Directive) | proposal | Proposed 11 Nov 2026 as COM(2026) 1100, procedure 2026/0356(COD), a regulation replacing the UCPD. Would apply 12 months after entry into force | 15 | 3 |
+| **OMNIBUS-DATA** Digital Omnibus Regulation proposal, COM(2025) 837, procedure 2025/0360(COD) | proposal | Proposed 19 Nov 2025 | 0 | 0 |
 | **DSA-G28** Commission Guidelines on the protection of minors under Article 28 DSA | guidance | Adopted 14 Jul 2025 | 23 | 2 |
 | **KIDS-COM** Communication: An EU approach to online child safety, COM(2026) 680 | guidance | Published 17 Sep 2026 | 5 | 0 |
 | **KIDS-FAQ** The KIDS Act explained (Commission Q&A) | guidance | Published Sep 2026 | 1 | 0 |
 | **AVREC** Commission Recommendation on an EU-wide framework for age verification (EU age verification app) | guidance | Adopted 29 Apr 2026 | 1 | 0 |
 | **EDPB-CONSENT** EDPB Guidelines 05/2020 on consent under Regulation 2016/679 (section on children) | guidance | Adopted 4 May 2020 | 2 | 0 |
 | **BIK** European strategy for a better internet for kids (BIK+) | guidance | Adopted May 2022 | 2 | 4 |
-| **UNCRC-GC25** UN Committee on the Rights of the Child, General Comment No. 25 (2021) on children's rights in relation to the digital environment | guidance | Adopted 2021 | 21 | 3 |
+| **UNCRC-GC25** UN Committee on the Rights of the Child, General Comment No. 25 (2021) on children's rights in relation to the digital environment | guidance | Adopted 2021 | 22 | 3 |
 | **EDPB-DDP** EDPB Guidelines 03/2022 on deceptive design patterns in social media platform interfaces: how to recognise and avoid them, version 2.0 | guidance | Adopted 14 Feb 2023 | 1 | 0 |
-| **WP216** Article 29 Working Party, Opinion 05/2014 on Anonymisation Techniques (WP216) | guidance | Adopted 10 Apr 2014; endorsed by the EDPB. Aggregation and k-anonymity fail when groups are small or every member shares the same value | 1 | 0 |
+| **WP216** Article 29 Working Party, Opinion 05/2014 on Anonymisation Techniques (WP216) | guidance | Adopted 10 Apr 2014; endorsed by the EDPB. Aggregation and k-anonymity fail when groups are small or every member shares the same value | 2 | 0 |
 | **DIGCOMP3** DigComp 3.0: European Digital Competence Framework, fifth edition (JRC144121). Cosgrove, J. and Cachia, R., Joint Research Centre | guidance | Published 27 Nov 2025. 5 areas, 21 competences, 4 proficiency levels, AI integrated across all competences | 0 | 24 |
 | **AILIT** Empowering Learners for the Age of AI: an AI Literacy Framework for Primary and Secondary Education (AILit), European Commission and OECD | guidance | Final version presented 18 Jun 2026. 4 domains (Engage, Create, Manage, Shape AI), 19 competences, learner expectations at basic, intermediate and advanced levels | 0 | 20 |
 | **EU-DEC** European Commission (2025). Making informed choices on digital education content: EU guidelines for teachers and educators | guidance | Manuscript completed Oct 2025; launched 5 Mar 2026 | 1 | 4 |
 | **EDPB-DSAGDPR** EDPB Guidelines 3/2025 on the interplay between the DSA and the GDPR | guidance | Adopted 11 Sep 2025 for public consultation (closed 31 Oct 2025) | 1 | 0 |
 | **CPC-VC** CPC Network: Key Principles on In-game Virtual Currencies (21 March 2025) | guidance | Published 21 Mar 2025 by the EU consumer protection authorities (CPC Network), coordinated by the Commission | 6 | 1 |
 | **CPC-JS** CPC Network: Joint Statement on Stronger Consumer Protection in Video Games across the EU Single Market (30 September 2026) | guidance | Adopted 30 Sep 2026 together with coordinated actions against nine game companies | 5 | 0 |
+| **EDPB-PSEUDO** EDPB Guidelines 01/2025 on Pseudonymisation | guidance | Adopted 16 Jan 2025 for public consultation (closed 28 Feb 2025) | 3 | 0 |
+| **EDPB-ART53** EDPB Guidelines 2/2023 on Technical Scope of Art. 5(3) of ePrivacy Directive, version 2.0 | guidance | Adopted 7 Oct 2024 after public consultation | 2 | 0 |
 | **EDU-EDIC** Commission Implementing Decision (EU) 2026/2413 of 3 November 2026 on setting up the European Digital Infrastructure Consortium on Education (EDU-EDIC) | policy | In force 4 Nov 2026 | 4 | 0 |
 | **EU-EDUPKG** European Commission (2026). Education and Skills Package (factsheet), with the Communication on stronger education foundations in the age of AI | policy | Presented 2026 | 0 | 3 |
 | **CB-AP** Communication COM(2026) 71: Action plan against cyberbullying, "Safer online, stronger together" (10 February 2026) | policy | Adopted 10 Feb 2026 | 8 | 1 |
@@ -102,7 +106,7 @@ The base layer for any product that processes children's personal data.
 
 **In CSEF.** Level 1 rules on data, security, roles, transfers and automated decisions.
 
-**Rules citing it.** `CORE-GOV-01`, `CORE-DAT-01`, `CORE-DAT-02`, `CORE-DAT-03`, `CORE-DAT-04`, `CORE-DAT-05`, `CORE-DAT-06`, `CORE-DAT-07`, `CORE-DAT-08`, `CORE-DAT-09`, `CORE-DAT-10`, `CORE-DAT-11`, `CORE-DAT-12`, `CORE-DAT-13`, `CORE-DAT-14`, `CORE-DAT-15`, `CORE-DAT-16`, `CORE-DAT-17`, `CORE-DAT-18`, `CORE-COM-01`, `CORE-COM-02`, `CORE-AI-04`, `CORE-AI-07`, `CORE-SEC-01`, `CORE-SEC-02`, `CORE-SEC-03`, `CORE-SEC-04`, `CORE-SEC-05`, `CORE-SEC-06`, `CORE-INT-01`, `CORE-INT-02`, `CORE-INT-03`, `CORE-INT-04`, `A-ASM-01`, `B-EVL-02`, `B-EVL-03`, `B-UGC-01`, `B-UGC-02`, `B-DAT-01`, `C-ENG-02`, `AGE-B4-01`, `CORE-AI-08`, `CORE-AI-12`, `CORE-CHT-01`, `CORE-CHT-07`, `CORE-CHT-09`, `CORE-CHT-10`
+**Rules citing it.** `CORE-GOV-01`, `CORE-DAT-01`, `CORE-DAT-02`, `CORE-DAT-03`, `CORE-DAT-04`, `CORE-DAT-05`, `CORE-DAT-06`, `CORE-DAT-07`, `CORE-DAT-08`, `CORE-DAT-09`, `CORE-DAT-10`, `CORE-DAT-11`, `CORE-DAT-12`, `CORE-DAT-13`, `CORE-DAT-14`, `CORE-DAT-15`, `CORE-DAT-16`, `CORE-DAT-17`, `CORE-DAT-18`, `CORE-DAT-19`, `CORE-DAT-20`, `CORE-DAT-21`, `CORE-DAT-22`, `CORE-DAT-24`, `CORE-DAT-25`, `CORE-COM-01`, `CORE-COM-02`, `CORE-AI-04`, `CORE-AI-07`, `CORE-SEC-01`, `CORE-SEC-02`, `CORE-SEC-03`, `CORE-SEC-04`, `CORE-SEC-05`, `CORE-SEC-06`, `CORE-INT-01`, `CORE-INT-02`, `CORE-INT-03`, `CORE-INT-04`, `A-ASM-01`, `B-EVL-02`, `B-EVL-03`, `B-UGC-01`, `B-UGC-02`, `B-DAT-01`, `C-ENG-02`, `AGE-B4-01`, `CORE-AI-08`, `CORE-AI-12`, `CORE-CHT-01`, `CORE-CHT-07`, `CORE-CHT-09`, `CORE-CHT-10`
 
 **Compass targets citing it.** `SAF-02`, `TRN-01`, `TRN-08`
 
@@ -122,7 +126,7 @@ Rules on storing or reading information on a user's device (cookies, local stora
 
 **In CSEF.** Level 1 rule on consent for non-essential storage.
 
-**Rules citing it.** `CORE-DAT-11`
+**Rules citing it.** `CORE-DAT-11`, `CORE-DAT-21`, `CORE-DAT-25`
 
 **Link.** [https://eur-lex.europa.eu/eli/dir/2002/58/oj](https://eur-lex.europa.eu/eli/dir/2002/58/oj)
 
@@ -169,7 +173,7 @@ The AI rulebook. Education is named both in the prohibitions and in the high-ris
 
 **In CSEF.** Level 1 AI rules, the high-risk path for assessment products (Profile B), and AI disclosure.
 
-**Rules citing it.** `CORE-AI-01`, `CORE-AI-02`, `CORE-AI-03`, `CORE-AI-04`, `CORE-AI-05`, `CORE-AI-06`, `CORE-AI-07`, `CORE-CNT-01`, `A-ASM-01`, `B-EVL-01`, `B-EVL-02`, `B-EVL-03`, `B-EVL-04`, `CORE-AI-09`, `CORE-AI-11`, `CORE-AI-12`
+**Rules citing it.** `CORE-DAT-22`, `CORE-AI-01`, `CORE-AI-02`, `CORE-AI-03`, `CORE-AI-04`, `CORE-AI-05`, `CORE-AI-06`, `CORE-AI-07`, `CORE-CNT-01`, `A-ASM-01`, `B-EVL-01`, `B-EVL-02`, `B-EVL-03`, `B-EVL-04`, `CORE-AI-09`, `CORE-AI-11`, `CORE-AI-12`
 
 **Compass targets citing it.** `TRN-02`, `TRN-05`, `EDU-06`
 
@@ -306,6 +310,16 @@ EU minimum rules on violence against women, including cyber violence.
 
 **Link.** [https://eur-lex.europa.eu/eli/dir/1993/13/oj](https://eur-lex.europa.eu/eli/dir/1993/13/oj)
 
+### CJEU, C-413/23 P, EDPS v Single Resolution Board, 4 Sep 2025 (EU:C:2025:645)
+
+*Id `CJEU-SRB` · law · EU · verified 2026-11-19*
+
+**Status.** Case law. Pseudonymised data stay personal for the controller that holds the key; for a recipient with no means reasonably likely to re-identify, they may not be personal data. The controller must name such recipients when it collects the data.
+
+**Rules citing it.** `CORE-DAT-20`, `CORE-DAT-24`, `B-DAT-01`
+
+**Link.** [https://curia.europa.eu/juris/liste.jsf?num=C-413/23%20P](https://curia.europa.eu/juris/liste.jsf?num=C-413/23%20P)
+
 ## Adopted, applying later
 
 ### Digital Omnibus on AI (amendments to the AI Act)
@@ -360,7 +374,7 @@ Commission proposal of 17 September 2026 (procedure 2026/0286 COD). The single m
 
 **In CSEF.** Most Level 2 rules: safe defaults, addictive design, contact and communications (CORE-SAF-05, CORE-CHT-*), rewards, purchases (CORE-COM-05 to 08), AI companions and chatbots (CORE-AI-06, 08 to 11), guardians, reporting, age assurance; and the code-of-conduct structure checks (COC-S01 to S11).
 
-**Rules citing it.** `CORE-GOV-02`, `CORE-DAT-09`, `CORE-DAT-10`, `CORE-DAT-12`, `CORE-DAT-16`, `CORE-DAT-18`, `CORE-COM-04`, `CORE-SAF-01`, `CORE-SAF-02`, `CORE-SAF-03`, `CORE-SAF-04`, `CORE-SAF-05`, `CORE-SAF-06`, `CORE-SAF-07`, `CORE-SAF-08`, `CORE-SAF-09`, `CORE-SAF-10`, `CORE-AI-05`, `CORE-AI-06`, `CORE-CNT-02`, `A-ECO-01`, `A-ECO-03`, `A-PLY-01`, `B-UGC-01`, `B-UGC-02`, `B-OPS-01`, `C-ENG-01`, `C-ENG-02`, `C-ENG-03`, `C-ENG-04`, `C-ENG-05`, `AGE-B1-01`, `AGE-B2-01`, `AGE-B3-01`, `AGE-B4-01`, `AGE-B5-01`, `CORE-COM-05`, `CORE-COM-06`, `CORE-COM-07`, `CORE-COM-08`, `CORE-AI-08`, `CORE-AI-09`, `CORE-AI-10`, `CORE-AI-11`, `CORE-CHT-01`, `CORE-CHT-02`, `CORE-CHT-03`, `CORE-CHT-04`, `CORE-CHT-05`, `CORE-CHT-06`, `CORE-CHT-07`, `CORE-CHT-08`, `CORE-CHT-10`, `CORE-CHT-13`, `CORE-CHT-14`, `PT-LNG-01`, `PT-SUP-01`
+**Rules citing it.** `CORE-GOV-02`, `CORE-DAT-09`, `CORE-DAT-10`, `CORE-DAT-12`, `CORE-DAT-16`, `CORE-DAT-18`, `CORE-DAT-22`, `CORE-DAT-23`, `CORE-COM-04`, `CORE-SAF-01`, `CORE-SAF-02`, `CORE-SAF-03`, `CORE-SAF-04`, `CORE-SAF-05`, `CORE-SAF-06`, `CORE-SAF-07`, `CORE-SAF-08`, `CORE-SAF-09`, `CORE-SAF-10`, `CORE-AI-05`, `CORE-AI-06`, `CORE-CNT-02`, `A-ECO-01`, `A-ECO-03`, `A-PLY-01`, `B-UGC-01`, `B-UGC-02`, `B-OPS-01`, `C-ENG-01`, `C-ENG-02`, `C-ENG-03`, `C-ENG-04`, `C-ENG-05`, `AGE-B1-01`, `AGE-B2-01`, `AGE-B3-01`, `AGE-B4-01`, `AGE-B5-01`, `CORE-COM-05`, `CORE-COM-06`, `CORE-COM-07`, `CORE-COM-08`, `CORE-AI-08`, `CORE-AI-09`, `CORE-AI-10`, `CORE-AI-11`, `CORE-CHT-01`, `CORE-CHT-02`, `CORE-CHT-03`, `CORE-CHT-04`, `CORE-CHT-05`, `CORE-CHT-06`, `CORE-CHT-07`, `CORE-CHT-08`, `CORE-CHT-10`, `CORE-CHT-13`, `CORE-CHT-14`, `PT-LNG-01`, `PT-SUP-01`
 
 **Compass targets citing it.** `INF-03`, `SAF-03`, `SAF-04`, `SAF-05`, `TRN-02`, `TRN-04`, `TRN-06`, `TRN-07`, `EDU-07`
 
@@ -386,11 +400,21 @@ Revises consumer law for the digital environment. CSEF first used a leaked draft
 
 **In CSEF.** Level 2 rules on economy (A-ECO), streaks, autoplay and AI personas.
 
-**Rules citing it.** `CORE-COM-01`, `CORE-COM-03`, `CORE-COM-04`, `CORE-SAF-02`, `CORE-SAF-03`, `CORE-AI-06`, `A-ECO-01`, `A-ECO-02`, `A-ECO-03`, `A-PLY-01`, `C-ENG-01`, `C-ENG-03`, `CORE-COM-05`, `CORE-COM-06`
+**Rules citing it.** `CORE-DAT-23`, `CORE-COM-01`, `CORE-COM-03`, `CORE-COM-04`, `CORE-SAF-02`, `CORE-SAF-03`, `CORE-AI-06`, `A-ECO-01`, `A-ECO-02`, `A-ECO-03`, `A-PLY-01`, `C-ENG-01`, `C-ENG-03`, `CORE-COM-05`, `CORE-COM-06`
 
 **Compass targets citing it.** `SAF-05`, `TRN-04`, `TRN-07`
 
 **Link.** [https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows](https://www.euronews.com/2026/11/09/eu-to-blacklist-ten-manipulative-online-design-traps-leaked-draft-shows)
+
+### Digital Omnibus Regulation proposal, COM(2025) 837, procedure 2025/0360(COD)
+
+*Id `OMNIBUS-DATA` · proposal · EU · verified 2026-11-19*
+
+**Status.** Proposed 19 Nov 2025. Would make the definition of personal data relative to the holder (Art. 4(1)) and move device-storage consent into a new GDPR Art. 88a with exemptions for aggregated audience measurement. EDPB-EDPS Joint Opinion 2/2026 (10 Feb 2026) calls the definition change a red line. Data part not yet in trilogue as of Oct 2026. Watched; CSEF relies on neither change.
+
+**Rules citing it.** none (context)
+
+**Link.** [https://www.europarl.europa.eu/legislative-train/theme-a-new-plan-for-europe-s-sustainable-prosperity-and-competitiveness/file-digital-package](https://www.europarl.europa.eu/legislative-train/theme-a-new-plan-for-europe-s-sustainable-prosperity-and-competitiveness/file-digital-package)
 
 ## EU guidance and recommendations
 
@@ -496,7 +520,7 @@ How the UN Convention on the Rights of the Child applies to the digital environm
 
 **In CSEF.** Child rights impact assessment and several Level 3 rules.
 
-**Rules citing it.** `CORE-GOV-03`, `CORE-DAT-13`, `CORE-DAT-14`, `CORE-DAT-15`, `CORE-DAT-16`, `CORE-DAT-17`, `CORE-SAF-07`, `CORE-SAF-09`, `CORE-ACC-03`, `A-PLY-02`, `B-EVL-04`, `B-SIM-01`, `B-OPS-01`, `C-ENG-06`, `AGE-B1-01`, `CORE-DES-08`, `CORE-COM-08`, `CORE-CHT-08`, `CORE-CHT-11`, `CORE-CHT-12`, `CORE-CHT-15`
+**Rules citing it.** `CORE-GOV-03`, `CORE-DAT-13`, `CORE-DAT-14`, `CORE-DAT-15`, `CORE-DAT-16`, `CORE-DAT-17`, `CORE-DAT-22`, `CORE-SAF-07`, `CORE-SAF-09`, `CORE-ACC-03`, `A-PLY-02`, `B-EVL-04`, `B-SIM-01`, `B-OPS-01`, `C-ENG-06`, `AGE-B1-01`, `CORE-DES-08`, `CORE-COM-08`, `CORE-CHT-08`, `CORE-CHT-11`, `CORE-CHT-12`, `CORE-CHT-15`
 
 **Compass targets citing it.** `COM-03`, `TRN-01`, `TRN-08`
 
@@ -526,7 +550,7 @@ Why small or uniform groups can make aggregated data identifiable.
 
 **In CSEF.** Teacher views show only class totals large and varied enough to hide individuals.
 
-**Rules citing it.** `CORE-DAT-17`
+**Rules citing it.** `CORE-DAT-17`, `CORE-DAT-24`
 
 **Link.** [https://ec.europa.eu/justice/article-29/documentation/opinion-recommendation/files/2014/wp216_en.pdf](https://ec.europa.eu/justice/article-29/documentation/opinion-recommendation/files/2014/wp216_en.pdf)
 
@@ -613,6 +637,26 @@ How the GDPR applies when providers meet DSA duties, including notice and action
 **Rules citing it.** `CORE-COM-03`, `CORE-COM-04`, `A-ECO-01`, `A-ECO-03`, `CORE-COM-09`
 
 **Link.** [https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en](https://commission.europa.eu/live-work-travel-eu/consumer-rights-and-complaints/enforcement-consumer-protection/coordinated-actions/social-media-online-games-and-search-engines_en)
+
+### EDPB Guidelines 01/2025 on Pseudonymisation
+
+*Id `EDPB-PSEUDO` · guidance · EU · verified 2026-11-19*
+
+**Status.** Adopted 16 Jan 2025 for public consultation (closed 28 Feb 2025). Pseudonymised data remain personal data for whoever can attribute them with additional information kept separately; the pseudonymisation domain decides who that is.
+
+**Rules citing it.** `CORE-DAT-20`, `CORE-DAT-24`, `B-DAT-01`
+
+**Link.** [https://edpb.europa.eu/news/news/2025/edpb-adopts-pseudonymisation-guidelines-and-paves-way-improve-cooperation_en](https://edpb.europa.eu/news/news/2025/edpb-adopts-pseudonymisation-guidelines-and-paves-way-improve-cooperation_en)
+
+### EDPB Guidelines 2/2023 on Technical Scope of Art. 5(3) of ePrivacy Directive, version 2.0
+
+*Id `EDPB-ART53` · guidance · EU · verified 2026-11-19*
+
+**Status.** Adopted 7 Oct 2024 after public consultation. Art. 5(3) covers any storage of or access to information on the device, not only cookies: local storage, tracking pixels, URL tracking, unique identifiers and fingerprinting.
+
+**Rules citing it.** `CORE-DAT-21`, `CORE-DAT-25`
+
+**Link.** [https://www.edpb.europa.eu/system/files/2024-10/edpb_guidelines_202302_technical_scope_art_53_eprivacydirective_v2_en_0.pdf](https://www.edpb.europa.eu/system/files/2024-10/edpb_guidelines_202302_technical_scope_art_53_eprivacydirective_v2_en_0.pdf)
 
 ## Policy context
 

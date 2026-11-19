@@ -302,6 +302,10 @@ def render_html(model: dict, for_print: bool = False) -> str:
     a('<p class="disclaimer"><strong>Pre-compliance report, not legal advice or certification.</strong> Automated checks find technical '
       'signals in code and configuration. They cannot see contracts, legal bases or how the product is operated. Use this dashboard to '
       'prepare a review with your DPO and legal counsel.</p>')
+    if d.get("mode") == "description":
+        a(f'<p class="disclaimer"><strong>Description check.</strong> This dashboard reads the product description (csef.yaml) and the '
+          f'documents it links, not the code. {len(d.get("code_rules_not_checked") or [])} rules in scope are checked in code: ask a '
+          'developer to run the full scan before release.</p>')
     if not for_print:
         a('<nav class="toc" aria-label="Sections"><a href="#levels">Levels</a><a href="#bands">Age bands</a><a href="#scope">Scope</a>'
           '<a href="#comms">Communications</a><a href="#findings">Findings</a><a href="#human">Human checks</a><a href="#plan">Improvement plan</a>'

@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workbench · CSEF, Child-Safe EdTech Framework</title>
+<meta name="description" content="Run CSEF on your product description and documents, in your browser. For designers, decision makers and researchers. Nothing is uploaded.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet"><link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<style>:root{--c-paper:#F6F3EC;--c-ink:#17233F;--c-ink2:#4A5468;--c-panel:#FFFFFF;--c-line:#E2DDD1;--c-code:#EEEAE0;--c-teal:#1F8A7A;--c-indigo:#4A5FC1;--c-sky:#5DA9DD;--c-lilac:#9A7AD0;--c-coral:#E2674A;--c-sun:#F2B441;--c-teal-t:#16695D;--c-indigo-t:#3B4DA6;--c-lilac-t:#6F51A8;--c-sky-t:#2B6F9E;--c-coral-t:#B3452B;--c-sun-t:#8A5C00;--c-teal-bg:#E0F0EC;--c-indigo-bg:#E6E9F8;--c-lilac-bg:#EFE8F8;--c-sky-bg:#E3F0F9;--c-coral-bg:#FBE7E1;--c-sun-bg:#FDF1D8;--font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--font-display:"Space Grotesk","Inter",system-ui,-apple-system,"Segoe UI",sans-serif}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--c-paper:#17233F;--c-ink:#F6F3EC;--c-ink2:#B8C0D0;--c-panel:#1F2C4C;--c-line:#33405F;--c-code:#26345A;--c-teal:#3FBFA8;--c-indigo:#8A9BEA;--c-sky:#5DA9DD;--c-lilac:#B59BE6;--c-coral:#E2674A;--c-sun:#F2B441;--c-teal-t:#5FD3BD;--c-indigo-t:#A9B6F2;--c-lilac-t:#CBB5F0;--c-sky-t:#8CC6EC;--c-coral-t:#F2967F;--c-sun-t:#F6C969;--c-teal-bg:#173E43;--c-indigo-bg:#262F5E;--c-lilac-bg:#33295A;--c-sky-bg:#1C3A5A;--c-coral-bg:#45263A;--c-sun-bg:#413A30}}:root[data-theme=dark]{--c-paper:#17233F;--c-ink:#F6F3EC;--c-ink2:#B8C0D0;--c-panel:#1F2C4C;--c-line:#33405F;--c-code:#26345A;--c-teal:#3FBFA8;--c-indigo:#8A9BEA;--c-sky:#5DA9DD;--c-lilac:#B59BE6;--c-coral:#E2674A;--c-sun:#F2B441;--c-teal-t:#5FD3BD;--c-indigo-t:#A9B6F2;--c-lilac-t:#CBB5F0;--c-sky-t:#8CC6EC;--c-coral-t:#F2967F;--c-sun-t:#F6C969;--c-teal-bg:#173E43;--c-indigo-bg:#262F5E;--c-lilac-bg:#33295A;--c-sky-bg:#1C3A5A;--c-coral-bg:#45263A;--c-sun-bg:#413A30}@media print{:root,:root[data-theme=dark]{--c-paper:#F6F3EC;--c-ink:#17233F;--c-ink2:#4A5468;--c-panel:#FFFFFF;--c-line:#E2DDD1;--c-code:#EEEAE0;--c-teal:#1F8A7A;--c-indigo:#4A5FC1;--c-sky:#5DA9DD;--c-lilac:#9A7AD0;--c-coral:#E2674A;--c-sun:#F2B441;--c-teal-t:#16695D;--c-indigo-t:#3B4DA6;--c-lilac-t:#6F51A8;--c-sky-t:#2B6F9E;--c-coral-t:#B3452B;--c-sun-t:#8A5C00;--c-teal-bg:#E0F0EC;--c-indigo-bg:#E6E9F8;--c-lilac-bg:#EFE8F8;--c-sky-bg:#E3F0F9;--c-coral-bg:#FBE7E1;--c-sun-bg:#FDF1D8}}
+h1,h2,h3,.display{font-family:var(--font-display);letter-spacing:-.01em}
+.csef-stripe{height:6px;background:linear-gradient(90deg,var(--c-teal) 0 25%,var(--c-indigo) 25% 50%,var(--c-sky) 50% 75%,var(--c-lilac) 75%)}
+.csef-brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 18px}
+.csef-brand svg{display:block;height:var(--logo-h,40px);width:auto;max-width:100%}
+.csef-brand .tag{font-family:var(--font-display);font-weight:500;color:var(--c-ink2);font-size:.95rem}
+@media print{body{background:#fff!important}.csef-stripe{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+*{box-sizing:border-box}body{margin:0;background:var(--c-paper);color:var(--c-ink);font:17px/1.6 var(--font)}
+a{color:var(--c-indigo-t)}:focus-visible{outline:3px solid var(--c-indigo);outline-offset:2px}
+.in{max-width:1100px;margin:0 auto;padding:0 24px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px 24px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px}
+.top .csef-brand{margin:0}.top nav{display:flex;gap:4px 20px;flex-wrap:wrap}.top nav a{color:var(--c-ink);text-decoration:none;font-weight:500;padding:10px 0}
+h1{font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.05;margin:8px 0 12px}h2{font-size:1.7rem;margin:0 0 6px}h3{font-size:1.15rem;margin:0 0 4px}
+.lead{font-size:1.15rem;color:var(--c-ink2);max-width:62ch;margin:0 0 18px}
+.trust{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 26px}.trust span{padding:6px 14px;border-radius:999px;background:var(--c-teal-bg);color:var(--c-teal-t);font-weight:600;font-size:.88rem}
+.step{background:var(--c-panel);border:1px solid var(--c-line);border-radius:20px;padding:26px 28px;margin:0 0 22px}
+.step-h{display:flex;gap:14px;align-items:flex-start;margin:0 0 18px}.num{flex:none;width:36px;height:36px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;background:var(--c-indigo-bg);color:var(--c-indigo-t);font-family:var(--font-display)}
+.step-h p{margin:2px 0 0;color:var(--c-ink2)}
+fieldset{border:0;margin:0 0 18px;padding:0}legend{font-weight:600;margin:0 0 6px;padding:0}
+.hint{color:var(--c-ink2);font-size:.9rem;margin:0 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px 18px}
+label.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--c-line);border-radius:12px;background:var(--c-paper);cursor:pointer;font-size:.95rem;line-height:1.35}
+label.opt input{margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--c-teal)}label.opt small{display:block;color:var(--c-ink2)}
+.row2{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px 22px}
+.field label{display:block;font-weight:600;margin:0 0 4px}.field select,.field input[type=text],textarea{width:100%;min-height:46px;padding:10px 12px;border-radius:10px;border:1.5px solid var(--c-line);background:var(--c-paper);color:var(--c-ink);font:inherit;font-size:.97rem}
+textarea{min-height:320px;font:13.5px/1.55 ui-monospace,"SF Mono",Menlo,monospace}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 18px;border-radius:12px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;border:1.5px solid var(--c-ink);background:transparent;color:var(--c-ink)}
+.btn.p{background:var(--c-teal-t);border-color:var(--c-teal-t);color:#fff}.btn[disabled]{opacity:.55;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+details.more{margin:6px 0 0;border-top:1px solid var(--c-line);padding-top:10px}details.more summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+.drop{border:2px dashed var(--c-line);border-radius:16px;padding:26px;text-align:center;background:var(--c-paper)}.drop.over{border-color:var(--c-teal);background:var(--c-teal-bg)}
+.drop p{margin:0 0 12px;color:var(--c-ink2)}
+.files{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.files li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:var(--c-paper);border:1px solid var(--c-line);font-size:.93rem}
+.files li code{overflow-wrap:anywhere}.files button{min-height:36px;padding:0 12px;border-radius:8px;border:1px solid var(--c-line);background:var(--c-panel);color:var(--c-ink);cursor:pointer;font:inherit;font-size:.85rem}
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+.tool{border:1.5px solid var(--c-line);border-radius:16px;padding:16px 18px;background:var(--c-paper)}.tool.on{border-color:var(--c-teal);background:var(--c-teal-bg)}
+.tool>label{display:flex;gap:12px;align-items:flex-start;cursor:pointer}.tool>label input{width:20px;height:20px;margin-top:4px;accent-color:var(--c-teal);flex:none}
+.tool b{display:block;font-family:var(--font-display);font-size:1.12rem}.tool .who{display:inline-block;margin:4px 0 6px;font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--c-indigo-t)}
+.tool p{margin:0;color:var(--c-ink2);font-size:.93rem}.tool .extra{margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--c-line)}
+.tool .extra label.small{display:block;font-size:.9rem;font-weight:600;margin:8px 0 4px}
+.status{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:var(--c-indigo-bg);color:var(--c-indigo-t);font-weight:500}
+.status.err{background:var(--c-coral-bg);color:var(--c-coral-t)}.status.ok{background:var(--c-teal-bg);color:var(--c-teal-t)}
+.results{display:flex;flex-direction:column;gap:12px;margin:18px 0 0}
+.res{border:1px solid var(--c-line);border-radius:14px;padding:16px 18px;background:var(--c-paper)}
+.res-h{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.res-h b{font-family:var(--font-display);font-size:1.12rem}
+.pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:.8rem;font-weight:700}.pill.g{background:var(--c-teal-bg);color:var(--c-teal-t)}.pill.r{background:var(--c-coral-bg);color:var(--c-coral-t)}.pill.y{background:var(--c-sun-bg);color:var(--c-sun-t)}
+.res p{margin:8px 0;color:var(--c-ink2);font-size:.93rem}.res .btns a{min-height:40px;font-size:.9rem;padding:0 14px}
+.fmt{padding:1px 7px;border-radius:6px;background:var(--c-ink);color:var(--c-paper);font-size:.68rem;font-weight:700}
+.log{white-space:pre-wrap;font:12px/1.5 ui-monospace,Menlo,monospace;background:var(--c-code);padding:10px;border-radius:8px;max-height:220px;overflow:auto}
+.gaps{margin:10px 0 0;padding-left:20px;color:var(--c-coral-t)}
+.note{font-size:.9rem;color:var(--c-ink2)}
+footer{border-top:1px solid var(--c-line);background:var(--c-panel);padding:28px 0;color:var(--c-ink2);font-size:.92rem;margin-top:40px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:560px){.step{padding:20px}}
+</style></head>
+<body data-pyodide="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/"><div class="csef-stripe"></div>
+<header class="in top"><a href="../" aria-label="CSEF home" style="text-decoration:none"><div class="csef-brand" style="--logo-h:44px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 594 160" role="img" aria-label="CSEF, Child-Safe EdTech Framework"><title>CSEF, Child-Safe EdTech Framework</title><g transform="translate(0.00 0.00) scale(1.02564) translate(-22 -34)"><path d="M38 100 L100 44 L162 100 Z" stroke-width="10" stroke-linejoin="round" style="fill:var(--c-ink,#17233F);stroke:var(--c-ink,#17233F)"/><rect x="38" y="112" width="38" height="34" rx="7" style="fill:var(--c-teal,#1F8A7A)"/><rect x="38" y="150" width="38" height="34" rx="7" style="fill:var(--c-indigo,#4A5FC1)"/><rect x="124" y="112" width="38" height="34" rx="7" fill="#5DA9DD"/><rect x="124" y="150" width="38" height="34" rx="7" style="fill:var(--c-lilac,#9A7AD0)"/><circle cx="100" cy="132" r="11" fill="#E2674A"/><path d="M84 184 C84 162 91 150 100 150 C109 150 116 162 116 184 Z" fill="#F2B441"/></g><g transform="translate(190.00 96.00) scale(0.10400 -0.10400)" style="fill:var(--c-ink,#17233F)"><path transform="translate(0.00 0)" d="M332 -14Q202 -14 126.0 58.5Q50 131 50 266V434Q50 569 126.0 641.5Q202 714 332 714Q461 714 531.5 643.5Q602 573 602 450V444H472V454Q472 516 437.5 556.0Q403 596 332 596Q262 596 222.0 553.0Q182 510 182 436V264Q182 191 222.0 147.5Q262 104 332 104Q403 104 437.5 144.5Q472 185 472 246V264H602V250Q602 127 531.5 56.5Q461 -14 332 -14Z"/><path transform="translate(624.00 0)" d="M309 -14Q228 -14 166.0 15.0Q104 44 69.0 98.0Q34 152 34 228V256H164V228Q164 165 203.0 133.5Q242 102 309 102Q377 102 410.5 129.0Q444 156 444 198Q444 227 427.5 245.0Q411 263 379.5 274.5Q348 286 303 296L280 301Q208 317 156.5 341.5Q105 366 77.5 406.0Q50 446 50 510Q50 574 80.5 619.5Q111 665 166.5 689.5Q222 714 297 714Q372 714 430.5 688.5Q489 663 522.5 612.5Q556 562 556 486V456H426V486Q426 526 410.5 550.5Q395 575 366.0 586.5Q337 598 297 598Q237 598 208.5 575.5Q180 553 180 514Q180 488 193.5 470.0Q207 452 234.0 440.0Q261 428 303 419L326 414Q401 398 456.5 373.0Q512 348 543.0 307.0Q574 266 574 202Q574 138 541.5 89.5Q509 41 449.5 13.5Q390 -14 309 -14Z"/><path transform="translate(1210.00 0)" d="M66 0V700H516V580H198V413H488V293H198V120H522V0Z"/><path transform="translate(1744.00 0)" d="M66 0V700H506V580H198V411H482V291H198V0Z"/></g><g transform="translate(194.00 138.00) scale(0.01318 -0.01318)" style="fill:var(--c-ink2,#4A5468)"><path transform="translate(0.00 0)" d="M784 -20Q591 -20 439.0 71.5Q287 163 200.0 334.5Q113 506 113 744Q113 983 200.0 1154.5Q287 1326 439.0 1418.0Q591 1510 784 1510Q902 1510 1005.5 1476.0Q1109 1442 1190.5 1377.0Q1272 1312 1325.5 1219.0Q1379 1126 1398 1008H1169Q1155 1079 1119.5 1133.5Q1084 1188 1033.0 1226.0Q982 1264 919.0 1283.0Q856 1302 786 1302Q658 1302 556.5 1237.5Q455 1173 397.0 1048.5Q339 924 339 744Q339 564 398.0 439.5Q457 315 558.0 251.5Q659 188 786 188Q856 188 918.5 207.5Q981 227 1032.5 264.5Q1084 302 1119.5 357.0Q1155 412 1169 482H1399Q1382 372 1330.0 280.5Q1278 189 1197.0 121.0Q1116 53 1011.5 16.5Q907 -20 784 -20Z"/><path transform="translate(1502.00 0)" d="M368 662V0H148V1490H366V918Q411 1012 479 1063Q572 1132 704 1132Q818 1132 903.5 1084.0Q989 1036 1036.5 942.5Q1084 849 1084 710V0H864V683Q864 804 801.0 872.0Q738 940 628 940Q554 940 495.0 907.5Q436 875 402.0 813.0Q368 751 368 662Z"/><path transform="translate(2734.00 0)" d="M148 0V1118H368V0ZM259 1289Q202 1289 161.5 1327.0Q121 1365 121 1419Q121 1474 161.5 1512.0Q202 1550 259 1550Q316 1550 357.0 1512.0Q398 1474 398 1419Q398 1365 357.0 1327.0Q316 1289 259 1289Z"/><path transform="translate(3250.00 0)" d="M368 1490V0H148V1490Z"/><path transform="translate(3766.00 0)" d="M564 -22Q428 -22 322.0 47.5Q216 117 156.0 246.5Q96 376 96 556Q96 738 157.0 867.0Q218 996 324.0 1064.0Q430 1132 564 1132Q668 1132 731.5 1097.5Q795 1063 831.0 1017.0Q867 971 886 936H898V1490H1118V0H904V175H886Q867 139 830.0 93.0Q793 47 729.0 12.5Q665 -22 564 -22ZM612 165Q706 165 770.5 215.0Q835 265 868.5 353.5Q902 442 902 558Q902 675 869.0 761.5Q836 848 771.5 896.5Q707 945 612 945Q515 945 450.5 894.0Q386 843 353.5 755.5Q321 668 321 558Q321 447 354.0 358.0Q387 269 452.0 217.0Q517 165 612 165Z"/><path transform="translate(5032.00 0)" d="M805 723V533H143V723Z"/><path transform="translate(5979.00 0)" d="M665 -25Q498 -25 375.0 28.0Q252 81 182.5 179.5Q113 278 106 414H335Q342 333 387.5 280.0Q433 227 506.0 201.0Q579 175 664 175Q759 175 832.5 204.5Q906 234 949.0 288.5Q992 343 992 415Q992 480 954.5 521.5Q917 563 853.5 590.5Q790 618 709 639L535 687Q352 736 249.5 832.0Q147 928 147 1081Q147 1210 216.5 1306.5Q286 1403 405.5 1456.5Q525 1510 675 1510Q828 1510 944.5 1456.5Q1061 1403 1127.5 1310.0Q1194 1217 1197 1098H975Q964 1200 880.5 1256.0Q797 1312 670 1312Q580 1312 513.5 1284.0Q447 1256 410.5 1206.5Q374 1157 374 1094Q374 1023 417.5 979.5Q461 936 523.5 910.5Q586 885 643 870L788 832Q859 814 934.5 783.5Q1010 753 1074.0 704.5Q1138 656 1177.5 584.5Q1217 513 1217 412Q1217 286 1152.0 187.0Q1087 88 963.5 31.5Q840 -25 665 -25Z"/><path transform="translate(7302.00 0)" d="M461 -25Q355 -25 269.0 14.5Q183 54 133.0 130.0Q83 206 83 316Q83 411 119.5 472.0Q156 533 218.5 569.0Q281 605 357.5 623.0Q434 641 513 650Q612 662 674.0 669.5Q736 677 765.5 694.5Q795 712 795 751V757Q795 820 771.0 863.0Q747 906 699.5 929.5Q652 953 581 953Q508 953 455.5 930.5Q403 908 370.5 873.0Q338 838 322 800L115 854Q153 954 224.0 1015.0Q295 1076 387.0 1104.0Q479 1132 577 1132Q645 1132 721.0 1116.0Q797 1100 864.0 1058.0Q931 1016 973.0 940.0Q1015 864 1015 742V0H802V153H791Q769 110 726.0 69.0Q683 28 617.5 1.5Q552 -25 461 -25ZM510 152Q600 152 664.0 187.0Q728 222 762.0 280.0Q796 338 796 403V546Q784 534 750.5 524.5Q717 515 674.0 507.5Q631 500 591.0 495.0Q551 490 525 487Q463 479 411.5 460.0Q360 441 329.5 406.0Q299 371 299 313Q299 260 326.5 224.0Q354 188 401.0 170.0Q448 152 510 152Z"/><path transform="translate(8465.00 0)" d="M702 1118V939H452V0H232V939H20V1118H232V1246Q232 1350 278.5 1420.0Q325 1490 401.0 1525.0Q477 1560 565 1560Q632 1560 679.5 1549.0Q727 1538 749 1530L698 1352Q682 1357 658.5 1362.5Q635 1368 600 1368Q522 1368 487.0 1329.0Q452 1290 452 1216V1118Z"/><path transform="translate(9242.00 0)" d="M630 -23Q465 -23 345.0 48.0Q225 119 160.5 248.0Q96 377 96 551Q96 723 159.5 854.0Q223 985 339.0 1058.5Q455 1132 611 1132Q707 1132 796.0 1100.5Q885 1069 956.0 1002.0Q1027 935 1068.5 828.5Q1110 722 1110 570V492H317Q321 391 357 320Q396 240 467.0 199.5Q538 159 632 159Q694 159 744.0 176.5Q794 194 830.5 229.5Q867 265 886 317L1093 268Q1066 182 1002.5 116.0Q939 50 844.5 13.5Q750 -23 630 -23ZM318 656H892Q885 726 862 784Q830 862 767.5 906.0Q705 950 611 950Q518 950 452.0 905.0Q386 860 352 787Q323 726 318 656Z"/><path transform="translate(10991.00 0)" d="M165 0V1490H1103V1294H393V850H1052V655H393V196H1109V0Z"/><path transform="translate(12226.00 0)" d="M564 -22Q428 -22 322.0 47.5Q216 117 156.0 246.5Q96 376 96 556Q96 738 157.0 867.0Q218 996 324.0 1064.0Q430 1132 564 1132Q668 1132 731.5 1097.5Q795 1063 831.0 1017.0Q867 971 886 936H898V1490H1118V0H904V175H886Q867 139 830.0 93.0Q793 47 729.0 12.5Q665 -22 564 -22ZM612 165Q706 165 770.5 215.0Q835 265 868.5 353.5Q902 442 902 558Q902 675 869.0 761.5Q836 848 771.5 896.5Q707 945 612 945Q515 945 450.5 894.0Q386 843 353.5 755.5Q321 668 321 558Q321 447 354.0 358.0Q387 269 452.0 217.0Q517 165 612 165Z"/><path transform="translate(13492.00 0)" d="M90 1294V1490H1247V1294H784V0H555V1294Z"/><path transform="translate(14829.00 0)" d="M630 -23Q465 -23 345.0 48.0Q225 119 160.5 248.0Q96 377 96 551Q96 723 159.5 854.0Q223 985 339.0 1058.5Q455 1132 611 1132Q707 1132 796.0 1100.5Q885 1069 956.0 1002.0Q1027 935 1068.5 828.5Q1110 722 1110 570V492H317Q321 391 357 320Q396 240 467.0 199.5Q538 159 632 159Q694 159 744.0 176.5Q794 194 830.5 229.5Q867 265 886 317L1093 268Q1066 182 1002.5 116.0Q939 50 844.5 13.5Q750 -23 630 -23ZM318 656H892Q885 726 862 784Q830 862 767.5 906.0Q705 950 611 950Q518 950 452.0 905.0Q386 860 352 787Q323 726 318 656Z"/><path transform="translate(16032.00 0)" d="M618 -23Q460 -23 343.0 49.0Q226 121 161.0 251.0Q96 381 96 553Q96 727 161.0 857.5Q226 988 343.0 1060.0Q460 1132 618 1132Q705 1132 781.0 1109.5Q857 1087 918.5 1044.5Q980 1002 1022.5 940.5Q1065 879 1086 802L877 752Q866 795 843.0 830.5Q820 866 787.5 892.0Q755 918 712.5 932.0Q670 946 619 946Q518 946 451.5 892.5Q385 839 352.5 750.0Q320 661 320 553Q320 446 352.5 357.5Q385 269 451.5 216.0Q518 163 619 163Q671 163 714.0 177.5Q757 192 791.0 218.5Q825 245 848.0 282.5Q871 320 881 365L1089 315Q1069 236 1026.0 173.5Q983 111 921.5 67.0Q860 23 783.0 0.0Q706 -23 618 -23Z"/><path transform="translate(17214.00 0)" d="M368 662V0H148V1490H366V918Q411 1012 479 1063Q572 1132 704 1132Q818 1132 903.5 1084.0Q989 1036 1036.5 942.5Q1084 849 1084 710V0H864V683Q864 804 801.0 872.0Q738 940 628 940Q554 940 495.0 907.5Q436 875 402.0 813.0Q368 751 368 662Z"/><path transform="translate(18992.00 0)" d="M165 0V1490H1092V1294H393V815H1025V620H393V0Z"/><path transform="translate(20199.00 0)" d="M148 0V1118H361V938H373Q404 1030 481.0 1082.0Q558 1134 656 1134Q677 1134 704.0 1132.5Q731 1131 749 1128V918Q737 922 703.0 926.0Q669 930 634 930Q558 930 497.0 898.0Q436 866 402.0 809.5Q368 753 368 679V0Z"/><path transform="translate(20991.00 0)" d="M461 -25Q355 -25 269.0 14.5Q183 54 133.0 130.0Q83 206 83 316Q83 411 119.5 472.0Q156 533 218.5 569.0Q281 605 357.5 623.0Q434 641 513 650Q612 662 674.0 669.5Q736 677 765.5 694.5Q795 712 795 751V757Q795 820 771.0 863.0Q747 906 699.5 929.5Q652 953 581 953Q508 953 455.5 930.5Q403 908 370.5 873.0Q338 838 322 800L115 854Q153 954 224.0 1015.0Q295 1076 387.0 1104.0Q479 1132 577 1132Q645 1132 721.0 1116.0Q797 1100 864.0 1058.0Q931 1016 973.0 940.0Q1015 864 1015 742V0H802V153H791Q769 110 726.0 69.0Q683 28 617.5 1.5Q552 -25 461 -25ZM510 152Q600 152 664.0 187.0Q728 222 762.0 280.0Q796 338 796 403V546Q784 534 750.5 524.5Q717 515 674.0 507.5Q631 500 591.0 495.0Q551 490 525 487Q463 479 411.5 460.0Q360 441 329.5 406.0Q299 371 299 313Q299 260 326.5 224.0Q354 188 401.0 170.0Q448 152 510 152Z"/><path transform="translate(22154.00 0)" d="M148 0V1118H357L362 910Q384 971 420 1015Q470 1076 537.0 1106.5Q604 1137 677 1137Q799 1137 874 1062Q934 1001 963 903Q985 962 1023 1007Q1077 1071 1153.5 1104.0Q1230 1137 1317 1137Q1416 1137 1496.5 1094.0Q1577 1051 1624.0 966.0Q1671 881 1671 754V0H1451V732Q1451 844 1388.5 894.0Q1326 944 1241 944Q1172 944 1122.0 915.0Q1072 886 1045.0 834.5Q1018 783 1018 716V0H801V746Q801 836 743.5 890.0Q686 944 597 944Q536 944 483.5 915.5Q431 887 399.5 831.5Q368 776 368 695V0Z"/><path transform="translate(23973.00 0)" d="M630 -23Q465 -23 345.0 48.0Q225 119 160.5 248.0Q96 377 96 551Q96 723 159.5 854.0Q223 985 339.0 1058.5Q455 1132 611 1132Q707 1132 796.0 1100.5Q885 1069 956.0 1002.0Q1027 935 1068.5 828.5Q1110 722 1110 570V492H317Q321 391 357 320Q396 240 467.0 199.5Q538 159 632 159Q694 159 744.0 176.5Q794 194 830.5 229.5Q867 265 886 317L1093 268Q1066 182 1002.5 116.0Q939 50 844.5 13.5Q750 -23 630 -23ZM318 656H892Q885 726 862 784Q830 862 767.5 906.0Q705 950 611 950Q518 950 452.0 905.0Q386 860 352 787Q323 726 318 656Z"/><path transform="translate(25176.00 0)" d="M393 0 57 1118H289L412 655Q439 551 470 424Q493 330 514 220Q536 326 558 418Q589 546 617 655L740 1118H960L1081 655Q1109 549 1140 421Q1162 328 1183 221Q1204 327 1226 419Q1256 547 1284 655L1407 1118H1641L1304 0H1083L945 481Q924 554 904.0 633.5Q884 713 865 796Q857 831 849 866Q841 831 833 797Q813 713 793.0 632.5Q773 552 752 481L614 0Z"/><path transform="translate(26874.00 0)" d="M618 -23Q461 -23 343.5 49.0Q226 121 161.0 251.0Q96 381 96 553Q96 727 161.0 857.5Q226 988 343.5 1060.0Q461 1132 618 1132Q776 1132 893.5 1060.0Q1011 988 1076.0 857.5Q1141 727 1141 553Q1141 381 1076.0 251.0Q1011 121 893.5 49.0Q776 -23 618 -23ZM618 163Q720 163 786.5 216.5Q853 270 885.5 358.5Q918 447 918 553Q918 660 885.5 749.5Q853 839 786.5 892.5Q720 946 618 946Q517 946 451.0 892.5Q385 839 352.5 750.0Q320 661 320 553Q320 447 352.5 358.5Q385 270 451.0 216.5Q517 163 618 163Z"/><path transform="translate(28111.00 0)" d="M148 0V1118H361V938H373Q404 1030 481.0 1082.0Q558 1134 656 1134Q677 1134 704.0 1132.5Q731 1131 749 1128V918Q737 922 703.0 926.0Q669 930 634 930Q558 930 497.0 898.0Q436 866 402.0 809.5Q368 753 368 679V0Z"/><path transform="translate(28903.00 0)" d="M148 0V1490H368V646H388L829 1118H1093L643 636L1124 0H852L475 501L368 394V0Z"/></g></svg>
+</div></a>
+<nav aria-label="Main"><a href="../">Home</a><a href="../learning-data/">Learning data guide</a><a href="../examples/">Examples</a><a href="../questionnaire/">Questionnaire</a><a href="https://github.com/eduardon83/child-safe-edtech-framework">GitHub</a></nav></header>
+<main class="in">
+<p class="pill" style="background:var(--c-indigo-bg);color:var(--c-indigo-t);margin:8px 0 0">CSEF v0.14.0 · Workbench</p>
+<h1>Check your product without touching code</h1>
+<p class="lead">For designers, decision makers and researchers. Describe the product, add your documents, and run the CSEF tools that do not need code: a description check, the Literacy Compass, the serious-game pre-check, a label package, a code-of-conduct comparison and the learning data checks.</p>
+<div class="trust"><span>Runs in this page</span><span>Nothing is uploaded</span><span>No account</span><span>Free and open source</span></div>
+<div class="btns" style="margin:0 0 26px"><button class="btn" id="example" type="button">Try it with the example game</button><span class="note" id="engine" role="status">The tools load in the background (about 15 MB the first time).</span></div>
+
+<section class="step" aria-labelledby="s1"><div class="step-h"><span class="num">1</span><div><h2 id="s1">Describe your product</h2>
+<p>Answer what you know. Everything here becomes a csef.yaml file, the product description CSEF reads. Developers can keep it in the code repository.</p></div></div>
+<div class="btns" style="margin:0 0 18px"><label class="btn" for="loadyaml">I already have a csef.yaml</label><input id="loadyaml" type="file" accept=".yaml,.yml" class="sr"></div>
+<div class="row2" style="margin:0 0 18px">
+<div class="field"><label for="f-product">Product name</label><input type="text" id="f-product" data-f="product"></div>
+<div class="field"><label for="f-description">In one sentence, what does it do and for whom?</label><input type="text" id="f-description" data-f="description"></div>
+</div>
+<fieldset><legend>What kind of product is it?</legend><div class="grid">
+<label class="opt"><input type="checkbox" data-f="profiles" value="A"><span>Educational game<small>A game made to teach</small></span></label>
+<label class="opt"><input type="checkbox" data-f="profiles" value="B"><span>Game-based software<small>An app or platform that uses games to teach or train</small></span></label>
+<label class="opt"><input type="checkbox" data-f="profiles" value="C"><span>Gamified app<small>Points, badges or levels on top of something else</small></span></label>
+</div></fieldset>
+<fieldset><legend>Who uses it?</legend><div class="grid">
+<label class="opt"><input type="checkbox" data-f="age_bands" value="B1"><span>Ages 3 to 5</span></label>
+<label class="opt"><input type="checkbox" data-f="age_bands" value="B2"><span>Ages 6 to 9</span></label>
+<label class="opt"><input type="checkbox" data-f="age_bands" value="B3"><span>Ages 10 to 12</span></label>
+<label class="opt"><input type="checkbox" data-f="age_bands" value="B4"><span>Ages 13 to 15</span></label>
+<label class="opt"><input type="checkbox" data-f="age_bands" value="B5"><span>Ages 16 to 17</span></label>
+</div></fieldset>
+<div class="row2" style="margin:0 0 18px">
+<div class="field"><label for="f-context">Where is it used?</label><select id="f-context" data-f="context"><option value="school">At school</option><option value="home">At home</option><option value="mixed">Both</option></select></div>
+<div class="field"><label for="f-channel">How does it reach children?</label><select id="f-channel" data-f="channel"><option value="school">Through the school</option><option value="web">On the open web</option><option value="app_store">In an app store</option><option value="platform">On a platform</option></select></div>
+<div class="field"><label for="f-operated">Who runs it?</label><select id="f-operated" data-f="operated_by"><option value="school">The school, or someone on its behalf</option><option value="provider">We do, as the provider</option></select></div>
+<div class="field"><label for="f-juris">Countries (EU plus country codes)</label><input type="text" id="f-juris" data-f="jurisdictions" placeholder="EU, PT"></div>
+<div class="field"><label for="f-gdpr">Our role under the GDPR</label><select id="f-gdpr" data-f="gdpr_role"><option value="">Not sure</option><option value="processor">Processor: we act for the school</option><option value="controller">Controller: we decide what data is used for</option><option value="joint">Joint controller with the school</option></select></div>
+<div class="field"><label for="f-kids">EU KIDS Act scope</label><select id="f-kids" data-f="kids_act"><option value="unknown">Not sure yet</option><option value="exempt_educational">Educational service run by or for a school</option><option value="in_scope_online_game">An online game in scope</option><option value="in_scope_ai_companion">An AI companion or chatbot</option><option value="in_scope_platform">A platform in scope</option><option value="not_applicable">Not used by minors</option></select></div>
+<div class="field"><label for="f-money">How does it make money?</label><select id="f-money" data-f="monetisation"><option value="none">It does not</option><option value="adult_licence">Licence paid by adults or schools</option><option value="subscription_adult">Subscription paid by adults</option><option value="in_app_purchases">In-app purchases</option><option value="virtual_currency">Virtual currency</option><option value="ads">Advertising</option></select></div>
+<div class="field"><label for="f-ai">AI in the product (AI Act)</label><select id="f-ai" data-f="ai_act_class"><option value="none">No AI, or only minimal-risk AI</option><option value="limited_risk_art50">Chatbots or generated content (transparency duties)</option><option value="high_risk_annex_iii">AI that evaluates, places or steers learners</option></select></div>
+</div>
+<fieldset><legend>What can children do in it?</legend><div class="grid">
+<label class="opt"><input type="checkbox" data-f="features" value="accounts"><span>Have an account</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="chat"><span>Chat or send messages</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="multiplayer"><span>Play with others</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="ugc"><span>Share what they make</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="social"><span>Follow, like or befriend</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="notifications"><span>Get notifications</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="streaks"><span>Keep streaks</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="leaderboards"><span>See leaderboards</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="purchases"><span>Buy things</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="assessment"><span>Take tests or get graded</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="ai_generative"><span>Talk to AI or make AI content</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="ai_adaptive"><span>Get a path adapted by AI</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="recommender"><span>Get recommendations</span></label>
+<label class="opt"><input type="checkbox" data-f="features" value="survey"><span>Answer questions about themselves</span></label>
+</div></fieldset>
+<fieldset><legend>Learning data</legend><p class="hint">Does the product log what pupils do, for example to improve levels or for research? See the <a href="../learning-data/">Learning data guide</a>.</p>
+<div class="row2"><div class="field"><label for="f-logs">Logging</label><select id="f-logs" data-f="logs_events"><option value="">Not answered</option><option value="none">It logs nothing beyond running the lesson</option><option value="ogd-0.1">Yes, in the Open Game Data format</option><option value="xapi-sg">Yes, in xAPI</option><option value="custom">Yes, in our own format</option></select></div>
+<div class="field"><label for="f-cat">Event catalogue file (path in your documents)</label><input type="text" id="f-cat" data-f="event_catalogue" placeholder="docs/event-catalogue.yaml"></div></div>
+<div class="grid" style="margin-top:10px">
+<label class="opt"><input type="checkbox" data-f="purposes" value="improvement"><span>To improve the product</span></label>
+<label class="opt"><input type="checkbox" data-f="purposes" value="evaluation"><span>To evaluate learning</span></label>
+<label class="opt"><input type="checkbox" data-f="purposes" value="research"><span>For research studies</span></label>
+<label class="opt"><input type="checkbox" data-f="open_evidence" value="1"><span>We publish group figures<small>An open evidence feed</small></span></label>
+</div>
+<div class="row2" style="margin-top:10px"><div class="field"><label for="f-cu">If you publish group figures, the data were collected</label><select id="f-cu" data-f="collected_under"><option value="">Not answered</option><option value="processor_for_school">For schools, as their processor</option><option value="own_study">In our own study, with an approval</option></select></div></div></fieldset>
+<fieldset><legend>How far do you want to go?</legend><div class="grid">
+<label class="opt"><input type="radio" name="lvl" data-f="compliance_level" value="1"><span>1 Legal baseline<small>Law in force today</small></span></label>
+<label class="opt"><input type="radio" name="lvl" data-f="compliance_level" value="2"><span>2 Forward-compliant<small>Adds adopted proposals and official guidance</small></span></label>
+<label class="opt"><input type="radio" name="lvl" data-f="compliance_level" value="3"><span>3 Best practice<small>Adds research and expert advice</small></span></label>
+</div></fieldset>
+<details class="more"><summary>See or edit the csef.yaml file</summary>
+<p class="hint">Everything the form does not ask (third parties, retention, metadata for labels, statements for the pre-check) can be added here. Start from the <a href="https://github.com/eduardon83/child-safe-edtech-framework/blob/main/templates/csef.yaml">template</a>.</p>
+<textarea id="yaml" spellcheck="false" aria-label="csef.yaml"></textarea>
+<div class="btns" style="margin-top:10px"><button class="btn" id="fromyaml" type="button">Update the form from this file</button><button class="btn" id="dlyaml" type="button">Download csef.yaml</button></div>
+</details>
+</section>
+
+<section class="step" aria-labelledby="s2"><div class="step-h"><span class="num">2</span><div><h2 id="s2">Add your documents</h2>
+<p>Design documents, teacher guides, in-product texts, the DPIA, research agreements, the event catalogue. Word, PDF, Markdown, text, HTML, JSON or CSV. They stay on this computer.</p></div></div>
+<div class="drop" id="drop"><p>Drop files or a folder here</p><div class="btns" style="justify-content:center"><label class="btn" for="addfiles">Add files</label><label class="btn" for="addfolder">Add a folder</label></div>
+<input id="addfiles" type="file" multiple class="sr"><input id="addfolder" type="file" webkitdirectory multiple class="sr"></div>
+<p class="hint" style="margin-top:10px">Tip: if csef.yaml names a file (for example <code>docs/dpia.md</code>), add the folder that holds it, or a file with that name: files you add go into <code>docs/</code>.</p>
+<ul class="files" id="files" aria-live="polite"></ul>
+</section>
+
+<section class="step" aria-labelledby="s3"><div class="step-h"><span class="num">3</span><div><h2 id="s3">Choose what to check</h2><p>Pick one or more. Each gives a report you can open, download and share.</p></div></div>
+<div class="tools">
+<div class="tool" data-t="describe"><label><input type="checkbox" value="describe" checked><span><span class="who">Decision makers, everyone</span><b>Description check</b><p>Reads the product description and the files it links. What is missing, what to fix first, and what a person must check. Code checks are listed for your developers.</p></span></label></div>
+<div class="tool" data-t="compass"><label><input type="checkbox" value="compass" checked><span><span class="who">Designers, educators</span><b>Literacy Compass</b><p>What your documents show the product teaches about digital, media and AI literacy, and how you know. Claims with nothing behind them, and copy that teaches the opposite.</p></span></label></div>
+<div class="tool" data-t="precheck"><label><input type="checkbox" value="precheck"><span><span class="who">Teams preparing a label</span><b>Serious-game pre-check</b><p>22 published quality criteria: ready, partial or missing, with what to add. Not a label.</p></span></label></div>
+<div class="tool" data-t="package"><label><input type="checkbox" value="package"><span><span class="who">Teams preparing a label</span><b>Label package</b><p>Standard metadata (SG-MDF and schema.org), the checks and your evidence index, in one zip with hashes.</p></span></label></div>
+<div class="tool" data-t="coc"><label><input type="checkbox" value="coc"><span><span class="who">Industry bodies, companies</span><b>Code-of-conduct comparison</b><p>Compares a code of conduct with what the EU KIDS Act expects from codes and with the CSEF rules.</p></span></label>
+<div class="extra"><label class="small" for="cocfile">The code of conduct</label><input id="cocfile" type="file" accept=".md,.txt,.html,.htm,.pdf,.docx"><div class="note" id="cocname"></div></div></div>
+<div class="tool" data-t="events"><label><input type="checkbox" value="events"><span><span class="who">Researchers, data teams</span><b>Learning data</b><p>Check an event file against the child-safe profile and its catalogue, and build an open evidence feed with group figures only.</p></span></label>
+<div class="extra"><label class="small" for="evfile">Event file (Open Game Data format, .tsv)</label><input id="evfile" type="file" accept=".tsv,.txt"><div class="note" id="evname"></div>
+<label class="small" for="catfile">Event catalogue (.yaml), if it is not in your documents</label><input id="catfile" type="file" accept=".yaml,.yml"><div class="note" id="catname"></div>
+<label class="opt" style="margin-top:10px"><input type="checkbox" id="buildfeed"><span>Also build the open evidence feed<small>At least 10 players and 3 classes behind every figure</small></span></label></div></div>
+<div class="tool" data-t="feedcheck"><label><input type="checkbox" value="feedcheck"><span><span class="who">Researchers, catalogues</span><b>Evidence feed check</b><p>Check a feed before you publish it, or before you show someone else's: hashes, format, thresholds, no engagement metrics.</p></span></label>
+<div class="extra"><label class="small" for="feedfile">The feed (.zip, or its files)</label><input id="feedfile" type="file" multiple accept=".zip,.tsv,.json,.md"><div class="note" id="feedname"></div></div></div>
+</div>
+<div class="btns" style="margin-top:20px"><button class="btn p" id="run" type="button">Run the checks</button><span class="note">Pre-compliance support, not legal advice and not a certification.</span></div>
+<div id="status" class="status" role="status" hidden></div>
+<ul class="gaps" id="gaps" hidden></ul>
+<div class="results" id="results" aria-live="polite"></div>
+</section>
+
+<section class="step" aria-labelledby="s4"><h2 id="s4">How this page handles your files</h2>
+<p>The CSEF tools are Python programs. This page runs them inside your browser with <a href="https://pyodide.org/">Pyodide</a>, which the page downloads from the jsDelivr CDN the first time. Your files are read by the browser and never sent anywhere: there is no server behind this page, no account and no analytics. Close the tab and everything is gone; download the results you want to keep.</p>
+<p class="note">Organisations that block CDNs can host Pyodide themselves and open this page with <code>?pyodide=https://their-host/pyodide/</code>. Developers get the same results, and the code checks, with <code>tooling/workbench.py</code> and <code>tooling/scan.py</code>.</p>
+</section>
+</main>
+<footer><div class="in">Child-Safe EdTech Framework (CSEF) v0.14.0, maintained by Kendir Studios with the EdTech community. Framework content CC BY 4.0 · code Apache 2.0.</div></footer>
+<script>
+(() => {
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const qp = new URLSearchParams(location.search);
+const PYODIDE = qp.get('pyodide') || document.body.dataset.pyodide;
+const docs = new Map();          // path in the work folder -> File or text
+const extra = {coc: null, events: null, catalogue: null, feed: []};
+let PY = null, loading = null, yamlText = '';
+
+function setEngine(msg) { $('#engine').textContent = msg; }
+async function engine() {
+  if (PY) return PY;
+  if (loading) return loading;
+  loading = (async () => {
+    setEngine('Loading the tools...');
+    const { loadPyodide } = await import(PYODIDE + 'pyodide.mjs');
+    const py = await loadPyodide({ indexURL: PYODIDE });
+    await py.loadPackage(['pyyaml', 'micropip']);
+    let docx = true;
+    try { await py.loadPackage(['lxml']); } catch (x) { docx = false; }
+    const b = await (await fetch('csef-bundle.json', {cache: 'no-cache'})).json();
+    for (const [path, text] of Object.entries(b.files)) { const full = '/csef/' + path;
+      py.FS.mkdirTree(full.slice(0, full.lastIndexOf('/'))); py.FS.writeFile(full, text); }
+    py.globals.set('WHEELS', [docx ? new URL('vendor/python_docx-1.1.2-py3-none-any.whl', location.href).href : '',
+                              new URL('vendor/pypdf-5.1.0-py3-none-any.whl', location.href).href].filter(Boolean));
+    try { await py.runPythonAsync('import micropip\nfor w in WHEELS:\n    await micropip.install(w, deps=False)'); }
+    catch (x) { console.warn('Word or PDF reading unavailable', x); }
+    await py.runPythonAsync('import sys, json\nsys.path.insert(0, "/csef/tooling")\nimport workbench');
+    PY = py; setEngine('Tools ready. Nothing leaves this page.');
+    return py;
+  })();
+  try { return await loading; } catch (x) { loading = null; setEngine('The tools could not load. Check the internet connection and reload the page.'); throw x; }
+}
+
+// ---------------------------------------------------------------- the form
+function readForm() {
+  const f = {};
+  for (const el of $$('[data-f]')) {
+    const k = el.dataset.f;
+    if (el.type === 'checkbox') { if (k === 'open_evidence') f[k] = el.checked; else { f[k] = f[k] || []; if (el.checked) f[k].push(el.value); } }
+    else if (el.type === 'radio') { if (el.checked) f[k] = Number(el.value); }
+    else f[k] = el.value;
+  }
+  return f;
+}
+function fillForm(f) {
+  for (const el of $$('[data-f]')) {
+    const k = el.dataset.f, v = f[k];
+    if (el.type === 'checkbox') el.checked = k === 'open_evidence' ? !!v : (v || []).includes(el.value);
+    else if (el.type === 'radio') el.checked = String(v) === el.value;
+    else if (v !== undefined && v !== null) el.value = v;
+  }
+}
+async function syncYaml() {
+  const py = await engine();
+  py.globals.set('Y', $('#yaml').value || yamlText); py.globals.set('F', JSON.stringify(readForm()));
+  yamlText = await py.runPythonAsync('workbench.form_to_manifest(Y, json.loads(F))');
+  $('#yaml').value = yamlText;
+  return yamlText;
+}
+async function yamlToForm(text) {
+  const py = await engine();
+  py.globals.set('Y', text);
+  fillForm(JSON.parse(await py.runPythonAsync('json.dumps(workbench.manifest_to_form(Y))')));
+  yamlText = text; $('#yaml').value = text;
+}
+$('#loadyaml').addEventListener('change', async e => { const f = e.target.files[0]; if (f) await yamlToForm(await f.text()); e.target.value = ''; });
+$('#fromyaml').addEventListener('click', () => yamlToForm($('#yaml').value));
+$('details.more').addEventListener('toggle', e => { if (e.target.open) syncYaml(); });
+$('#dlyaml').addEventListener('click', async () => download('csef.yaml', new Blob([await syncYaml()], {type: 'text/yaml'})));
+document.querySelector('[data-f=compliance_level][value="2"]').checked = true;
+
+// ---------------------------------------------------------------- files
+function fmtSize(n) { return n > 1e6 ? (n / 1e6).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1e3)) + ' kB'; }
+function renderFiles() {
+  const ul = $('#files'); ul.innerHTML = '';
+  for (const [path, f] of docs) {
+    const li = document.createElement('li');
+    li.innerHTML = `<span><code>${esc(path)}</code> <span class="note">${typeof f === 'string' ? fmtSize(f.length) : fmtSize(f.size)}</span></span><button type="button">Remove</button>`;
+    li.querySelector('button').addEventListener('click', () => { docs.delete(path); renderFiles(); });
+    li.querySelector('button').setAttribute('aria-label', 'Remove ' + path);
+    ul.appendChild(li);
+  }
+}
+function addFile(f, rel) {
+  let path = (rel || f.webkitRelativePath || f.name).replace(/^\/+/, '');
+  if (!rel && f.webkitRelativePath) path = path.split('/').slice(1).join('/') || f.name;   // drop the chosen folder's own name
+  else if (!rel) path = 'docs/' + f.name;
+  if (/(^|\/)csef\.ya?ml$/i.test(path) && !path.includes('/docs/')) { f.text().then(yamlToForm); return; }
+  docs.set(path, f);
+}
+$('#addfiles').addEventListener('change', e => { [...e.target.files].forEach(f => addFile(f)); e.target.value = ''; renderFiles(); });
+$('#addfolder').addEventListener('change', e => { [...e.target.files].forEach(f => addFile(f)); e.target.value = ''; renderFiles(); });
+const drop = $('#drop');
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+drop.addEventListener('drop', async e => {
+  e.preventDefault(); drop.classList.remove('over');
+  const walk = (entry, prefix) => new Promise(res => {
+    if (entry.isFile) entry.file(f => { addFile(f, prefix ? prefix + f.name : 'docs/' + f.name); res(); });
+    else entry.createReader().readEntries(async es => { for (const x of es) await walk(x, (prefix || '') + entry.name + '/'); res(); });
+  });
+  const items = [...e.dataTransfer.items].map(i => i.webkitGetAsEntry && i.webkitGetAsEntry()).filter(Boolean);
+  for (const it of items) await (it.isDirectory ? new Promise(res => it.createReader().readEntries(async es => { for (const x of es) await walk(x, ''); res(); })) : walk(it, ''));
+  renderFiles();
+});
+function single(id, key, nameId) { $(id).addEventListener('change', e => { extra[key] = e.target.files[0] || null; $(nameId).textContent = extra[key] ? extra[key].name : ''; tick(key === 'coc' ? 'coc' : 'events'); }); }
+single('#cocfile', 'coc', '#cocname'); single('#evfile', 'events', '#evname'); single('#catfile', 'catalogue', '#catname');
+$('#feedfile').addEventListener('change', e => { extra.feed = [...e.target.files]; $('#feedname').textContent = extra.feed.map(f => f.name).join(', '); tick('feedcheck'); });
+function tick(t) { const c = document.querySelector(`.tool[data-t=${t}] input[type=checkbox]`); c.checked = true; paint(); }
+function paint() { $$('.tool').forEach(el => el.classList.toggle('on', el.querySelector('input').checked)); }
+$$('.tool input').forEach(i => i.addEventListener('change', paint)); paint();
+
+// ---------------------------------------------------------------- example
+$('#example').addEventListener('click', async () => {
+  $('#example').disabled = true;
+  try {
+    const ex = await (await fetch('example.json', {cache: 'no-cache'})).json();
+    docs.clear();
+    for (const [path, text] of Object.entries(ex)) {
+      if (path === 'csef.yaml') continue;
+      if (path.startsWith('coc/')) { extra.coc = new File([text], path.split('/').pop()); $('#cocname').textContent = extra.coc.name + ' (example)'; continue; }
+      if (path.startsWith('data/')) { extra.events = new File([text], path.split('/').pop()); $('#evname').textContent = extra.events.name + ' (example, fictional data)'; continue; }
+      docs.set(path, text);
+    }
+    renderFiles();
+    ['describe', 'compass', 'precheck', 'package', 'coc', 'events'].forEach(t => { document.querySelector(`.tool[data-t=${t}] input`).checked = true; });
+    $('#buildfeed').checked = true; paint();
+    await yamlToForm(ex['csef.yaml']);
+    status('The example game is loaded: Garden of Numbers, a fictional maths game. Press "Run the checks".', 'ok');
+  } catch (x) { console.error(x); status('The example could not load.', 'err'); }
+  finally { $('#example').disabled = false; }
+});
+
+// ---------------------------------------------------------------- run
+function status(msg, kind) { const s = $('#status'); s.hidden = false; s.className = 'status' + (kind ? ' ' + kind : ''); s.textContent = msg; }
+async function bytes(f) { return typeof f === 'string' ? new TextEncoder().encode(f) : new Uint8Array(await f.arrayBuffer()); }
+function put(py, path, data) { py.FS.mkdirTree(path.slice(0, path.lastIndexOf('/'))); py.FS.writeFile(path, data); }
+function download(name, blob) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
+const TYPES = {html: 'text/html', zip: 'application/zip', json: 'application/json', md: 'text/markdown', docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', tsv: 'text/tab-separated-values', xml: 'application/xml'};
+$('#run').addEventListener('click', async () => {
+  const tools = $$('.tool input[type=checkbox]').filter(i => i.checked && i.value).map(i => i.value);
+  if ($('#buildfeed').checked && tools.includes('events')) tools.push('feed');
+  if (!tools.length) { status('Pick at least one check.', 'err'); return; }
+  $('#run').disabled = true; $('#results').innerHTML = ''; $('#gaps').hidden = true;
+  try {
+    status('Getting the tools ready...');
+    const py = await engine();
+    const y = await syncYaml();
+    py.globals.set('Y', y);
+    const gaps = JSON.parse(await py.runPythonAsync('json.dumps(workbench.check_form(Y))'));
+    if (gaps.length && tools.some(t => ['describe', 'precheck', 'package'].includes(t))) {
+      $('#gaps').innerHTML = gaps.map(g => `<li>${esc(g)}</li>`).join(''); $('#gaps').hidden = false;
+    }
+    status('Reading your files...');
+    await py.runPythonAsync('import shutil\nfor d in ("/work", "/in", "/out"):\n    shutil.rmtree(d, ignore_errors=True)');
+    put(py, '/work/csef.yaml', new TextEncoder().encode(y));
+    for (const [path, f] of docs) put(py, '/work/' + path, await bytes(f));
+    const opts = {};
+    if (extra.coc) { put(py, '/in/coc/' + extra.coc.name, await bytes(extra.coc)); opts.coc = '/in/coc/' + extra.coc.name; }
+    if (extra.events) { put(py, '/in/events/' + extra.events.name, await bytes(extra.events)); opts.events = '/in/events/' + extra.events.name; }
+    if (extra.catalogue) { put(py, '/in/catalogue/' + extra.catalogue.name, await bytes(extra.catalogue)); opts.catalogue = '/in/catalogue/' + extra.catalogue.name; }
+    if (extra.feed.length === 1 && /\.zip$/i.test(extra.feed[0].name)) { put(py, '/in/feed.zip', await bytes(extra.feed[0])); opts.feed = '/in/feed.zip'; }
+    else if (extra.feed.length) { for (const f of extra.feed) put(py, '/in/feed/' + f.name, await bytes(f)); opts.feed = '/in/feed'; }
+    status('Running the checks. This can take a minute; the page may pause.');
+    await new Promise(r => setTimeout(r, 60));
+    py.globals.set('JOB', JSON.stringify({tools, opts}));
+    const res = JSON.parse(await py.runPythonAsync('j = json.loads(JOB)\njson.dumps(workbench.run("/work", j["tools"], "/out", j["opts"]))'));
+    showResults(py, res);
+    const okN = res.results.filter(r => r.ok).length;
+    status(`Done: ${okN} of ${res.results.length} checks ran. Open the reports below, or download everything.`, okN ? 'ok' : 'err');
+  } catch (x) { console.error(x); status('Something went wrong: ' + (x.message || x).toString().split('\n').slice(-2).join(' '), 'err'); }
+  finally { $('#run').disabled = false; }
+});
+function cleanLog(log) {
+  return (log || '').split('\n').filter(l => l.trim() && !/^\s*(note|exported|written)/i.test(l)).slice(-2).join(' ').replace(/\/out\/\S+/g, '').replace(/\s*\|\s*$/, '').slice(0, 300);
+}
+function showResults(py, res) {
+  const box = $('#results'); box.innerHTML = '';
+  for (const r of res.results) {
+    const div = document.createElement('div'); div.className = 'res';
+    const pill = r.ok ? '<span class="pill g">Done</span>' : (r.code === 2 ? '<span class="pill y">Needs input</span>' : '<span class="pill r">Problem</span>');
+    const links = r.files.filter(f => ['html', 'zip', 'docx', 'md', 'json', 'tsv', 'xml'].includes(f.kind) && !/\/out\/feed\/feed\//.test(f.path) && !/label-package-[^/]+\/./.test(f.path))
+      .map(f => {
+        const url = URL.createObjectURL(new Blob([py.FS.readFile(f.path)], {type: TYPES[f.kind] || 'application/octet-stream'}));
+        return f.kind === 'html' ? `<a class="btn" href="${url}" target="_blank" rel="noopener"><span class="fmt">HTML</span>Open ${esc(f.name.replace(/\.html$/, '').replace(/-/g, ' '))}</a>`
+                                 : `<a class="btn" href="${url}" download="${esc(f.name)}"><span class="fmt">${esc(f.kind.toUpperCase())}</span>${esc(f.name)}</a>`;
+      }).join('');
+    div.innerHTML = `<div class="res-h"><b>${esc(r.title)}</b>${pill}</div><p>${esc(r.note || r.summary || cleanLog(r.log))}</p>` +
+      (links ? `<div class="btns">${links}</div>` : '') +
+      (r.code === 3 ? `<details><summary>Details</summary><div class="log">${esc(r.log)}</div></details>` : '');
+    box.appendChild(div);
+  }
+  const all = document.createElement('div'); all.className = 'btns';
+  const zipUrl = URL.createObjectURL(new Blob([py.FS.readFile(res.zip)], {type: 'application/zip'}));
+  all.innerHTML = `<a class="btn p" href="${zipUrl}" download="csef-results.zip">Download everything (zip)</a><span class="note">The zip includes your csef.yaml, so you can come back and continue.</span>`;
+  box.appendChild(all);
+}
+setTimeout(() => engine().catch(() => {}), 400);
+})();
+</script>
+</body></html>

@@ -608,6 +608,59 @@ rules:
     csef_rule: CORE-DAT-15
     tier: 1
     sources: *id006
+- id: core-dat-20-1
+  message: 'CORE-DAT-20 (MUST, level 1): Player codes are random, scoped to one product and not derived from identifiers. Generate player codes with a secure random generator, store the link to accounts
+    in a separate table, rotate codes each school year, and set cross_product_linking to false.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)((sha1|sha256|sha512|md5|hashlib\.\w+|digest|hmac|btoa|base64\w*|Hash128\.Compute|ComputeHash)\s*\(|createHash\([^)]*\)\s*\.update\s*\()[^;\n]{0,80}\b(e_?mail|user_?name|full_?name|first_?name|last_?name|account_?id|student_?(id|number)|user\.id|userId)\b
+  metadata:
+    csef_rule: CORE-DAT-20
+    tier: 1
+    sources:
+    - GDPR
+    - EDPB-PSEUDO
+    - CJEU-SRB
+- id: core-dat-21-1
+  message: 'CORE-DAT-21 (MUST, level 1): No fingerprinting attributes in telemetry. Replace device attributes with one device class computed on the device, and remove advertising and unique device ids from
+    events.'
+  severity: WARNING
+  languages:
+  - generic
+  pattern-regex: (?i)\b(track|logEvent|log_event|trackEvent|capture|sendEvent|analytics\.\w+|Log)\s*\([^;\n]{0,200}(navigator\.userAgent|userAgent|screen\.(width|height|availWidth|availHeight)|devicePixelRatio|hardwareConcurrency|deviceMemory|deviceUniqueIdentifier|advertisingId|idfa|gaid)
+  metadata:
+    csef_rule: CORE-DAT-21
+    tier: 1
+    sources: &id007
+    - EPRIV
+    - EDPB-ART53
+    - GDPR
+- id: core-dat-21-2
+  message: 'CORE-DAT-21 (MUST, level 1): No fingerprinting attributes in telemetry. Replace device attributes with one device class computed on the device, and remove advertising and unique device ids from
+    events.'
+  severity: ERROR
+  languages:
+  - generic
+  pattern-regex: \b(AdvertisingIdClient|getAdvertisingIdInfo|ASIdentifierManager|advertisingIdentifier|SystemInfo\.deviceUniqueIdentifier|Settings\.Secure\.ANDROID_ID)\b
+  metadata:
+    csef_rule: CORE-DAT-21
+    tier: 1
+    sources: *id007
+- id: core-dat-23-1
+  message: 'CORE-DAT-23 (SHOULD, level 2): No engagement targets for children. Replace engagement KPIs in dashboards, experiments and OKRs with the csef-evidence-0.1 features.'
+  severity: INFO
+  languages:
+  - generic
+  pattern-regex: (?i)\b(d1|d7|d30|day_?1|day_?7|day_?30)_?retention\b|\bretention_?(rate|target|goal|kpi)\b|\b(dau|mau|wau)\b|\bstickiness\b|\bstreak_?length_?(goal|target)\b|\bsession_?(length|time)_?(goal|target|kpi)\b
+  metadata:
+    csef_rule: CORE-DAT-23
+    tier: 2
+    sources:
+    - KIDS
+    - DFA
+    - R-DECI1999
+    - R-HANUS2015
 - id: core-int-01-2
   message: 'CORE-INT-01 (SHOULD, level 3): Country rules are configuration, not code. Move country-specific values into one versioned file per country, reference it as `country_config` in csef.yaml, and
     default to the strictest value.'
@@ -643,7 +696,7 @@ rules:
   metadata:
     csef_rule: CORE-SAF-02
     tier: 2
-    sources: &id007
+    sources: &id008
     - KIDS
     - DSA-G28
     - DFA
@@ -657,7 +710,7 @@ rules:
   metadata:
     csef_rule: CORE-SAF-02
     tier: 2
-    sources: *id007
+    sources: *id008
 - id: core-saf-03-1
   message: 'CORE-SAF-03 (MUST, level 2): Natural stopping points, no autoplay or endless feeds. Remove autoplay; end each activity with a clear ''done'' screen and an explicit choice to continue.'
   severity: WARNING

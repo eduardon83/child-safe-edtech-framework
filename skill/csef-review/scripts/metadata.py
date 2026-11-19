@@ -185,6 +185,10 @@ def build_sgmdf(m: dict, scan_summary: dict | None = None) -> tuple[dict, list[s
 
     quality = [{"qualityAspect": _s(q.get("aspect")), "qualityAspectType": _s(q.get("type"))}
                for q in _list(md.get("quality"))]
+    oe = ((m.get("data_collection") or {}).get("open_evidence") or {})
+    if oe.get("url"):
+        quality.append({"qualityAspect": f"Open evidence feed from play (csef-evidence-0.1, group figures only): {oe['url']}",
+                        "qualityAspectType": "evaluation"})
     if scan_summary:
         quality.append({"qualityAspect": f"CSEF {scan_summary['version']} scan at level {scan_summary['level']} on "
                                          f"{scan_summary['date']}: {scan_summary['blocking']} blocking findings, "

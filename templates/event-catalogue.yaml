@@ -1,0 +1,85 @@
+# CSEF event catalogue. Copy to your product repository (for example docs/event-catalogue.yaml) and link it
+# from csef.yaml under data_collection.event_catalogue.
+#
+# Every event the product logs, with its fields and its purpose. Nothing that is not here may be logged
+# (CORE-DAT-19). tooling/evidence.py check-events compares an event file with this catalogue, and the scanner
+# compares event names in code with it.
+#
+# purpose:       operation | improvement | evaluation | research
+#                (research events are logged only in a study build: CORE-DAT-25)
+# evidence_role: optional. Lets evidence.py build-feed compute the open evidence features
+#                (see framework/data/evidence-ontology.yaml for the roles).
+# fields:        event_data keys. type: integer | number | boolean | enum | id. Never free text.
+
+catalogue: csef-event-catalogue-0.1
+game_id: my-game
+log_version: 1
+event_standard: ogd-0.1
+
+events:
+  - name: session_start
+    purpose: operation
+    evidence_role: session_start
+    fields:
+      device: {type: enum, values: [tablet, laptop, desktop, phone, other]}
+
+  - name: unit_start
+    purpose: improvement
+    evidence_role: unit_start
+    fields:
+      unit: {type: id}
+
+  - name: unit_complete
+    purpose: improvement
+    evidence_role: unit_complete
+    fields:
+      unit: {type: id}
+      attempts: {type: integer}
+
+  - name: hint_used
+    purpose: improvement
+    evidence_role: help
+    fields:
+      unit: {type: id}
+
+  - name: setting_changed
+    purpose: operation
+    evidence_role: setting
+    fields:
+      setting: {type: enum, values: [captions, text_size, reduced_motion, high_contrast]}
+      "on": {type: boolean}
+
+  - name: mode_set
+    purpose: operation
+    evidence_role: mode
+    fields:
+      mode: {type: enum, values: [solo, team, teacher_led]}
+
+  - name: check_score
+    purpose: evaluation
+    evidence_role: assessment
+    fields:
+      phase: {type: enum, values: [pre, post]}
+      score: {type: integer}
+      max: {type: integer}
+
+  - name: session_end
+    purpose: operation
+    evidence_role: session_end
+    fields:
+      natural_stop: {type: boolean}
+
+# Events made by detectors (event_source is the detector name, never GAME).
+detectors:
+  - name: stuck
+    source: StuckDetector
+    purpose: improvement
+    evidence_role: stuck
+    level: population          # population | teacher_view (teacher_view needs the assessment rules)
+    meaning: "Three failed attempts and a help request in the same unit within five minutes."
+    fields:
+      unit: {type: id}
+
+# Keys allowed in game_state and player_metadata.
+game_state: [unit, score, mode]
+player_metadata: [age_band, captions, text_size, reduced_motion]

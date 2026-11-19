@@ -124,13 +124,13 @@ Profile B: game-based applications and software. Read together with the core rul
 
 **MUST** · Level 1 (Legal baseline) · Age bands: all · Detection: manual · Effort: medium
 
-**Requirement.** Learning data is only shared for research under a data sharing agreement, with legal basis, ethics approval and pseudonymisation, and never as a by-product of normal operation.
+**Requirement.** Learning data is only shared for research under a data sharing agreement, with legal basis, ethics approval and pseudonymisation, and never as a by-product of normal operation. Research data come from a study build (CORE-DAT-25). Extracts use relative time (seconds since session start), drop the time zone, and never include the key between player codes and accounts: the controller keeps it.
 
-**Why.** GDPR Art. 5(1)(b), 6 and 89.
+**Why.** GDPR Art. 5(1)(b), 6 and 89. A recipient without the key and without means reasonably likely to re-identify holds data that may not be personal for it, while they stay personal for the controller (CJEU, EDPS v SRB). CSEF still treats extracts about children as personal data.
 
-**How to improve.** Create a research export pipeline that pseudonymises and logs every extract.
+**How to improve.** Create a research export pipeline that pseudonymises, uses relative time, keeps the key at home and logs every extract.
 
-**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [CJEU-SRB](https://curia.europa.eu/juris/liste.jsf?num=C-413/23%20P), [EDPB-PSEUDO](https://edpb.europa.eu/news/news/2025/edpb-adopts-pseudonymisation-guidelines-and-paves-way-improve-cooperation_en)
 
 ### B-EVL-01: High-risk path for systems that evaluate or place learners
 

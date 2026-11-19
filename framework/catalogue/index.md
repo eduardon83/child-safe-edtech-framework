@@ -2,12 +2,12 @@
 
 # Rule catalogue
 
-CSEF v0.13.0: 124 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
+CSEF v0.14.0: 131 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Best practice.
 
 | Level | MUST | SHOULD |
 |---|---|---|
-| 1 Legal baseline | 41 | 2 |
-| 2 Forward-compliant | 40 | 11 |
+| 1 Legal baseline | 46 | 2 |
+| 2 Forward-compliant | 41 | 12 |
 | 3 Best practice | 0 | 30 |
 
 | ID | Title | Profiles | Strength | Level | Age bands |
@@ -105,6 +105,13 @@ CSEF v0.13.0: 124 rules. Level 1 = Legal baseline, 2 = Forward-compliant, 3 = Be
 | CORE-DAT-16 | Who answers personal questions fits the child's age | core | MUST | 2 | all |
 | CORE-DAT-17 | Teachers see answers about children's lives only as class totals | core | MUST | 2 | all |
 | CORE-DAT-18 | Answers stay with their purpose and under the family's control | core | MUST | 1 | all |
+| CORE-DAT-19 | Every logged event is declared in an event catalogue | core | MUST | 1 | all |
+| CORE-DAT-20 | Player codes are random, scoped to one product and not derived from identifiers | core | MUST | 1 | all |
+| CORE-DAT-21 | No fingerprinting attributes in telemetry | core | MUST | 1 | all |
+| CORE-DAT-22 | Inferences about a child stay at population level by default | core | MUST | 2 | all |
+| CORE-DAT-23 | No engagement targets for children | core | SHOULD | 2 | all |
+| CORE-DAT-24 | Open releases of learning data hold group figures only | core | MUST | 1 | all |
+| CORE-DAT-25 | Research logging runs only in a study build | core | MUST | 1 | all |
 | CORE-DES-01 | Motion and sound can be turned down or off | core | SHOULD | 2 | all |
 | CORE-DES-02 | Motion shows the content, not decoration | core | SHOULD | 3 | all |
 | CORE-DES-03 | Calm screens, especially under 8 | core | SHOULD | 3 | B1 (3-5), B2 (6-9) |

@@ -479,6 +479,57 @@ sources:
     url: "https://ec.europa.eu/justice/article-29/documentation/opinion-recommendation/files/2014/wp216_en.pdf"
     verified: 2026-11-14
 
+  # ------------------------------------------------------------------ Learning data (v0.14)
+  # Event data, research use and open evidence. See framework/08-learning-data.md.
+
+  - id: EDPB-PSEUDO
+    title: "EDPB Guidelines 01/2025 on Pseudonymisation"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 16 Jan 2025 for public consultation (closed 28 Feb 2025). Pseudonymised data remain personal data for whoever can attribute them with additional information kept separately; the pseudonymisation domain decides who that is"
+    url: "https://edpb.europa.eu/news/news/2025/edpb-adopts-pseudonymisation-guidelines-and-paves-way-improve-cooperation_en"
+    verified: 2026-11-19
+
+  - id: CJEU-SRB
+    title: "CJEU, C-413/23 P, EDPS v Single Resolution Board, 4 Sep 2025 (EU:C:2025:645)"
+    type: law
+    jurisdiction: EU
+    status: "Case law. Pseudonymised data stay personal for the controller that holds the key; for a recipient with no means reasonably likely to re-identify, they may not be personal data. The controller must name such recipients when it collects the data"
+    url: "https://curia.europa.eu/juris/liste.jsf?num=C-413/23%20P"
+    verified: 2026-11-19
+
+  - id: EDPB-ART53
+    title: "EDPB Guidelines 2/2023 on Technical Scope of Art. 5(3) of ePrivacy Directive, version 2.0"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 7 Oct 2024 after public consultation. Art. 5(3) covers any storage of or access to information on the device, not only cookies: local storage, tracking pixels, URL tracking, unique identifiers and fingerprinting"
+    url: "https://www.edpb.europa.eu/system/files/2024-10/edpb_guidelines_202302_technical_scope_art_53_eprivacydirective_v2_en_0.pdf"
+    verified: 2026-11-19
+
+  - id: OMNIBUS-DATA
+    title: "Digital Omnibus Regulation proposal, COM(2025) 837, procedure 2025/0360(COD)"
+    type: proposal
+    jurisdiction: EU
+    status: "Proposed 19 Nov 2025. Would make the definition of personal data relative to the holder (Art. 4(1)) and move device-storage consent into a new GDPR Art. 88a with exemptions for aggregated audience measurement. EDPB-EDPS Joint Opinion 2/2026 (10 Feb 2026) calls the definition change a red line. Data part not yet in trilogue as of Oct 2026. Watched; CSEF relies on neither change"
+    url: "https://www.europarl.europa.eu/legislative-train/theme-a-new-plan-for-europe-s-sustainable-prosperity-and-competitiveness/file-digital-package"
+    verified: 2026-11-19
+
+  - id: R-OGD2024
+    title: "Gagnon, D. J., Swanson, L. and Harpstead, E. (2024). Open Game Data: Defining a Pipeline and Standards for Educational Data Mining and Learning Analytics with Video Game Data. IEEE Conference on Games (CoG), pp. 1-8. doi:10.1109/CoG60054.2024.10645573"
+    type: literature
+    jurisdiction: international
+    status: "Peer-reviewed. Pipeline (logger, detectors, player and population features) and event and feature data standards v0.1; 21 games log with it, 2 to 10 million events a day, monthly public releases. Basis of the CSEF event profile and evidence feed"
+    url: "https://par.nsf.gov/servlets/purl/10593375"
+    verified: 2026-11-19
+
+  - id: R-OGD-EDS
+    title: "Open Game Data (2025). Case study: an event data standard for learning games (Harpstead, Swanson and Younger; NSF grant 2243668)"
+    type: literature
+    jurisdiction: international
+    status: "Project page. Shared event schema blending the PBS KIDS approach, xAPI serious-game profiles and CMU DataShop; anonymous player codes; modular and extensible; draft schema to go to standards bodies"
+    url: "https://opengamedata.io/case-studies/event-data-standard"
+    verified: 2026-11-19
+
   # ------------------------------------------------------------------ Literacy Compass (v0.9)
   # Competence frameworks, quality frameworks and policy the Literacy Compass maps to.
 

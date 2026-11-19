@@ -1,0 +1,93 @@
+# csef-evidence-0.1: open evidence features for learning games
+# An OGD "ontology": a small set of population features that help teachers choose and plan, published only
+# for groups large enough that no child or class can be picked out. Built by tooling/evidence.py build-feed
+# from an OGD event file and an event catalogue; checked by evidence.py check-feed, the Workbench and the
+# Play to Learn Toolkit. Read with framework/08-learning-data.md.
+#
+# Licence: CC BY 4.0
+
+ontology: csef-evidence-0.1
+profile: csef-ogd-0.1
+
+thresholds:
+  min_players: 10          # players behind every published figure
+  min_classes: 3           # classes (instance ids) behind every published figure
+  round_counts_to: 5       # player and session counts are rounded to this
+  time_precision: month    # dates in META.json and README.md
+
+# Event roles an event catalogue can give its events (`evidence_role`). build-feed reads only these.
+roles:
+  session_start: "A session begins. event_data may carry device (one of the profile's device classes)."
+  session_end: "A session ends. event_data.natural_stop (boolean) says if it ended at a natural stopping point."
+  unit_start: "A unit (level, mission, chapter) begins. game_state.unit or event_data.unit names it."
+  unit_complete: "The unit is finished."
+  help: "The player opens a hint or help."
+  stuck: "A detector marks the player as stuck in the unit (event_source is the detector, never GAME)."
+  setting: "An accessibility setting changes. event_data.setting and event_data.on."
+  assessment: "A short check. event_data.phase (pre or post), score and max."
+  mode: "How the session is played. event_data.mode or game_state.mode: solo, team or teacher_led."
+
+features:
+  - id: EV-TIME
+    columns: [ev_time_p25_min, ev_time_p50_min, ev_time_p75_min]
+    per: unit
+    meaning: "Active minutes from start to finish of the unit, among players who finished: 25th, 50th and 75th percentile. Gaps over 60 seconds count as 60."
+    toolkit: "Lesson time and number of lessons (Pedagogical Fit)."
+  - id: EV-DONE
+    columns: [ev_done_share]
+    per: unit
+    meaning: "Share of players who started the unit and finished it."
+    toolkit: "Difficulty curve; Educator Capacity."
+  - id: EV-STUCK
+    columns: [ev_stuck_share]
+    per: unit
+    meaning: "Share of players a detector marked as stuck in the unit."
+    toolkit: "Where a teacher should step in (lesson plan tips, Educator Capacity)."
+  - id: EV-HELP
+    columns: [ev_help_share]
+    per: unit
+    meaning: "Share of players who used a hint or help in the unit."
+    toolkit: "Support needed (Educator Capacity)."
+  - id: EV-GAIN
+    columns: [ev_gain_mean, ev_gain_n]
+    per: all
+    meaning: "Mean change between the pre and post check (score / max), for players with both. The instrument is named in META.json."
+    toolkit: "Evidence item V33 for Learning Purpose and Skill Development; lower weight than a peer-reviewed study unless checked."
+  - id: EV-ACCESS
+    columns_prefix: ev_access_
+    per: all
+    meaning: "Share of players who turned on each declared accessibility setting."
+    toolkit: "Universal Design for Learning (PF6)."
+  - id: EV-STOP
+    columns: [ev_stop_share]
+    per: all
+    meaning: "Share of sessions that ended at a natural stopping point."
+    toolkit: "Safety and best practices (S2): no pressure to keep playing."
+  - id: EV-MODE
+    columns_prefix: ev_mode_
+    per: all
+    meaning: "Share of sessions played solo, in teams or teacher-led."
+    toolkit: "Play mode (Pedagogical Fit)."
+  - id: EV-DEVICE
+    columns_prefix: ev_device_
+    per: all
+    meaning: "Share of sessions per device class."
+    toolkit: "Technical fit."
+
+# Context columns on every row.
+context_columns: [population_id, unit_id, players, classes]
+
+# Never in a feed. check-feed refuses a feed with any of these words in a column or META key.
+forbidden_metrics:
+  - retention
+  - dau
+  - mau
+  - wau
+  - stickiness
+  - streak
+  - revenue
+  - arpu
+  - purchase
+  - churn
+  - session_count_per_player
+  - time_spent_total

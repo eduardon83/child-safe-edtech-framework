@@ -414,17 +414,28 @@ def validate_serious_games(std):
 
 def validate_site():
     """Every local link on the website points to a file in docs/ (example reports come from tooling/examples.py)."""
-    for name, base in (("landing.template.html", ROOT / "docs"), ("submit.template.html", ROOT / "docs" / "submit")):
+    for name, base in (("landing.template.html", ROOT / "docs"), ("submit.template.html", ROOT / "docs" / "submit"),
+                       ("workbench.template.html", ROOT / "docs" / "workbench")):
         text = (ROOT / "tooling" / name).read_text(encoding="utf-8")
         for href in re.findall(r'href="([^"]+)"', text):
-            if re.match(r"^(https?:|mailto:|#|\{)", href):
+            if re.match(r"^(https?:|mailto:|#|\{|\$\{)", href):
                 continue
             target = (base / href.split("#", 1)[0]).resolve()
             if href.endswith("/") or target.is_dir():
                 target = target / "index.html"
-            generated = target in (ROOT / "docs" / "index.html", ROOT / "docs" / "submit" / "index.html")
+            generated = target in (ROOT / "docs" / "index.html", ROOT / "docs" / "submit" / "index.html",
+                                   ROOT / "docs" / "workbench" / "index.html", ROOT / "docs" / "learning-data" / "index.html")
             if not target.exists() and not generated:
                 err(f"{name}: link {href} has no file in docs/ (run tooling/examples.py for example reports)")
+
+
+WORKBENCH_WHEELS = ["python_docx-1.1.2-py3-none-any.whl", "pypdf-5.1.0-py3-none-any.whl"]
+
+
+def validate_workbench():
+    for w in WORKBENCH_WHEELS:
+        if not (ROOT / "docs" / "workbench" / "vendor" / w).exists():
+            err(f"docs/workbench/vendor/{w} is missing (the Workbench reads Word and PDF with it)")
 
 
 def load_and_validate():
@@ -461,6 +472,7 @@ def load_and_validate():
     validate_compass(std, packs_for_compass())
     validate_serious_games(std)
     validate_site()
+    validate_workbench()
 
     pack_rule_ids = {r["id"] for pf in (ROOT / "packs").glob("*.yaml") for r in scan.load_yaml(pf).get("rules", []) or []}
     guide = (ROOT / "skill" / "csef-review" / "references" / "review-guide.md").read_text(encoding="utf-8")
@@ -690,6 +702,18 @@ def generate(std, packs) -> dict[Path, str]:
                 .replace("{logo}", brand.logo("lockup", 44)))
     files[ROOT / "docs" / "index.html"] = site_page("landing.template.html", "favicon.svg")
     files[ROOT / "docs" / "submit" / "index.html"] = site_page("submit.template.html", "../favicon.svg")
+    # Guides published as pages of the website (Markdown in framework/ is the source).
+    import mdpage
+    files[ROOT / "docs" / "learning-data" / "index.html"] = mdpage.page(
+        (ROOT / "framework" / "08-learning-data.md").read_text(encoding="utf-8"), version=std.version,
+        source_path="framework/08-learning-data.md",
+        description="Collect learning data from games safely, and publish only group figures: the CSEF Learning Data guide.",
+        images={"data/tiers.svg": "tiers.svg"})
+    import workbench
+    files[ROOT / "docs" / "workbench" / "index.html"] = site_page("workbench.template.html", "../favicon.svg")
+    files[ROOT / "docs" / "workbench" / "csef-bundle.json"] = workbench.web_bundle(ROOT)
+    files[ROOT / "docs" / "workbench" / "example.json"] = workbench.example_bundle(ROOT)
+    files[ROOT / "docs" / "learning-data" / "tiers.svg"] = (ROOT / "framework" / "data" / "tiers.svg").read_text(encoding="utf-8")
 
     import compass as cmp
     s2 = scan.load_standard(ROOT)
@@ -713,11 +737,15 @@ def generate(std, packs) -> dict[Path, str]:
         files[sk / "brand" / "svg" / name] = (ROOT / "brand" / "svg" / name).read_text(encoding="utf-8")
     files[sk / "brand" / "web" / "favicon.svg"] = (ROOT / "brand" / "web" / "favicon.svg").read_text(encoding="utf-8")
     files[sk / "framework" / "serious-games" / "criteria.yaml"] = (ROOT / "framework" / "serious-games" / "criteria.yaml").read_text(encoding="utf-8")
-    for t in ("export.py", "comms.py", "coc.py", "policy.py", "brand.py", "compass.py", "precheck.py", "metadata.py"):
+    for name in ("profile.yaml", "evidence-ontology.yaml"):
+        files[sk / "framework" / "data" / name] = (ROOT / "framework" / "data" / name).read_text(encoding="utf-8")
+    for t in ("export.py", "comms.py", "coc.py", "policy.py", "brand.py", "compass.py", "precheck.py", "metadata.py",
+              "evidence.py", "workbench.py"):
         files[sk / "scripts" / t] = (ROOT / "tooling" / t).read_text(encoding="utf-8")
     for t in ("coc-topics.yaml", "questionnaire.yaml"):
         files[sk / "framework" / t] = (ROOT / "framework" / t).read_text(encoding="utf-8")
-    for t in ("csef.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md", "survey-register.md", "bullying-procedure.md"):
+    for t in ("csef.yaml", "dpia-starter.md", "ai-risk-file.md", "waiver.md", "agent-instructions.md", "survey-register.md", "bullying-procedure.md",
+              "event-catalogue.yaml"):
         files[sk / "templates" / t] = (ROOT / "templates" / t).read_text(encoding="utf-8")
     return files
 
