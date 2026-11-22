@@ -109,6 +109,7 @@ rules:
     tier: 1
     sources:
     - AIA
+    - AIA-GL-PROHIB
     - GDPR
 - id: b-ugc-01-1
   message: 'B-UGC-01 (MUST, level 2): User-generated content is moderated and visible to the teacher. Add teacher review queues, EXIF stripping on upload, and keep galleries class-private.'
@@ -229,6 +230,7 @@ rules:
     tier: 1
     sources:
     - AIA
+    - AIA-GL-PROHIB
 - id: core-ai-06-1
   message: 'CORE-AI-06 (MUST, level 2): No AI persona that simulates a relationship. Rewrite the system prompt persona; add tests that reject outputs claiming feelings or friendship.'
   severity: ERROR
@@ -296,6 +298,7 @@ rules:
     - GDPR
     - AIA
     - AIA-OMNIBUS
+    - AIA-GL-ART50
     - VAW-DIR
     - CB-AP
 - id: core-cht-12-1

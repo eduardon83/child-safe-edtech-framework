@@ -177,7 +177,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Remove emotion inference. Use explicit signals (a help button, a self-report mood picker).
 
-**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
+**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-GL-PROHIB](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-prohibited-artificial-intelligence-ai-practices-defined-ai-act)
 
 ### CORE-AI-02: No manipulative AI exploiting age
 
@@ -189,19 +189,19 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Review prompts and reward logic for persuasion targets that serve engagement over learning; document the review.
 
-**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
+**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-GL-PROHIB](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-prohibited-artificial-intelligence-ai-practices-defined-ai-act)
 
 ### CORE-AI-03: AI interaction and AI-generated content are disclosed
 
 **MUST** · Level 1 (Legal baseline) · Age bands: all · Features: ai_generative · Detection: mixed · Effort: low
 
-**Requirement.** Children (and teachers) are told, in age-appropriate form, when they interact with AI and when content is AI-generated. Generated media is marked.
+**Requirement.** Children (and teachers) are told, in age-appropriate form, when they interact with AI, from the first interaction and in a way that is clear and accessible. This includes chatbots, AI agents and AI avatars or characters. Generated audio, images, video and text carry a machine-readable mark. AI-made media that looks real (deepfakes) has a visible label at first view; in a story or game, the label does not have to break the experience.
 
-**Why.** AI Act Art. 50, applicable from 2 Aug 2026.
+**Why.** AI Act Art. 50, applicable from 2 Aug 2026. The Commission's Art. 50 guidelines (20 Jul 2026) name chatbots, agents and avatars, and read the "obvious" exception narrowly; for children, assume it is never obvious. Systems already on the market before 2 Aug 2026 must add machine-readable marks by 2 Dec 2026. The Code of Practice on Transparency of AI-generated Content, assessed as adequate by the Commission and the AI Board, is a voluntary way to show compliance.
 
-**How to improve.** Add a persistent 'AI' label on AI responses and metadata marking on generated images and audio.
+**How to improve.** Add a persistent 'AI' label on AI responses and on AI characters from the first message; add machine-readable marks (for example C2PA or watermarks) to generated images, audio and video; label realistic AI media in the interface; consider signing the Code of Practice.
 
-**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
+**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-GL-ART50](https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems), [AIA-COP-CONTENT](https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content)
 
 ### CORE-AI-04: AI inventory and no training on learners' data by default
 
@@ -249,7 +249,7 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **How to improve.** Make automated results provisional until a teacher confirms; show the reasons.
 
-**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus)
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai)
 
 ### CORE-AI-08: Conversation memory is off by default
 
@@ -305,11 +305,11 @@ Rules that apply to every product used by minors, whatever its profile.
 
 **Requirement.** Generative features cannot make images, video or voices of real, identifiable people, other children above all. In practice: (1) no photo, video or voice recording of a person goes into generation, and there is no face swap, voice cloning or editing of photos of people; (2) prompts that name someone on the class list, or another real person, are refused, checked against the roster inside the product; (3) uploaded images are checked for faces and refused for generation, without identifying anyone; (4) generated media is labelled as made by AI and carries provenance data; and (5) a child can report "this is about me", and that report is handled first.
 
-**Why.** A classmate's face or voice is personal data, and nobody in the class can consent for them (GDPR Art. 5 and 6; CORE-DAT-14). The EU action plan against cyberbullying names deepfake abuse. Directive (EU) 2024/1385 requires Member States to make sexual deepfakes a crime, and the AI Omnibus adds a ban on AI systems that generate non-consensual intimate images. Labels follow AI Act Art. 50. Blocking real people at the input is far more reliable than filtering the output.
+**Why.** A classmate's face or voice is personal data, and nobody in the class can consent for them (GDPR Art. 5 and 6; CORE-DAT-14). The EU action plan against cyberbullying names deepfake abuse. Directive (EU) 2024/1385 requires Member States to make sexual deepfakes a crime, and the AI Omnibus adds a ban on AI systems that generate non-consensual intimate content or child sexual abuse material, including nudification apps (prohibition 9, from December 2026). Labels and marks follow AI Act Art. 50 and the Commission's Art. 50 guidelines. Blocking real people at the input is far more reliable than filtering the output.
 
 **How to improve.** Remove image-to-image, face swap and voice cloning from child-facing features; check prompts against the class roster; refuse uploads with faces for generation; add provenance metadata (for example C2PA) and a priority "this is about me" report.
 
-**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus), [VAW-DIR](https://eur-lex.europa.eu/eli/dir/2024/1385/oj), [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying)
+**Sources.** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai), [AIA-GL-ART50](https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems), [VAW-DIR](https://eur-lex.europa.eu/eli/dir/2024/1385/oj), [CB-AP](https://better-internet-for-kids.europa.eu/en/news/eu-action-plan-against-cyberbullying)
 
 ### CORE-CHT-01: Every communication channel is declared
 

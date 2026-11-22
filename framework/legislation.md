@@ -2,7 +2,7 @@
 
 This page lists every legal and policy source behind the Child-Safe EdTech Framework (CSEF): what it is, its status, the provisions that matter for EdTech used by children, and which CSEF rules rely on it.
 
-> Status as of **19 November 2026**. Each source has a `verified` date in `framework/sources.yaml`. Proposals are not law. This page is not legal advice.
+> Status as of **22 November 2026**. Each source has a `verified` date in `framework/sources.yaml`. Proposals are not law. This page is not legal advice.
 
 ## How sources map to compliance levels
 
@@ -30,7 +30,7 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 | **CRD** Directive 2011/83/EU, Consumer Rights Directive | law | In force (transposed nationally) | 2 | 0 |
 | **UCTD** Council Directive 93/13/EEC on unfair terms in consumer contracts | law | In force (transposed nationally) | 1 | 0 |
 | **CJEU-SRB** CJEU, C-413/23 P, EDPS v Single Resolution Board, 4 Sep 2025 (EU:C:2025:645) | law | Case law | 3 | 0 |
-| **AIA-OMNIBUS** Digital Omnibus on AI: Regulation amending the AI Act (reported as Regulation (EU) 2026/1744) | law | Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026 | 4 | 1 |
+| **AIA-OMNIBUS** Digital Omnibus on AI: Regulation amending the AI Act (reported as Regulation (EU) 2026/1744) | law | Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026 (political agreement 7 May 2026) | 4 | 1 |
 | **KIDS** Proposal for a Regulation: EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681 | proposal | Commission proposal of 17 Sep 2026 (2026/0286 COD) | 59 | 9 |
 | **DFA** Digital Fairness Act (proposal replacing the Unfair Commercial Practices Directive) | proposal | Proposed 11 Nov 2026 as COM(2026) 1100, procedure 2026/0356(COD), a regulation replacing the UCPD. Would apply 12 months after entry into force | 15 | 3 |
 | **OMNIBUS-DATA** Digital Omnibus Regulation proposal, COM(2025) 837, procedure 2025/0360(COD) | proposal | Proposed 19 Nov 2025 | 0 | 0 |
@@ -51,6 +51,11 @@ This page lists every legal and policy source behind the Child-Safe EdTech Frame
 | **CPC-JS** CPC Network: Joint Statement on Stronger Consumer Protection in Video Games across the EU Single Market (30 September 2026) | guidance | Adopted 30 Sep 2026 together with coordinated actions against nine game companies | 5 | 0 |
 | **EDPB-PSEUDO** EDPB Guidelines 01/2025 on Pseudonymisation | guidance | Adopted 16 Jan 2025 for public consultation (closed 28 Feb 2025) | 3 | 0 |
 | **EDPB-ART53** EDPB Guidelines 2/2023 on Technical Scope of Art. 5(3) of ePrivacy Directive, version 2.0 | guidance | Adopted 7 Oct 2024 after public consultation | 2 | 0 |
+| **AIA-GL-PROHIB** Commission Guidelines on prohibited artificial intelligence practices established by Regulation (EU) 2024/1689 (AI Act), C(2025) 884 | guidance | Published 4 Feb 2025 | 3 | 0 |
+| **AIA-GL-DEF** Commission Guidelines on the definition of an artificial intelligence system established by Regulation (EU) 2024/1689 (AI Act) | guidance | Published 6 Feb 2025 | 0 | 0 |
+| **AIA-GL-ART50** Commission Guidelines on transparency obligations for providers and deployers of AI systems (Art. 50 AI Act) | guidance | Published 20 Jul 2026; obligations apply from 2 Aug 2026 | 2 | 0 |
+| **AIA-COP-CONTENT** Code of Practice on Transparency of AI-generated Content, and Commission opinion on its assessment (9 Jul 2026) | guidance | Code published Jun 2026; voluntary | 1 | 0 |
+| **AIA-REVIEW-2026** Commission report on the review of prohibitions and high-risk AI (Art. 112(1) AI Act), 22 May 2026 | guidance | Adopted 22 May 2026 | 0 | 0 |
 | **EDU-EDIC** Commission Implementing Decision (EU) 2026/2413 of 3 November 2026 on setting up the European Digital Infrastructure Consortium on Education (EDU-EDIC) | policy | In force 4 Nov 2026 | 4 | 0 |
 | **EU-EDUPKG** European Commission (2026). Education and Skills Package (factsheet), with the Communication on stronger education foundations in the age of AI | policy | Presented 2026 | 0 | 3 |
 | **CB-AP** Communication COM(2026) 71: Action plan against cyberbullying, "Safer online, stronger together" (10 February 2026) | policy | Adopted 10 Feb 2026 | 8 | 1 |
@@ -157,11 +162,11 @@ Applies to intermediary services; the strongest duties fall on online platforms 
 
 ### Regulation (EU) 2024/1689, Artificial Intelligence Act
 
-*Id `AIA` · law · EU · verified 2026-11-11*
+*Id `AIA` · law · EU · verified 2026-11-22*
 
 The AI rulebook. Education is named both in the prohibitions and in the high-risk list.
 
-**Status.** Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025; Art. 4 recast by the AI Omnibus (2026): providers and deployers must take measures to support AI literacy of staff, no specific level required. GPAI rules since 2 Aug 2025. Transparency (Art. 50) from 2 Aug 2026.
+**Status.** Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025; Art. 4 recast by the AI Omnibus (2026): providers and deployers must take measures to support AI literacy of staff, no specific level required. GPAI rules since 2 Aug 2025. Transparency (Art. 50) from 2 Aug 2026; systems on the market before then must add machine-readable marks (Art. 50(2)) by 2 Dec 2026. As amended by the AI Omnibus: prohibition 9 (AI that generates non-consensual intimate content or child sexual abuse material, including nudification apps) from December 2026; high-risk rules for Annex III use cases (education included) from 2 Dec 2027, and for AI in products under Annex I law (for example toys) from 2 Aug 2028.
 
 **Provisions that matter for EdTech.**
 
@@ -324,11 +329,11 @@ EU minimum rules on violence against women, including cyber violence.
 
 ### Digital Omnibus on AI (amendments to the AI Act)
 
-*Id `AIA-OMNIBUS` · law · EU · verified 2026-11-14*
+*Id `AIA-OMNIBUS` · law · EU · verified 2026-11-22*
 
 Moves the start of Annex III high-risk obligations, including education, to 2 December 2027.
 
-**Status.** Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026. Annex III high-risk obligations (incl. education) apply from 2 Dec 2027. Art. 4 AI literacy becomes a duty to take measures to support AI literacy.
+**Status.** Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026 (political agreement 7 May 2026). Annex III high-risk obligations (incl. education) apply from 2 Dec 2027; Annex I (AI in regulated products) from 2 Aug 2028. Adds prohibition 9 (non-consensual intimate content and CSAM, including nudification apps) from December 2026. Art. 4 AI literacy becomes a duty to take measures to support AI literacy.
 
 **Provisions that matter for EdTech.**
 
@@ -657,6 +662,56 @@ How the GDPR applies when providers meet DSA duties, including notice and action
 **Rules citing it.** `CORE-DAT-21`, `CORE-DAT-25`
 
 **Link.** [https://www.edpb.europa.eu/system/files/2024-10/edpb_guidelines_202302_technical_scope_art_53_eprivacydirective_v2_en_0.pdf](https://www.edpb.europa.eu/system/files/2024-10/edpb_guidelines_202302_technical_scope_art_53_eprivacydirective_v2_en_0.pdf)
+
+### Commission Guidelines on prohibited artificial intelligence practices established by Regulation (EU) 2024/1689 (AI Act), C(2025) 884
+
+*Id `AIA-GL-PROHIB` · guidance · EU · verified 2026-11-22*
+
+**Status.** Published 4 Feb 2025. Not binding; legal explanations and practical examples for Art. 5, including harmful manipulation, exploitation of age-related vulnerability and emotion recognition in education institutions. Predates prohibition 9 (AI Omnibus).
+
+**Rules citing it.** `CORE-AI-01`, `CORE-AI-02`, `B-EVL-02`
+
+**Link.** [https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-prohibited-artificial-intelligence-ai-practices-defined-ai-act](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-prohibited-artificial-intelligence-ai-practices-defined-ai-act)
+
+### Commission Guidelines on the definition of an artificial intelligence system established by Regulation (EU) 2024/1689 (AI Act)
+
+*Id `AIA-GL-DEF` · guidance · EU · verified 2026-11-22*
+
+**Status.** Published 6 Feb 2025. Not binding; helps decide whether a software system is an AI system, and so whether the AI Act applies at all. To be updated with practice.
+
+**Rules citing it.** none (context)
+
+**Link.** [https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-ai-system-definition-facilitate-first-ai-acts-rules-application](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-ai-system-definition-facilitate-first-ai-acts-rules-application)
+
+### Commission Guidelines on transparency obligations for providers and deployers of AI systems (Art. 50 AI Act)
+
+*Id `AIA-GL-ART50` · guidance · EU · verified 2026-11-22*
+
+**Status.** Published 20 Jul 2026; obligations apply from 2 Aug 2026. Interactive systems (chatbots, AI agents, avatars) disclose from the first interaction, clearly and accessibly; the 'obvious' exception is read restrictively. Providers mark synthetic audio, image, video and text in machine-readable form; systems on the market before 2 Aug 2026 have until 2 Dec 2026 for marking. Deployers label deepfakes at first exposure, perceivable without tools; for creative or fictional work, in a way that does not hamper it. No retroactive labelling of content made before 2 Aug 2026.
+
+**Rules citing it.** `CORE-AI-03`, `CORE-AI-12`
+
+**Link.** [https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems](https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems)
+
+### Code of Practice on Transparency of AI-generated Content, and Commission opinion on its assessment (9 Jul 2026)
+
+*Id `AIA-COP-CONTENT` · guidance · EU · verified 2026-11-22*
+
+**Status.** Code published Jun 2026; voluntary. On 8 Jul 2026 the Commission found it adequately covers Art. 50(2), (4) and (5); the AI Board adopted its adequacy assessment on 9 Jul 2026. About 190 organisations signed before 2 Aug 2026. Section 1: providers' machine-readable marking and detection; Section 2: deployers' labelling of deepfakes and public-interest text. Signing is one way to show compliance; others must show it by other means.
+
+**Rules citing it.** `CORE-AI-03`
+
+**Link.** [https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content](https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content)
+
+### Commission report on the review of prohibitions and high-risk AI (Art. 112(1) AI Act), 22 May 2026
+
+*Id `AIA-REVIEW-2026` · guidance · EU · verified 2026-11-22*
+
+**Status.** Adopted 22 May 2026. Annual review of whether to amend the Art. 5 prohibitions and the Annex III high-risk list, which includes education. Watched: a change to either list would change CSEF rules.
+
+**Rules citing it.** none (context)
+
+**Link.** [https://digital-strategy.ec.europa.eu/en/library/report-review-prohibitions-and-high-risk-ai](https://digital-strategy.ec.europa.eu/en/library/report-review-prohibitions-and-high-risk-ai)
 
 ## Policy context
 
@@ -1139,11 +1194,12 @@ Portugal's national plan against bullying and cyberbullying in schools.
 | EU KIDS Act | Feedback until 26 Nov 2026; then Parliament and Council positions | Level 2 rules may change; when adopted, they move to Level 1 with the application date |
 | Digital Fairness Act | Official text on EUR-Lex (COM(2026) 1100); Parliament and Council positions | Confirm article numbers in A-ECO-01/02/03, C-ENG-01, CORE-AI-06, CORE-SAF-03; when adopted, Level 2 rules move to Level 1 with the application date |
 | CPC coordinated actions on games | Company commitments, or national enforcement, after the 30 Sep 2026 actions | More detail for A-ECO-03, CORE-COM-09 and CORE-COM-10 |
-| Digital Omnibus on AI | Commission guidance on the recast Art. 4 | Check AI literacy wording and high-risk dates |
+| Digital Omnibus on AI | Commission guidance on the recast Art. 4; updated prohibitions guidelines that cover prohibition 9 | Check AI literacy wording, CORE-AI-12 and high-risk dates |
 | EDU-EDIC | Work programme and the technical standards it chooses | CORE-INT rules may become more specific |
 | DSA Art. 28 guidelines on minors | Review in 2026 with more focus on cyberbullying (EU action plan) | CORE-CHT-10 to 15 may become MUST where the guidelines ask for them |
 | EU online safety app | National roll-out from Q3 2026 and its interface for platforms | Concrete integration steps for CORE-CHT-13 |
 | EDPB Guidelines 3/2025 | Final text after the 2025 consultation | Confirm the wording of CORE-CHT-10 |
-| AI Office guidance | Art. 50 code of practice; guidelines on Annex III classification | Detail on AI disclosure and assessment products |
+| AI Office guidance | Guidelines on high-risk classification (Annex III, education included) and the standards for high-risk systems, ahead of 2 Dec 2027; annual review of Art. 5 and Annex III (first report 22 May 2026). Art. 50 guidelines and the Code of Practice on AI-generated content are published (Jul 2026) and now cited | Detail on assessment and adaptive products (B-EVL, CORE-AI-05); a new prohibition or Annex III entry would change CSEF rules |
+| AI in regulated products | AI Act Annex I applies from 2 Aug 2028 (for example AI in toys) | Connected toys and devices with AI get high-risk duties on top of CSEF rules |
 | EDPB | Guidance on age assurance and children's data | Possible updates to CORE-SAF-08 and consent rules |
 | National packs | Contributions for other Member States; Portugal review by a lawyer | National consent ages, authorities, helplines |

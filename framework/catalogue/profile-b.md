@@ -142,7 +142,7 @@ Profile B: game-based applications and software. Read together with the core rul
 
 **How to improve.** Open a risk management file now (templates/ai-risk-file.md) and record the classification decision.
 
-**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus)
+**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai)
 
 ### B-EVL-02: No camera-based or biometric proctoring of minors
 
@@ -154,7 +154,7 @@ Profile B: game-based applications and software. Read together with the core rul
 
 **How to improve.** Use supervised test conditions in class instead of automated surveillance.
 
-**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+**Sources.** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-GL-PROHIB](https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-prohibited-artificial-intelligence-ai-practices-defined-ai-act), [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
 
 ### B-EVL-03: Results are explainable and contestable
 

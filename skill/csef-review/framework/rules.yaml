@@ -15,7 +15,7 @@
 #   effort      low | medium | high (used to prioritise the improvement list)
 #   detection   method: static | manifest | manual | mixed, plus patterns
 
-version: "0.14.0"
+version: "0.14.1"
 
 # Rules merged into others. Packs, waivers and csef-ignore comments that use an old id keep working:
 # the tools map it to the rule that replaced it.
@@ -969,7 +969,7 @@ rules:
     rationale: AI Act Art. 5(1)(f) prohibits emotion recognition in education institutions since 2 Feb 2025.
     improvement: Remove emotion inference. Use explicit signals (a help button, a self-report mood picker).
     effort: medium
-    sources: [AIA]
+    sources: [AIA, AIA-GL-PROHIB]
     detection:
       method: static
       patterns:
@@ -988,7 +988,7 @@ rules:
     rationale: AI Act Art. 5(1)(a)(b).
     improvement: Review prompts and reward logic for persuasion targets that serve engagement over learning; document the review.
     effort: medium
-    sources: [AIA]
+    sources: [AIA, AIA-GL-PROHIB]
     detection:
       method: manual
 
@@ -1000,12 +1000,23 @@ rules:
     age_bands: [all]
     features: [ai_generative]
     requirement: >
-      Children (and teachers) are told, in age-appropriate form, when they interact with AI and
-      when content is AI-generated. Generated media is marked.
-    rationale: AI Act Art. 50, applicable from 2 Aug 2026.
-    improvement: Add a persistent 'AI' label on AI responses and metadata marking on generated images and audio.
+      Children (and teachers) are told, in age-appropriate form, when they interact with AI, from the
+      first interaction and in a way that is clear and accessible. This includes chatbots, AI agents
+      and AI avatars or characters. Generated audio, images, video and text carry a machine-readable
+      mark. AI-made media that looks real (deepfakes) has a visible label at first view; in a story or
+      game, the label does not have to break the experience.
+    rationale: >
+      AI Act Art. 50, applicable from 2 Aug 2026. The Commission's Art. 50 guidelines (20 Jul 2026)
+      name chatbots, agents and avatars, and read the "obvious" exception narrowly; for children, assume
+      it is never obvious. Systems already on the market before 2 Aug 2026 must add machine-readable
+      marks by 2 Dec 2026. The Code of Practice on Transparency of AI-generated Content, assessed as
+      adequate by the Commission and the AI Board, is a voluntary way to show compliance.
+    improvement: >
+      Add a persistent 'AI' label on AI responses and on AI characters from the first message; add
+      machine-readable marks (for example C2PA or watermarks) to generated images, audio and video;
+      label realistic AI media in the interface; consider signing the Code of Practice.
     effort: low
-    sources: [AIA]
+    sources: [AIA, AIA-GL-ART50, AIA-COP-CONTENT]
     detection:
       method: mixed
       patterns:
@@ -1518,7 +1529,7 @@ rules:
     rationale: AI Act Art. 5(1)(f) (emotion recognition) and Annex III(3)(d) (monitoring during tests). GDPR Art. 9.
     improvement: Use supervised test conditions in class instead of automated surveillance.
     effort: medium
-    sources: [AIA, GDPR]
+    sources: [AIA, AIA-GL-PROHIB, GDPR]
     detection:
       method: static
       patterns:
@@ -2381,11 +2392,13 @@ rules:
       A classmate's face or voice is personal data, and nobody in the class can consent for them (GDPR Art. 5
       and 6; CORE-DAT-14). The EU action plan against cyberbullying names deepfake abuse. Directive (EU)
       2024/1385 requires Member States to make sexual deepfakes a crime, and the AI Omnibus adds a ban on AI
-      systems that generate non-consensual intimate images. Labels follow AI Act Art. 50. Blocking real
+      systems that generate non-consensual intimate content or child sexual abuse material, including
+      nudification apps (prohibition 9, from December 2026). Labels and marks follow AI Act Art. 50 and the
+      Commission's Art. 50 guidelines. Blocking real
       people at the input is far more reliable than filtering the output.
     improvement: Remove image-to-image, face swap and voice cloning from child-facing features; check prompts against the class roster; refuse uploads with faces for generation; add provenance metadata (for example C2PA) and a priority "this is about me" report.
     effort: medium
-    sources: [GDPR, AIA, AIA-OMNIBUS, VAW-DIR, CB-AP]
+    sources: [GDPR, AIA, AIA-OMNIBUS, AIA-GL-ART50, VAW-DIR, CB-AP]
     detection:
       method: mixed
       patterns:

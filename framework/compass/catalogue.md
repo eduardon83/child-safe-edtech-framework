@@ -548,7 +548,7 @@ Evidence ladder: 0 Not found, 1 Stated, 2 Designed, 3 Tested, 4 Measured.
 - **Improvement:** Provide a short staff explainer and oversight guide for every AI feature.
 - **Ideas:** Ten-minute staff explainer of the AI; Oversight checklist for teachers
 - **Framework references:** -
-- **Sources:** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus), [EU-EDUPKG](https://doi.org/10.2766/6358386)
+- **Sources:** [AIA](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), [AIA-OMNIBUS](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai), [EU-EDUPKG](https://doi.org/10.2766/6358386)
 
 ### EDU-07 Guidance for families
 

@@ -42,18 +42,61 @@ sources:
     title: "Regulation (EU) 2024/1689, Artificial Intelligence Act"
     type: law
     jurisdiction: EU
-    status: "Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025; Art. 4 recast by the AI Omnibus (2026): providers and deployers must take measures to support AI literacy of staff, no specific level required. GPAI rules since 2 Aug 2025. Transparency (Art. 50) from 2 Aug 2026"
+    status: "Prohibitions (Art. 5) and AI literacy (Art. 4) apply since 2 Feb 2025; Art. 4 recast by the AI Omnibus (2026): providers and deployers must take measures to support AI literacy of staff, no specific level required. GPAI rules since 2 Aug 2025. Transparency (Art. 50) from 2 Aug 2026; systems on the market before then must add machine-readable marks (Art. 50(2)) by 2 Dec 2026. As amended by the AI Omnibus: prohibition 9 (AI that generates non-consensual intimate content or child sexual abuse material, including nudification apps) from December 2026; high-risk rules for Annex III use cases (education included) from 2 Dec 2027, and for AI in products under Annex I law (for example toys) from 2 Aug 2028"
     url: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
-    verified: 2026-11-11
+    notes: "Timeline as stated by the Commission's AI Act page (last updated 19 Oct 2026): https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+    verified: 2026-11-22
+
+  - id: AIA-GL-PROHIB
+    title: "Commission Guidelines on prohibited artificial intelligence practices established by Regulation (EU) 2024/1689 (AI Act), C(2025) 884"
+    type: guidance
+    jurisdiction: EU
+    status: "Published 4 Feb 2025. Not binding; legal explanations and practical examples for Art. 5, including harmful manipulation, exploitation of age-related vulnerability and emotion recognition in education institutions. Predates prohibition 9 (AI Omnibus)"
+    url: "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-prohibited-artificial-intelligence-ai-practices-defined-ai-act"
+    verified: 2026-11-22
+
+  - id: AIA-GL-DEF
+    title: "Commission Guidelines on the definition of an artificial intelligence system established by Regulation (EU) 2024/1689 (AI Act)"
+    type: guidance
+    jurisdiction: EU
+    status: "Published 6 Feb 2025. Not binding; helps decide whether a software system is an AI system, and so whether the AI Act applies at all. To be updated with practice"
+    url: "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-ai-system-definition-facilitate-first-ai-acts-rules-application"
+    verified: 2026-11-22
+
+  - id: AIA-GL-ART50
+    title: "Commission Guidelines on transparency obligations for providers and deployers of AI systems (Art. 50 AI Act)"
+    type: guidance
+    jurisdiction: EU
+    status: "Published 20 Jul 2026; obligations apply from 2 Aug 2026. Interactive systems (chatbots, AI agents, avatars) disclose from the first interaction, clearly and accessibly; the 'obvious' exception is read restrictively. Providers mark synthetic audio, image, video and text in machine-readable form; systems on the market before 2 Aug 2026 have until 2 Dec 2026 for marking. Deployers label deepfakes at first exposure, perceivable without tools; for creative or fictional work, in a way that does not hamper it. No retroactive labelling of content made before 2 Aug 2026"
+    url: "https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems"
+    notes: "Commission Q&A: https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act"
+    verified: 2026-11-22
+
+  - id: AIA-COP-CONTENT
+    title: "Code of Practice on Transparency of AI-generated Content, and Commission opinion on its assessment (9 Jul 2026)"
+    type: guidance
+    jurisdiction: EU
+    status: "Code published Jun 2026; voluntary. On 8 Jul 2026 the Commission found it adequately covers Art. 50(2), (4) and (5); the AI Board adopted its adequacy assessment on 9 Jul 2026. About 190 organisations signed before 2 Aug 2026. Section 1: providers' machine-readable marking and detection; Section 2: deployers' labelling of deepfakes and public-interest text. Signing is one way to show compliance; others must show it by other means"
+    url: "https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content"
+    notes: "Commission opinion: https://digital-strategy.ec.europa.eu/en/library/commission-opinion-assessment-code-practice-transparency-ai-generated-content"
+    verified: 2026-11-22
+
+  - id: AIA-REVIEW-2026
+    title: "Commission report on the review of prohibitions and high-risk AI (Art. 112(1) AI Act), 22 May 2026"
+    type: guidance
+    jurisdiction: EU
+    status: "Adopted 22 May 2026. Annual review of whether to amend the Art. 5 prohibitions and the Annex III high-risk list, which includes education. Watched: a change to either list would change CSEF rules"
+    url: "https://digital-strategy.ec.europa.eu/en/library/report-review-prohibitions-and-high-risk-ai"
+    verified: 2026-11-22
 
   - id: AIA-OMNIBUS
     title: "Digital Omnibus on AI: Regulation amending the AI Act (reported as Regulation (EU) 2026/1744)"
     type: law
     jurisdiction: EU
-    status: "Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026. Annex III high-risk obligations (incl. education) apply from 2 Dec 2027. Art. 4 AI literacy becomes a duty to take measures to support AI literacy"
-    url: "https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus"
-    notes: "Secondary sources (FPF, law firms). Replace with the EUR-Lex reference of the consolidated text when cited."
-    verified: 2026-11-14
+    status: "Adopted by Parliament 16 Jun 2026 and Council 29 Jun 2026; published in the Official Journal 24 Jul 2026; in force 27 Jul 2026 (political agreement 7 May 2026). Annex III high-risk obligations (incl. education) apply from 2 Dec 2027; Annex I (AI in regulated products) from 2 Aug 2028. Adds prohibition 9 (non-consensual intimate content and CSAM, including nudification apps) from December 2026. Art. 4 AI literacy becomes a duty to take measures to support AI literacy"
+    url: "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+    notes: "Dates confirmed on the Commission's AI Act page (last updated 19 Oct 2026). Earlier secondary source: https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus. Replace with the EUR-Lex reference of the consolidated text when cited."
+    verified: 2026-11-22
 
   - id: KIDS
     title: "Proposal for a Regulation: EU KIDS Act (Keeping Internet Digital Spaces Accountable and Trustworthy), COM(2026) 681"

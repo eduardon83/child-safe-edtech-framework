@@ -11,7 +11,7 @@ An open framework and toolkit for building safe educational software for under-1
 It turns EU law, pending EU proposals (EU KIDS Act, Digital Fairness Act) and expert recommendations into
 rules a team can check in code, in CI and in review.
 
-> **Status:** v0.14.0, draft for public comment (November 2026).
+> **Status:** v0.14.1, draft for public comment (November 2026).
 > **Not legal advice and not a certification.** CSEF produces *pre-compliance* reports. Legal compliance
 > depends on facts code cannot show; involve your DPO and legal counsel. See [Limitations](#limitations).
 >

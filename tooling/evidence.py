@@ -47,7 +47,7 @@ sys.path.insert(0, str(HERE))
 import brand  # noqa: E402
 
 TOOL = "csef-evidence"
-VERSION = "0.14.0"
+VERSION = "0.14.1"
 ONTOLOGY = "csef-evidence-0.1"
 PROFILE = "csef-ogd-0.1"
 ACTIVE_GAP_S = 60

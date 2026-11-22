@@ -3,6 +3,24 @@
 Newest first. One short entry per version; the full story of each release is in [docs/releases/](docs/releases/).
 Open items and what we are watching: [legislation.md, watch list](framework/legislation.md#open-discussions-and-watch-list).
 
+## v0.14.1 (2026-11-22)
+
+- **AI Act guidance**: CSEF now cites the Commission's guidance next to the AI Act itself. New sources:
+  AIA-GL-PROHIB (prohibited practices guidelines, Feb 2025), AIA-GL-DEF (AI system definition guidelines,
+  Feb 2025), AIA-GL-ART50 (Art. 50 transparency guidelines, 20 Jul 2026), AIA-COP-CONTENT (Code of Practice on
+  Transparency of AI-generated Content and the Commission opinion of 9 Jul 2026), AIA-REVIEW-2026 (review of
+  prohibitions and Annex III, 22 May 2026).
+- CORE-AI-03 now names chatbots, agents and AI characters, asks for disclosure from the first interaction,
+  machine-readable marks on generated media (by 2 Dec 2026 for products already on the market) and visible
+  labels on realistic AI media that do not break a story or game.
+- CORE-AI-12 dates the AI Omnibus ban on nudification and CSAM generation (prohibition 9, from December 2026).
+- CORE-AI-01, CORE-AI-02 and B-EVL-02 cite the prohibitions guidelines.
+- AIA and AIA-OMNIBUS status: Annex I (AI in regulated products such as toys) from 2 Aug 2028; dates confirmed
+  on the Commission's AI Act page.
+- Watch list: Art. 50 code and guidelines are no longer pending; added high-risk classification guidelines,
+  the annual review and Annex I.
+- Rules: 131 (unchanged). Sources: 89 to 94, plus 9 in the Portugal pack.
+
 ## v0.14.0 (2026-11-19)
 
 - **Learning data** ([08-learning-data.md](framework/08-learning-data.md), online at csef.kendirstudios.pt/learning-data/):

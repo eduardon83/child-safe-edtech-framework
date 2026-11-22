@@ -21,7 +21,7 @@ Product: ____________________  Date: __________  Assessor: ____________________
       Evidence: 
 - [ ] **CORE-AI-02** (MUST) No manipulative AI exploiting age. AI features do not use subliminal, manipulative or deceptive techniques, or exploit age-related vulnerability, to change a child's behaviour in a harmful way.  
       Evidence: 
-- [ ] **CORE-AI-03** (MUST) AI interaction and AI-generated content are disclosed. Children (and teachers) are told, in age-appropriate form, when they interact with AI and when content is AI-generated. Generated media is marked.  
+- [ ] **CORE-AI-03** (MUST) AI interaction and AI-generated content are disclosed. Children (and teachers) are told, in age-appropriate form, when they interact with AI, from the first interaction and in a way that is clear and accessible. This includes chatbots, AI agents and AI avatars or characters. Generated audio, images, video and text carry a machine-readable mark. AI-made media that looks real (deepfakes) has a visible label at first view; in a story or game, the label does not have to break the experience.  
       Evidence: 
 - [ ] **CORE-AI-04** (MUST) AI inventory and no training on learners' data by default. Every AI component is listed (model, provider, purpose, inputs, outputs, oversight). Provider data retention for training is disabled. Learners' data is not used to train or fine-tune models without a DPIA and a lawful basis.  
       Evidence: 
