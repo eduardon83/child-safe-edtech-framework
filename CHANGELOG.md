@@ -3,6 +3,14 @@
 Newest first. One short entry per version; the full story of each release is in [docs/releases/](docs/releases/).
 Open items and what we are watching: [legislation.md, watch list](framework/legislation.md#open-discussions-and-watch-list).
 
+## Unreleased
+
+- **Shared engine** (`engine/sfe`, [engine/README.md](engine/README.md)): rule and source validation, catalogue and
+  checklist generation, Semgrep export, pattern scanning, a generic scanner and the Markdown renderer, configured by
+  `framework/framework.yaml`. `tooling/build.py` and `tooling/mdpage.py` now use it; generated files are unchanged.
+  `tests/test_engine.py` keeps `tooling/scan.py` and the engine in step. The engine also runs the new Health Data
+  Safety Framework (HDSF).
+
 ## v0.14.1 (2026-11-22)
 
 - **AI Act guidance**: CSEF now cites the Commission's guidance next to the AI Act itself. New sources:

@@ -1,0 +1,30 @@
+# How the Safety Framework Engine (engine/sfe) sees CSEF. Rules, sources and texts stay in their own files.
+# tests/test_engine.py checks that these values match tooling/scan.py and tooling/build.py.
+id: csef
+short: CSEF
+name: Child-Safe EdTech Framework
+repo: https://github.com/eduardon83/child-safe-edtech-framework
+site: https://csef.kendirstudios.pt
+levels: {1: Legal baseline, 2: Forward-compliant, 3: Best practice}
+profiles:
+  core: Every product
+  A: Educational games
+  B: Game-based applications
+  C: Gamified applications
+dimension:
+  key: age_bands
+  label: Age bands
+  values: {B1: "3-5", B2: "6-9", B3: "10-12", B4: "13-15", B5: "16-17"}
+features: [accounts, multiplayer, chat, ugc, social, notifications, streaks, leaderboards, purchases, assessment,
+           ai_generative, ai_assessment, ai_adaptive, recommender, survey]
+feature_groups: {communication: [chat, multiplayer, social, ugc]}
+id_pattern: '^(CORE|A|B|C|AGE|[A-Z]{2,8})-[A-Z0-9]{2,4}-\d{2}$'
+source_types: [law, law-pending, proposal, guidance, standard, literature, news, policy]
+tier_min_types:
+  1: [law, law-pending, policy]
+  2: [law, law-pending, proposal, guidance, standard, policy]
+  3: all
+manifest_names: [csef.yaml, csef.yml, .csef/manifest.yaml, .csef/csef.yaml, cses.yaml, cses.yml, .cses/manifest.yaml, .cses/cses.yaml]
+ignore_token: 'cse[fs]-ignore'
+rule_meta_key: csef_rule
+generator: tooling/build.py

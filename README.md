@@ -259,6 +259,7 @@ framework/        rules.yaml + sources.yaml (single source of truth), coc-topics
 packs/           country and extra packs (pt.yaml, _template.yaml)
 tooling/         scan.py, comms.py, export.py, coc.py, policy.py, compass.py, precheck.py, metadata.py, evidence.py,
                  workbench.py, mdpage.py, build.py, examples.py (example reports for the website), site templates, generated Semgrep rules
+engine/          Safety Framework Engine (sfe), shared with the Health Data Safety Framework (engine/README.md)
 skill/           csef-review skill for Claude (generated copies + SKILL.md + references)
 templates/       manifest, DPIA starter, AI risk file, waiver, agent instructions, GitHub files
 self-assessment/ generated checklists per profile and level
