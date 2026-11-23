@@ -48,7 +48,7 @@ def build_model(cfg: Config, result: dict, rules_by_id: dict, sources: dict, sec
             "date": result.get("date", ""), "level": result.get("level", 1), "level_name": cfg.levels.get(result.get("level", 1), ""),
             "levels": cfg.levels, "verdict": result.get("verdict", ""), "counts": result.get("counts", {}),
             "in_scope": len(result.get("rules_in_scope", [])), "description_only": result.get("description_only", False),
-            "groups": groups, "sections": sections or [],
+            "groups": groups, "sections": sections or [], "packs": result.get("packs", []), "parameters": result.get("parameters", {}),
             "sources": [{"id": s, "title": sources.get(s, {}).get("title", s), "url": sources.get(s, {}).get("url", ""),
                          "status": sources.get(s, {}).get("status", "")} for s in used]}
 
@@ -123,14 +123,19 @@ def render_html(model: dict, accent: str = "#0f6e6e", for_print: bool = False) -
     src_list = "".join(f'<li><b>{_e(s["id"])}</b>: {_e(s["title"])}{" (" + _e(s["status"][:160]) + ")" if s["status"] else ""}'
                        f'{" <a href=" + chr(34) + _e(s["url"]) + chr(34) + ">link</a>" if s["url"] else ""}</li>' for s in model["sources"])
     mode = " · description only (code not read)" if model["description_only"] else ""
+    packs = ""
+    if model.get("packs"):
+        packs = "<div class=\"meta\">Packs: " + ", ".join(_e(f"{p['title']} v{p['version']}") for p in model["packs"]) + "</div>"
+    if model.get("parameters"):
+        packs += "<div class=\"meta\">" + " · ".join(f"{_e(k)}: {_e(v)}" for k, v in model["parameters"].items()) + "</div>"
     return ("<!DOCTYPE html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">"
             f"<title>{_e(model['framework'])} report{': ' + _e(model['product']) if model['product'] else ''}</title>"
             f"<style>{CSS.replace('ACCENT', accent)}</style></head><body>"
             f"<header><h1>{_e(model['framework'])} report{': ' + _e(model['product']) if model['product'] else ''}</h1>"
             f"<div class=\"meta\">{_e(model['name'])} · level {model['level']} ({_e(model['level_name'])}) · {model['in_scope']} rules in scope · {_e(model['date'])}{mode}</div>"
-            f"<p class=\"verdict\">{_e(model['verdict'])}</p></header><main class=\"wrap\"><div class=\"counts\">{cards}</div>{bar}"
+            f"{packs}<p class=\"verdict\">{_e(model['verdict'])}</p></header><main class=\"wrap\"><div class=\"counts\">{cards}</div>{bar}"
             f"{''.join(body)}<h2>Sources cited</h2><ul class=\"src\">{src_list}</ul>"
-            "<p class=\"note\">Automated checks find signs, not proof. A clean report does not mean the product is compliant. "
+            "<p class=\"note\">Automated checks find signs. A person confirms them. A clean report does not mean the product is compliant. "
             "This report is not legal or regulatory advice.</p>"
             f"<footer>Generated with {_e(model['name'])} ({_e(model['framework'])}). {_e(model['site'])}</footer></main>"
             + ("" if for_print else f"<script>{JS}</script>") + "</body></html>\n")
@@ -183,6 +188,10 @@ def render_docx(model: dict, path: Path, accent: str = "#0f6e6e") -> None:
     doc.add_heading(f"{model['framework']} report{': ' + model['product'] if model['product'] else ''}", 0)
     doc.add_paragraph(f"{model['name']} · level {model['level']} ({model['level_name']}) · {model['in_scope']} rules in scope · {model['date']}"
                       + (" · description only" if model["description_only"] else ""))
+    if model.get("packs"):
+        doc.add_paragraph("Packs: " + ", ".join(f"{p['title']} v{p['version']}" for p in model["packs"]))
+    if model.get("parameters"):
+        doc.add_paragraph(" · ".join(f"{k}: {v}" for k, v in model["parameters"].items()))
     p = doc.add_paragraph()
     p.add_run(model["verdict"]).bold = True
     t = doc.add_table(rows=2, cols=len(SEVS))
@@ -227,7 +236,7 @@ def render_docx(model: dict, path: Path, accent: str = "#0f6e6e") -> None:
     doc.add_heading("Sources cited", 1)
     for s in model["sources"]:
         doc.add_paragraph(f"{s['id']}: {s['title']}" + (f" {s['url']}" if s["url"] else ""), style="List Bullet")
-    doc.add_paragraph("Automated checks find signs, not proof. A clean report does not mean the product is compliant. "
+    doc.add_paragraph("Automated checks find signs. A person confirms them. A clean report does not mean the product is compliant. "
                       "This report is not legal or regulatory advice.").runs[0].italic = True
     doc.save(str(path))
 

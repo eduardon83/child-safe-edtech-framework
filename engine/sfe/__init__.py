@@ -8,4 +8,4 @@ and texts.
 Used by the Child-Safe EdTech Framework (CSEF, home of this package) and the Health Data Safety Framework (HDSF,
 which vendors a pinned copy). Licence: Apache-2.0
 """
-ENGINE_VERSION = "0.2.0"
+ENGINE_VERSION = "0.3.0"

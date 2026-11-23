@@ -74,3 +74,16 @@ def test_engine_export_renders_html(tmp_path):
     out = export.export(CFG, data, std.rules, std.sources, ["html"], tmp_path, sections)
     h = out["html"].read_text()
     assert "CSEF report" in h and "Extra" in h and 'data-sev="BLOCK"' in h
+
+
+def test_engine_packs_apply_csef_examples():
+    from sfe import packs
+    import yaml
+    std = scan.load_standard(ROOT)
+    m = packs.merged(list(std.rules.values()), std.sources)
+    for f in (ROOT / "packs" / "pt.yaml", ROOT / "examples" / "company-packs" / "acme.yaml"):
+        packs.apply(CFG, m, yaml.safe_load(f.read_text()), str(f), set(scan.MANIFEST_CHECKS) | {"decision_records", "review_stale"})
+    assert m.minimum_level == 2 and any(r.startswith("ACME-POL-") for r in m.rules) and m.rules["CORE-AI-01"]["no_go"]
+    import pytest
+    with pytest.raises(ValueError):
+        packs.apply(CFG, m, {"pack": {"id": "bad"}, "amend": [{"rule": "CORE-AI-01", "level": "SHOULD"}]}, "bad")

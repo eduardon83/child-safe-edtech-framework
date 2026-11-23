@@ -93,7 +93,7 @@ def run(cfg: Config, repo: Path, rules: list, manifest: dict | None, level: int 
         det = r.get("detection") or {}
         for p in det.get("patterns", []) or []:
             conf = p.get("confidence", "medium")
-            sev = "WARN" if r["level"] == "SHOULD" else ("BLOCK" if conf == "high" else "REVIEW")
+            sev = "BLOCK" if r.get("no_go") else "WARN" if r["level"] == "SHOULD" else ("BLOCK" if conf == "high" else "REVIEW")
             if p["type"] == "regex" and not description_only:
                 for rel, line, text, ign in regex_findings(r, p, files_cache, repo, ignore):
                     hit = True
@@ -155,7 +155,7 @@ def render_markdown(cfg: Config, result, sources: dict, product: str = "") -> st
             loc = f"`{f.where}` " if f.where else ""
             lines.append(f"- {loc}{f.detail}" + (f" ({f.waived})" if f.waived else ""))
         lines.append("")
-    lines += ["---", "", f"{cfg.name} ({cfg.short}). Automated checks find signs, not proof. "
+    lines += ["---", "", f"{cfg.name} ({cfg.short}). Automated checks find signs; a person confirms them. "
               "This report is not legal or regulatory advice.", ""]
     return "\n".join(lines)
 

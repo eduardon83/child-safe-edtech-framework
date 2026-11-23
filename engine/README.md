@@ -12,6 +12,7 @@ Each framework keeps its own rules, sources, manifest checks, guides and site. T
 | `sfe/config.py` | Reads `framework/framework.yaml`: name, levels, profiles, the second scope axis (CSEF: age bands; HDSF: users), features, id pattern, source types, manifest names |
 | `sfe/catalogue.py` | Validates rules and sources; writes catalogue pages, self-assessment checklists and Semgrep rules |
 | `sfe/patterns.py` | Walks a code base; regex and dependency findings (16 package formats); inline ignore comments |
+| `sfe/packs.py` | Country, sector, literature and company packs: new sources and rules, stricter amendments, company policy (no-gos, forbidden packages and wording, minimum level), parameters |
 | `sfe/scanner.py` | Which rules apply to a product; findings from code and manifest; Markdown, JSON and SARIF reports |
 | `sfe/export.py` | Reports: interactive HTML dashboard (search, filters, print), PDF (Chrome or WeasyPrint) and Word (python-docx), with optional extra sections such as a document review |
 | `sfe/markdown.py` | A small deterministic Markdown renderer for guide pages |

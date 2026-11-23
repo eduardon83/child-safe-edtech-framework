@@ -12,6 +12,9 @@ Open items and what we are watching: [legislation.md, watch list](framework/legi
   Safety Framework (HDSF).
 - Engine 0.2.0 adds `sfe/export.py`: interactive HTML dashboard, PDF and Word reports from a scanner result, with optional extra
   sections. HDSF uses it; CSEF keeps `tooling/export.py` for now.
+- Engine 0.3.0 adds `sfe/packs.py` (country, sector and company packs, lifted from `tooling/scan.py`), no-go handling in
+  the generic scanner and pack details in exported reports. Reports now say "Automated checks find signs. A person
+  confirms them." HDSF ships a Portugal pack and an ACME company pack on it.
 
 ## v0.14.1 (2026-11-22)
 
