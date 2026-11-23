@@ -54,7 +54,7 @@ function oneLine(s, max = 72) {
 }
 
 async function api(request, env, url) {
-  const route = `${request.method} ${url.pathname}`;
+  const route = `${request.method} ${url.pathname.replace(/\/+$/, "")}`;
   const ip = request.headers.get("CF-Connecting-IP") || "local";
 
   if (request.method === "POST" && !sameOrigin(request, url)) fail("Wrong origin.", 403);

@@ -15,6 +15,11 @@
     <h1>Set up editors</h1>
     <p class="muted">This page runs only in your browser. Nothing you type here is sent anywhere.</p>
 
+    <h2>Check the setup</h2>
+    <p>Shows which settings the running admin can see. Never their values.</p>
+    <button type="button" class="ghost" id="check">Check the setup</button>
+    <ul id="health" class="muted"></ul>
+
     <h2>1. Session secret</h2>
     <p>Copy this value into the Cloudflare secret <code>SESSION_SECRET</code>. You only need it once.</p>
     <div class="copyrow"><input id="secret" readonly aria-label="Session secret"><button type="button" class="ghost" data-copy="secret">Copy</button></div>

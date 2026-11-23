@@ -46,3 +46,15 @@ document.addEventListener("click", async (ev) => {
   ev.target.textContent = "Copied";
   setTimeout(() => { ev.target.textContent = "Copy"; }, 1500);
 });
+
+$("#check").addEventListener("click", async () => {
+  const out = $("#health");
+  out.innerHTML = "<li>Checking…</li>";
+  try {
+    const h = await (await fetch("/api/health", { cache: "no-store" })).json();
+    const line = (name, v) => `<li><code>${name}</code>: ${v === true ? "set" : v === false ? "<strong class=\"error\">missing</strong>" : String(v).replace(/[<&]/g, "")}</li>`;
+    out.innerHTML = line("GITHUB_TOKEN", h.GITHUB_TOKEN) + line("SESSION_SECRET", h.SESSION_SECRET) + line("EDITORS", h.EDITORS);
+  } catch {
+    out.innerHTML = "<li class=\"error\">The check did not answer. The admin may still be deploying.</li>";
+  }
+});
