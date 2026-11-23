@@ -1,0 +1,47 @@
+# Rebuilds the site after a text edit made in the text admin (commits that start with "admin:").
+# It runs the same checks as CI, commits the regenerated files and asks GitHub Pages to publish.
+name: Rebuild after text edit
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: rebuild-after-edit
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'admin:')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml pytest python-docx
+      - name: Regenerate the site and check it
+        run: |
+          python3 tooling/build.py
+          python3 tooling/build.py --check
+          python3 -m pytest -q
+      - name: Commit the regenerated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "Nothing to regenerate."; exit 0; fi
+          git commit -q -m "build: regenerate the site after a text edit"
+          git pull -q --rebase origin main
+          git push -q origin HEAD:main
+      - name: Ask GitHub Pages to publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" --silent || echo "Pages will publish on its own."

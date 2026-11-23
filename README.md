@@ -249,6 +249,11 @@ compares meaning and reads any language.
 12. [Rule catalogue](framework/catalogue/index.md): every rule with requirement, rationale, improvement and sources
 13. [Self-assessment checklists](self-assessment/)
 
+## Edit the text
+
+Maintainers can edit guides, rule texts, sources, packs and page text in the [text admin](admin/README.md), without
+code. Each save is a commit; the site rebuilds by itself.
+
 ## Repository layout
 
 ```

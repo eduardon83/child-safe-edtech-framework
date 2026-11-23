@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Text admin · CSEF and HDSF</title>
+<link rel="stylesheet" href="/app.css">
+<script src="/app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <strong class="brand">Text admin</strong>
+  <nav id="sites" aria-label="Framework"></nav>
+  <span class="grow"></span>
+  <span id="who" class="muted"></span>
+  <button id="logout" class="ghost" hidden>Sign out</button>
+</header>
+
+<main id="login" class="login" hidden>
+  <form id="login-form" class="card">
+    <h1>Sign in</h1>
+    <p class="muted">Edit the information text of CSEF and HDSF. Each save goes live after the site rebuilds.</p>
+    <label>Email <input name="email" type="email" autocomplete="username" required></label>
+    <label>Password <input name="password" type="password" autocomplete="current-password" required></label>
+    <button type="submit">Sign in</button>
+    <p id="login-error" class="error" role="alert"></p>
+  </form>
+</main>
+
+<main id="app" class="app" hidden>
+  <aside class="files">
+    <input id="file-filter" type="search" placeholder="Find a file" aria-label="Find a file">
+    <div id="file-list"></div>
+  </aside>
+  <section class="editor" id="editor" aria-live="polite">
+    <div class="empty">
+      <h2>Pick a file</h2>
+      <p>Guides are Markdown files. Rules, sources and packs show one box per text. Page text shows the paragraphs and headings of a page.</p>
+      <p>Buttons, labels, ids, levels and checks are not shown. Change those through a pull request.</p>
+    </div>
+  </section>
+</main>
+
+<div id="savebar" class="savebar" hidden>
+  <span id="changes" class="muted"></span>
+  <input id="message" type="text" maxlength="72" placeholder="What did you change? (optional)" aria-label="What did you change?">
+  <button id="discard" class="ghost">Discard</button>
+  <button id="save">Save and publish</button>
+</div>
+<div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

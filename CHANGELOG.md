@@ -5,6 +5,10 @@ Open items and what we are watching: [legislation.md, watch list](framework/legi
 
 ## Unreleased
 
+- **Text admin** ([admin/](admin/README.md)): a web page to edit the information text of CSEF and HDSF without code,
+  with email and password sign-in. It runs as a Cloudflare Worker. Each save is a commit to `main`; the new workflow
+  `rebuild-after-edit.yml` regenerates the site, runs the checks and publishes. Buttons, labels, ids, levels and checks
+  stay out of reach. CI skips `admin:` commits, because the rebuild runs the same checks.
 - **Shared engine** (`engine/sfe`, [engine/README.md](engine/README.md)): rule and source validation, catalogue and
   checklist generation, Semgrep export, pattern scanning, a generic scanner and the Markdown renderer, configured by
   `framework/framework.yaml`. `tooling/build.py` and `tooling/mdpage.py` now use it; generated files are unchanged.
