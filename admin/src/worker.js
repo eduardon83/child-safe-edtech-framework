@@ -59,10 +59,22 @@ async function api(request, env, url) {
 
   if (request.method === "POST" && !sameOrigin(request, url)) fail("Wrong origin.", 403);
 
+  // Which settings are in place, never their values. Helps when sign-in fails after setup.
+  if (route === "GET /api/health") {
+    let editors = 0, editorsError = null;
+    try { editors = auth.editors(env).length; } catch (e) { editorsError = e.message; }
+    return json({
+      GITHUB_TOKEN: Boolean(env.GITHUB_TOKEN),
+      SESSION_SECRET: Boolean(env.SESSION_SECRET && env.SESSION_SECRET.length >= 32),
+      EDITORS: editorsError || (editors ? `${editors} editor${editors === 1 ? "" : "s"}` : "missing or empty"),
+    });
+  }
+
   if (route === "POST /api/login") {
     const { email, password } = await body(request);
     const key = `${ip}|${String(email || "").toLowerCase()}`;
     if (!(await auth.loginAllowed(env, key))) fail("Too many attempts. Wait 15 minutes and try again.", 429);
+    if (auth.editors(env).length === 0) fail("No editors are set up yet. Add the EDITORS secret in Cloudflare, then deploy.", 503);
     const editor = await auth.checkPassword(env, email, password);
     if (!editor) {
       auth.loginFailed(key);

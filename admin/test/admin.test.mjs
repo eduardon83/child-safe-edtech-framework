@@ -159,3 +159,12 @@ test("the real repositories can be listed", () => {
     assert.equal(ruleFor(site, "packs/_template.yaml"), null);
   }
 });
+
+test("health shows which settings exist, and an empty EDITORS is reported", async () => {
+  const { env } = await setup();
+  const h = await (await worker.fetch(new Request("https://a.example/api/health"), env)).json();
+  assert.deepEqual(h, { GITHUB_TOKEN: true, SESSION_SECRET: true, EDITORS: "1 editor" });
+  const empty = { ...env, EDITORS: '"not a list"' };
+  const r = await worker.fetch(new Request("https://a.example/api/login", { method: "POST", headers: { Origin: "https://a.example", "Content-Type": "application/json" }, body: JSON.stringify({ email: "a@b.c", password: "x" }) }), empty);
+  assert.equal(r.status, 503);
+});
