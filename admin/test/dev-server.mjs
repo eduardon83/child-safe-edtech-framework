@@ -14,7 +14,7 @@ const env = {
   DEV: "1",
   GITHUB_TOKEN: "test",
   SESSION_SECRET: "a-local-test-secret-that-is-long-enough",
-  EDITORS: JSON.stringify([{ email: "admin@example.org", name: "Test Editor", hash: await makeHash("correct horse battery") }]),
+  EDITORS: process.env.EDITORS || JSON.stringify([{ email: "admin@example.org", name: "Test Editor", hash: await makeHash("correct horse battery") }]),
   FETCH: mockGitHub({ "eduardon83/child-safe-edtech-framework": csef, "eduardon83/digital-health-safety-framework": hdsf }),
 };
 const PUBLIC = new URL("../public/", import.meta.url).pathname;

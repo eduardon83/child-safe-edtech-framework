@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Set up editors · Text admin</title>
+<link rel="stylesheet" href="/app.css">
+<script src="/setup.js" defer></script>
+</head>
+<body>
+<header class="top"><strong class="brand">Text admin</strong><span class="grow"></span><a href="/">Sign in</a></header>
+<main class="login">
+  <form id="editor-form" class="card wide">
+    <h1>Set up editors</h1>
+    <p class="muted">This page runs only in your browser. Nothing you type here is sent anywhere.</p>
+
+    <h2>1. Session secret</h2>
+    <p>Copy this value into the Cloudflare secret <code>SESSION_SECRET</code>. You only need it once.</p>
+    <div class="copyrow"><input id="secret" readonly aria-label="Session secret"><button type="button" class="ghost" data-copy="secret">Copy</button></div>
+
+    <h2>2. Editors</h2>
+    <p>To add someone to an existing list, paste the current <code>EDITORS</code> value here first. Leave it empty for the first editor.</p>
+    <label>Current EDITORS value (optional) <textarea id="current" rows="3" spellcheck="false"></textarea></label>
+    <label>Email <input id="email" type="email" required autocomplete="off"></label>
+    <label>Name (shown in commits) <input id="name" type="text" autocomplete="off"></label>
+    <label>Password (at least 12 characters) <input id="password" type="password" required minlength="12" autocomplete="new-password"></label>
+    <label>Password again <input id="again" type="password" required minlength="12" autocomplete="new-password"></label>
+    <label class="check"><input id="free" type="checkbox" checked> I use the Workers Free plan (lighter hash that fits its 10 ms limit)</label>
+    <button type="submit">Make the EDITORS value</button>
+    <p id="error" class="error" role="alert"></p>
+
+    <div id="result" hidden>
+      <p>Copy this value into the Cloudflare secret <code>EDITORS</code>. Keep a copy in your password manager: Cloudflare does not show secrets again, and you need it to add people later. It holds hashes only, never passwords.</p>
+      <textarea id="editors" rows="6" readonly spellcheck="false" aria-label="EDITORS value"></textarea>
+      <button type="button" class="ghost" data-copy="editors">Copy</button>
+    </div>
+  </form>
+</main>
+</body>
+</html>

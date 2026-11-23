@@ -24,7 +24,23 @@ The admin keeps the rest of each file exactly as it was. In page text you can us
 
 The admin warns about em dashes, double spaces and very long sentences. HDSF also runs its style check (`STYLE.md`) when it rebuilds. If that check fails, the site does not update; the admin links to the reason. Fix the text and save again.
 
-## Set it up (once)
+## Set it up in the Cloudflare dashboard (no command line)
+
+1. Make the GitHub token (step 1 below).
+2. In Cloudflare, go to **Workers & Pages → Create → Import a repository**. Connect GitHub and pick
+   `child-safe-edtech-framework`. Name the Worker exactly `framework-text-admin`. Set the root directory (under
+   advanced settings) to `admin`, the build command to `npm ci` and the deploy command to `npx wrangler deploy`.
+3. In the Worker, go to **Settings → Build → Build watch paths** and set the include path to `admin/*`. Otherwise
+   every text save rebuilds the admin too.
+4. Open the Worker's address and go to **Set up editors** (`/setup.html`). It makes the `SESSION_SECRET` and the
+   `EDITORS` values in your browser.
+5. In the Worker, go to **Settings → Variables and Secrets → Add**, type **Secret**, and add `GITHUB_TOKEN`,
+   `SESSION_SECRET` and `EDITORS`. Deploy.
+
+To add or remove an editor later, go back to **Set up editors**, paste the current `EDITORS` value, and replace the
+secret with the new value.
+
+## Set it up from the command line (once)
 
 You need a Cloudflare account (the free plan works) and Node.js 20 or later on your computer.
 

@@ -71,3 +71,11 @@ textarea.md { min-height: 60vh; font-family: ui-monospace, SFMono-Regular, Menlo
   .files { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
   .savebar { flex-wrap: wrap; }
 }
+
+.card.wide { width: min(40rem, 100%); }
+.card h2 { font-size: 1.05rem; margin: .8rem 0 0; }
+.card p { margin: 0; }
+.card label.check { display: flex; gap: .5rem; align-items: flex-start; font-weight: 400; }
+.card label.check input { width: auto; margin-top: .3rem; }
+.copyrow { display: flex; gap: .5rem; }
+.top a { color: var(--accent); }
