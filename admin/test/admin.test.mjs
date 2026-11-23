@@ -166,7 +166,7 @@ test("health shows which settings exist, and an empty EDITORS is reported", asyn
   assert.deepEqual(h, { GITHUB_TOKEN: true, SESSION_SECRET: true, EDITORS: "1 editor" });
   const none = await (await worker.fetch(new Request("https://a.example/api/health"), { ...env, EDITORS: undefined })).json();
   assert.match(none.EDITORS, /^missing/);
-  const empty = { ...env, EDITORS: '"not a list"' };
+  const empty = { ...env, EDITORS: "[]" };
   const r = await worker.fetch(new Request("https://a.example/api/login", { method: "POST", headers: { Origin: "https://a.example", "Content-Type": "application/json" }, body: JSON.stringify({ email: "a@b.c", password: "x" }) }), empty);
   assert.equal(r.status, 503);
 });
