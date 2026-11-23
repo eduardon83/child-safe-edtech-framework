@@ -61,3 +61,16 @@ def test_generic_scanner_runs_on_csef_rules():
     assert res["rules_in_scope"] and res["counts"]["BLOCK"] + res["counts"]["REVIEW"] > 0
     md = scanner.render_markdown(CFG, res, std.sources, "noncompliant example")
     assert md.startswith("# CSEF report")
+
+
+def test_engine_export_renders_html(tmp_path):
+    import json
+    from sfe import export
+    std = scan.load_standard(ROOT)
+    res = scanner.run(CFG, EXAMPLES[1], list(std.rules.values()), {"profiles": ["core", "A"]}, 1,
+                      manifest_checks={n: (lambda m, r, p: []) for n in scan.MANIFEST_CHECKS})
+    data = json.loads(scanner.to_json(CFG, res, "example"))
+    sections = [{"title": "Extra", "items": [{"status": "gap", "title": "Something", "detail": "Detail"}]}]
+    out = export.export(CFG, data, std.rules, std.sources, ["html"], tmp_path, sections)
+    h = out["html"].read_text()
+    assert "CSEF report" in h and "Extra" in h and 'data-sev="BLOCK"' in h

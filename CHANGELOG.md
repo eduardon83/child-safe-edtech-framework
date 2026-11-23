@@ -10,6 +10,8 @@ Open items and what we are watching: [legislation.md, watch list](framework/legi
   `framework/framework.yaml`. `tooling/build.py` and `tooling/mdpage.py` now use it; generated files are unchanged.
   `tests/test_engine.py` keeps `tooling/scan.py` and the engine in step. The engine also runs the new Health Data
   Safety Framework (HDSF).
+- Engine 0.2.0 adds `sfe/export.py`: interactive HTML dashboard, PDF and Word reports from a scanner result, with optional extra
+  sections. HDSF uses it; CSEF keeps `tooling/export.py` for now.
 
 ## v0.14.1 (2026-11-22)
 
