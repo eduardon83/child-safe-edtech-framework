@@ -164,7 +164,19 @@ test("health shows which settings exist, and an empty EDITORS is reported", asyn
   const { env } = await setup();
   const h = await (await worker.fetch(new Request("https://a.example/api/health"), env)).json();
   assert.deepEqual(h, { GITHUB_TOKEN: true, SESSION_SECRET: true, EDITORS: "1 editor" });
+  const none = await (await worker.fetch(new Request("https://a.example/api/health"), { ...env, EDITORS: undefined })).json();
+  assert.match(none.EDITORS, /^missing/);
   const empty = { ...env, EDITORS: '"not a list"' };
   const r = await worker.fetch(new Request("https://a.example/api/login", { method: "POST", headers: { Origin: "https://a.example", "Content-Type": "application/json" }, body: JSON.stringify({ email: "a@b.c", password: "x" }) }), empty);
   assert.equal(r.status, 503);
+});
+
+test("common paste slips in EDITORS still work", async () => {
+  const { parseEditors } = await import("../src/auth.js");
+  const one = { email: "a@b.c", hash: "h" };
+  assert.equal(parseEditors(JSON.stringify([one])).length, 1);
+  assert.equal(parseEditors(JSON.stringify(one)).length, 1);
+  assert.equal(parseEditors(JSON.stringify(JSON.stringify([one]))).length, 1);
+  assert.equal(parseEditors("  \n" + JSON.stringify([one]) + "\n").length, 1);
+  assert.throws(() => parseEditors("pbkdf2_sha256$1$a$b"));
 });

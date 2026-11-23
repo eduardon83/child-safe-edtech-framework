@@ -3,6 +3,8 @@ name = "framework-text-admin"
 main = "src/worker.js"
 compatibility_date = "2025-09-01"
 workers_dev = true
+# Keep variables added in the Cloudflare dashboard when GitHub redeploys the Worker.
+keep_vars = true
 
 # The admin page (public/) is served as static assets. Requests to /api/* run the Worker.
 [assets]

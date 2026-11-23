@@ -35,14 +35,24 @@ export async function makeHash(password) {
   return `pbkdf2_sha256$${ITERATIONS}$${b64u(salt)}$${b64u(await derive(password, salt))}`;
 }
 
-export function editors(env) {
-  let list;
-  try {
-    list = JSON.parse(env.EDITORS || "[]");
-  } catch {
-    throw Object.assign(new Error("EDITORS is not valid JSON."), { status: 500 });
+// Accepts the value as the setup page makes it, and also common paste slips:
+// the whole value wrapped in quotes, or a single editor without the [ ] brackets.
+export function parseEditors(raw) {
+  let list = String(raw || "").trim() || "[]";
+  for (let i = 0; i < 2 && typeof list === "string"; i++) {
+    try {
+      list = JSON.parse(list);
+    } catch {
+      throw Object.assign(new Error("EDITORS is not valid JSON. Paste the whole value from Set up editors."), { status: 500 });
+    }
   }
-  return (Array.isArray(list) ? list : []).filter((e) => e && typeof e.email === "string" && typeof e.hash === "string")
+  if (list && !Array.isArray(list) && typeof list === "object") list = [list];
+  return Array.isArray(list) ? list : [];
+}
+
+export function editors(env) {
+  const list = parseEditors(env.EDITORS);
+  return list.filter((e) => e && typeof e.email === "string" && typeof e.hash === "string")
     .map((e) => ({ email: e.email.trim().toLowerCase(), name: e.name || e.email, hash: e.hash }));
 }
 

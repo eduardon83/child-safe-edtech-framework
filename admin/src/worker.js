@@ -66,7 +66,8 @@ async function api(request, env, url) {
     return json({
       GITHUB_TOKEN: Boolean(env.GITHUB_TOKEN),
       SESSION_SECRET: Boolean(env.SESSION_SECRET && env.SESSION_SECRET.length >= 32),
-      EDITORS: editorsError || (editors ? `${editors} editor${editors === 1 ? "" : "s"}` : "missing or empty"),
+      EDITORS: editorsError || (editors ? `${editors} editor${editors === 1 ? "" : "s"}`
+        : env.EDITORS === undefined ? "missing: this deployment has no EDITORS setting" : "set, but it holds no editor with an email and a hash"),
     });
   }
 
